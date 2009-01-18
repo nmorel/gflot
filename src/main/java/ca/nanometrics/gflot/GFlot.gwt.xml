@@ -1,0 +1,12 @@
+<module>
+	<inherits name="com.google.gwt.user.User"/>
+	<inherits name="com.google.gwt.json.JSON"/>
+	
+<!--	<entry-point class="ca.nanometrics.gflot.client.Demo" />-->
+
+	<!--  Flot scripts -->
+	<script src="flot-0.5/jquery.js"></script>
+	<script src="jQuery-noConfict.js"></script>
+	<script src="flot-0.5/jquery.flot.pack.js"></script>
+	<script src="flot-0.5/excanvas.pack.js"></script>
+</module>
