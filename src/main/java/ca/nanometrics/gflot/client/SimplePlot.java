@@ -164,6 +164,7 @@ public class SimplePlot extends Widget implements PlotWidget {
 	}
 
 	public void redraw() {
+		assertLoaded();
 		plot.setData(model.getSeries());
 		plot.setupGrid();
 		plot.draw();
@@ -178,13 +179,17 @@ public class SimplePlot extends Widget implements PlotWidget {
 			} else {
 				plot = Plot.create(getElement(), model.getSeries(), options);
 			}
-			assert plot != null : "An javascript error occurrerd while creating plot. Most likely you added the plot to a container which has not been sized.";
+
+			// Issue : 2
+			assert plot != null : "An javascript error occurrerd while creating plot.";
+
+			loaded = true;
+
+			redraw();
 			for (Command cmd : onLoadOperations) {
 				cmd.execute();
 			}
 			onLoadOperations.clear();
-			loaded = true;
-			redraw();
 		}
 	}
 

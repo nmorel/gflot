@@ -1,6 +1,7 @@
 package ca.nanometrics.gflot.client;
 
 import ca.nanometrics.gflot.client.example.GFlotExample;
+import ca.nanometrics.gflot.client.example.HoverExample;
 import ca.nanometrics.gflot.client.example.SimplePlotExample;
 import ca.nanometrics.gflot.client.example.TickFormatterExample;
 
@@ -14,6 +15,7 @@ public class Demo {
 	private void addExamples() {
 		addExample(new SimplePlotExample());
 		addExample(new TickFormatterExample());
+		addExample(new HoverExample());
 	}
 
 	private void addExample(GFlotExample example) {
