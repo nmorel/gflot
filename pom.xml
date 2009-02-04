@@ -3,16 +3,16 @@
 	<groupId>ca.nanometrics</groupId>
 	<artifactId>gflot</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.2</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>GFlot: a GWT wrapper for Flot charts</name>
 	<description>A GWT module that provides widgets for creation and
 		manipulation of charts based on the Flot JavaScript library. 
 	</description>
 	<url>http://gflot.googlecode.com</url>
 	<scm>
-		<connection>scm:svn:http://gflot.googlecode.com/svn/tags/gflot-0.0.2</connection>
-		<developerConnection>scm:svn:https://gflot.googlecode.com/svn/tags/gflot-0.0.2</developerConnection>
-		<url>scm:svn:https://gflot.googlecode.com/svn/tags/gflot-0.0.2</url>
+		<connection>scm:svn:http://gflot.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:https://gflot.googlecode.com/svn/trunk/</developerConnection>
+		<url>scm:svn:https://gflot.googlecode.com/svn/trunk/</url>
 	</scm>
 	<properties>
 		<junit.version>4.3.1</junit.version>
