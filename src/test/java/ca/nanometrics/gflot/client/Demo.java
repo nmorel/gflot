@@ -19,10 +19,14 @@ public class Demo {
 	}
 
 	public void onModuleLoad() {
-		addExamples();
+
 		m_tabs.setWidth("100%");
 		m_tabs.setHeight("100%");
+
 		RootPanel.get().add(m_tabs);
+
+		addExamples();
+		m_tabs.selectTab(0);
 	}
 
 }

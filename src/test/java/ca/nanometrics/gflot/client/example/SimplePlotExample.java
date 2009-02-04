@@ -8,6 +8,7 @@ import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -24,7 +25,7 @@ public class SimplePlotExample implements GFlotExample {
 		PlotModel model = new PlotModel();
 
 		SeriesHandler handler = model.addSeries(
-				"Ottawa's Temperatures (Daily Average in Â°C)", "blue");
+				"Ottawa's Month Temperatures (Daily Average in °C)", "blue");
 		handler.add(new DataPoint(1, -10.5));
 		handler.add(new DataPoint(2, -8.6));
 		handler.add(new DataPoint(3, -2.4));
@@ -39,7 +40,10 @@ public class SimplePlotExample implements GFlotExample {
 		handler.add(new DataPoint(12, -6.6));
 
 		SimplePlot plot = new SimplePlot(model);
-		return plot.getWidget();
+
+		FlowPanel panel = new FlowPanel();
+		panel.add(plot);
+		return panel;
 	}
 
 }
