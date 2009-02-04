@@ -2,6 +2,7 @@ package ca.nanometrics.gflot.client;
 
 import ca.nanometrics.gflot.client.example.GFlotExample;
 import ca.nanometrics.gflot.client.example.SimplePlotExample;
+import ca.nanometrics.gflot.client.example.TickFormatterExample;
 
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
@@ -12,6 +13,7 @@ public class Demo {
 
 	private void addExamples() {
 		addExample(new SimplePlotExample());
+		addExample(new TickFormatterExample());
 	}
 
 	private void addExample(GFlotExample example) {

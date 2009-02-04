@@ -41,21 +41,22 @@ public class Plot extends JavaScriptObject {
 	}
 
 	public static Plot create(Element container, Series[] series) {
-		Plot plot = PlotImpl.create(container, JSONHelper
-				.getJSONArray(JSONHelper.wrapArray(series)));
+		Plot plot = PlotImpl.create(container, JSONHelper.getJSONArray(
+				JSONHelper.wrapArray(series)).getJavaScriptObject());
 		return plot;
 	}
 
 	public static Plot create(Element container, Series[] series,
 			PlotOptions options) {
-		return PlotImpl.create(container, JSONHelper.getJSONArray(JSONHelper
-				.wrapArray(series)), JSONHelper.getJSONObject(options));
+		return PlotImpl.create(container, JSONHelper.getJSONArray(
+				JSONHelper.wrapArray(series)).getJavaScriptObject(), JSONHelper
+				.getJSONObject(options).getJavaScriptObject());
 
 	}
 
 	public final void setData(Series[] series) {
-		PlotImpl.setData(this, JSONHelper.getJSONArray(JSONHelper
-				.wrapArray(series)));
+		PlotImpl.setData(this, JSONHelper.getJSONArray(
+				JSONHelper.wrapArray(series)).getJavaScriptObject());
 	}
 
 	public final void setData(Series series) {

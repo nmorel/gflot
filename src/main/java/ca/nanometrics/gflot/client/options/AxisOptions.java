@@ -66,11 +66,11 @@ public class AxisOptions extends JSONObjectWrapper {
 
 	static native void setTickFormatterNative(JavaScriptObject axisOptions,
 			TickFormatter tickFormatter)/*-{
-							axisOptions.tickFormatter = function(val, axis)
-							{
-								var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
-								var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
-								return tickFormatter.@ca.nanometrics.gflot.client.options.TickFormatter::formatTickValue(DLca/nanometrics/gflot/client/Axis;)(val, javaAxisObject);
-							};
-					}-*/;
+					axisOptions.tickFormatter = function(val, axis)
+					{
+						var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
+						var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
+						return tickFormatter.@ca.nanometrics.gflot.client.options.TickFormatter::formatTickValue(DLca/nanometrics/gflot/client/Axis;)(val, javaAxisObject);
+					};
+		}-*/;
 }

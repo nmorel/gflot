@@ -24,8 +24,13 @@ public class SimplePlotExample implements GFlotExample {
 	public Widget createExample() {
 		PlotModel model = new PlotModel();
 
-		SeriesHandler handler = model.addSeries(
-				"Ottawa's Month Temperatures (Daily Average in °C)", "blue");
+		// create a series
+		SeriesHandler handler = model
+				.addSeries(
+						"Ottawa's Month Temperatures (Daily Average in &deg;C)",
+						"blue");
+
+		// add data
 		handler.add(new DataPoint(1, -10.5));
 		handler.add(new DataPoint(2, -8.6));
 		handler.add(new DataPoint(3, -2.4));
@@ -39,8 +44,10 @@ public class SimplePlotExample implements GFlotExample {
 		handler.add(new DataPoint(11, 1.5));
 		handler.add(new DataPoint(12, -6.6));
 
+		// create the plot
 		SimplePlot plot = new SimplePlot(model);
 
+		// put it on a panel
 		FlowPanel panel = new FlowPanel();
 		panel.add(plot);
 		return panel;
