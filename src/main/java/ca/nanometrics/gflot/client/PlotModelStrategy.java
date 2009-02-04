@@ -41,24 +41,28 @@ public abstract class PlotModelStrategy {
 		return downSamplingStrategy(capacity, 0);
 	}
 
-	public static PlotModelStrategy downSamplingStrategy(final int capacity, final long maximumXValueSpan) {
+	public static PlotModelStrategy downSamplingStrategy(final int capacity,
+			final long maximumXValueSpan) {
 		return new PlotModelStrategy() {
 			SeriesData createSeriesData() {
 				if (maximumXValueSpan <= 0) {
 					return new DownsamplingSeriesData(capacity);
 				}
-				return new FixedSpanDownsamplingSeriesData(capacity, maximumXValueSpan);
+				return new FixedSpanDownsamplingSeriesData(capacity,
+						maximumXValueSpan);
 			}
 		};
 	}
 
-	public static PlotModelStrategy slidingWindowStrategy(final int capacity, final long maximumXValueSpan) {
+	public static PlotModelStrategy slidingWindowStrategy(final int capacity,
+			final long maximumXValueSpan) {
 		return new PlotModelStrategy() {
 			SeriesData createSeriesData() {
 				if (maximumXValueSpan <= 0) {
 					return new FixedSizeSeriesData(capacity);
 				}
-				return new FixedSpanFixedSizeSeriesData(capacity, maximumXValueSpan);
+				return new FixedSpanFixedSizeSeriesData(capacity,
+						maximumXValueSpan);
 			}
 		};
 	}

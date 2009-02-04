@@ -47,7 +47,8 @@ public class PlotWithOverviewModel extends PlotModel {
 		setDataProvider(handler, new AsyncDataProviderWrapper(provider));
 	}
 
-	public void setDataProvider(SeriesHandler handler, AsyncDataProvider provider) {
+	public void setDataProvider(SeriesHandler handler,
+			AsyncDataProvider provider) {
 		((PlotWithOverviewSeriesHandler) handler).setDataProvider(provider);
 	}
 
@@ -80,7 +81,8 @@ public class PlotWithOverviewModel extends PlotModel {
 		m_selection[1] = x2;
 		m_windowModel.clear();
 		for (SeriesHandler handler : getHandlers()) {
-			((PlotWithOverviewSeriesHandler) handler).populateWindowSeries(toExcuteAfterSelection);
+			((PlotWithOverviewSeriesHandler) handler)
+					.populateWindowSeries(toExcuteAfterSelection);
 		}
 	}
 
@@ -97,9 +99,12 @@ public class PlotWithOverviewModel extends PlotModel {
 
 		public PlotWithOverviewSeriesHandler(Series series, SeriesData data) {
 			super(series, data);
-			m_provider = new AsyncDataProviderWrapper(new LocalDataProvider(data));
-			m_windowHandler = m_windowModel.addSeries(series.getLabel(), series.getColor());
-			m_overviewHandler = m_overviewModel.addSeries(series.getLabel(), series.getColor());
+			m_provider = new AsyncDataProviderWrapper(new LocalDataProvider(
+					data));
+			m_windowHandler = m_windowModel.addSeries(series.getLabel(), series
+					.getColor());
+			m_overviewHandler = m_overviewModel.addSeries(series.getLabel(),
+					series.getColor());
 		}
 
 		@Override
@@ -110,7 +115,8 @@ public class PlotWithOverviewModel extends PlotModel {
 				double diff = datapoint.getX() - m_lastDataPoint.getX();
 				double x1 = m_selection[0] + diff;
 				double x2 = m_selection[1] + diff;
-				setSelection(Math.max(x1, m_selection[0]), Math.max(x2, m_selection[1]));
+				setSelection(Math.max(x1, m_selection[0]), Math.max(x2,
+						m_selection[1]));
 			}
 			m_lastDataPoint = datapoint;
 
@@ -154,7 +160,8 @@ public class PlotWithOverviewModel extends PlotModel {
 			if (x1 < x2) {
 				m_provider.getData(x1, x2, new AsyncCallback<DataPoint[]>() {
 					public void onFailure(Throwable caught) {
-						GWT.log("Failed to obtain data for PlotWithOverview", caught);
+						GWT.log("Failed to obtain data for PlotWithOverview",
+								caught);
 					}
 
 					public void onSuccess(DataPoint[] result) {
@@ -208,7 +215,8 @@ public class PlotWithOverviewModel extends PlotModel {
 			m_provider = provider;
 		}
 
-		public void getData(double x1, double x2, AsyncCallback<DataPoint[]> callback) {
+		public void getData(double x1, double x2,
+				AsyncCallback<DataPoint[]> callback) {
 			try {
 				DataPoint[] result = m_provider.getData(x1, x2);
 				callback.onSuccess(result);

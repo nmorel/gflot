@@ -95,7 +95,8 @@ public class DownsamplingSeriesData extends SeriesData {
 		return samples;
 	}
 
-	private void downsamplingAndAdd(List decimationBuffer, SeriesData decimatedData) {
+	private void downsamplingAndAdd(List decimationBuffer,
+			SeriesData decimatedData) {
 		DataPoint[] samples = downsampling(decimationBuffer);
 		for (int i = 0; i < samples.length; i++) {
 			decimatedData.add(samples[i]);

@@ -1,4 +1,5 @@
 <module>
+	<inherits name="com.google.gwt.user.theme.chrome.Chrome"/>
 	<inherits name="ca.nanometrics.gflot.GFlot"/>
 	<entry-point  class="ca.nanometrics.gflot.client.Demo" />
 </module>

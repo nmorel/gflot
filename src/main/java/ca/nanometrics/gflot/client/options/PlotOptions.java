@@ -44,12 +44,14 @@ public class PlotOptions extends JSONObjectWrapper {
 		return this;
 	}
 
-	public PlotOptions setDefaultLineSeriesOptions(SeriesOptions lineSeriesOptions) {
+	public PlotOptions setDefaultLineSeriesOptions(
+			SeriesOptions lineSeriesOptions) {
 		put("lines", lineSeriesOptions);
 		return this;
 	}
 
-	public PlotOptions setDefaultBarsSeriesOptions(SeriesOptions barSeriesOptions) {
+	public PlotOptions setDefaultBarsSeriesOptions(
+			SeriesOptions barSeriesOptions) {
 		put("bars", barSeriesOptions);
 		return this;
 	}

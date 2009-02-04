@@ -37,12 +37,18 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @author Alexander De Leon
  */
-public class PlotWithOverview extends Composite implements PlotWidget, SelectionListener {
+public class PlotWithOverview extends Composite implements PlotWidget,
+		SelectionListener {
 	public static final int DEFAULT_OVERVIEW_HEIGHT = 100; // px
-	public static final PlotOptions DEFAULT_OVERVIEW_OPTIONS = new PlotOptions().setDefaultShadowSize(0)
-			.setLegendOptions(new LegendOptions().setShow(false)).setDefaultLineSeriesOptions(
-					new LineSeriesOptions().setLineWidth(1).setFill(true)).setSelectionOptions(
-					new SelectionOptions().setMode(SelectionOptions.X_SELECTION_MODE).setDragging(true));
+	public static final PlotOptions DEFAULT_OVERVIEW_OPTIONS = new PlotOptions()
+			.setDefaultShadowSize(0).setLegendOptions(
+					new LegendOptions().setShow(false))
+			.setDefaultLineSeriesOptions(
+					new LineSeriesOptions().setLineWidth(1).setFill(true))
+			.setSelectionOptions(
+					new SelectionOptions().setMode(
+							SelectionOptions.X_SELECTION_MODE)
+							.setDragging(true));
 
 	private int m_overviewHeight;
 	private final SimplePlot m_windowPlot;
@@ -59,26 +65,31 @@ public class PlotWithOverview extends Composite implements PlotWidget, Selection
 		this(model, plotOptions, DEFAULT_OVERVIEW_OPTIONS);
 	}
 
-	public PlotWithOverview(PlotWithOverviewModel model, PlotOptions plotOptions, PlotOptions overviewPlotOptions) {
+	public PlotWithOverview(PlotWithOverviewModel model,
+			PlotOptions plotOptions, PlotOptions overviewPlotOptions) {
 		this(model, DEFAULT_OVERVIEW_HEIGHT, plotOptions, overviewPlotOptions);
 	}
 
-	public PlotWithOverview(PlotWithOverviewModel model, int overviewHeight, PlotOptions windowPlotOptions,
-			PlotOptions overviewPlotOptions) {
+	public PlotWithOverview(PlotWithOverviewModel model, int overviewHeight,
+			PlotOptions windowPlotOptions, PlotOptions overviewPlotOptions) {
 		m_overviewHeight = overviewHeight;
 		m_model = model;
-		m_windowPlot = new SimplePlot(m_model.getWindowPlotModel(), windowPlotOptions);
-		m_overviewPlot = new SimplePlot(m_model.getOverviewPlotModel(), overviewPlotOptions);
+		m_windowPlot = new SimplePlot(m_model.getWindowPlotModel(),
+				windowPlotOptions);
+		m_overviewPlot = new SimplePlot(m_model.getOverviewPlotModel(),
+				overviewPlotOptions);
 		setupPlots();
 		initWidget(createUi());
 	}
 
 	/* ---------------------- PlotWidget API -- */
-	public void addClickListener(PlotClickListener listener, boolean onlyOnDatapoint) {
+	public void addClickListener(PlotClickListener listener,
+			boolean onlyOnDatapoint) {
 		m_windowPlot.addClickListener(listener, onlyOnDatapoint);
 	}
 
-	public void addHoverListener(PlotHoverListener listener, boolean onlyOnDatapoint) {
+	public void addHoverListener(PlotHoverListener listener,
+			boolean onlyOnDatapoint) {
 		m_windowPlot.addHoverListener(listener, onlyOnDatapoint);
 	}
 
@@ -121,7 +132,8 @@ public class PlotWithOverview extends Composite implements PlotWidget, Selection
 		m_overviewPlot.setLinearSelection(x1, x2);
 	}
 
-	public void setRectangularSelection(double x1, double y1, double x2, double y2) {
+	public void setRectangularSelection(double x1, double y1, double x2,
+			double y2) {
 		m_overviewPlot.setRectangularSelection(x1, y1, x2, y2);
 	}
 

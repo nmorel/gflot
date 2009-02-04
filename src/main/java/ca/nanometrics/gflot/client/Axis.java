@@ -19,43 +19,44 @@
  *	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *	THE SOFTWARE.
  */
-package ca.nanometrics.gflot.client.util;
+package ca.nanometrics.gflot.client;
 
-import ca.nanometrics.gflot.client.SeriesData;
+import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+
+import com.google.gwt.json.client.JSONObject;
 
 /**
- * @author AlexanderDeleon
+ * Model of a plot axis.
+ * 
+ * @author David Easton
  */
-public class Algorithm {
+public class Axis extends JSONObjectWrapper {
+	private static final String MIN = "min";
+	private static final String MAX = "max";
+	private static final String TICK_DECIMALS = "tickDecimals";
+	private static final String TICK_SIZE = "tickSize";
 
-	public static int xBinarySearch(SeriesData s, double xValue) {
-		return xBinarySearch(s, 0, s.size(), xValue);
+	protected Axis() {
+		super();
 	}
 
-	public static int xBinarySearch(SeriesData s, int fromIndex, int toIndex,
-			double xValue) {
-		if (fromIndex > toIndex) {
-			return -1;
-		}
-		int lMid = fromIndex + (int) Math.floor((toIndex - fromIndex) / 2);
-		int rMid = lMid + 1;
+	protected Axis(JSONObject object) {
+		super(object);
+	}
 
-		if (xValue < s.getX(lMid)) {
-			return xBinarySearch(s, fromIndex, lMid - 1, xValue);
-		}
-		if (xValue == s.getX(lMid)) {
-			return lMid;
-		}
-		if (rMid < s.size()) {
-			if (xValue > s.getX(rMid)) {
-				return xBinarySearch(s, rMid, toIndex, xValue);
-			}
-			double rVal = s.getX(rMid);
-			double lVal = s.getX(lMid);
-			return Math.abs(rVal - xValue) > Math.abs(lVal - xValue) ? lMid
-					: rMid;
-		} else {
-			return -1;
-		}
+	public Double getMinimumValue() {
+		return super.getDouble(MIN);
+	}
+
+	public Double getMaximumValue() {
+		return super.getDouble(MAX);
+	}
+
+	public Integer getTickDecimals() {
+		return super.getInteger(TICK_DECIMALS);
+	}
+
+	public Integer getTickSize() {
+		return super.getInteger(TICK_SIZE);
 	}
 }

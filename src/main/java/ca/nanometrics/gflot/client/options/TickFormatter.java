@@ -12,7 +12,8 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-public interface TickFormatter
-{
-  String formatTickValue(double tickValue, Axis axis);
+import ca.nanometrics.gflot.client.Axis;
+
+public interface TickFormatter {
+	String formatTickValue(double tickValue, Axis axis);
 }

@@ -107,7 +107,8 @@ public class SimplePlot extends Widget implements PlotWidget {
 		plot.setLinearSelection(x1, x2);
 	}
 
-	public void setRectangularSelection(double x1, double y1, double x2, double y2) {
+	public void setRectangularSelection(double x1, double y1, double x2,
+			double y2) {
 		assertLoaded();
 		plot.setRectangularSelection(x1, y1, x2, y2);
 	}
@@ -124,26 +125,30 @@ public class SimplePlot extends Widget implements PlotWidget {
 		}
 	}
 
-	public void addHoverListener(final PlotHoverListener listener, final boolean onlyOnDatapoint) {
+	public void addHoverListener(final PlotHoverListener listener,
+			final boolean onlyOnDatapoint) {
 		if (loaded) {
 			plot.addPlotHoverListener(getElement(), listener, onlyOnDatapoint);
 		} else {
 			onLoadOperations.add(new Command() {
 				public void execute() {
-					plot.addPlotHoverListener(getElement(), listener, onlyOnDatapoint);
+					plot.addPlotHoverListener(getElement(), listener,
+							onlyOnDatapoint);
 				}
 			});
 		}
 
 	}
 
-	public void addClickListener(final PlotClickListener listener, final boolean onlyOnDatapoint) {
+	public void addClickListener(final PlotClickListener listener,
+			final boolean onlyOnDatapoint) {
 		if (loaded) {
 			plot.addPlotClickListener(getElement(), listener, onlyOnDatapoint);
 		} else {
 			onLoadOperations.add(new Command() {
 				public void execute() {
-					plot.addPlotClickListener(getElement(), listener, onlyOnDatapoint);
+					plot.addPlotClickListener(getElement(), listener,
+							onlyOnDatapoint);
 				}
 			});
 		}

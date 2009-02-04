@@ -44,7 +44,8 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @author Alexander De Leon
  */
-public class PlotWithInteractiveLegend extends Composite implements PlotWidget, PlotModelListener {
+public class PlotWithInteractiveLegend extends Composite implements PlotWidget,
+		PlotModelListener {
 
 	private final PlotWidget m_plot;
 	private Panel m_legendPanel;
@@ -59,16 +60,19 @@ public class PlotWithInteractiveLegend extends Composite implements PlotWidget, 
 
 	private void buildLegendFromModel(PlotModel model) {
 		for (SeriesHandler seriesHandler : model.getHandlers()) {
-			addSeriesToLegend(seriesHandler.getSeries().getLabel(), seriesHandler.getSeries().getColor(), seriesHandler);
+			addSeriesToLegend(seriesHandler.getSeries().getLabel(),
+					seriesHandler.getSeries().getColor(), seriesHandler);
 		}
 		model.addListener(this);
 	}
 
-	public void addClickListener(PlotClickListener listener, boolean onlyOnDatapoint) {
+	public void addClickListener(PlotClickListener listener,
+			boolean onlyOnDatapoint) {
 		m_plot.addClickListener(listener, onlyOnDatapoint);
 	}
 
-	public void addHoverListener(PlotHoverListener listener, boolean onlyOnDatapoint) {
+	public void addHoverListener(PlotHoverListener listener,
+			boolean onlyOnDatapoint) {
 		m_plot.addHoverListener(listener, onlyOnDatapoint);
 	}
 
@@ -92,7 +96,8 @@ public class PlotWithInteractiveLegend extends Composite implements PlotWidget, 
 		m_plot.setLinearSelection(x1, x2);
 	}
 
-	public void setRectangularSelection(double x1, double y1, double x2, double y2) {
+	public void setRectangularSelection(double x1, double y1, double x2,
+			double y2) {
 		m_plot.setRectangularSelection(x1, y1, x2, y2);
 	}
 
@@ -116,7 +121,8 @@ public class PlotWithInteractiveLegend extends Composite implements PlotWidget, 
 		m_legend.get(handler).addWidget(widget);
 	}
 
-	public void onAddSeries(PlotModel model, String label, String color, SeriesHandler handler) {
+	public void onAddSeries(PlotModel model, String label, String color,
+			SeriesHandler handler) {
 		addSeriesToLegend(label, color, handler);
 
 	}
@@ -126,7 +132,8 @@ public class PlotWithInteractiveLegend extends Composite implements PlotWidget, 
 	}
 
 	/* --------------------- helper methods -- */
-	private void addSeriesToLegend(String label, String color, SeriesHandler handler) {
+	private void addSeriesToLegend(String label, String color,
+			SeriesHandler handler) {
 		LegendItem item = new LegendItem(color, handler, label);
 		m_legend.put(handler, item);
 		m_legendPanel.add(item);
@@ -153,11 +160,13 @@ public class PlotWithInteractiveLegend extends Composite implements PlotWidget, 
 
 		final HorizontalPanel m_labelsPanel;
 
-		public LegendItem(String color, final SeriesHandler handler, String label) {
+		public LegendItem(String color, final SeriesHandler handler,
+				String label) {
 			FlexTable table = new FlexTable();
 
-			HTML colorBand = new HTML("<div style=\"width: 100%; height: " + COLOR_BAND_HEIGHT + "; background-color: "
-					+ color + ";\"></div>");
+			HTML colorBand = new HTML("<div style=\"width: 100%; height: "
+					+ COLOR_BAND_HEIGHT + "; background-color: " + color
+					+ ";\"></div>");
 			table.setWidget(0, 0, colorBand);
 			table.getFlexCellFormatter().setColSpan(0, 0, 2);
 
@@ -170,12 +179,14 @@ public class PlotWithInteractiveLegend extends Composite implements PlotWidget, 
 				}
 			});
 			table.setWidget(1, 0, checkBox);
-			table.getCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_LEFT);
+			table.getCellFormatter().setHorizontalAlignment(1, 0,
+					HasHorizontalAlignment.ALIGN_LEFT);
 
 			m_labelsPanel = new HorizontalPanel();
 			m_labelsPanel.add(new Label(label));
 			table.setWidget(1, 1, m_labelsPanel);
-			table.getCellFormatter().setHorizontalAlignment(1, 1, HasHorizontalAlignment.ALIGN_CENTER);
+			table.getCellFormatter().setHorizontalAlignment(1, 1,
+					HasHorizontalAlignment.ALIGN_CENTER);
 
 			initWidget(table);
 

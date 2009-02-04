@@ -41,18 +41,21 @@ public class Plot extends JavaScriptObject {
 	}
 
 	public static Plot create(Element container, Series[] series) {
-		Plot plot = PlotImpl.create(container, JSONHelper.getJSONArray(JSONHelper.wrapArray(series)));
+		Plot plot = PlotImpl.create(container, JSONHelper
+				.getJSONArray(JSONHelper.wrapArray(series)));
 		return plot;
 	}
 
-	public static Plot create(Element container, Series[] series, PlotOptions options) {
-		return PlotImpl.create(container, JSONHelper.getJSONArray(JSONHelper.wrapArray(series)), JSONHelper
-				.getJSONObject(options));
+	public static Plot create(Element container, Series[] series,
+			PlotOptions options) {
+		return PlotImpl.create(container, JSONHelper.getJSONArray(JSONHelper
+				.wrapArray(series)), JSONHelper.getJSONObject(options));
 
 	}
 
 	public final void setData(Series[] series) {
-		PlotImpl.setData(this, JSONHelper.getJSONArray(JSONHelper.wrapArray(series)));
+		PlotImpl.setData(this, JSONHelper.getJSONArray(JSONHelper
+				.wrapArray(series)));
 	}
 
 	public final void setData(Series series) {
@@ -71,20 +74,26 @@ public class Plot extends JavaScriptObject {
 		PlotImpl.setLinearSelection(this, x1, x2);
 	}
 
-	public final void setRectangularSelection(double x1, double y1, double x2, double y2) {
+	public final void setRectangularSelection(double x1, double y1, double x2,
+			double y2) {
 		PlotImpl.setRectangularSelection(this, x1, y1, x2, y2);
 	}
 
-	public final void addSelectionListener(Element container, SelectionListener listener) {
+	public final void addSelectionListener(Element container,
+			SelectionListener listener) {
 		PlotImpl.addSelectionListener(container, listener);
 	}
 
-	public final void addPlotHoverListener(Element container, PlotHoverListener listener, boolean onlyOnDatapoint) {
-		PlotImpl.addPlotHoverListener(container, listener, onlyOnDatapoint, this);
+	public final void addPlotHoverListener(Element container,
+			PlotHoverListener listener, boolean onlyOnDatapoint) {
+		PlotImpl.addPlotHoverListener(container, listener, onlyOnDatapoint,
+				this);
 	}
 
-	public final void addPlotClickListener(Element container, PlotClickListener listener, boolean onlyOnDatapoint) {
-		PlotImpl.addPlotClickListener(container, listener, onlyOnDatapoint, this);
+	public final void addPlotClickListener(Element container,
+			PlotClickListener listener, boolean onlyOnDatapoint) {
+		PlotImpl.addPlotClickListener(container, listener, onlyOnDatapoint,
+				this);
 	}
 
 }

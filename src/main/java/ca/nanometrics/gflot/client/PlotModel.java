@@ -114,7 +114,8 @@ public class PlotModel {
 		}
 	}
 
-	private void fireOnAddSeries(String label, String color, SeriesHandler handler) {
+	private void fireOnAddSeries(String label, String color,
+			SeriesHandler handler) {
 		for (PlotModelListener listener : m_listeners) {
 			listener.onAddSeries(this, label, color, handler);
 		}
@@ -122,7 +123,8 @@ public class PlotModel {
 
 	public interface PlotModelListener {
 
-		void onAddSeries(PlotModel model, String label, String color, SeriesHandler handler);
+		void onAddSeries(PlotModel model, String label, String color,
+				SeriesHandler handler);
 
 		void onRemoveSeries(PlotModel model, SeriesHandler handler);
 	}
