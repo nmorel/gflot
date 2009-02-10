@@ -1,28 +1,38 @@
-/**
- * Copyright (c) 2009 Nanometrics Inc. All Rights Reserved.
- */
 package ca.nanometrics.gflot.client.example;
 
+import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
+import ca.nanometrics.gflot.client.options.AxisOptions;
+import ca.nanometrics.gflot.client.options.PlotOptions;
+import ca.nanometrics.gflot.client.options.TickFormatter;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * @author Alexander De Leon
- * 
- */
 public class SimplePlotExample implements GFlotExample {
+
+	private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr",
+			"may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
 	public String getName() {
 		return "SimplePlot Example";
 	}
 
 	public Widget createExample() {
+
 		PlotModel model = new PlotModel();
+		PlotOptions plotOptions = new PlotOptions();
+
+		// add tick formatter to the options
+		plotOptions.setXAxisOptions(new AxisOptions().setTicks(12)
+				.setTickFormatter(new TickFormatter() {
+					public String formatTickValue(double tickValue, Axis axis) {
+						return MONTH_NAMES[(int) (tickValue - 1)];
+					}
+				}));
 
 		// create a series
 		SeriesHandler handler = model
@@ -45,12 +55,13 @@ public class SimplePlotExample implements GFlotExample {
 		handler.add(new DataPoint(12, -6.6));
 
 		// create the plot
-		SimplePlot plot = new SimplePlot(model);
+		SimplePlot plot = new SimplePlot(model, plotOptions);
 
 		// put it on a panel
 		FlowPanel panel = new FlowPanel();
 		panel.add(plot);
 		return panel;
+
 	}
 
 }
