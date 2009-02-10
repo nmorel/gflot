@@ -27,7 +27,7 @@ public class HoverExample implements GFlotExample {
 	private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr",
 			"may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
-	private Label selectedPointLabel = new Label(INSTRUCTIONS);
+	private final Label selectedPointLabel = new Label(INSTRUCTIONS);
 
 	public String getName() {
 		return "PlotHoverListener Example";
@@ -56,10 +56,9 @@ public class HoverExample implements GFlotExample {
 		// >>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 		// create a series
-		SeriesHandler handler = model
-				.addSeries(
-						"Ottawa's Month Temperatures (Daily Average in &deg;C)",
-						"blue");
+		SeriesHandler handler = model.addSeries(
+				"Ottawa's Month Temperatures (Daily Average in &deg;C)",
+				"#007f00");
 
 		// add data
 		handler.add(new DataPoint(1, -10.5));
