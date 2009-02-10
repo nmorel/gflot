@@ -18,7 +18,7 @@ public class TickFormatterExample implements GFlotExample {
 			"may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
 	public String getName() {
-		return "TickFortamatter Example";
+		return "TickFormatter Example";
 	}
 
 	public Widget createExample() {
