@@ -2,7 +2,7 @@ package ca.nanometrics.gflot.client;
 
 import ca.nanometrics.gflot.client.example.GFlotExample;
 import ca.nanometrics.gflot.client.example.HoverExample;
-import ca.nanometrics.gflot.client.example.SimplePlotExample;
+import ca.nanometrics.gflot.client.example.PlotWithInteractiveLegendExample;
 import ca.nanometrics.gflot.client.example.TickFormatterExample;
 
 import com.google.gwt.user.client.ui.RootPanel;
@@ -13,8 +13,8 @@ public class Demo {
 	private final TabPanel m_tabs = new TabPanel();
 
 	private void addExamples() {
-		addExample(new SimplePlotExample());
 		addExample(new TickFormatterExample());
+		addExample(new PlotWithInteractiveLegendExample());
 		addExample(new HoverExample());
 	}
 
