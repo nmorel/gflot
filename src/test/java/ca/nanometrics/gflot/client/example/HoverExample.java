@@ -24,41 +24,36 @@ public class HoverExample implements GFlotExample {
 
 	private static final String INSTRUCTIONS = "Point your mouse to a data point on the chart";
 
-	private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr",
-			"may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
+	private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
+			"nov", "dec" };
 
 	private final Label selectedPointLabel = new Label(INSTRUCTIONS);
 
 	public String getName() {
-		return "PlotHoverListener Example";
+		return "PlotHoverListener";
 	}
 
 	public Widget createExample() {
 
 		PlotModel model = new PlotModel();
 		PlotOptions plotOptions = new PlotOptions();
-		plotOptions.setDefaultLineSeriesOptions(new LineSeriesOptions()
-				.setLineWidth(1).setShow(true));
-		plotOptions.setDefaultPointsOptions(new PointsSeriesOptions()
-				.setRadius(2).setShow(true));
+		plotOptions.setDefaultLineSeriesOptions(new LineSeriesOptions().setLineWidth(1).setShow(true));
+		plotOptions.setDefaultPointsOptions(new PointsSeriesOptions().setRadius(2).setShow(true));
 		plotOptions.setDefaultShadowSize(0);
 
 		// add tick formatter to the options
-		plotOptions.setXAxisOptions(new AxisOptions().setTicks(12)
-				.setTickFormatter(new TickFormatter() {
-					public String formatTickValue(double tickValue, Axis axis) {
-						return MONTH_NAMES[(int) (tickValue - 1)];
-					}
-				}));
+		plotOptions.setXAxisOptions(new AxisOptions().setTicks(12).setTickFormatter(new TickFormatter() {
+			public String formatTickValue(double tickValue, Axis axis) {
+				return MONTH_NAMES[(int) (tickValue - 1)];
+			}
+		}));
 
 		// >>>>>>> You need make the grid hoverable <<<<<<<<<
 		plotOptions.setGridOptions(new GridOptions().setHoverable(true));
 		// >>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 		// create a series
-		SeriesHandler handler = model.addSeries(
-				"Ottawa's Month Temperatures (Daily Average in &deg;C)",
-				"#007f00");
+		SeriesHandler handler = model.addSeries("Ottawa's Month Temperatures (Daily Average in &deg;C)", "#007f00");
 
 		// add data
 		handler.add(new DataPoint(1, -10.5));
@@ -79,12 +74,10 @@ public class HoverExample implements GFlotExample {
 
 		// add hover listener
 		plot.addHoverListener(new PlotHoverListener() {
-			public void onPlotHover(Plot plot, PlotPosition position,
-					PlotItem item) {
+			public void onPlotHover(Plot plot, PlotPosition position, PlotItem item) {
 				if (item != null) {
-					selectedPointLabel.setText("x: "
-							+ item.getDataPoint().getX() + ", y: "
-							+ item.getDataPoint().getY());
+					selectedPointLabel
+							.setText("x: " + item.getDataPoint().getX() + ", y: " + item.getDataPoint().getY());
 				} else {
 					selectedPointLabel.setText(INSTRUCTIONS);
 				}

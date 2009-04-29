@@ -1,5 +1,6 @@
 package ca.nanometrics.gflot.client;
 
+import ca.nanometrics.gflot.client.example.BarChartExample;
 import ca.nanometrics.gflot.client.example.GFlotExample;
 import ca.nanometrics.gflot.client.example.HoverExample;
 import ca.nanometrics.gflot.client.example.PlotWithInteractiveLegendExample;
@@ -15,6 +16,7 @@ public class Demo {
 
 	private void addExamples() {
 		addExample(new SimplePlotExample());
+		addExample(new BarChartExample());
 		addExample(new PlotWithInteractiveLegendExample());
 		addExample(new PlotWithOverviewExample());
 		addExample(new HoverExample());

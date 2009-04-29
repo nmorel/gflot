@@ -27,31 +27,28 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class PlotWithInteractiveLegendExample implements GFlotExample {
 
-	private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr",
-			"may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
+	private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
+			"nov", "dec" };
 
 	public String getName() {
-		return "PlotWithInteractiveLegend Example";
+		return "PlotWithInteractiveLegend";
 	}
 
 	public Widget createExample() {
 
 		PlotModel model = new PlotModel(PlotModelStrategy.defaultStrategy());
 		PlotOptions plotOptions = new PlotOptions();
-		plotOptions.setDefaultLineSeriesOptions(new LineSeriesOptions()
-				.setLineWidth(1).setShow(true));
-		plotOptions.setDefaultPointsOptions(new PointsSeriesOptions()
-				.setRadius(2).setShow(true));
+		plotOptions.setDefaultLineSeriesOptions(new LineSeriesOptions().setLineWidth(1).setShow(true));
+		plotOptions.setDefaultPointsOptions(new PointsSeriesOptions().setRadius(2).setShow(true));
 		plotOptions.setDefaultShadowSize(0);
 		plotOptions.setLegendOptions(new LegendOptions().setShow(false));
 
 		// add tick formatter to the options
-		plotOptions.setXAxisOptions(new AxisOptions().setTicks(12)
-				.setTickFormatter(new TickFormatter() {
-					public String formatTickValue(double tickValue, Axis axis) {
-						return MONTH_NAMES[(int) (tickValue - 1)];
-					}
-				}));
+		plotOptions.setXAxisOptions(new AxisOptions().setTicks(12).setTickFormatter(new TickFormatter() {
+			public String formatTickValue(double tickValue, Axis axis) {
+				return MONTH_NAMES[(int) (tickValue - 1)];
+			}
+		}));
 
 		// create a series
 		// Note: you need to specified the colors in other for the legend to
@@ -91,9 +88,8 @@ public class PlotWithInteractiveLegendExample implements GFlotExample {
 
 		// put it on a panel
 		FlowPanel panel = new FlowPanel();
-		panel
-				.add(new HTML(
-						"<p style=\"font-weight: bold; align: center;\">Month Temperatures (Daily Average in &deg;C)</p>"));
+		panel.add(new HTML(
+				"<p style=\"font-weight: bold; align: center;\">Month Temperatures (Daily Average in &deg;C)</p>"));
 		panel.add(new PlotWithInteractiveLegend(plot));
 
 		return panel;

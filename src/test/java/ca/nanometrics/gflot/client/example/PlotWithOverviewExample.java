@@ -27,7 +27,7 @@ public class PlotWithOverviewExample implements GFlotExample {
 	 * @see ca.nanometrics.gflot.client.example.GFlotExample#getName()
 	 */
 	public String getName() {
-		return "PlotWithOverview Example";
+		return "PlotWithOverview";
 	}
 
 	/**
@@ -35,13 +35,10 @@ public class PlotWithOverviewExample implements GFlotExample {
 	 */
 	public Widget createExample() {
 
-		PlotWithOverviewModel model = new PlotWithOverviewModel(
-				PlotModelStrategy.defaultStrategy());
+		PlotWithOverviewModel model = new PlotWithOverviewModel(PlotModelStrategy.defaultStrategy());
 		PlotOptions plotOptions = new PlotOptions();
-		plotOptions.setDefaultLineSeriesOptions(new LineSeriesOptions()
-				.setLineWidth(1).setShow(true));
-		plotOptions.setDefaultPointsOptions(new PointsSeriesOptions()
-				.setRadius(2).setShow(true));
+		plotOptions.setDefaultLineSeriesOptions(new LineSeriesOptions().setLineWidth(1).setShow(true));
+		plotOptions.setDefaultPointsOptions(new PointsSeriesOptions().setRadius(2).setShow(true));
 		plotOptions.setDefaultShadowSize(0);
 
 		SeriesHandler series = model.addSeries("Random Series", "#2c1d54");
@@ -57,6 +54,7 @@ public class PlotWithOverviewExample implements GFlotExample {
 		// put it on a panel
 		FlowPanel panel = new FlowPanel() {
 
+			@Override
 			protected void onLoad() {
 				super.onLoad();
 				plot.setLinearSelection(150, 199);

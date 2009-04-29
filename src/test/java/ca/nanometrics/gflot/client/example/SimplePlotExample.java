@@ -14,11 +14,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SimplePlotExample implements GFlotExample {
 
-	private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr",
-			"may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
+	private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
+			"nov", "dec" };
 
 	public String getName() {
-		return "SimplePlot Example";
+		return "SimplePlot";
 	}
 
 	public Widget createExample() {
@@ -27,18 +27,14 @@ public class SimplePlotExample implements GFlotExample {
 		PlotOptions plotOptions = new PlotOptions();
 
 		// add tick formatter to the options
-		plotOptions.setXAxisOptions(new AxisOptions().setTicks(12)
-				.setTickFormatter(new TickFormatter() {
-					public String formatTickValue(double tickValue, Axis axis) {
-						return MONTH_NAMES[(int) (tickValue - 1)];
-					}
-				}));
+		plotOptions.setXAxisOptions(new AxisOptions().setTicks(12).setTickFormatter(new TickFormatter() {
+			public String formatTickValue(double tickValue, Axis axis) {
+				return MONTH_NAMES[(int) (tickValue - 1)];
+			}
+		}));
 
 		// create a series
-		SeriesHandler handler = model
-				.addSeries(
-						"Ottawa's Month Temperatures (Daily Average in &deg;C)",
-						"blue");
+		SeriesHandler handler = model.addSeries("Ottawa's Month Temperatures (Daily Average in &deg;C)", "blue");
 
 		// add data
 		handler.add(new DataPoint(1, -10.5));
