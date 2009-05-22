@@ -97,4 +97,19 @@ public class Plot extends JavaScriptObject {
 				this);
 	}
 
+	public final int getPlotOffsetLeft() {
+		return PlotImpl.getPlotOffsetLeft(this);
+	}
+
+	public final int getPlotOffsetRight() {
+		return PlotImpl.getPlotOffsetRight(this);
+	}
+
+	public final int getPlotOffsetTop() {
+		return PlotImpl.getPlotOffsetTop(this);
+	}
+
+	public final int getPlotOffsetBottom() {
+		return PlotImpl.getPlotOffsetBottom(this);
+	}
 }

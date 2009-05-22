@@ -170,6 +170,22 @@ public class SimplePlot extends Widget implements PlotWidget {
 		plot.draw();
 	}
 
+	public int getOffsetLeft() {
+		return plot.getPlotOffsetLeft();
+	}
+
+	public int getOffsetRight() {
+		return plot.getPlotOffsetRight();
+	}
+
+	public int getOffsetTop() {
+		return plot.getPlotOffsetTop();
+	}
+
+	public int getOffsetBottom() {
+		return plot.getPlotOffsetBottom();
+	}
+
 	/* ------------------ Widget API -- */
 	protected void onLoad() {
 		super.onLoad();
