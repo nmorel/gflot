@@ -1,11 +1,13 @@
 package ca.nanometrics.gflot.client;
 
 import ca.nanometrics.gflot.client.example.BarChartExample;
+import ca.nanometrics.gflot.client.example.DecimationExample;
 import ca.nanometrics.gflot.client.example.GFlotExample;
 import ca.nanometrics.gflot.client.example.HoverExample;
 import ca.nanometrics.gflot.client.example.PlotWithInteractiveLegendExample;
 import ca.nanometrics.gflot.client.example.PlotWithOverviewExample;
 import ca.nanometrics.gflot.client.example.SimplePlotExample;
+import ca.nanometrics.gflot.client.example.SlidingWindowExample;
 
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
@@ -20,6 +22,8 @@ public class Demo {
 		addExample(new PlotWithInteractiveLegendExample());
 		addExample(new PlotWithOverviewExample());
 		addExample(new HoverExample());
+		addExample(new SlidingWindowExample());
+		addExample(new DecimationExample());
 	}
 
 	private void addExample(GFlotExample example) {
