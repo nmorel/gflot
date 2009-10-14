@@ -21,8 +21,11 @@
  */
 package ca.nanometrics.gflot.client.options;
 
+import ca.nanometrics.gflot.client.util.JQueryHelper;
+import ca.nanometrics.gflot.client.util.JSONHelper;
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 
@@ -72,7 +75,12 @@ public class LegendOptions extends JSONObjectWrapper {
 	}
 
 	public LegendOptions setContainer(Element container) {
-		put("container", DOM.getElementProperty(container, "id"));
+		String id = DOM.getElementProperty(container, "id");
+		if (id == null || id.length() == 0) {
+			id = "gflot-legend-container";
+			DOM.setElementProperty(container, "id", id);
+		}
+		put("container", JSONHelper.wrapObject(new JSONObject(JQueryHelper.getJQueryObj(id))));
 		return this;
 	}
 }

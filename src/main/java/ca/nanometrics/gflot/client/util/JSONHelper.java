@@ -56,4 +56,8 @@ public class JSONHelper {
 		wrapper.pushAll(values);
 		return wrapper;
 	}
+
+	public static JSONObjectWrapper wrapObject(JSONObject obj) {
+		return new JSONObjectWrapper(obj);
+	}
 }
