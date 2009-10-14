@@ -95,6 +95,7 @@ public class PlotWithOverviewModel extends PlotModel {
 		private final SeriesHandler m_overviewHandler;
 		private final SeriesHandler m_windowHandler;
 		private DataPoint m_lastDataPoint;
+		private DataPoint m_firstDataPoint;
 		private boolean m_lockSelection;
 
 		public PlotWithOverviewSeriesHandler(Series series, SeriesData data) {
@@ -118,8 +119,10 @@ public class PlotWithOverviewModel extends PlotModel {
 				setSelection(Math.max(x1, m_selection[0]), Math.max(x2,
 						m_selection[1]));
 			}
+			if (m_firstDataPoint == null) {
+				m_firstDataPoint = datapoint;
+			}
 			m_lastDataPoint = datapoint;
-
 		}
 
 		@Override
@@ -154,8 +157,8 @@ public class PlotWithOverviewModel extends PlotModel {
 		}
 
 		void populateWindowSeries(final Command toExcuteAfterSelection) {
-			final double x1 = m_selection[0];
-			final double x2 = m_selection[1];
+			final double x1 = getWindowMinX();
+			final double x2 = getWindowMaxX();
 			m_windowHandler.clear();
 			if (x1 < x2) {
 				m_provider.getData(x1, x2, new AsyncCallback<DataPoint[]>() {
@@ -175,6 +178,24 @@ public class PlotWithOverviewModel extends PlotModel {
 					}
 				});
 			}
+		}
+
+		private double getWindowMinX() {
+			double x = m_selection[0];
+			if (x == m_overviewHandler.getData().getX(0)) {
+				return m_firstDataPoint.getX();
+			}
+			return x;
+		}
+
+		private double getWindowMaxX() {
+			double x = m_selection[1];
+			SeriesData data = m_overviewHandler.getData();
+			int size = data.size();
+			if (size > 0 && x == data.getX(size - 1)) {
+				return m_lastDataPoint.getX();
+			}
+			return x;
 		}
 	}
 
@@ -223,8 +244,6 @@ public class PlotWithOverviewModel extends PlotModel {
 			} catch (Throwable e) {
 				callback.onFailure(e);
 			}
-
 		}
 	}
-
 }
