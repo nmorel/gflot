@@ -48,7 +48,17 @@ public class AxisOptions extends JSONObjectWrapper {
 		return this;
 	}
 
-	public AxisOptions setTicks(int ticks) {
+	public AxisOptions setLabelWidth(double labelWidth) {
+		put("labelWidth", new Double(labelWidth));
+		return this;
+	}
+
+	public AxisOptions setLabelHeight(double labelHeight) {
+		put("labelHeight", new Double(labelHeight));
+		return this;
+	}
+
+	public AxisOptions setTicks(double ticks) {
 		put("ticks", new Double(ticks));
 		return this;
 	}
@@ -58,19 +68,34 @@ public class AxisOptions extends JSONObjectWrapper {
 		return this;
 	}
 
+	public AxisOptions setTickSize(double tickSize) {
+		put("tickSize", new Double(tickSize));
+		return this;
+	}
+
+	public AxisOptions setMinTickSize(double minTickSize) {
+		put("minTickSize", new Double(minTickSize));
+		return this;
+	}
+
 	public AxisOptions setTickFormatter(TickFormatter tickFormatter) {
 		setTickFormatterNative(getWrappedObj().getJavaScriptObject(),
 				tickFormatter);
 		return this;
 	}
 
+	public AxisOptions setTickDecimals(double tickDecimals) {
+		put("tickDecimals", new Double(tickDecimals));
+		return this;
+	}
+
 	static native void setTickFormatterNative(JavaScriptObject axisOptions,
 			TickFormatter tickFormatter)/*-{
-					axisOptions.tickFormatter = function(val, axis)
-					{
-						var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
-						var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
-						return tickFormatter.@ca.nanometrics.gflot.client.options.TickFormatter::formatTickValue(DLca/nanometrics/gflot/client/Axis;)(val, javaAxisObject);
-					};
-		}-*/;
+	    axisOptions.tickFormatter = function(val, axis)
+	    {
+	      var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
+	      var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
+	      return tickFormatter.@ca.nanometrics.gflot.client.options.TickFormatter::formatTickValue(DLca/nanometrics/gflot/client/Axis;)(val, javaAxisObject);
+	    };
+	  }-*/;
 }
