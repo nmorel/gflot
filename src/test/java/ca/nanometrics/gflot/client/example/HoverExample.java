@@ -28,6 +28,7 @@ public class HoverExample implements GFlotExample {
 			"nov", "dec" };
 
 	private final Label selectedPointLabel = new Label(INSTRUCTIONS);
+	private final Label positionLabel = new Label();
 
 	public String getName() {
 		return "PlotHoverListener";
@@ -75,6 +76,9 @@ public class HoverExample implements GFlotExample {
 		// add hover listener
 		plot.addHoverListener(new PlotHoverListener() {
 			public void onPlotHover(Plot plot, PlotPosition position, PlotItem item) {
+				if(position != null){
+					positionLabel.setText("position: ("+position.getX()+","+position.getY()+")");
+				}
 				if (item != null) {
 					selectedPointLabel
 							.setText("x: " + item.getDataPoint().getX() + ", y: " + item.getDataPoint().getY());
@@ -88,6 +92,7 @@ public class HoverExample implements GFlotExample {
 		FlowPanel panel = new FlowPanel();
 		panel.add(plot);
 		panel.add(selectedPointLabel);
+		panel.add(positionLabel);
 
 		return panel;
 
