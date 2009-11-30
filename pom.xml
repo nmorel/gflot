@@ -3,7 +3,7 @@
 	<groupId>ca.nanometrics</groupId>
 	<artifactId>gflot</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>0.9.2-SNAPSHOT</version>
 	<name>GFlot: a GWT wrapper for Flot charts</name>
 	<description>A GWT module that provides widgets for creation and
 		manipulation of charts based on the Flot JavaScript library. 
