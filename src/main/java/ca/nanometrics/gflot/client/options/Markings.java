@@ -25,7 +25,12 @@ import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
 
 /**
  * @author Alexander De Leon
+ * @author Mohamed M. El-Kalioby
  */
 public class Markings extends JSONArrayWrapper {
-	// TODO: implement me!
+
+	public void addMarking(Marking M) {
+		push(M);
+	}
+
 }

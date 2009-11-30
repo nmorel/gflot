@@ -4,6 +4,7 @@ import ca.nanometrics.gflot.client.example.BarChartExample;
 import ca.nanometrics.gflot.client.example.DecimationExample;
 import ca.nanometrics.gflot.client.example.GFlotExample;
 import ca.nanometrics.gflot.client.example.HoverExample;
+import ca.nanometrics.gflot.client.example.MarkingsExample;
 import ca.nanometrics.gflot.client.example.PlotWithInteractiveLegendExample;
 import ca.nanometrics.gflot.client.example.PlotWithOverviewExample;
 import ca.nanometrics.gflot.client.example.SimplePlotExample;
@@ -24,6 +25,7 @@ public class Demo {
 		addExample(new HoverExample());
 		addExample(new SlidingWindowExample());
 		addExample(new DecimationExample());
+		addExample(new MarkingsExample());
 	}
 
 	private void addExample(GFlotExample example) {
