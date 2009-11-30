@@ -85,4 +85,18 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<distributionManagement>
+    <!-- Site omitted - each project must provide their own -->
+    <repository>
+      <id>codemonkey</id>
+      <name>Dumontierlab Distribution Repository</name>
+      <url>scp://codemonkey.dumontierlab.com/home/alex/sonatype-work/nexus/storage/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>codemonkey</id>
+      <name>Dumontierlab Development Snapshot Repository</name>
+      <url>scp://codemonkey.dumontierlab.com/home/alex/sonatype-work/nexus/storage/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>
