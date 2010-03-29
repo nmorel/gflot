@@ -1,4 +1,5 @@
-<module>
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='gflot'>
 	<inherits name="com.google.gwt.user.User"/>
 	<inherits name="com.google.gwt.json.JSON"/>
 	
@@ -7,6 +8,7 @@
 	<!--  Flot scripts -->
 	<script src="jquery.js"></script>
 	<script src="jQuery-noConfict.js"></script>
-	<script src="flot-0.5/jquery.flot.pack.js"></script>
-	<script src="flot-0.5/excanvas.pack.js"></script>
+	<script src="flot-0.6/jquery.flot.js"></script>
+	<script src="flot-0.6/jquery.flot.selection.js"></script>
+	<script src="flot-0.6/excanvas.js"></script>
 </module>
