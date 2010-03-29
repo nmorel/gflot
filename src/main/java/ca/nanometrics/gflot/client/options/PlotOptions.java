@@ -29,6 +29,8 @@ import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
  */
 public class PlotOptions extends JSONObjectWrapper {
 
+	private DefaultSeriesOptions defaultSeriesOptions;
+
 	public PlotOptions setLegendOptions(LegendOptions legendOptions) {
 		put("legend", legendOptions);
 		return this;
@@ -44,20 +46,18 @@ public class PlotOptions extends JSONObjectWrapper {
 		return this;
 	}
 
-	public PlotOptions setDefaultLineSeriesOptions(
-			SeriesOptions lineSeriesOptions) {
-		put("lines", lineSeriesOptions);
+	public PlotOptions setDefaultLineSeriesOptions(SeriesOptions lineSeriesOptions) {
+		getDefaultSeriesOptions().setDefaultLineSeriesOptions(lineSeriesOptions);
 		return this;
 	}
 
-	public PlotOptions setDefaultBarsSeriesOptions(
-			SeriesOptions barSeriesOptions) {
-		put("bars", barSeriesOptions);
+	public PlotOptions setDefaultBarsSeriesOptions(SeriesOptions barSeriesOptions) {
+		getDefaultSeriesOptions().setDefaultBarsSeriesOptions(barSeriesOptions);
 		return this;
 	}
 
 	public PlotOptions setDefaultPointsOptions(SeriesOptions pointsSeriesOptions) {
-		put("points", pointsSeriesOptions);
+		getDefaultSeriesOptions().setDefaultPointsOptions(pointsSeriesOptions);
 		return this;
 	}
 
@@ -82,4 +82,25 @@ public class PlotOptions extends JSONObjectWrapper {
 		return this;
 	}
 
+	private DefaultSeriesOptions getDefaultSeriesOptions() {
+		if (defaultSeriesOptions == null) {
+			defaultSeriesOptions = new DefaultSeriesOptions();
+			put("series", defaultSeriesOptions);
+		}
+		return defaultSeriesOptions;
+	}
+
+	private static class DefaultSeriesOptions extends JSONObjectWrapper {
+		public void setDefaultLineSeriesOptions(SeriesOptions lineSeriesOptions) {
+			put("lines", lineSeriesOptions);
+		}
+
+		public void setDefaultBarsSeriesOptions(SeriesOptions barSeriesOptions) {
+			put("bars", barSeriesOptions);
+		}
+
+		public void setDefaultPointsOptions(SeriesOptions pointsSeriesOptions) {
+			put("points", pointsSeriesOptions);
+		}
+	}
 }
