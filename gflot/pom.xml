@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ca.nanometrics</groupId>
+  <artifactId>gflot</artifactId>
+  <packaging>jar</packaging>
+  <version>2.0</version>
+  <name>GFlot: a GWT wrapper for Flot charts</name>
+  <description>A GWT module that provides widgets for creation and manipulation of charts based on the Flot JavaScript library.</description>
+  <url>http://gflot.googlecode.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
+    <gwt.version>2.4.0</gwt.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-user</artifactId>
+      <version>${gwt.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/main/java</directory>
+      </resource>
+      <resource>
+        <directory>${basedir}/src/main/resources</directory>
+      </resource>
+    </resources>
+
+    <testResources>
+      <testResource>
+        <directory>${basedir}/src/test/java</directory>
+      </testResource>
+      <testResource>
+        <directory>${basedir}/src/test/resources</directory>
+      </testResource>
+    </testResources>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.7</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.google.code.maven-svn-wagon</groupId>
+            <artifactId>maven-svn-wagon</artifactId>
+            <version>1.4</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+
+  <distributionManagement>
+    <repository>
+      <id>gflot-repo-release</id>
+      <url>svn:https://gflot2.googlecode.com/svn/repo/releases</url>
+    </repository>
+  </distributionManagement>
+</project>
