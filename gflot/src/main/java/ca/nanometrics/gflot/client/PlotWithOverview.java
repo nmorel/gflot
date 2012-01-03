@@ -134,6 +134,16 @@ public class PlotWithOverview
         return m_model;
     }
 
+    public PlotOptions getWindowPlotOptions()
+    {
+    	return m_windowPlot.getPlotOptions();
+    }
+
+    public PlotOptions getOverviewPlotOptions()
+    {
+    	return m_overviewPlot.getPlotOptions();
+    }
+
     public int getWidth()
     {
         return m_windowPlot.getWidth();
