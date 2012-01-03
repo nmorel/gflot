@@ -5,9 +5,55 @@
   <artifactId>gflot</artifactId>
   <packaging>jar</packaging>
   <version>2.3.0-SNAPSHOT</version>
+
   <name>GFlot: a GWT wrapper for Flot charts</name>
   <description>A GWT module that provides widgets for creation and manipulation of charts based on the Flot JavaScript library.</description>
   <url>http://gflot.googlecode.com</url>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:svn:http://gflot.googlecode.com/svn/trunk/</connection>
+    <developerConnection>scm:svn:https://gflot.googlecode.com/svn/trunk/</developerConnection>
+    <url>http://gflot.googlecode.com/svn/trunk/</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>alexjdl</id>
+      <name>Alexander De Leon</name>
+      <email>alexjdl@gmail.com</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>nmr.morel</id>
+      <name>Nicolas Morel</name>
+      <email>nmr.morel@gmail.com</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
+
+  <distributionManagement>
+    <repository>
+      <id>gflot-repo-release</id>
+      <url>svn:https://gflot.googlecode.com/svn/repo/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>gflot-repo-snapshot</id>
+      <url>svn:https://gflot.googlecode.com/svn/repo/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -90,15 +136,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <distributionManagement>
-    <repository>
-      <id>gflot-repo-release</id>
-      <url>svn:https://gflot.googlecode.com/svn/repo/releases</url>
-    </repository>
-    <snapshotRepository>
-      <id>gflot-repo-snapshot</id>
-      <url>svn:https://gflot.googlecode.com/svn/repo/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
 </project>
