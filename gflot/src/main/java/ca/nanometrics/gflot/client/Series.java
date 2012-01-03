@@ -21,64 +21,140 @@
  */
 package ca.nanometrics.gflot.client;
 
-import ca.nanometrics.gflot.client.options.SeriesOptions;
+import ca.nanometrics.gflot.client.options.AbstractSeriesOptions;
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 
 import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 
 /**
  * @author AlexanderDeleon
  */
-public class Series extends JSONObjectWrapper {
+public class Series
+    extends JSONObjectWrapper
+{
 
-	public Series() {
-		super();
-	}
+    public Series()
+    {
+        super();
+    }
 
-	protected Series(JSONObject obj) {
-		super(obj);
-	}
+    protected Series( JSONObject obj )
+    {
+        super( obj );
+    }
 
-	public void setData(SeriesData data) {
-		put("data", data);
-	}
+    protected void setData( SeriesData data )
+    {
+        put( "data", data );
+    }
 
-	public SeriesData getData() {
-		JSONArray data = getArray("data");
-		if(null == data){
-			return null;
-		}else{
-			return new SeriesData(data);
-		}
-	}
+    protected SeriesData getData()
+    {
+        JSONArray data = getArray( "data" );
+        if ( null == data )
+        {
+            return null;
+        }
+        else
+        {
+            return new SeriesData( data );
+        }
+    }
 
-	public void setColor(String cssColor) {
-		put("color", cssColor);
-	}
+    /**
+     * Set the color. If you don't specify color, the series will get a color from the auto-generated colors.
+     */
+    public void setColor( String color )
+    {
+        put( "color", color );
+    }
 
-	public String getColor() {
-		return getString("color");
-	}
+    /**
+     * Set which of auto-generated colors to select, e.g. 0 will get color no. 0, etc. It is mostly useful if you let
+     * the user add and remove series, in which case you can hard-code the color index to prevent the colors from
+     * jumping around between the series.
+     */
+    public void setColor( int color )
+    {
+        put( "color", color );
+    }
 
-	public void setLabel(String label) {
-		put("label", label);
-	}
+    /**
+     * @return the color
+     */
+    public String getColor()
+    {
+        JSONValue value = get( "color" );
+        if ( value == null )
+        {
+            return null;
+        }
+        JSONString str = value.isString();
+        if ( str != null )
+        {
+            return str.stringValue();
+        }
+        JSONNumber number = value.isNumber();
+        if ( number != null )
+        {
+            return new Double( number.doubleValue() ).toString();
+        }
+        return null;
+    }
 
-	public String getLabel() {
-		return getString("label");
-	}
+    /**
+     * Set the label. The label is used for the legend, if you don't specify one, the series will not show up in the
+     * legend.
+     */
+    public void setLabel( String label )
+    {
+        put( "label", label );
+    }
 
-	public void setShadowSize(int sizeInPx) {
-		put("shadowSize", new Integer(sizeInPx));
-	}
+    /**
+     * @return the label
+     */
+    public String getLabel()
+    {
+        return getString( "label" );
+    }
 
-	public Integer getShadowSize() {
-		return getInteger("shadowSize");
-	}
+    /**
+     * Set the size of shadows in pixels. Set it to 0 to remove shadows.
+     */
+    public void setShadowSize( int shadowSize )
+    {
+        put( "shadowSize", shadowSize );
+    }
 
-	public void setSeriesOptions(SeriesType type, SeriesOptions options) {
-		put(type.toString(), options);
-	}
+    public Integer getShadowSize()
+    {
+        return getInteger( "shadowSize" );
+    }
+
+    public void setSeriesOptions( SeriesType type, AbstractSeriesOptions<?> options )
+    {
+        put( type.toString(), options );
+    }
+
+    /**
+     * Set if this series will listen for click events.
+     */
+    public void setClickable( boolean clickable )
+    {
+        put( "clickable", clickable );
+    }
+
+    /**
+     * Set if this series will listen for mouse move events.
+     */
+    public void setHoverable( boolean hoverable )
+    {
+        put( "hoverable", hoverable );
+    }
 
 }

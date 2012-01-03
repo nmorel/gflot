@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -26,36 +26,44 @@ import ca.nanometrics.gflot.client.SeriesData;
 /**
  * @author AlexanderDeleon
  */
-public class Algorithm {
+public class Algorithm
+{
 
-	public static int xBinarySearch(SeriesData s, double xValue) {
-		return xBinarySearch(s, 0, s.size(), xValue);
-	}
+    public static int xBinarySearch( SeriesData s, double xValue )
+    {
+        return xBinarySearch( s, 0, s.size(), xValue );
+    }
 
-	public static int xBinarySearch(SeriesData s, int fromIndex, int toIndex,
-			double xValue) {
-		if (fromIndex > toIndex) {
-			return -1;
-		}
-		int lMid = fromIndex + (int) Math.floor((toIndex - fromIndex) / 2);
-		int rMid = lMid + 1;
+    public static int xBinarySearch( SeriesData s, int fromIndex, int toIndex, double xValue )
+    {
+        if ( fromIndex > toIndex )
+        {
+            return -1;
+        }
+        int lMid = fromIndex + (int) Math.floor( ( toIndex - fromIndex ) / 2 );
+        int rMid = lMid + 1;
 
-		if (xValue < s.getX(lMid)) {
-			return xBinarySearch(s, fromIndex, lMid - 1, xValue);
-		}
-		if (xValue == s.getX(lMid)) {
-			return lMid;
-		}
-		if (rMid < s.size()) {
-			if (xValue > s.getX(rMid)) {
-				return xBinarySearch(s, rMid, toIndex, xValue);
-			}
-			double rVal = s.getX(rMid);
-			double lVal = s.getX(lMid);
-			return Math.abs(rVal - xValue) > Math.abs(lVal - xValue) ? lMid
-					: rMid;
-		} else {
-			return -1;
-		}
-	}
+        if ( xValue < s.getX( lMid ) )
+        {
+            return xBinarySearch( s, fromIndex, lMid - 1, xValue );
+        }
+        if ( xValue == s.getX( lMid ) )
+        {
+            return lMid;
+        }
+        if ( rMid < s.size() )
+        {
+            if ( xValue > s.getX( rMid ) )
+            {
+                return xBinarySearch( s, rMid, toIndex, xValue );
+            }
+            double rVal = s.getX( rMid );
+            double lVal = s.getX( lMid );
+            return Math.abs( rVal - xValue ) > Math.abs( lVal - xValue ) ? lMid : rMid;
+        }
+        else
+        {
+            return -1;
+        }
+    }
 }

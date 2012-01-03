@@ -21,7 +21,7 @@
  */
 package ca.nanometrics.gflot.client;
 
-import ca.nanometrics.gflot.client.options.SeriesOptions;
+import ca.nanometrics.gflot.client.options.AbstractSeriesOptions;
 import ca.nanometrics.gflot.client.util.Algorithm;
 
 import com.google.gwt.user.client.Command;
@@ -133,7 +133,7 @@ public class PlotWithOverviewModel extends PlotModel {
 		}
 
 		@Override
-		public void setOptions(SeriesType type, SeriesOptions options) {
+		public void setOptions(SeriesType type, AbstractSeriesOptions<?> options) {
 			super.setOptions(type, options);
 			m_windowHandler.setOptions(type, options);
 		}

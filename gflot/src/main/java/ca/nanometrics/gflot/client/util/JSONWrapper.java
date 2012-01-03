@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,11 @@ package ca.nanometrics.gflot.client.util;
 import com.google.gwt.json.client.JSONValue;
 
 /**
- * A JSONWrapper wraps a JSONValue and provides convenient access using Java
- * types.
- * 
+ * A JSONWrapper wraps a JSONValue and provides convenient access using Java types.
+ *
  * @author AlexanderDeleon
  */
-public abstract class JSONWrapper {
-
-	protected abstract JSONValue getWrappedObj();
-
+public abstract class JSONWrapper
+{
+    protected abstract JSONValue getWrappedObj();
 }

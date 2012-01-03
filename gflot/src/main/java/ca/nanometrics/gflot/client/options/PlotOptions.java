@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -27,80 +27,127 @@ import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 /**
  * @author AlexanderDeleon
  */
-public class PlotOptions extends JSONObjectWrapper {
+public class PlotOptions
+    extends JSONObjectWrapper
+{
 
-	private DefaultSeriesOptions defaultSeriesOptions;
+    private DefaultSeriesOptions defaultSeriesOptions;
 
-	public PlotOptions setLegendOptions(LegendOptions legendOptions) {
-		put("legend", legendOptions);
-		return this;
-	}
+    /**
+     * Set the legend options
+     */
+    public PlotOptions setLegendOptions( LegendOptions legendOptions )
+    {
+        put( "legend", legendOptions );
+        return this;
+    }
 
-	public PlotOptions setXAxisOptions(AxisOptions xAxisOptions) {
-		put("xaxis", xAxisOptions);
-		return this;
-	}
+    public PlotOptions setXAxisOptions( AbstractAxisOptions<?> xAxisOptions )
+    {
+        put( "xaxis", xAxisOptions );
+        return this;
+    }
 
-	public PlotOptions setYAxisOptions(AxisOptions yAxisOptions) {
-		put("yaxis", yAxisOptions);
-		return this;
-	}
+    public PlotOptions setYAxisOptions( AbstractAxisOptions<?> yAxisOptions )
+    {
+        put( "yaxis", yAxisOptions );
+        return this;
+    }
 
-	public PlotOptions setDefaultLineSeriesOptions(SeriesOptions lineSeriesOptions) {
-		getDefaultSeriesOptions().setDefaultLineSeriesOptions(lineSeriesOptions);
-		return this;
-	}
+    /**
+     * Set default Line series options that will be used unless options are set directly to the series
+     */
+    public PlotOptions setDefaultLineSeriesOptions( AbstractSeriesOptions<?> lineSeriesOptions )
+    {
+        getDefaultSeriesOptions().setDefaultLineSeriesOptions( lineSeriesOptions );
+        return this;
+    }
+    /**
+     * Set default Bar series options that will be used unless options are set directly to the series
+     */
+    public PlotOptions setDefaultBarsSeriesOptions( AbstractSeriesOptions<?> barSeriesOptions )
+    {
+        getDefaultSeriesOptions().setDefaultBarsSeriesOptions( barSeriesOptions );
+        return this;
+    }
+    /**
+     * Set default Points series options that will be used unless options are set directly to the series
+     */
+    public PlotOptions setDefaultPointsOptions( AbstractSeriesOptions<?> pointsSeriesOptions )
+    {
+        getDefaultSeriesOptions().setDefaultPointsOptions( pointsSeriesOptions );
+        return this;
+    }
 
-	public PlotOptions setDefaultBarsSeriesOptions(SeriesOptions barSeriesOptions) {
-		getDefaultSeriesOptions().setDefaultBarsSeriesOptions(barSeriesOptions);
-		return this;
-	}
+    /**
+     * Set a default color theme to get colors for the data series from. You can specify as many colors as you like,
+     * like this:
+     * <p>
+     * colors: ["#d18b2c", "#dba255", "#919733"]
+     * </p>
+     * If there are more data series than colors, Flot will try to generate extra colors by lightening and darkening
+     * colors in the theme.
+     */
+    public PlotOptions setDefaultColors( String[] colors )
+    {
+        assert null != colors && colors.length > 0 : "colors can't be null or empty";
 
-	public PlotOptions setDefaultPointsOptions(SeriesOptions pointsSeriesOptions) {
-		getDefaultSeriesOptions().setDefaultPointsOptions(pointsSeriesOptions);
-		return this;
-	}
+        put( "colors", JSONHelper.wrapArray( colors ) );
+        return this;
+    }
 
-	public PlotOptions setDefaultColors(String[] cssColors) {
+    /**
+     * Set the default size of shadows in pixels. Set it to 0 to remove shadows.
+     */
+    public PlotOptions setDefaultShadowSize( double shadow )
+    {
+        getDefaultSeriesOptions().setDefaultShadowSize( shadow );
+        return this;
+    }
 
-		put("colors", JSONHelper.wrapArray(cssColors));
-		return this;
-	}
+    public PlotOptions setSelectionOptions( SelectionOptions selectionOptions )
+    {
+        put( "selection", selectionOptions );
+        return this;
+    }
 
-	public PlotOptions setDefaultShadowSize(double shadow) {
-		put("shadowSize", new Double(shadow));
-		return this;
-	}
+    public PlotOptions setGridOptions( GridOptions gridOptions )
+    {
+        put( "grid", gridOptions );
+        return this;
+    }
 
-	public PlotOptions setSelectionOptions(SelectionOptions selectionOptions) {
-		put("selection", selectionOptions);
-		return this;
-	}
+    private DefaultSeriesOptions getDefaultSeriesOptions()
+    {
+        if ( defaultSeriesOptions == null )
+        {
+            defaultSeriesOptions = new DefaultSeriesOptions();
+            put( "series", defaultSeriesOptions );
+        }
+        return defaultSeriesOptions;
+    }
 
-	public PlotOptions setGridOptions(GridOptions gridOptions) {
-		put("grid", gridOptions);
-		return this;
-	}
+    private static class DefaultSeriesOptions
+        extends JSONObjectWrapper
+    {
+        public void setDefaultLineSeriesOptions( AbstractSeriesOptions<?> lineSeriesOptions )
+        {
+            put( "lines", lineSeriesOptions );
+        }
 
-	private DefaultSeriesOptions getDefaultSeriesOptions() {
-		if (defaultSeriesOptions == null) {
-			defaultSeriesOptions = new DefaultSeriesOptions();
-			put("series", defaultSeriesOptions);
-		}
-		return defaultSeriesOptions;
-	}
+        public void setDefaultBarsSeriesOptions( AbstractSeriesOptions<?> barSeriesOptions )
+        {
+            put( "bars", barSeriesOptions );
+        }
 
-	private static class DefaultSeriesOptions extends JSONObjectWrapper {
-		public void setDefaultLineSeriesOptions(SeriesOptions lineSeriesOptions) {
-			put("lines", lineSeriesOptions);
-		}
+        public void setDefaultPointsOptions( AbstractSeriesOptions<?> pointsSeriesOptions )
+        {
+            put( "points", pointsSeriesOptions );
+        }
 
-		public void setDefaultBarsSeriesOptions(SeriesOptions barSeriesOptions) {
-			put("bars", barSeriesOptions);
-		}
-
-		public void setDefaultPointsOptions(SeriesOptions pointsSeriesOptions) {
-			put("points", pointsSeriesOptions);
-		}
-	}
+        public void setDefaultShadowSize( double shadow )
+        {
+            put( "shadowSize", new Double( shadow ) );
+        }
+    }
 }

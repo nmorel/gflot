@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -34,82 +34,90 @@ import com.google.gwt.user.client.Element;
 /**
  * @author AlexanderDeleon
  */
-public class Plot extends JavaScriptObject {
+public class Plot
+    extends JavaScriptObject
+{
 
-	protected Plot() {
-		// empty
-	}
+    protected Plot()
+    {
+        // empty
+    }
 
-	public static Plot create(Element container, Series[] series) {
-		Plot plot = PlotImpl.create(container, JSONHelper.getJSONArray(
-				JSONHelper.wrapArray(series)).getJavaScriptObject());
-		return plot;
-	}
+    public static Plot create( Element container, Series[] series )
+    {
+        Plot plot = PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject() );
+        return plot;
+    }
 
-	public static Plot create(Element container, Series[] series,
-			PlotOptions options) {
-		return PlotImpl.create(container, JSONHelper.getJSONArray(
-				JSONHelper.wrapArray(series)).getJavaScriptObject(), JSONHelper
-				.getJSONObject(options).getJavaScriptObject());
+    public static Plot create( Element container, Series[] series, PlotOptions options )
+    {
+        return PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject(),
+            JSONHelper.getJSONObject( options ).getJavaScriptObject() );
 
-	}
+    }
 
-	public final void setData(Series[] series) {
-		PlotImpl.setData(this, JSONHelper.getJSONArray(
-				JSONHelper.wrapArray(series)).getJavaScriptObject());
-	}
+    public final void setData( Series[] series )
+    {
+        PlotImpl.setData( this, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject() );
+    }
 
-	public final void setData(Series series) {
-		setData(new Series[] { series });
-	}
+    public final void setData( Series series )
+    {
+        setData( new Series[] { series } );
+    }
 
-	public final void draw() {
-		PlotImpl.draw(this);
-	}
+    public final void draw()
+    {
+        PlotImpl.draw( this );
+    }
 
-	public final void setupGrid() {
-		PlotImpl.setupGrid(this);
-	}
+    public final void setupGrid()
+    {
+        PlotImpl.setupGrid( this );
+    }
 
-	public final void setLinearSelection(double x1, double x2) {
-		PlotImpl.setLinearSelection(this, x1, x2);
-	}
+    public final void setLinearSelection( double x1, double x2 )
+    {
+        PlotImpl.setLinearSelection( this, x1, x2 );
+    }
 
-	public final void setRectangularSelection(double x1, double y1, double x2,
-			double y2) {
-		PlotImpl.setRectangularSelection(this, x1, y1, x2, y2);
-	}
+    public final void setRectangularSelection( double x1, double y1, double x2, double y2 )
+    {
+        PlotImpl.setRectangularSelection( this, x1, y1, x2, y2 );
+    }
 
-	public final void addSelectionListener(Element container,
-			SelectionListener listener) {
-		PlotImpl.addSelectionListener(container, listener);
-	}
+    public final void addSelectionListener( Element container, SelectionListener listener )
+    {
+        PlotImpl.addSelectionListener( container, listener );
+    }
 
-	public final void addPlotHoverListener(Element container,
-			PlotHoverListener listener, boolean onlyOnDatapoint) {
-		PlotImpl.addPlotHoverListener(container, listener, onlyOnDatapoint,
-				this);
-	}
+    public final void addPlotHoverListener( Element container, PlotHoverListener listener, boolean onlyOnDatapoint )
+    {
+        PlotImpl.addPlotHoverListener( container, listener, onlyOnDatapoint, this );
+    }
 
-	public final void addPlotClickListener(Element container,
-			PlotClickListener listener, boolean onlyOnDatapoint) {
-		PlotImpl.addPlotClickListener(container, listener, onlyOnDatapoint,
-				this);
-	}
+    public final void addPlotClickListener( Element container, PlotClickListener listener, boolean onlyOnDatapoint )
+    {
+        PlotImpl.addPlotClickListener( container, listener, onlyOnDatapoint, this );
+    }
 
-	public final int getPlotOffsetLeft() {
-		return PlotImpl.getPlotOffsetLeft(this);
-	}
+    public final int getPlotOffsetLeft()
+    {
+        return PlotImpl.getPlotOffsetLeft( this );
+    }
 
-	public final int getPlotOffsetRight() {
-		return PlotImpl.getPlotOffsetRight(this);
-	}
+    public final int getPlotOffsetRight()
+    {
+        return PlotImpl.getPlotOffsetRight( this );
+    }
 
-	public final int getPlotOffsetTop() {
-		return PlotImpl.getPlotOffsetTop(this);
-	}
+    public final int getPlotOffsetTop()
+    {
+        return PlotImpl.getPlotOffsetTop( this );
+    }
 
-	public final int getPlotOffsetBottom() {
-		return PlotImpl.getPlotOffsetBottom(this);
-	}
+    public final int getPlotOffsetBottom()
+    {
+        return PlotImpl.getPlotOffsetBottom( this );
+    }
 }

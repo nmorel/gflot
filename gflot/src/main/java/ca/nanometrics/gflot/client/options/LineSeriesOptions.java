@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,18 @@ package ca.nanometrics.gflot.client.options;
 /**
  * @author AlexanderDeleon
  */
-public class LineSeriesOptions extends SeriesOptions {
-	// empty
+public class LineSeriesOptions
+    extends AbstractSeriesOptions<LineSeriesOptions>
+{
+
+    /**
+     * Set whether two adjacent data points are connected with a straight (possibly diagonal) line or with first a
+     * horizontal and then a vertical line. Note that this transforms the data by adding extra points.
+     */
+    public LineSeriesOptions setSteps( boolean steps )
+    {
+        put( "steps", steps );
+        return this;
+    }
+
 }

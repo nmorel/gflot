@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,8 @@ import ca.nanometrics.gflot.client.event.PlotHoverListener;
 import ca.nanometrics.gflot.client.event.SelectionListener;
 import ca.nanometrics.gflot.client.jsni.Plot;
 import ca.nanometrics.gflot.client.options.PlotOptions;
+import ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader;
+import ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.FlotJavaScriptCallback;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
@@ -38,189 +40,255 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @author AlexanderDeleon
  */
-public class SimplePlot extends Widget implements PlotWidget {
+public class SimplePlot
+    extends Widget
+    implements PlotWidget
+{
 
-	private static final int DEFAULT_WIDTH = 600;
-	private static final int DEFAULT_HEIGHT = 300;
-	private static int s_counter = 1;
+    private static final int DEFAULT_WIDTH = 600;
 
-	private final PlotModel model;
-	private int width;
-	private int height;
-	private Plot plot;
-	private boolean loaded;
-	private PlotOptions options;
-	private final List<Command> onLoadOperations;
+    private static final int DEFAULT_HEIGHT = 300;
 
-	public SimplePlot(PlotModel model) {
-		this.model = model;
-		onLoadOperations = new ArrayList<Command>();
-		setElement(createPlotContainer());
-		setWidth(DEFAULT_WIDTH);
-		setHeight(DEFAULT_HEIGHT);
-	}
+    private static int s_counter = 1;
 
-	public SimplePlot(PlotModel model, PlotOptions options) {
-		this(model);
-		this.options = options;
-	}
+    private final PlotModel model;
 
-	public SimplePlot() {
+    private int width;
 
-		this(new PlotModel());
-	}
+    private int height;
 
-	public SimplePlot(PlotOptions options) {
-		this(new PlotModel(), options);
-	}
+    private Plot plot;
 
-	public int getWidth() {
-		return width;
-	}
+    private boolean loaded;
 
-	public void setWidth(int width) {
-		this.width = width;
-		DOM.setStyleAttribute(getElement(), "width", width + "px");
-	}
+    private PlotOptions options;
 
-	public int getHeight() {
-		return height;
-	}
+    private final List<Command> onLoadOperations;
 
-	public void setHeight(int height) {
-		this.height = height;
-		DOM.setStyleAttribute(getElement(), "height", height + "px");
-	}
+    public SimplePlot( PlotModel model )
+    {
+        this.model = model;
+        onLoadOperations = new ArrayList<Command>();
+        setElement( createPlotContainer() );
+        setWidth( DEFAULT_WIDTH );
+        setHeight( DEFAULT_HEIGHT );
+    }
 
-	public void setupGrid() {
-		assertLoaded();
-		plot.setupGrid();
-	}
+    public SimplePlot( PlotModel model, PlotOptions options )
+    {
+        this( model );
+        this.options = options;
+    }
 
-	public void draw() {
-		assertLoaded();
-		plot.draw();
-	}
+    public SimplePlot()
+    {
 
-	public void setLinearSelection(double x1, double x2) {
-		assertLoaded();
-		plot.setLinearSelection(x1, x2);
-	}
+        this( new PlotModel() );
+    }
 
-	public void setRectangularSelection(double x1, double y1, double x2,
-			double y2) {
-		assertLoaded();
-		plot.setRectangularSelection(x1, y1, x2, y2);
-	}
+    public SimplePlot( PlotOptions options )
+    {
+        this( new PlotModel(), options );
+    }
 
-	public void addSelectionListener(final SelectionListener listener) {
-		if (loaded) {
-			plot.addSelectionListener(getElement(), listener);
-		} else {
-			onLoadOperations.add(new Command() {
-				public void execute() {
-					plot.addSelectionListener(getElement(), listener);
-				}
-			});
-		}
-	}
+    public int getWidth()
+    {
+        return width;
+    }
 
-	public void addHoverListener(final PlotHoverListener listener,
-			final boolean onlyOnDatapoint) {
-		if (loaded) {
-			plot.addPlotHoverListener(getElement(), listener, onlyOnDatapoint);
-		} else {
-			onLoadOperations.add(new Command() {
-				public void execute() {
-					plot.addPlotHoverListener(getElement(), listener,
-							onlyOnDatapoint);
-				}
-			});
-		}
+    public void setWidth( int width )
+    {
+        this.width = width;
+        DOM.setStyleAttribute( getElement(), "width", width + "px" );
+    }
 
-	}
+    public int getHeight()
+    {
+        return height;
+    }
 
-	public void addClickListener(final PlotClickListener listener,
-			final boolean onlyOnDatapoint) {
-		if (loaded) {
-			plot.addPlotClickListener(getElement(), listener, onlyOnDatapoint);
-		} else {
-			onLoadOperations.add(new Command() {
-				public void execute() {
-					plot.addPlotClickListener(getElement(), listener,
-							onlyOnDatapoint);
-				}
-			});
-		}
+    public void setHeight( int height )
+    {
+        this.height = height;
+        DOM.setStyleAttribute( getElement(), "height", height + "px" );
+    }
 
-	}
+    public void setupGrid()
+    {
+        assertLoaded();
+        plot.setupGrid();
+    }
 
-	public PlotModel getModel() {
-		return model;
-	}
+    public void draw()
+    {
+        assertLoaded();
+        plot.draw();
+    }
 
-	public Widget getWidget() {
-		return this;
-	}
+    public void setLinearSelection( double x1, double x2 )
+    {
+        assertLoaded();
+        plot.setLinearSelection( x1, x2 );
+    }
 
-	public void redraw() {
-		assertLoaded();
-		plot.setData(model.getSeries());
-		plot.setupGrid();
-		plot.draw();
-	}
+    public void setRectangularSelection( double x1, double y1, double x2, double y2 )
+    {
+        assertLoaded();
+        plot.setRectangularSelection( x1, y1, x2, y2 );
+    }
 
-	public int getOffsetLeft() {
-		return plot.getPlotOffsetLeft();
-	}
+    public void addSelectionListener( final SelectionListener listener )
+    {
+        if ( loaded )
+        {
+            plot.addSelectionListener( getElement(), listener );
+        }
+        else
+        {
+            onLoadOperations.add( new Command()
+            {
+                public void execute()
+                {
+                    plot.addSelectionListener( getElement(), listener );
+                }
+            } );
+        }
+    }
 
-	public int getOffsetRight() {
-		return plot.getPlotOffsetRight();
-	}
+    public void addHoverListener( final PlotHoverListener listener, final boolean onlyOnDatapoint )
+    {
+        if ( loaded )
+        {
+            plot.addPlotHoverListener( getElement(), listener, onlyOnDatapoint );
+        }
+        else
+        {
+            onLoadOperations.add( new Command()
+            {
+                public void execute()
+                {
+                    plot.addPlotHoverListener( getElement(), listener, onlyOnDatapoint );
+                }
+            } );
+        }
 
-	public int getOffsetTop() {
-		return plot.getPlotOffsetTop();
-	}
+    }
 
-	public int getOffsetBottom() {
-		return plot.getPlotOffsetBottom();
-	}
+    public void addClickListener( final PlotClickListener listener, final boolean onlyOnDatapoint )
+    {
+        if ( loaded )
+        {
+            plot.addPlotClickListener( getElement(), listener, onlyOnDatapoint );
+        }
+        else
+        {
+            onLoadOperations.add( new Command()
+            {
+                public void execute()
+                {
+                    plot.addPlotClickListener( getElement(), listener, onlyOnDatapoint );
+                }
+            } );
+        }
 
-	/* ------------------ Widget API -- */
-	protected void onLoad() {
-		super.onLoad();
-		if (!loaded) {
-			if (options == null) {
-				plot = Plot.create(getElement(), model.getSeries());
-			} else {
-				plot = Plot.create(getElement(), model.getSeries(), options);
-			}
+    }
 
-			// Issue : 2
-			assert plot != null : "An javascript error occurrerd while creating plot.";
+    public PlotModel getModel()
+    {
+        return model;
+    }
 
-			loaded = true;
+    public Widget getWidget()
+    {
+        return this;
+    }
 
-			redraw();
-			for (Command cmd : onLoadOperations) {
-				cmd.execute();
-			}
-			onLoadOperations.clear();
-		}
-	}
+    public void redraw()
+    {
+        assertLoaded();
+        plot.setData( model.getSeries() );
+        plot.setupGrid();
+        plot.draw();
+    }
 
-	/* ------------------ Helper methods -- */
-	protected Element createPlotContainer() {
-		Element element = DOM.createElement("div");
-		DOM.setElementProperty(element, "id", "gflot_" + s_counter++);
-		return element;
-	}
+    public int getOffsetLeft()
+    {
+        return plot.getPlotOffsetLeft();
+    }
 
-	protected void assertLoaded() {
-		if (!loaded) {
-			throw new IllegalStateException(
-					"The widget has not been loaded yet. Please call this method after adding this widget to a panel");
-		}
-	}
+    public int getOffsetRight()
+    {
+        return plot.getPlotOffsetRight();
+    }
+
+    public int getOffsetTop()
+    {
+        return plot.getPlotOffsetTop();
+    }
+
+    public int getOffsetBottom()
+    {
+        return plot.getPlotOffsetBottom();
+    }
+
+    /* ------------------ Widget API -- */
+    protected void onLoad()
+    {
+        super.onLoad();
+        if ( !loaded )
+        {
+            FlotJavaScriptLoader.get().loadRequiredFlotLibrary( new FlotJavaScriptCallback()
+            {
+                @Override
+                public void onSuccess()
+                {
+                    if ( options == null )
+                    {
+                        plot = Plot.create( getElement(), model.getSeries() );
+                    }
+                    else
+                    {
+                        plot = Plot.create( getElement(), model.getSeries(), options );
+                    }
+
+                    // Issue : 2
+                    assert plot != null : "An javascript error occurrerd while creating plot.";
+
+                    loaded = true;
+
+                    // commenting this line since it seems it is useless
+                    // see http://code.google.com/p/gflot/issues/detail?id=27
+                    // redraw();
+                    for ( Command cmd : onLoadOperations )
+                    {
+                        cmd.execute();
+                    }
+                    onLoadOperations.clear();
+                }
+
+                @Override
+                public void onError( Throwable caught )
+                {
+                    throw new RuntimeException( "Error while loading flot library", caught );
+                }
+            } );
+        }
+    }
+
+    /* ------------------ Helper methods -- */
+    protected Element createPlotContainer()
+    {
+        Element element = DOM.createElement( "div" );
+        DOM.setElementProperty( element, "id", "gflot_" + s_counter++ );
+        return element;
+    }
+
+    protected void assertLoaded()
+    {
+        if ( !loaded )
+        {
+            throw new IllegalStateException( "The widget has not been loaded yet. Please call this method after adding this widget to a panel" );
+        }
+    }
 
 }

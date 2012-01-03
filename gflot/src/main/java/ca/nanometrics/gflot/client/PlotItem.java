@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import com.google.gwt.json.client.JSONObject;
 public class PlotItem extends JSONObjectWrapper {
 
 	private static final String DATAPOINT = "datapoint";
-	private static final String DATA_INDEX = "dataindex";
+	private static final String DATA_INDEX = "dataIndex";
 	private static final String SERIES = "series";
 	private static final String SERIES_INDEX = "seriesIndex";
 	private static final String PAGE_X = "pageX";

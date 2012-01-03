@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='gflot'>
-	<inherits name="com.google.gwt.user.User"/>
-	<inherits name="com.google.gwt.json.JSON"/>
+  <inherits name="com.google.gwt.user.User" />
+  <inherits name="com.google.gwt.json.JSON" />
+
+  <replace-with class="ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.SynchronousImpl">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.Impl" />
+  </replace-with>
+
+  <replace-with class="ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.SynchronousIEUnder9Impl">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.Impl" />
+    <any>
+      <when-property-is name="user.agent" value="ie6" />
+      <when-property-is name="user.agent" value="ie8" />
+    </any>
+  </replace-with>
+
 </module>

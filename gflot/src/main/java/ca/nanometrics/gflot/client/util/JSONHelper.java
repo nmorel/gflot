@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -26,38 +26,66 @@ import com.google.gwt.json.client.JSONObject;
 
 /**
  * A helper class for manipulating JSONWrapper objects
- * 
+ *
  * @author AlexanderDeleon
  */
-public class JSONHelper {
+public class JSONHelper
+{
 
-	public static JSONArray getJSONArray(JSONArrayWrapper wrapper) {
-		return (JSONArray) wrapper.getWrappedObj();
-	}
+    public static JSONArray getJSONArray( JSONArrayWrapper wrapper )
+    {
+        return (JSONArray) wrapper.getWrappedObj();
+    }
 
-	public static JSONObject getJSONObject(JSONObjectWrapper wrapper) {
-		return wrapper.getWrappedObj();
-	}
+    public static JSONObject getJSONObject( JSONObjectWrapper wrapper )
+    {
+        return wrapper.getWrappedObj();
+    }
 
-	public static JSONArrayWrapper wrapArray(String[] values) {
-		JSONArrayWrapper wrapper = new JSONArrayWrapper();
-		wrapper.pushAll(values);
-		return wrapper;
-	}
+    public static JSONArrayWrapper wrapArray( String[] values )
+    {
+        JSONArrayWrapper wrapper = new JSONArrayWrapper();
+        wrapper.pushAll( values );
+        return wrapper;
+    }
 
-	public static JSONArrayWrapper wrapArray(Double[] values) {
-		JSONArrayWrapper wrapper = new JSONArrayWrapper();
-		wrapper.pushAll(values);
-		return wrapper;
-	}
+    public static JSONArrayWrapper wrapArray( Double[] values )
+    {
+        JSONArrayWrapper wrapper = new JSONArrayWrapper();
+        wrapper.pushAll( values );
+        return wrapper;
+    }
 
-	public static JSONArrayWrapper wrapArray(JSONWrapper[] values) {
-		JSONArrayWrapper wrapper = new JSONArrayWrapper();
-		wrapper.pushAll(values);
-		return wrapper;
-	}
+    public static JSONArrayWrapper wrapArray( JSONWrapper[] values )
+    {
+        JSONArrayWrapper wrapper = new JSONArrayWrapper();
+        wrapper.pushAll( values );
+        return wrapper;
+    }
 
-	public static JSONObjectWrapper wrapObject(JSONObject obj) {
-		return new JSONObjectWrapper(obj);
-	}
+    public static JSONObjectWrapper wrapObject( JSONObject obj )
+    {
+        return new JSONObjectWrapper( obj );
+    }
+
+    public static JSONObjectWrapper wrapArrayIntoObject( String objectName, String[] values )
+    {
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put( objectName, wrapArray( values ).getWrappedObj() );
+        return wrapObject( jsonObj );
+    }
+
+    public static JSONObjectWrapper wrapArrayIntoObject( String objectName, Double[] values )
+    {
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put( objectName, wrapArray( values ).getWrappedObj() );
+        return wrapObject( jsonObj );
+    }
+
+    public static JSONObjectWrapper wrapArrayIntoObject( String objectName, JSONWrapper[] values )
+    {
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put( objectName, wrapArray( values ).getWrappedObj() );
+        return wrapObject( jsonObj );
+    }
 }

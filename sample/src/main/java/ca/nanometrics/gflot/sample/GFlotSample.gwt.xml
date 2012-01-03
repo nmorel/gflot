@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='gflotsample'>
+
+  <inherits name="com.google.gwt.user.theme.chrome.Chrome" />
+  <inherits name="ca.nanometrics.gflot.GFlot" />
+
+  <entry-point class="ca.nanometrics.gflot.sample.client.GFlotSample" />
+
+</module>

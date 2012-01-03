@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,44 @@ package ca.nanometrics.gflot.client.options;
 /**
  * @author AlexanderDeleon
  */
-public class PointsSeriesOptions extends SeriesOptions {
+public class PointsSeriesOptions
+    extends AbstractSeriesOptions<PointsSeriesOptions>
+{
+    public enum PointSymbol
+    {
+        CIRCLE( "circle" ), SQUARE( "square" ), DIAMOND( "diamond" ), TRIANGLE( "triangle" ), CROSS( "cross" );
 
-	public PointsSeriesOptions setRadius(double radius) {
-		put("radius", new Double(radius));
-		return this;
-	}
+        private String flotValue;
+
+        PointSymbol( String flotValue )
+        {
+            this.flotValue = flotValue;
+        }
+
+        String getFlotValue()
+        {
+            return flotValue;
+        }
+    }
+
+    /**
+     * Set the radius of the symbol
+     */
+    public PointsSeriesOptions setRadius( double radius )
+    {
+        put( "radius", new Double( radius ) );
+        return this;
+    }
+
+    /**
+     * Set the symbol to represents the points
+     */
+    public PointsSeriesOptions setSymbol( PointSymbol symbol )
+    {
+        assert null != symbol : "symbol can't be null";
+
+        put( "symbol", symbol.getFlotValue() );
+        return this;
+    }
 
 }

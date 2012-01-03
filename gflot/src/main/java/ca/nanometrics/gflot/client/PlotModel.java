@@ -27,106 +27,134 @@ import java.util.List;
 /**
  * @author Alexander De Leon
  */
-public class PlotModel {
+public class PlotModel
+{
 
-	private PlotModelStrategy m_strategy;
-	private final List<SeriesHandler> m_handlers = new ArrayList<SeriesHandler>();
-	private final List<PlotModelListener> m_listeners = new ArrayList<PlotModelListener>();
+    private PlotModelStrategy m_strategy;
 
-	public PlotModel() {
-		this(PlotModelStrategy.defaultStrategy());
-	}
+    private final List<SeriesHandler> m_handlers = new ArrayList<SeriesHandler>();
 
-	public PlotModel(PlotModelStrategy strategy) {
-		m_strategy = strategy;
-	}
+    private final List<PlotModelListener> m_listeners = new ArrayList<PlotModelListener>();
 
-	public SeriesHandler addSeries(String label, String color) {
-		Series series = new Series();
-		series.setLabel(label);
+    public PlotModel()
+    {
+        this( PlotModelStrategy.defaultStrategy() );
+    }
 
-		if (color != null) {
-			series.setColor(color);
-		}
-		SeriesData data = m_strategy.createSeriesData();
-		series.setData(data);
+    public PlotModel( PlotModelStrategy strategy )
+    {
+        m_strategy = strategy;
+    }
 
-		SeriesHandler handler = createSeriesHandler(series, data);
-		m_handlers.add(handler);
-		fireOnAddSeries(label, color, handler);
-		return handler;
-	}
+    public SeriesHandler addSeries( String label )
+    {
+        return addSeries( label, null );
+    }
 
-	public SeriesHandler addSeries(String label) {
-		return addSeries(label, null);
-	}
+    public SeriesHandler addSeries( String label, String color )
+    {
+        Series series = new Series();
+        series.setLabel( label );
 
-	public void removeSeries(SeriesHandler handler) {
-		m_handlers.remove(handler);
-		fireOnRemoveSeries(handler);
-	}
+        if ( color != null )
+        {
+            series.setColor( color );
+        }
+        return addSeries( series );
+    }
 
-	public void setStrategy(PlotModelStrategy strategy) {
-		m_strategy = strategy;
-		for (SeriesHandler handler : m_handlers) {
-			DataPoint[] currentData = handler.getData().getDatapoints();
-			handler.setData(m_strategy.createSeriesData());
-			for (DataPoint datapoint : currentData) {
-				handler.add(datapoint);
-			}
-		}
-	}
+    public SeriesHandler addSeries( Series series )
+    {
+        SeriesData data = m_strategy.createSeriesData();
+        series.setData( data );
 
-	public void clear() {
-		for (SeriesHandler handler : m_handlers) {
-			handler.clear();
-		}
-	}
+        SeriesHandler handler = createSeriesHandler( series, data );
+        m_handlers.add( handler );
+        fireOnAddSeries( series.getLabel(), series.getColor(), handler );
+        return handler;
+    }
 
-	public void addListener(PlotModelListener listener) {
-		m_listeners.add(listener);
-	}
+    public void removeSeries( SeriesHandler handler )
+    {
+        m_handlers.remove( handler );
+        fireOnRemoveSeries( handler );
+    }
 
-	public void removeListener(PlotModelListener listener) {
-		m_listeners.remove(listener);
-	}
+    public void setStrategy( PlotModelStrategy strategy )
+    {
+        m_strategy = strategy;
+        for ( SeriesHandler handler : m_handlers )
+        {
+            DataPoint[] currentData = handler.getData().getDatapoints();
+            handler.setData( m_strategy.createSeriesData() );
+            for ( DataPoint datapoint : currentData )
+            {
+                handler.add( datapoint );
+            }
+        }
+    }
 
-	public Series[] getSeries() {
-		Series[] seriesArray = new Series[m_handlers.size()];
-		int i = 0;
-		for (SeriesHandler handler : m_handlers) {
-			seriesArray[i++] = handler.getSeries();
-		}
-		return seriesArray;
-	}
+    public void clear()
+    {
+        for ( SeriesHandler handler : m_handlers )
+        {
+            handler.clear();
+        }
+    }
 
-	protected List<SeriesHandler> getHandlers() {
-		return m_handlers;
-	}
+    public void addListener( PlotModelListener listener )
+    {
+        m_listeners.add( listener );
+    }
 
-	protected SeriesHandler createSeriesHandler(Series series, SeriesData data) {
-		return new SeriesHandler(series, data);
-	}
+    public void removeListener( PlotModelListener listener )
+    {
+        m_listeners.remove( listener );
+    }
 
-	private void fireOnRemoveSeries(SeriesHandler handler) {
-		for (PlotModelListener listener : m_listeners) {
-			listener.onRemoveSeries(this, handler);
-		}
-	}
+    public Series[] getSeries()
+    {
+        Series[] seriesArray = new Series[m_handlers.size()];
+        int i = 0;
+        for ( SeriesHandler handler : m_handlers )
+        {
+            seriesArray[i++] = handler.getSeries();
+        }
+        return seriesArray;
+    }
 
-	private void fireOnAddSeries(String label, String color,
-			SeriesHandler handler) {
-		for (PlotModelListener listener : m_listeners) {
-			listener.onAddSeries(this, label, color, handler);
-		}
-	}
+    protected List<SeriesHandler> getHandlers()
+    {
+        return m_handlers;
+    }
 
-	public interface PlotModelListener {
+    protected SeriesHandler createSeriesHandler( Series series, SeriesData data )
+    {
+        return new SeriesHandler( series, data );
+    }
 
-		void onAddSeries(PlotModel model, String label, String color,
-				SeriesHandler handler);
+    private void fireOnRemoveSeries( SeriesHandler handler )
+    {
+        for ( PlotModelListener listener : m_listeners )
+        {
+            listener.onRemoveSeries( this, handler );
+        }
+    }
 
-		void onRemoveSeries(PlotModel model, SeriesHandler handler);
-	}
+    private void fireOnAddSeries( String label, String color, SeriesHandler handler )
+    {
+        for ( PlotModelListener listener : m_listeners )
+        {
+            listener.onAddSeries( this, label, color, handler );
+        }
+    }
+
+    public interface PlotModelListener
+    {
+
+        void onAddSeries( PlotModel model, String label, String color, SeriesHandler handler );
+
+        void onRemoveSeries( PlotModel model, SeriesHandler handler );
+    }
 
 }

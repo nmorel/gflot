@@ -79,9 +79,13 @@ public class GFlotSample
                 SimpleLayoutPanel panel = panels.get( index );
                 if ( null == panel.getWidget() )
                 {
-                    Widget sample =  samples.get( index ).createExample();
+                    Widget sample = samples.get( index ).createExample();
                     DOM.setStyleAttribute( sample.getElement(), "marginTop", "10px" );
-                    panel.setWidget(sample );
+                    panel.setWidget( sample );
+
+                    // setting size to 100% to avoid a bug on IE6 and IE7 where the panel don't take all the space
+                    // available
+                    panel.setSize( "100%", "100%" );
                 }
             }
         } );

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ca.nanometrics</groupId>
   <artifactId>gflot-sample</artifactId>
-  <version>1.0</version>
+  <version>2.1</version>
   <packaging>war</packaging>
   <name>gflot-sample</name>
 
@@ -13,9 +13,9 @@
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
     <gwt.version>2.4.0</gwt.version>
-    <gae.version>1.5.5</gae.version>
-    <gae.home>${user.home}/.m2/repository/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
-    <gae.application.version>1</gae.application.version>
+    <gae.version>1.6.0</gae.version>
+    <gae.home>${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
+    <gflot.version>2.1</gflot.version>
   </properties>
 
   <repositories>
@@ -36,7 +36,7 @@
     <dependency>
       <groupId>ca.nanometrics</groupId>
       <artifactId>gflot</artifactId>
-      <version>2.0</version>
+      <version>${gflot.version}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -45,6 +45,8 @@
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-1.0-sdk</artifactId>
       <version>${gae.version}</version>
+      <scope>provided</scope>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>com.google.appengine</groupId>
@@ -146,7 +148,7 @@
       <plugin>
         <groupId>net.kindleit</groupId>
         <artifactId>maven-gae-plugin</artifactId>
-        <version>0.9.1</version>
+        <version>0.9.2</version>
         <executions>
           <execution>
             <id />
@@ -169,12 +171,16 @@
           <downloadSources>true</downloadSources>
           <downloadJavadocs>true</downloadJavadocs>
           <wtpversion>2.0</wtpversion>
+          <classpathContainers>
+            <classpathContainer>com.google.appengine.eclipse.core.GAE_CONTAINER</classpathContainer>
+            <classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
+            <classpathContainer>com.google.gwt.eclipse.core.GWT_CONTAINER</classpathContainer>
+          </classpathContainers>
           <additionalBuildcommands>
-            <buildCommand>
-              <name>com.google.gwt.eclipse.core.gwtProjectValidator</name>
-            </buildCommand>
+            <buildcommand>com.google.gwt.eclipse.core.gwtProjectValidator</buildcommand>
           </additionalBuildcommands>
           <additionalProjectnatures>
+            <projectnature>com.google.appengine.eclipse.core.gaeNature</projectnature>
             <projectnature>com.google.gwt.eclipse.core.gwtNature</projectnature>
           </additionalProjectnatures>
         </configuration>
@@ -194,7 +200,8 @@
       <id>dev</id>
       <build>
         <plugins>
-          <!-- Allow to take into account changes in gwt-socle by just refreshing the browser instead of rebuilding the jar and relaunch gwt:run -->
+          <!-- Allow to take into account changes in gflot by just refreshing the browser instead of rebuilding the jar and
+            relaunch gwt:run -->
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>build-helper-maven-plugin</artifactId>

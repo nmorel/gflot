@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
  */
 package ca.nanometrics.gflot.client;
 
-import ca.nanometrics.gflot.client.options.SeriesOptions;
+import ca.nanometrics.gflot.client.options.AbstractSeriesOptions;
 
 /**
  * @author Alexander De Leon
@@ -44,7 +44,7 @@ public class SeriesHandler {
 		m_data.clear();
 	}
 
-	public void setOptions(SeriesType type, SeriesOptions options) {
+	public void setOptions(SeriesType type, AbstractSeriesOptions<?> options) {
 		m_series.setSeriesOptions(type, options);
 	}
 
@@ -71,11 +71,11 @@ public class SeriesHandler {
 		return m_series.hashCode();
 	}
 
-	/* ------------- for internal use */
-	Series getSeries() {
+	public Series getSeries() {
 		return m_series;
 	}
 
+    /* ------------- for internal use */
 	SeriesData getData() {
 		return m_data;
 	}

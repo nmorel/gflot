@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -26,24 +26,43 @@ import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 /**
  * @author AlexanderDeleon
  */
-public class SelectionOptions extends JSONObjectWrapper {
+public class SelectionOptions
+    extends JSONObjectWrapper
+{
+    public enum SelectionMode
+    {
+        X( "x" ), Y( "y" ), XY( "xy" );
 
-	public static final String X_SELECTION_MODE = "x";
-	public static final String Y_SELECTION_MODE = "y";
-	public static final String XY_SELECTION_MODE = "xy";
+        private String flotValue;
 
-	public SelectionOptions setMode(String mode) {
-		put("mode", mode);
-		return this;
-	}
+        SelectionMode( String flotValue )
+        {
+            this.flotValue = flotValue;
+        }
 
-	public SelectionOptions setDragging(boolean dragging) {
-		put("dragging", dragging);
-		return this;
-	}
+        String getFlotValue()
+        {
+            return flotValue;
+        }
+    }
 
-	public SelectionOptions setColor(String cssColor) {
-		put("color", cssColor);
-		return this;
-	}
+    public SelectionOptions setMode( SelectionMode mode )
+    {
+        assert null != mode : "mode can't be null";
+
+        put( "mode", mode.getFlotValue() );
+        return this;
+    }
+
+    public SelectionOptions setDragging( boolean dragging )
+    {
+        put( "dragging", dragging );
+        return this;
+    }
+
+    public SelectionOptions setColor( String color )
+    {
+        put( "color", color );
+        return this;
+    }
 }
