@@ -5,6 +5,7 @@ import ca.nanometrics.gflot.client.PlotModelStrategy;
 import ca.nanometrics.gflot.client.PlotWithOverview;
 import ca.nanometrics.gflot.client.PlotWithOverviewModel;
 import ca.nanometrics.gflot.client.SeriesHandler;
+import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
@@ -39,9 +40,9 @@ public class PlotWithOverviewExample
 
         PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.defaultStrategy() );
         PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setDefaultLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) );
-        plotOptions.setDefaultPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) );
-        plotOptions.setDefaultShadowSize( 0 );
+        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
+        .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
+        .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
 
         SeriesHandler series = model.addSeries( "Random Series", "#2c1d54" );
 

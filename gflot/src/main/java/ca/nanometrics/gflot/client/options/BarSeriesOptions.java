@@ -21,6 +21,8 @@
  */
 package ca.nanometrics.gflot.client.options;
 
+import com.google.gwt.json.client.JSONObject;
+
 /**
  * @author AlexanderDeleon
  */
@@ -31,17 +33,48 @@ public class BarSeriesOptions
     {
         CENTER( "center" ), LEFT( "left" );
 
-        private final String m_stringRepresentation;
+        private final String flotValue;
 
-        private BarAlignment( String stringRepresentation )
+        private BarAlignment( String flotValue )
         {
-            m_stringRepresentation = stringRepresentation;
+            this.flotValue = flotValue;
         }
 
-        public String getStringRepresentation()
+        public String getFlotValue()
         {
-            return m_stringRepresentation;
+            return flotValue;
         }
+
+        static BarAlignment findByFlotValue( String flotValue )
+        {
+            if ( null != flotValue && !"".equals( flotValue ) )
+            {
+                for ( BarAlignment mode : values() )
+                {
+                    if ( mode.getFlotValue().equals( flotValue ) )
+                    {
+                        return mode;
+                    }
+                }
+            }
+            return null;
+        }
+    }
+
+    private static final String BAR_WIDTH_KEY = "barWidth";
+
+    private static final String ALIGN_KEY = "align";
+
+    private static final String HORIZONTAL_KEY = "horizontal";
+
+    public BarSeriesOptions()
+    {
+        super();
+    }
+
+    BarSeriesOptions( JSONObject jsonObj )
+    {
+        super( jsonObj );
     }
 
     /**
@@ -51,8 +84,16 @@ public class BarSeriesOptions
      */
     public BarSeriesOptions setBarWidth( double width )
     {
-        put( "barWidth", new Double( width ) );
+        put( BAR_WIDTH_KEY, new Double( width ) );
         return this;
+    }
+
+    /**
+     * @return the width of the bars in units of the x axis (or the y axis if "horizontal" is true)
+     */
+    public Double getBarWidth()
+    {
+        return getDouble( BAR_WIDTH_KEY );
     }
 
     /**
@@ -62,18 +103,34 @@ public class BarSeriesOptions
     {
         assert null != alignment : "alignment can't be null";
 
-        put( "align", alignment.getStringRepresentation() );
+        put( ALIGN_KEY, alignment.getFlotValue() );
         return this;
     }
 
     /**
-     * Set if the bars are drawn horizontally, i.e. from the y axis instead of the x axis; note that
-     * the bar end points are still defined in the same way so you'll probably want to swap the coordinates if you've
-     * been plotting vertical bars first.
+     * @return the bar alignment
+     */
+    public BarAlignment getAlignment()
+    {
+        return BarAlignment.findByFlotValue( getString( ALIGN_KEY ) );
+    }
+
+    /**
+     * Set if the bars are drawn horizontally, i.e. from the y axis instead of the x axis; note that the bar end points
+     * are still defined in the same way so you'll probably want to swap the coordinates if you've been plotting
+     * vertical bars first.
      */
     public BarSeriesOptions setHorizontal( boolean horizontal )
     {
-        put( "horizontal", horizontal );
+        put( HORIZONTAL_KEY, horizontal );
         return this;
+    }
+
+    /**
+     * @return true if the bars are drawn horizontally
+     */
+    public Boolean getHorizontal()
+    {
+        return getBoolean( HORIZONTAL_KEY );
     }
 }

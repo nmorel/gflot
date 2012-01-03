@@ -21,11 +21,8 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONHelper;
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
-import ca.nanometrics.gflot.client.util.JSONWrapper;
 
-import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 
 /**
@@ -36,13 +33,39 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
     extends JSONObjectWrapper
 {
 
+    protected static final String SHOW_KEY = "show";
+
+    protected static final String LINE_WIDTH_KEY = "lineWidth";
+
+    protected static final String FILL_KEY = "fill";
+
+    protected static final String FILL_COLOR_KEY = "fillColor";
+
+    public AbstractSeriesOptions()
+    {
+        super();
+    }
+
+    AbstractSeriesOptions( JSONObject jsonObj )
+    {
+        super( jsonObj );
+    }
+
     /**
      * Set the visibility of the series. By default, the series is shown.
      */
     public T setShow( boolean show )
     {
-        put( "show", show );
+        put( SHOW_KEY, show );
         return (T) this;
+    }
+
+    /**
+     * @return the visibility of the series
+     */
+    public Boolean getShow()
+    {
+        return getBoolean( SHOW_KEY );
     }
 
     /**
@@ -51,8 +74,16 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
      */
     public T setLineWidth( double lineWidth )
     {
-        put( "lineWidth", new Double( lineWidth ) );
+        put( LINE_WIDTH_KEY, new Double( lineWidth ) );
         return (T) this;
+    }
+
+    /**
+     * @return the thickness of the line or outline in pixels
+     */
+    public Double getLineWidth()
+    {
+        return getDouble( LINE_WIDTH_KEY );
     }
 
     /**
@@ -61,21 +92,35 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
      */
     public T setFill( boolean fill )
     {
-        put( "fill", fill );
+        put( FILL_KEY, fill );
         return (T) this;
     }
 
     /**
-     * Set if the shape should be filled. For lines, this produces area graphs. You can use setFillColor to specify the
-     * color of the fill. You can adjust the opacity of the fill by setting fill to a number between 0 (fully
-     * transparent) and 1 (fully opaque).
+     * @return true if the shape is filled
+     */
+    public Boolean getFillBoolean()
+    {
+        return getBoolean( FILL_KEY );
+    }
+
+    /**
+     * Set the opacity of the fill by setting fill to a number between 0 (fully transparent) and 1 (fully opaque).
      */
     public T setFill( double opacity )
     {
         assert opacity >= 0 && opacity <= 1 : "opacity range from 0.0 to 1.0";
 
-        put( "fill", opacity );
+        put( FILL_KEY, opacity );
         return (T) this;
+    }
+
+    /**
+     * @return the opacity of the fill
+     */
+    public Double getFillOpacity()
+    {
+        return getDouble( FILL_KEY );
     }
 
     /**
@@ -84,13 +129,20 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
      */
     public T setFillColor( String cssColor )
     {
-        put( "fillColor", cssColor );
+        put( FILL_COLOR_KEY, cssColor );
         return (T) this;
     }
 
     /**
-     * Set the color to fill. If "fillColor" evaluates to false (default for everything except points which are filled
-     * with white), the fill color is auto-set to the color of the data series.
+     * @return the color to fill
+     */
+    public String getFillColor()
+    {
+        return getString( FILL_COLOR_KEY );
+    }
+
+    /**
+     * Set the scaling of the brightness and the opacity of the series fill color
      */
     public T setFillColor( Double fromOpacity, Double fromBrightness, Double toOpacity, Double toBrightness )
     {
@@ -100,25 +152,24 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
         assert null == toOpacity || toOpacity >= 0 && toOpacity <= 1 : "toOpacity range from 0.0 to 1.0";
         assert null == toBrightness || toBrightness >= 0 && toBrightness <= 1 : "toBrightness range from 0.0 to 1.0";
 
-        put(
-            "fillColor",
-            JSONHelper.wrapArrayIntoObject( "colors", new JSONWrapper[] { buildOpacityBrightnessObject( fromOpacity, fromBrightness ),
-                buildOpacityBrightnessObject( toOpacity, toBrightness ) } ) );
+        put( FILL_COLOR_KEY, new SeriesGradient( fromOpacity, fromBrightness, toOpacity, toBrightness ) );
 
         return (T) this;
     }
 
-    private JSONObjectWrapper buildOpacityBrightnessObject( Double opacity, Double brightness )
+    /**
+     * @return the scaling of the brightness and the opacity of the series fill color
+     */
+    public SeriesGradient getFillColorGradient()
     {
-        JSONObject obj = new JSONObject();
-        if ( null != opacity )
+        JSONObject obj = getObject( FILL_COLOR_KEY );
+        if ( null == obj )
         {
-            obj.put( "opacity", new JSONNumber( opacity ) );
+            return null;
         }
-        if ( null != brightness )
+        else
         {
-            obj.put( "brightness", new JSONNumber( brightness ) );
+            return new SeriesGradient( obj );
         }
-        return JSONHelper.wrapObject( obj );
     }
 }

@@ -49,8 +49,6 @@ public class SimplePlot
 
     private static final int DEFAULT_HEIGHT = 300;
 
-    private static int s_counter = 1;
-
     private final PlotModel model;
 
     private int width;
@@ -65,30 +63,34 @@ public class SimplePlot
 
     private final List<Command> onLoadOperations;
 
-    public SimplePlot( PlotModel model )
-    {
-        this.model = model;
-        onLoadOperations = new ArrayList<Command>();
-        setElement( createPlotContainer() );
-        setWidth( DEFAULT_WIDTH );
-        setHeight( DEFAULT_HEIGHT );
-    }
-
-    public SimplePlot( PlotModel model, PlotOptions options )
-    {
-        this( model );
-        this.options = options;
-    }
-
     public SimplePlot()
     {
-
         this( new PlotModel() );
+    }
+
+    public SimplePlot( PlotModel model )
+    {
+        this( model, null );
     }
 
     public SimplePlot( PlotOptions options )
     {
         this( new PlotModel(), options );
+    }
+
+    public SimplePlot( PlotModel model, PlotOptions options )
+    {
+        this( PlotFactory.createUniquePlotContainer(), model, options );
+    }
+
+    public SimplePlot( Element plotContainer, PlotModel model, PlotOptions options )
+    {
+        this.model = model;
+        onLoadOperations = new ArrayList<Command>();
+        setElement( plotContainer );
+        setWidth( DEFAULT_WIDTH );
+        setHeight( DEFAULT_HEIGHT );
+        this.options = options;
     }
 
     public int getWidth()
@@ -231,6 +233,11 @@ public class SimplePlot
         return plot.getPlotOffsetBottom();
     }
 
+    public PlotOptions getPlotOptions()
+    {
+        return options;
+    }
+
     /* ------------------ Widget API -- */
     protected void onLoad()
     {
@@ -256,6 +263,9 @@ public class SimplePlot
 
                     loaded = true;
 
+                    // retrieving the calculated options
+                    options = plot.getPlotOptions();
+
                     // commenting this line since it seems it is useless
                     // see http://code.google.com/p/gflot/issues/detail?id=27
                     // redraw();
@@ -276,13 +286,6 @@ public class SimplePlot
     }
 
     /* ------------------ Helper methods -- */
-    protected Element createPlotContainer()
-    {
-        Element element = DOM.createElement( "div" );
-        DOM.setElementProperty( element, "id", "gflot_" + s_counter++ );
-        return element;
-    }
-
     protected void assertLoaded()
     {
         if ( !loaded )

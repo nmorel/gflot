@@ -10,6 +10,7 @@ import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
 import ca.nanometrics.gflot.client.jsni.Plot;
 import ca.nanometrics.gflot.client.options.AxisOptions;
+import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.GridOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
@@ -39,10 +40,9 @@ public class HoverExample implements GFlotExample {
 
 		PlotModel model = new PlotModel();
 		PlotOptions plotOptions = new PlotOptions();
-		plotOptions.setDefaultLineSeriesOptions(new LineSeriesOptions().setLineWidth(1).setShow(true));
-		plotOptions.setDefaultPointsOptions(new PointsSeriesOptions().setRadius(2).setShow(true));
-		plotOptions.setDefaultShadowSize(0);
-
+		plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
+        .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
+        .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
 		// add tick formatter to the options
 		plotOptions.setXAxisOptions(new AxisOptions().setTicks(12).setTickFormatter(new TickFormatter() {
 			public String formatTickValue(double tickValue, Axis axis) {

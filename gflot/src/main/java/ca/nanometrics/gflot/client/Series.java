@@ -47,12 +47,19 @@ public class Series
         super( obj );
     }
 
-    protected void setData( SeriesData data )
+    void setData( SeriesData data )
     {
         put( "data", data );
     }
 
-    protected SeriesData getData()
+    /**
+     * Returns the data associated to this series.
+     * <p>
+     * Be careful, the data can be null if the method setVisible(false) has been called on its associated SeriesHandler.
+     * In this case, use the method getDate() of the SeriesHandler
+     * <p>
+     */
+    SeriesData getData()
     {
         JSONArray data = getArray( "data" );
         if ( null == data )

@@ -24,6 +24,7 @@ package ca.nanometrics.gflot.client;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
 import ca.nanometrics.gflot.client.event.SelectionListener;
+import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
@@ -31,6 +32,7 @@ import ca.nanometrics.gflot.client.options.SelectionOptions;
 import ca.nanometrics.gflot.client.options.SelectionOptions.SelectionMode;
 
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
@@ -44,12 +46,11 @@ public class PlotWithOverview
 {
     public static final int DEFAULT_OVERVIEW_HEIGHT = 100; // px
 
-    public static final PlotOptions DEFAULT_OVERVIEW_OPTIONS = new PlotOptions().setDefaultShadowSize( 0 )
+    public static final PlotOptions DEFAULT_OVERVIEW_OPTIONS = new PlotOptions()
         .setLegendOptions( new LegendOptions().setShow( false ) )
-        .setDefaultLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) )
-        .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ).setDragging( true ) );
-
-    private int m_overviewHeight;
+        .setGlobalSeriesOptions(
+            new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) ).setShadowSize( 0d ) )
+        .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) );
 
     private final SimplePlot m_windowPlot;
 
@@ -69,17 +70,30 @@ public class PlotWithOverview
         this( model, plotOptions, DEFAULT_OVERVIEW_OPTIONS );
     }
 
-    public PlotWithOverview( PlotWithOverviewModel model, PlotOptions plotOptions, PlotOptions overviewPlotOptions )
+    public PlotWithOverview( PlotWithOverviewModel model, PlotOptions windowPlotOptions, PlotOptions overviewPlotOptions )
     {
-        this( model, DEFAULT_OVERVIEW_HEIGHT, plotOptions, overviewPlotOptions );
-    }
-
-    public PlotWithOverview( PlotWithOverviewModel model, int overviewHeight, PlotOptions windowPlotOptions, PlotOptions overviewPlotOptions )
-    {
-        m_overviewHeight = overviewHeight;
         m_model = model;
         m_windowPlot = new SimplePlot( m_model.getWindowPlotModel(), windowPlotOptions );
         m_overviewPlot = new SimplePlot( m_model.getOverviewPlotModel(), overviewPlotOptions );
+        setupPlots();
+        initWidget( createUi() );
+    }
+
+    public PlotWithOverview( PlotWithOverviewModel model, PlotOptions windowPlotOptions, Element windowPlotContainer, Element overviewPlotContainer )
+    {
+        m_model = model;
+        m_windowPlot = new SimplePlot( windowPlotContainer, m_model.getWindowPlotModel(), windowPlotOptions );
+        m_overviewPlot = new SimplePlot( overviewPlotContainer, m_model.getOverviewPlotModel(), null );
+        setupPlots();
+        initWidget( createUi() );
+    }
+
+    public PlotWithOverview( PlotWithOverviewModel model, PlotOptions windowPlotOptions, PlotOptions overviewPlotOptions,
+                             Element windowPlotContainer, Element overviewPlotContainer )
+    {
+        m_model = model;
+        m_windowPlot = new SimplePlot( windowPlotContainer, m_model.getWindowPlotModel(), windowPlotOptions );
+        m_overviewPlot = new SimplePlot( overviewPlotContainer, m_model.getOverviewPlotModel(), overviewPlotOptions );
         setupPlots();
         initWidget( createUi() );
     }
@@ -102,7 +116,17 @@ public class PlotWithOverview
 
     public int getHeight()
     {
-        return m_windowPlot.getHeight() + m_overviewHeight;
+        return m_windowPlot.getHeight() + m_overviewPlot.getHeight();
+    }
+
+    public int getWindowHeight()
+    {
+        return m_windowPlot.getHeight();
+    }
+
+    public int getOverviewHeight()
+    {
+        return m_overviewPlot.getHeight();
     }
 
     public PlotModel getModel()
@@ -129,12 +153,16 @@ public class PlotWithOverview
 
     public void setHeight( int height )
     {
-        m_windowPlot.setHeight( height - m_overviewHeight );
+        m_windowPlot.setHeight( height - getOverviewHeight() );
+    }
+
+    public void setWindowHeight( int height )
+    {
+        m_windowPlot.setHeight( height );
     }
 
     public void setOverviewHeight( int height )
     {
-        m_overviewHeight = height;
         m_overviewPlot.setHeight( height );
     }
 
@@ -183,13 +211,23 @@ public class PlotWithOverview
         FlexTable mainPanel = new FlexTable();
         mainPanel.setWidget( 0, 0, m_windowPlot );
         mainPanel.setWidget( 1, 0, m_overviewPlot );
-        m_overviewPlot.setHeight( m_overviewHeight );
+        m_overviewPlot.setHeight( DEFAULT_OVERVIEW_HEIGHT );
         return mainPanel;
     }
 
     private void setupPlots()
     {
         m_overviewPlot.addSelectionListener( this );
+    }
+
+    SimplePlot getWindowPlot()
+    {
+        return m_windowPlot;
+    }
+
+    SimplePlot getOverviewPlot()
+    {
+        return m_overviewPlot;
     }
 
 }

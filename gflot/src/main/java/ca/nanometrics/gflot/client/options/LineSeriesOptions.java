@@ -21,6 +21,8 @@
  */
 package ca.nanometrics.gflot.client.options;
 
+import com.google.gwt.json.client.JSONObject;
+
 /**
  * @author AlexanderDeleon
  */
@@ -28,14 +30,35 @@ public class LineSeriesOptions
     extends AbstractSeriesOptions<LineSeriesOptions>
 {
 
+    private static final String STEPS_KEY = "steps";
+
+    public LineSeriesOptions()
+    {
+        super();
+    }
+
+    LineSeriesOptions( JSONObject jsonObj )
+    {
+        super( jsonObj );
+    }
+
     /**
      * Set whether two adjacent data points are connected with a straight (possibly diagonal) line or with first a
      * horizontal and then a vertical line. Note that this transforms the data by adding extra points.
      */
     public LineSeriesOptions setSteps( boolean steps )
     {
-        put( "steps", steps );
+        put( STEPS_KEY, steps );
         return this;
+    }
+
+    /**
+     * @return true if two adjacent data points are connected with a straight (possibly diagonal) line or with first a
+     * horizontal and then a vertical line
+     */
+    public Boolean getSteps()
+    {
+        return getBoolean( STEPS_KEY );
     }
 
 }

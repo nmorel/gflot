@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -23,17 +23,29 @@ package ca.nanometrics.gflot.client;
 
 import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
 
-public class Tick extends JSONArrayWrapper {
-	public Tick(double value, String label) {
-		super.set(0, new Double(value));
-		super.set(1, label);
-	}
+import com.google.gwt.json.client.JSONArray;
 
-	public double getValue() {
-		return get(0).isNumber().doubleValue();
-	}
+public class Tick
+    extends JSONArrayWrapper
+{
+    public Tick( double value, String label )
+    {
+        super.set( 0, value );
+        super.set( 1, label );
+    }
 
-	public String getLabel() {
-		return get(1).isString().stringValue();
-	}
+    public Tick( JSONArray jsonArray )
+    {
+        super( jsonArray );
+    }
+
+    public double getValue()
+    {
+        return get( 0 ).isNumber().doubleValue();
+    }
+
+    public String getLabel()
+    {
+        return get( 1 ).isString().stringValue();
+    }
 }

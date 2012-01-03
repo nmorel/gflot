@@ -6,6 +6,7 @@ import ca.nanometrics.gflot.client.PlotWidget;
 import ca.nanometrics.gflot.client.PlotWithOverview;
 import ca.nanometrics.gflot.client.PlotWithOverviewModel;
 import ca.nanometrics.gflot.client.SeriesHandler;
+import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
@@ -37,15 +38,18 @@ public class SlidingWindowExample
     {
         PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.slidingWindowStrategy( 20 ) );
         PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setDefaultLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) );
-        plotOptions.setDefaultPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) );
-        plotOptions.setDefaultShadowSize( 0 );
+        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
+            .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
+            .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
         plotOptions.setXAxisOptions( new TimeSeriesAxisOptions() );
 
         PlotOptions overviewPlotOptions =
-            new PlotOptions().setDefaultShadowSize( 0 ).setLegendOptions( new LegendOptions().setShow( false ) )
-                .setDefaultLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) )
-                .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ).setDragging( true ) )
+            new PlotOptions()
+                .setLegendOptions( new LegendOptions().setShow( false ) )
+                .setGlobalSeriesOptions(
+                    new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) )
+                        .setShadowSize( 0d ) )
+                .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) )
                 .setXAxisOptions( new TimeSeriesAxisOptions() );
 
         final SeriesHandler series = model.addSeries( "Random Series", "#FF9900" );

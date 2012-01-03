@@ -26,66 +26,98 @@ import ca.nanometrics.gflot.client.options.AbstractSeriesOptions;
 /**
  * @author Alexander De Leon
  */
-public class SeriesHandler {
+public class SeriesHandler
+{
 
-	private final Series m_series;
-	private SeriesData m_data;
+    private final Series m_series;
 
-	public SeriesHandler(Series series, SeriesData data) {
-		m_series = series;
-		m_data = data;
-	}
+    private SeriesData m_data;
 
-	public void add(DataPoint datapoint) {
-		m_data.add(datapoint);
-	}
+    public SeriesHandler( Series series, SeriesData data )
+    {
+        m_series = series;
+        m_data = data;
+    }
 
-	public void clear() {
-		m_data.clear();
-	}
+    public void add( DataPoint datapoint )
+    {
+        m_data.add( datapoint );
+    }
 
-	public void setOptions(SeriesType type, AbstractSeriesOptions<?> options) {
-		m_series.setSeriesOptions(type, options);
-	}
+    public void clear()
+    {
+        m_data.clear();
+    }
 
-	public void setVisible(boolean visisble) {
-		if (visisble) {
-			m_series.setData(m_data);
-		} else {
-			m_series.setData(null);
-		}
-	}
+    public void setOptions( SeriesType type, AbstractSeriesOptions<?> options )
+    {
+        m_series.setSeriesOptions( type, options );
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) {
-			return true;
-		}
-		if (obj instanceof SeriesHandler) {
-			return m_series.equals(((SeriesHandler) obj).m_series);
-		}
-		return false;
-	}
+    /**
+     * Set if the series is visible or not
+     *
+     * @param visible true if the series is visible, false otherwise
+     */
+    public void setVisible( boolean visible )
+    {
+        if ( visible )
+        {
+            m_series.setData( m_data );
+        }
+        else
+        {
+            m_series.setData( null );
+        }
+    }
 
-	public int hashCode() {
-		return m_series.hashCode();
-	}
+    /**
+     * @return true if the series is visible, false otherwise
+     */
+    public boolean isVisible()
+    {
+        return null != m_series.getData();
+    }
 
-	public Series getSeries() {
-		return m_series;
-	}
+    public Series getSeries()
+    {
+        return m_series;
+    }
+
+    public SeriesData getData()
+    {
+        return m_data;
+    }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        if ( obj == this )
+        {
+            return true;
+        }
+        if ( obj instanceof SeriesHandler )
+        {
+            return m_series.equals( ( (SeriesHandler) obj ).m_series );
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return m_series.hashCode();
+    }
 
     /* ------------- for internal use */
-	SeriesData getData() {
-		return m_data;
-	}
-
-	void setData(SeriesData newData) {
-		m_data = newData;
-		// set the data if the series is visible
-		if (m_series.getData() != null) {
-			m_series.setData(m_data);
-		}
-	}
+    void setData( SeriesData newData )
+    {
+        m_data = newData;
+        // set the data if the series is visible
+        if ( isVisible() )
+        {
+            m_series.setData( m_data );
+        }
+    }
 
 }

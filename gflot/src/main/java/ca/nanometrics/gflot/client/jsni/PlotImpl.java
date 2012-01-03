@@ -36,14 +36,12 @@ public class PlotImpl
 
     static native Plot create( Element container, JavaScriptObject series )
     /*-{
-        var plot = new $wnd.jQuery.plot($wnd.jQuery("#"+container.id), series);
-        return plot;
+        return new $wnd.jQuery.plot($wnd.jQuery("#"+container.id), series);
     }-*/;
 
     static native Plot create( Element container, JavaScriptObject series, JavaScriptObject options )
     /*-{
-        var plot = new $wnd.jQuery.plot($wnd.jQuery("#"+container.id), series, options);
-        return plot;
+        return new $wnd.jQuery.plot($wnd.jQuery("#"+container.id), series, options);
     }-*/;
 
     static native void setData( Plot plot, JavaScriptObject series )
@@ -122,5 +120,10 @@ public class PlotImpl
     /*-{
         var offset = plot.getPlotOffset().bottom;
         return (offset === undefined) ? -1 : offset;
+    }-*/;
+
+    static native JavaScriptObject getPlotOptions( Plot plot )
+    /*-{
+        return plot.getOptions();
     }-*/;
 }

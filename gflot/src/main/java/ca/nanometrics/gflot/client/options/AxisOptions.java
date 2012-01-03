@@ -21,6 +21,7 @@
  */
 package ca.nanometrics.gflot.client.options;
 
+import com.google.gwt.json.client.JSONObject;
 
 /**
  * @author Alexander De Leon
@@ -29,13 +30,33 @@ public class AxisOptions
     extends AbstractAxisOptions<AxisOptions>
 {
 
+    private static final String TICK_DECIMALS_KEY = "tickDecimals";
+
+    public AxisOptions()
+    {
+        super();
+    }
+
+    AxisOptions( JSONObject jsonObj )
+    {
+        super( jsonObj );
+    }
+
     /**
      * Set the tick interval size. If you set it to 2, you'll get ticks at 2, 4, 6, etc.
      */
     public AxisOptions setTickSize( double tickSize )
     {
-        put( "tickSize", new Double( tickSize ) );
+        put( TICK_SIZE_KEY, new Double( tickSize ) );
         return this;
+    }
+
+    /**
+     * @return the tick interval size
+     */
+    public Double getTickSize()
+    {
+        return getDouble( TICK_SIZE_KEY );
     }
 
     /**
@@ -43,8 +64,16 @@ public class AxisOptions
      */
     public AxisOptions setMinTickSize( double minTickSize )
     {
-        put( "minTickSize", new Double( minTickSize ) );
+        put( MIN_TICK_SIZE_KEY, new Double( minTickSize ) );
         return this;
+    }
+
+    /**
+     * @return the minimal tick size
+     */
+    public Double getMinTickSize()
+    {
+        return getDouble( MIN_TICK_SIZE_KEY );
     }
 
     /**
@@ -52,7 +81,15 @@ public class AxisOptions
      */
     public AxisOptions setTickDecimals( double tickDecimals )
     {
-        put( "tickDecimals", new Double( tickDecimals ) );
+        put( TICK_DECIMALS_KEY, new Double( tickDecimals ) );
         return this;
+    }
+
+    /**
+     * @return the number of decimals to display
+     */
+    public Double getTickDecimals()
+    {
+        return getDouble( TICK_DECIMALS_KEY );
     }
 }

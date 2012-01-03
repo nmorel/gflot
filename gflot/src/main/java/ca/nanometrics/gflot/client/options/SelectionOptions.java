@@ -23,6 +23,8 @@ package ca.nanometrics.gflot.client.options;
 
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 
+import com.google.gwt.json.client.JSONObject;
+
 /**
  * @author AlexanderDeleon
  */
@@ -44,25 +46,70 @@ public class SelectionOptions
         {
             return flotValue;
         }
+
+        static SelectionMode findByFlotValue( String flotValue )
+        {
+            if ( null != flotValue && !"".equals( flotValue ) )
+            {
+                for ( SelectionMode mode : values() )
+                {
+                    if ( mode.getFlotValue().equals( flotValue ) )
+                    {
+                        return mode;
+                    }
+                }
+            }
+            return null;
+        }
     }
 
+    private static final String MODE_KEY = "mode";
+
+    private static final String COLOR_KEY = "color";
+
+    public SelectionOptions()
+    {
+        super();
+    }
+
+    SelectionOptions( JSONObject jsonObj )
+    {
+        super( jsonObj );
+    }
+
+    /**
+     * Set the selection mode.
+     */
     public SelectionOptions setMode( SelectionMode mode )
     {
         assert null != mode : "mode can't be null";
 
-        put( "mode", mode.getFlotValue() );
+        put( MODE_KEY, mode.getFlotValue() );
         return this;
     }
 
-    public SelectionOptions setDragging( boolean dragging )
+    /**
+     * @return the selection mode
+     */
+    public SelectionMode getMode()
     {
-        put( "dragging", dragging );
-        return this;
+        return SelectionMode.findByFlotValue( getString( MODE_KEY ) );
     }
 
+    /**
+     * Set the selection color
+     */
     public SelectionOptions setColor( String color )
     {
-        put( "color", color );
+        put( COLOR_KEY, color );
         return this;
+    }
+
+    /**
+     * @return the selection color
+     */
+    public String getColor()
+    {
+        return getString( COLOR_KEY );
     }
 }

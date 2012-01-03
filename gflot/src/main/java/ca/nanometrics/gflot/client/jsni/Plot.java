@@ -29,6 +29,7 @@ import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.util.JSONHelper;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -45,15 +46,13 @@ public class Plot
 
     public static Plot create( Element container, Series[] series )
     {
-        Plot plot = PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject() );
-        return plot;
+        return PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject() );
     }
 
     public static Plot create( Element container, Series[] series, PlotOptions options )
     {
         return PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject(),
             JSONHelper.getJSONObject( options ).getJavaScriptObject() );
-
     }
 
     public final void setData( Series[] series )
@@ -119,5 +118,10 @@ public class Plot
     public final int getPlotOffsetBottom()
     {
         return PlotImpl.getPlotOffsetBottom( this );
+    }
+
+    public final PlotOptions getPlotOptions()
+    {
+        return new PlotOptions(new JSONObject(PlotImpl.getPlotOptions( this )));
     }
 }

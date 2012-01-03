@@ -109,6 +109,36 @@ public class JSONObjectWrapper
         return str == null ? null : str.stringValue();
     }
 
+    protected String[] getStringArray( String key )
+    {
+        JSONArray array = getArray( key );
+        if ( array == null )
+        {
+            return null;
+        }
+        String[] result = new String[array.size()];
+        for ( int i = 0; i < array.size(); i++ )
+        {
+            JSONString value = array.get( i ).isString();
+            if ( null != value )
+            {
+                result[i] = value.stringValue();
+            }
+        }
+        return result;
+    }
+
+    protected Boolean getBoolean( String key )
+    {
+        JSONValue value = get( key );
+        if ( value == null )
+        {
+            return null;
+        }
+        JSONBoolean str = value.isBoolean();
+        return str == null ? null : str.booleanValue();
+    }
+
     protected JSONNumber getNumber( String key )
     {
         JSONValue val = get( key );

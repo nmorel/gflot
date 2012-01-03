@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,64 @@ package ca.nanometrics.gflot.client.options;
 
 import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
 
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONObject;
+
 /**
  * @author Alexander De Leon
  * @author Mohamed M. El-Kalioby
  */
-public class Markings extends JSONArrayWrapper {
+public class Markings
+    extends JSONArrayWrapper
+{
 
-	public void addMarking(Marking M) {
-		push(M);
-	}
+    public Markings()
+    {
+        super();
+    }
+
+    Markings( JSONArray jsonArray )
+    {
+        super( jsonArray );
+    }
+
+    public Markings addMarking( Marking marking )
+    {
+        push( marking );
+        return this;
+    }
+
+    public Markings addMarkings( Marking[] markings )
+    {
+        pushAll( markings );
+        return this;
+    }
+
+    public Marking getMarking( int index )
+    {
+        if ( index >= size() )
+        {
+            return null;
+        }
+        JSONObject obj = getObject( index );
+        if ( null == obj )
+        {
+            return null;
+        }
+        else
+        {
+            return new Marking( obj );
+        }
+    }
+
+    public Marking[] getMarkings()
+    {
+        Marking[] markings = new Marking[size()];
+        for ( int i = 0; i < size(); i++ )
+        {
+            markings[i] = new Marking( getObject( i ) );
+        }
+        return markings;
+    }
 
 }
