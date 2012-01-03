@@ -22,6 +22,7 @@
 package ca.nanometrics.gflot.client.jsni;
 
 import ca.nanometrics.gflot.client.Series;
+import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
 import ca.nanometrics.gflot.client.event.SelectionListener;
@@ -51,8 +52,35 @@ public class Plot
 
     public static Plot create( Element container, Series[] series, PlotOptions options )
     {
-        return PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject(),
-            JSONHelper.getJSONObject( options ).getJavaScriptObject() );
+        JavaScriptObject optionsJs = null;
+        if ( null == options )
+        {
+            optionsJs = null;
+        }
+        else
+        {
+            optionsJs = JSONHelper.getJSONObject( options ).getJavaScriptObject();
+        }
+        return PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject(), optionsJs );
+    }
+
+    public static Plot create( Element container, JavaScriptObject data, JavaScriptObject options )
+    {
+        return PlotImpl.create( container, data, options );
+    }
+
+    public static void loadDataImages( Series[] series, PlotOptions options, LoadImagesCallback callback )
+    {
+        JavaScriptObject optionsJs = null;
+        if ( null == options )
+        {
+            optionsJs = null;
+        }
+        else
+        {
+            optionsJs = JSONHelper.getJSONObject( options ).getJavaScriptObject();
+        }
+        PlotImpl.loadDataImages( JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject(), optionsJs, callback );
     }
 
     public final void setData( Series[] series )
@@ -122,6 +150,6 @@ public class Plot
 
     public final PlotOptions getPlotOptions()
     {
-        return new PlotOptions(new JSONObject(PlotImpl.getPlotOptions( this )));
+        return new PlotOptions( new JSONObject( PlotImpl.getPlotOptions( this ) ) );
     }
 }

@@ -24,6 +24,7 @@ package ca.nanometrics.gflot.client;
 import ca.nanometrics.gflot.client.options.AbstractSeriesOptions;
 import ca.nanometrics.gflot.client.util.Algorithm;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -31,6 +32,30 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  * @author Alexander De Leon
  */
 public class PlotWithOverviewModel extends PlotModel {
+
+	private static class PopulateCommand implements Command {
+
+		private Command toExecuteAfterAllDataPopulated;
+
+		private int nbSeries;
+
+		private int nbSeriesPopulated;
+
+		PopulateCommand(Command toExecuteAfterAllDataPopulated, int nbSeries) {
+			this.toExecuteAfterAllDataPopulated = toExecuteAfterAllDataPopulated;
+			this.nbSeries = nbSeries;
+			this.nbSeriesPopulated = 0;
+		}
+
+		@Override
+		public void execute() {
+			nbSeriesPopulated++;
+			if (nbSeriesPopulated == nbSeries) {
+				toExecuteAfterAllDataPopulated.execute();
+			}
+		}
+
+	}
 
 	private final PlotModel m_windowModel;
 	private final PlotModel m_overviewModel;
@@ -77,9 +102,14 @@ public class PlotWithOverviewModel extends PlotModel {
 	void setSelection(double x1, double x2, Command toExcuteAfterSelection) {
 		m_selection[0] = x1;
 		m_selection[1] = x2;
-		m_windowModel.clear();
+
+		Command command = null;
+		if (null != toExcuteAfterSelection) {
+			command = new PopulateCommand(toExcuteAfterSelection, getHandlers().size());
+		}
+
 		for (SeriesHandler handler : getHandlers()) {
-			((PlotWithOverviewSeriesHandler) handler).populateWindowSeries(toExcuteAfterSelection);
+			((PlotWithOverviewSeriesHandler) handler).populateWindowSeries(command);
 		}
 	}
 
@@ -123,6 +153,9 @@ public class PlotWithOverviewModel extends PlotModel {
 			super.clear();
 			m_windowHandler.clear();
 			m_overviewHandler.clear();
+			m_lastDataPoint = null;
+			m_firstDataPoint = null;
+			m_lockSelection = false;
 		}
 
 		@Override
@@ -156,9 +189,10 @@ public class PlotWithOverviewModel extends PlotModel {
 			if (x1 < x2) {
 				m_provider.getData(x1, x2, new AsyncCallback<DataPoint[]>() {
 					public void onFailure(Throwable caught) {
-						// log appears even if the (re)draw works
-						// GWT.log("Failed to obtain data for PlotWithOverview",
-						// caught);
+						GWT.log("Failed to obtain data for PlotWithOverview", caught);
+						if (toExcuteAfterSelection != null) {
+							toExcuteAfterSelection.execute();
+						}
 					}
 
 					public void onSuccess(DataPoint[] result) {

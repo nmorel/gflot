@@ -21,6 +21,7 @@
  */
 package ca.nanometrics.gflot.client.jsni;
 
+import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
 import ca.nanometrics.gflot.client.event.SelectionListener;
@@ -36,44 +37,64 @@ public class PlotImpl
 
     static native Plot create( Element container, JavaScriptObject series )
     /*-{
-        return new $wnd.jQuery.plot($wnd.jQuery("#"+container.id), series);
+		return new $wnd.jQuery.plot($wnd.jQuery("#" + container.id), series);
     }-*/;
 
     static native Plot create( Element container, JavaScriptObject series, JavaScriptObject options )
     /*-{
-        return new $wnd.jQuery.plot($wnd.jQuery("#"+container.id), series, options);
+		return new $wnd.jQuery.plot($wnd.jQuery("#" + container.id), series,
+				options);
+    }-*/;
+
+    static native void loadDataImages( JavaScriptObject data, JavaScriptObject options, LoadImagesCallback callback )
+    /*-{
+		$wnd.jQuery.plot.image.loadDataImages(data, options, function() {
+            callback.@ca.nanometrics.gflot.client.event.LoadImagesCallback::onImagesLoaded(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;)(data, options);
+		});
     }-*/;
 
     static native void setData( Plot plot, JavaScriptObject series )
     /*-{
-        plot.setData(series);
+		plot.setData(series);
     }-*/;
 
     static native void draw( Plot plot )
     /*-{
-        plot.draw();
+		plot.draw();
     }-*/;
 
     static native void setupGrid( Plot plot )
     /*-{
-        plot.setupGrid();
+		plot.setupGrid();
     }-*/;
 
     static native void setLinearSelection( Plot plot, double x1, double x2 )
     /*-{
-        plot.setSelection({ 'x1': x1, 'x2': x2});
+		plot.setSelection({
+			'x1' : x1,
+			'x2' : x2
+		});
     }-*/;
 
     static native void setRectangularSelection( Plot plot, double x1, double y1, double x2, double y2 )
     /*-{
-        plot.setSelection({ 'x1': x1, 'y1': y1,  'x2': x2, 'y2': y2});
+		plot.setSelection({
+			'x1' : x1,
+			'y1' : y1,
+			'x2' : x2,
+			'y2' : y2
+		});
     }-*/;
 
     static native void addSelectionListener( Element container, SelectionListener listener )
     /*-{
-        $wnd.jQuery("#"+container.id).bind("selected", function(event, area) {
-            listener.@ca.nanometrics.gflot.client.event.SelectionListener::selected(DDDD)(area.x1, area.y1, area.x2, area.y2);
-        });
+		$wnd
+				.jQuery("#" + container.id)
+				.bind(
+						"selected",
+						function(event, area) {
+							listener.@ca.nanometrics.gflot.client.event.SelectionListener::selected(DDDD)(area.x1, area.y1, area.x2, area.y2);
+						});
     }-*/;
 
     static native void addPlotHoverListener( Element container, PlotHoverListener listener, boolean onlyOnDatapoint, Plot plot )
@@ -100,30 +121,30 @@ public class PlotImpl
 
     static native int getPlotOffsetLeft( Plot plot )
     /*-{
-        var offset = plot.getPlotOffset().left;
-        return (offset === undefined) ? -1 : offset;
+		var offset = plot.getPlotOffset().left;
+		return (offset === undefined) ? -1 : offset;
     }-*/;
 
     static native int getPlotOffsetRight( Plot plot )
     /*-{
-        var offset = plot.getPlotOffset().right;
-        return (offset === undefined) ? -1 : offset;
+		var offset = plot.getPlotOffset().right;
+		return (offset === undefined) ? -1 : offset;
     }-*/;
 
     static native int getPlotOffsetTop( Plot plot )
     /*-{
-        var offset = plot.getPlotOffset().top;
-        return (offset === undefined) ? -1 : offset;
+		var offset = plot.getPlotOffset().top;
+		return (offset === undefined) ? -1 : offset;
     }-*/;
 
     static native int getPlotOffsetBottom( Plot plot )
     /*-{
-        var offset = plot.getPlotOffset().bottom;
-        return (offset === undefined) ? -1 : offset;
+		var offset = plot.getPlotOffset().bottom;
+		return (offset === undefined) ? -1 : offset;
     }-*/;
 
     static native JavaScriptObject getPlotOptions( Plot plot )
     /*-{
-        return plot.getOptions();
+		return plot.getOptions();
     }-*/;
 }

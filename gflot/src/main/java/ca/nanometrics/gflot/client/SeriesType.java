@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -24,20 +24,27 @@ package ca.nanometrics.gflot.client;
 /**
  * @author Alexander De Leon
  */
-public class SeriesType {
+public class SeriesType
+{
 
-	public static final SeriesType LINES = new SeriesType("lines");
-	public static final SeriesType BARS = new SeriesType("bars");
-	public static final SeriesType POINTS = new SeriesType("points");
+    public static final SeriesType LINES = new SeriesType( "lines" );
 
-	private final String m_type;
+    public static final SeriesType BARS = new SeriesType( "bars" );
 
-	private SeriesType(String type) {
-		m_type = type;
-	}
+    public static final SeriesType POINTS = new SeriesType( "points" );
 
-	public String toString() {
-		return m_type;
-	}
+    public static final SeriesType IMAGE = new SeriesType( "images" );
+
+    private final String m_type;
+
+    private SeriesType( String type )
+    {
+        m_type = type;
+    }
+
+    public String toString()
+    {
+        return m_type;
+    }
 
 }

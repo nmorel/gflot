@@ -19,6 +19,8 @@ public class GlobalSeriesOptions
 
     private static final String POINTS_SERIES_KEY = "points";
 
+    private static final String IMAGES_SERIES_KEY = "images";
+
     private static final String SHADOW_SIZE_KEY = "shadowSize";
 
     private LineSeriesOptions lineSeriesOptions;
@@ -26,6 +28,8 @@ public class GlobalSeriesOptions
     private BarSeriesOptions barSeriesOptions;
 
     private PointsSeriesOptions pointsSeriesOptions;
+
+    private ImageSeriesOptions imageSeriesOptions;
 
     public GlobalSeriesOptions()
     {
@@ -37,6 +41,7 @@ public class GlobalSeriesOptions
         lineSeriesOptions = new LineSeriesOptions( getObject( LINE_SERIES_KEY ) );
         barSeriesOptions = new BarSeriesOptions( getObject( BAR_SERIES_KEY ) );
         pointsSeriesOptions = new PointsSeriesOptions( getObject( POINTS_SERIES_KEY ) );
+        imageSeriesOptions = new ImageSeriesOptions( getObject( IMAGES_SERIES_KEY ) );
     }
 
     /**
@@ -91,6 +96,24 @@ public class GlobalSeriesOptions
     public PointsSeriesOptions getPointsSeriesOptions()
     {
         return pointsSeriesOptions;
+    }
+
+    /**
+     * Set global Image series options that will be used unless options are set directly to the series
+     */
+    public GlobalSeriesOptions setImageSeriesOptions( ImageSeriesOptions imageSeriesOptions )
+    {
+        this.imageSeriesOptions = imageSeriesOptions;
+        put( IMAGES_SERIES_KEY, imageSeriesOptions );
+        return this;
+    }
+
+    /**
+     * @return global Points series options
+     */
+    public ImageSeriesOptions getImageSeriesOptions()
+    {
+        return imageSeriesOptions;
     }
 
     /**

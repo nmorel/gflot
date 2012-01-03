@@ -27,7 +27,7 @@ import com.google.gwt.json.client.JSONObject;
  * @author AlexanderDeleon
  */
 public class LineSeriesOptions
-    extends AbstractSeriesOptions<LineSeriesOptions>
+    extends AbstractBasicSeriesOptions<LineSeriesOptions>
 {
 
     private static final String STEPS_KEY = "steps";
