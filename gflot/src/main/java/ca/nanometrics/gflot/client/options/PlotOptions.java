@@ -70,8 +70,10 @@ public class PlotOptions
         selectionOptions = new SelectionOptions( getObject( SELECTION_KEY ) );
         gridOptions = new GridOptions( getObject( GRID_KEY ) );
         legendOptions = new LegendOptions( getObject( LEGEND_KEY ) );
-        xAxisOptions = AbstractAxisOptions.createAxisOptions( getObject( X_AXIS_KEY ) );
-        yAxisOptions = AbstractAxisOptions.createAxisOptions( getObject( Y_AXIS_KEY ) );
+
+        // TODO change this when the support for multiples axes is added
+        xAxisOptions = AbstractAxisOptions.createAxisOptions( getArray( "xaxes" ).get( 0 ).isObject() );
+        yAxisOptions = AbstractAxisOptions.createAxisOptions( getArray( "yaxes" ).get( 0 ).isObject() );
     }
 
     /**
