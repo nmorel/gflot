@@ -2,12 +2,17 @@ package ca.nanometrics.gflot.sample.client;
 
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
+import ca.nanometrics.gflot.client.PlotItem;
 import ca.nanometrics.gflot.client.PlotModel;
+import ca.nanometrics.gflot.client.PlotPosition;
 import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
+import ca.nanometrics.gflot.client.event.PlotHoverListener;
+import ca.nanometrics.gflot.client.jsni.Plot;
 import ca.nanometrics.gflot.client.options.AbstractAxisOptions.AxisPosition;
 import ca.nanometrics.gflot.client.options.AxisOptions;
+import ca.nanometrics.gflot.client.options.GridOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions.LegendPosition;
 import ca.nanometrics.gflot.client.options.PlotOptions;
@@ -37,6 +42,7 @@ public class MultipleAxesExample
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
 
+        plotOptions.setGridOptions( new GridOptions().setHoverable( true ) );
         plotOptions.setLegendOptions( new LegendOptions().setPosition( LegendPosition.SOUTH_WEST ) );
 
         // add tick formatter to the options
@@ -53,6 +59,7 @@ public class MultipleAxesExample
                 }
             } ) );
 
+
         // create a series
         SeriesHandler oilPrices = model.addSeries( "Oil price ($)" );
         addOilPricesData( oilPrices );
@@ -66,6 +73,25 @@ public class MultipleAxesExample
         // put it on a panel
         FlowPanel panel = new FlowPanel();
         panel.add( plot );
+
+        final Label labelPosition = new Label( "position:" );
+        panel.add( labelPosition );
+
+        final Label labelItem = new Label( "item:" );
+        panel.add( labelItem );
+
+        // add hover listener
+        plot.addHoverListener( new PlotHoverListener()
+        {
+            public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
+            {
+                if ( position != null )
+                {
+                    labelPosition.setText( "position: (x=" + position.getX() + ", y1=" + position.getY() + ", y2=" + position.getY( 2 ) + ")" );
+                }
+            }
+        }, false );
+
         panel
             .add( new HTML(
                 "<p>Multiple axis support showing the raw oil price in US $/barrel of crude oil vs. the exchange rate from US $ to €.</p><p>As illustrated, you can put in multiple axes if you need to. For each data series, simply specify the axis number. In the options, you can then configure where you want the extra axes to appear.</p>" ) );

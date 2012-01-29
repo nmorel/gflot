@@ -45,6 +45,9 @@ public class PlotItem
         super( obj );
     }
 
+    /**
+     * @return the datapoint hovered
+     */
     public DataPoint getDataPoint()
     {
         JSONArray array = getArray( DATAPOINT );
@@ -55,11 +58,17 @@ public class PlotItem
         return new DataPoint( array );
     }
 
+    /**
+     * @return the index of the data point inside the data array
+     */
     public Integer getDataIndex()
     {
         return getInteger( DATA_INDEX );
     }
 
+    /**
+     * @return the series hovered
+     */
     public Series getSeries()
     {
         JSONObject obj = getObject( SERIES );
@@ -70,16 +79,25 @@ public class PlotItem
         return new Series( obj );
     }
 
+    /**
+     * @return the index of the series, starting at 0
+     */
     public Integer getSeriesIndex()
     {
         return getInteger( SERIES_INDEX );
     }
 
+    /**
+     * @return the global screen x coordinates
+     */
     public Integer getPageX()
     {
         return getInteger( PAGE_X );
     }
 
+    /**
+     * @return the global screen y coordinates
+     */
     public Integer getPageY()
     {
         return getInteger( PAGE_Y );
