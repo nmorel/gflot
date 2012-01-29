@@ -6,17 +6,16 @@ import com.google.gwt.json.client.JSONObject;
 
 /**
  * @author Mohamed M. El-Kalioby
- * @since Septmeber 21, 2009
+ * @since September 21, 2009
  */
 public class Marking
     extends JSONObjectWrapper
 {
-    private static final String X_AXIS_KEY = "xaxis";
-
-    private static final String Y_AXIS_KEY = "yaxis";
-
+    private static final String X_AXIS_KEY_PREFIX = "x";
+    private static final String X_AXIS_KEY_SUFFIX = "axis";
+    private static final String Y_AXIS_KEY_PREFIX = "y";
+    private static final String Y_AXIS_KEY_SUFFIX = "axis";
     private static final String COLOR_KEY = "color";
-
     private static final String LINE_WIDTH_KEY = "lineWidth";
 
     public Marking()
@@ -30,11 +29,29 @@ public class Marking
     }
 
     /**
-     * Set the range for x axis
+     * Set the range for the first x axis
      */
-    public Marking setX( Range X )
+    public Marking setX( Range xRange )
     {
-        put( X_AXIS_KEY, X );
+        return setX( xRange, 1 );
+    }
+
+    /**
+     * Set the range for x axis number xAxisNumber
+     *
+     * @param xAxisNumber number of the x axis, starting at 1
+     */
+    public Marking setX( Range xRange, int xAxisNumber )
+    {
+        assert xAxisNumber > 0 : "xAxisNumber starts at 1";
+        if ( xAxisNumber == 1 )
+        {
+            put( X_AXIS_KEY_PREFIX + X_AXIS_KEY_SUFFIX, xRange );
+        }
+        else
+        {
+            put( X_AXIS_KEY_PREFIX + xAxisNumber + X_AXIS_KEY_SUFFIX, xRange );
+        }
         return this;
     }
 
@@ -43,7 +60,24 @@ public class Marking
      */
     public Range getX()
     {
-        JSONObject obj = getObject( X_AXIS_KEY );
+        return getX( 1 );
+    }
+
+    /**
+     * @return the range for x axis
+     */
+    public Range getX( int xAxisNumber )
+    {
+        assert xAxisNumber > 0 : "xAxisNumber starts at 1";
+        JSONObject obj = null;
+        if ( xAxisNumber == 1 )
+        {
+            obj = getObject( X_AXIS_KEY_PREFIX + X_AXIS_KEY_SUFFIX );
+        }
+        else
+        {
+            obj = getObject( X_AXIS_KEY_PREFIX + xAxisNumber + X_AXIS_KEY_SUFFIX );
+        }
         if ( null == obj )
         {
             return null;
@@ -55,11 +89,29 @@ public class Marking
     }
 
     /**
-     * Set the range for y axis
+     * Set the range for the first y axis
      */
-    public Marking setY( Range Y )
+    public Marking setY( Range yRange )
     {
-        put( Y_AXIS_KEY, Y );
+        return setY( yRange, 1 );
+    }
+
+    /**
+     * Set the range for y axis number yAxisNumber
+     *
+     * @param yAxisNumber number of the y axis, starting at 1
+     */
+    public Marking setY( Range yRange, int yAxisNumber )
+    {
+        assert yAxisNumber > 0 : "yAxisNumber starts at 1";
+        if ( yAxisNumber == 1 )
+        {
+            put( Y_AXIS_KEY_PREFIX + Y_AXIS_KEY_SUFFIX, yRange );
+        }
+        else
+        {
+            put( Y_AXIS_KEY_PREFIX + yAxisNumber + Y_AXIS_KEY_SUFFIX, yRange );
+        }
         return this;
     }
 
@@ -68,7 +120,24 @@ public class Marking
      */
     public Range getY()
     {
-        JSONObject obj = getObject( Y_AXIS_KEY );
+        return getY( 1 );
+    }
+
+    /**
+     * @return the range for y axis
+     */
+    public Range getY( int yAxisNumber )
+    {
+        assert yAxisNumber > 0 : "yAxisNumber starts at 1";
+        JSONObject obj = null;
+        if ( yAxisNumber == 1 )
+        {
+            obj = getObject( Y_AXIS_KEY_PREFIX + Y_AXIS_KEY_SUFFIX );
+        }
+        else
+        {
+            obj = getObject( Y_AXIS_KEY_PREFIX + yAxisNumber + Y_AXIS_KEY_SUFFIX );
+        }
         if ( null == obj )
         {
             return null;
