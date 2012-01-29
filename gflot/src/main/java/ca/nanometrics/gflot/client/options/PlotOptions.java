@@ -36,9 +36,9 @@ public class PlotOptions
 
     private static final String LEGEND_KEY = "legend";
 
-    private static final String X_AXIS_KEY = "xaxis";
+    private static final String X_AXES_KEY = "xaxes";
 
-    private static final String Y_AXIS_KEY = "yaxis";
+    private static final String Y_AXES_KEY = "yaxes";
 
     private static final String SERIES_KEY = "series";
 
@@ -48,9 +48,9 @@ public class PlotOptions
 
     private LegendOptions legendOptions;
 
-    private AbstractAxisOptions<?> xAxisOptions;
+    private AxesOptions xAxesOptions;
 
-    private AbstractAxisOptions<?> yAxisOptions;
+    private AxesOptions yAxesOptions;
 
     private SelectionOptions selectionOptions;
 
@@ -71,9 +71,8 @@ public class PlotOptions
         gridOptions = new GridOptions( getObject( GRID_KEY ) );
         legendOptions = new LegendOptions( getObject( LEGEND_KEY ) );
 
-        // TODO change this when the support for multiples axes is added
-        xAxisOptions = AbstractAxisOptions.createAxisOptions( getArray( "xaxes" ).get( 0 ).isObject() );
-        yAxisOptions = AbstractAxisOptions.createAxisOptions( getArray( "yaxes" ).get( 0 ).isObject() );
+        xAxesOptions = new AxesOptions( getArray( X_AXES_KEY ) );
+        yAxesOptions = new AxesOptions( getArray( Y_AXES_KEY ) );
     }
 
     /**
@@ -120,39 +119,111 @@ public class PlotOptions
     }
 
     /**
-     * Set the options for x axis
+     * Add options for a x axis
      */
-    public PlotOptions setXAxisOptions( AbstractAxisOptions<?> xAxisOptions )
+    public PlotOptions addXAxisOptions( AbstractAxisOptions<?> xAxisOptions )
     {
-        this.xAxisOptions = xAxisOptions;
-        put( X_AXIS_KEY, xAxisOptions );
+        if ( null == xAxesOptions )
+        {
+            setXAxesOptions( new AxesOptions() );
+        }
+        xAxesOptions.addAxisOptions( xAxisOptions );
+
         return this;
     }
 
     /**
-     * @return the options for x axis
+     * Return first x axis options
      */
     public AbstractAxisOptions<?> getXAxisOptions()
     {
-        return xAxisOptions;
+        return getXAxisOptions( 1 );
     }
 
     /**
-     * Set the options for y axis
+     * Return x axis options at given index, starting at 1
      */
-    public PlotOptions setYAxisOptions( AbstractAxisOptions<?> yAxisOptions )
+    public AbstractAxisOptions<?> getXAxisOptions( int xAxisNumber )
     {
-        this.yAxisOptions = yAxisOptions;
-        put( Y_AXIS_KEY, yAxisOptions );
+        assert xAxisNumber > 0 : "xAxisNumber starts at 1";
+        if ( null == xAxesOptions )
+        {
+            return null;
+        }
+        return xAxesOptions.getAxisOptions( xAxisNumber );
+    }
+
+    /**
+     * Set the options for x axes
+     */
+    public PlotOptions setXAxesOptions( AxesOptions xAxesOptions )
+    {
+        this.xAxesOptions = xAxesOptions;
+
+        put( X_AXES_KEY, xAxesOptions );
         return this;
     }
 
     /**
-     * @return the options for y axis
+     * @return the options for x axes
      */
-    public AbstractAxisOptions<?> getyAxisOptions()
+    public AxesOptions getXAxesOptions()
     {
-        return yAxisOptions;
+        return xAxesOptions;
+    }
+
+    /**
+     * Add y axis options
+     */
+    public PlotOptions addYAxisOptions( AbstractAxisOptions<?> yAxisOptions )
+    {
+        if ( null == yAxesOptions )
+        {
+            setYAxesOptions( new AxesOptions() );
+        }
+        yAxesOptions.addAxisOptions( yAxisOptions );
+
+        return this;
+    }
+
+    /**
+     * Return first y axis options
+     */
+    public AbstractAxisOptions<?> getYAxisOptions()
+    {
+        return getYAxisOptions( 1 );
+    }
+
+    /**
+     * Return y axis options at given index, starting at 1
+     */
+    public AbstractAxisOptions<?> getYAxisOptions( int yAxisNumber )
+    {
+        assert yAxisNumber > 0 : "yAxisNumber starts at 1";
+        if ( null == yAxesOptions )
+        {
+            return null;
+        }
+        return yAxesOptions.getAxisOptions( yAxisNumber );
+    }
+
+    /**
+     * Set the options for y axes
+     */
+    public PlotOptions setYAxesOptions( AxesOptions yAxesOptions )
+    {
+        this.yAxesOptions = yAxesOptions;
+
+        put( Y_AXES_KEY, yAxesOptions );
+        return this;
+    }
+
+    /**
+     * @return the options for y axes
+     */
+    public AxesOptions getYAxesOptions()
+    {
+        return yAxesOptions;
     }
 
     /**

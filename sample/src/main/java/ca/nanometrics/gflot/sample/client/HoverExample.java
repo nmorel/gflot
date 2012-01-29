@@ -44,7 +44,7 @@ public class HoverExample implements GFlotExample {
         .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
         .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
 		// add tick formatter to the options
-		plotOptions.setXAxisOptions(new AxisOptions().setTicks(12).setTickFormatter(new TickFormatter() {
+		plotOptions.addXAxisOptions(new AxisOptions().setTicks(12).setTickFormatter(new TickFormatter() {
 			public String formatTickValue(double tickValue, Axis axis) {
 				return MONTH_NAMES[(int) (tickValue - 1)];
 			}

@@ -27,8 +27,8 @@ public class ImageExample
         final PlotOptions plotOptions = new PlotOptions();
 
         // add tick formatter to the options
-        plotOptions.setXAxisOptions( new AxisOptions().setMinimum( -8 ).setMaximum( 4 ) );
-        plotOptions.setYAxisOptions( new AxisOptions().setMinimum( -8 ).setMaximum( 4 ) );
+        plotOptions.addXAxisOptions( new AxisOptions().setMinimum( -8 ).setMaximum( 4 ) );
+        plotOptions.addYAxisOptions( new AxisOptions().setMinimum( -8 ).setMaximum( 4 ) );
 
         // create a series
         SeriesHandler handlerImage = model.addSeries( "Image series" );

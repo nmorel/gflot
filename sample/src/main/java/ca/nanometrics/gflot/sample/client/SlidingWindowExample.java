@@ -41,7 +41,7 @@ public class SlidingWindowExample
         plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
             .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
             .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
-        plotOptions.setXAxisOptions( new TimeSeriesAxisOptions() );
+        plotOptions.addXAxisOptions( new TimeSeriesAxisOptions() );
 
         PlotOptions overviewPlotOptions =
             new PlotOptions()
@@ -50,7 +50,7 @@ public class SlidingWindowExample
                     new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) )
                         .setShadowSize( 0d ) )
                 .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) )
-                .setXAxisOptions( new TimeSeriesAxisOptions() );
+                .addXAxisOptions( new TimeSeriesAxisOptions() );
 
         final SeriesHandler series = model.addSeries( "Random Series", "#FF9900" );
 

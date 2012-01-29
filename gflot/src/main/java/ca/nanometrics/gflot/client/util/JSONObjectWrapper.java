@@ -89,7 +89,7 @@ public class JSONObjectWrapper
     protected Double getDouble( String key )
     {
         JSONNumber num = getNumber( key );
-        return num == null ? null : new Double( num.doubleValue() );
+        return num == null ? null : num.doubleValue();
     }
 
     protected Integer getInteger( String key )

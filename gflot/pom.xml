@@ -53,12 +53,33 @@
       <id>gflot-repo-snapshot</id>
       <url>svn:https://gflot.googlecode.com/svn/repo/snapshots</url>
     </snapshotRepository>
+    <!-- <snapshotRepository> -->
+    <!-- <id>sonatype-nexus-snapshots</id> -->
+    <!-- <name>Sonatype Nexus Snapshots</name> -->
+    <!-- <url>https://oss.sonatype.org/content/repositories/snapshots/</url> -->
+    <!-- </snapshotRepository> -->
+    <!-- <repository> -->
+    <!-- <id>sonatype-nexus-staging</id> -->
+    <!-- <name>Nexus Release Repository</name> -->
+    <!-- <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url> -->
+    <!-- </repository> -->
   </distributionManagement>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
+
+    <!-- Plugins version -->
+    <maven-compiler.version>2.3.2</maven-compiler.version>
+    <maven-eclipse.version>2.8</maven-eclipse.version>
+    <maven-deploy.version>2.7</maven-deploy.version>
+    <maven-svn-wagon.version>1.4</maven-svn-wagon.version>
+    <maven-source.version>2.1.2</maven-source.version>
+    <maven-javadoc.version>2.8.1</maven-javadoc.version>
+    <maven-gpg.version>1.4</maven-gpg.version>
+
+    <!-- GWT dependencies version -->
     <gwt.version>2.0.0</gwt.version>
   </properties>
 
@@ -93,7 +114,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>${maven-compiler.version}</version>
         <configuration>
           <encoding>${project.build.sourceEncoding}</encoding>
           <source>${maven.compiler.source}</source>
@@ -104,7 +125,7 @@
       <!-- Mark the project for Google Plugin for Eclipse (GPE) -->
       <plugin>
         <artifactId>maven-eclipse-plugin</artifactId>
-        <version>2.8</version>
+        <version>${maven-eclipse.version}</version>
         <configuration>
           <downloadSources>true</downloadSources>
           <downloadJavadocs>true</downloadJavadocs>
@@ -125,15 +146,67 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.7</version>
+        <version>${maven-deploy.version}</version>
         <dependencies>
           <dependency>
             <groupId>com.google.code.maven-svn-wagon</groupId>
             <artifactId>maven-svn-wagon</artifactId>
-            <version>1.4</version>
+            <version>${maven-svn-wagon.version}</version>
           </dependency>
         </dependencies>
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>${maven-source.version}</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${maven-javadoc.version}</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>${maven-gpg.version}</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

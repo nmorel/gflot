@@ -47,7 +47,7 @@ public class PlotWithInteractiveLegendExample
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
 
         // add tick formatter to the options
-        plotOptions.setXAxisOptions( new TimeSeriesAxisOptions().setTickSize( 2, TickTimeUnit.MONTH ).setMonthNames( MONTH_NAMES ) );
+        plotOptions.addXAxisOptions( new TimeSeriesAxisOptions().setTickSize( 2, TickTimeUnit.MONTH ).setMonthNames( MONTH_NAMES ) );
 
         // create a series
         // Note: you need to specified the colors in other for the legend to

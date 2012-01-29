@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -27,36 +27,47 @@ import com.google.gwt.json.client.JSONObject;
 
 /**
  * Model of a plot axis.
- * 
+ *
  * @author David Easton
  */
-public class Axis extends JSONObjectWrapper {
-	private static final String MIN = "min";
-	private static final String MAX = "max";
-	private static final String TICK_DECIMALS = "tickDecimals";
-	private static final String TICK_SIZE = "tickSize";
+public class Axis
+    extends JSONObjectWrapper
+{
+    private static final String MIN = "min";
 
-	protected Axis() {
-		super();
-	}
+    private static final String MAX = "max";
 
-	protected Axis(JSONObject object) {
-		super(object);
-	}
+    private static final String TICK_DECIMALS = "tickDecimals";
 
-	public Double getMinimumValue() {
-		return super.getDouble(MIN);
-	}
+    private static final String TICK_SIZE = "tickSize";
 
-	public Double getMaximumValue() {
-		return super.getDouble(MAX);
-	}
+    protected Axis()
+    {
+        super();
+    }
 
-	public Integer getTickDecimals() {
-		return super.getInteger(TICK_DECIMALS);
-	}
+    protected Axis( JSONObject object )
+    {
+        super( object );
+    }
 
-	public Integer getTickSize() {
-		return super.getInteger(TICK_SIZE);
-	}
+    public Double getMinimumValue()
+    {
+        return super.getDouble( MIN );
+    }
+
+    public Double getMaximumValue()
+    {
+        return super.getDouble( MAX );
+    }
+
+    public Integer getTickDecimals()
+    {
+        return super.getInteger( TICK_DECIMALS );
+    }
+
+    public Integer getTickSize()
+    {
+        return super.getInteger( TICK_SIZE );
+    }
 }

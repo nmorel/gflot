@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -24,53 +24,63 @@ package ca.nanometrics.gflot.client;
 /**
  * @author Alexander De Leon
  */
-public abstract class PlotModelStrategy {
+public abstract class PlotModelStrategy
+{
 
-	/**
-	 * A plot model strategy that allows unlimited amount of datapoints.
-	 */
-	public static PlotModelStrategy defaultStrategy() {
-		return new PlotModelStrategy() {
-			SeriesData createSeriesData() {
-				return new SeriesData();
-			}
-		};
-	}
+    /**
+     * A plot model strategy that allows unlimited amount of datapoints.
+     */
+    public static PlotModelStrategy defaultStrategy()
+    {
+        return new PlotModelStrategy()
+        {
+            SeriesData createSeriesData()
+            {
+                return new SeriesData();
+            }
+        };
+    }
 
-	public static PlotModelStrategy downSamplingStrategy(final int capacity) {
-		return downSamplingStrategy(capacity, 0);
-	}
+    public static PlotModelStrategy downSamplingStrategy( final int capacity )
+    {
+        return downSamplingStrategy( capacity, 0 );
+    }
 
-	public static PlotModelStrategy downSamplingStrategy(final int capacity,
-			final long maximumXValueSpan) {
-		return new PlotModelStrategy() {
-			SeriesData createSeriesData() {
-				if (maximumXValueSpan <= 0) {
-					return new DownsamplingSeriesData(capacity);
-				}
-				return new FixedSpanDownsamplingSeriesData(capacity,
-						maximumXValueSpan);
-			}
-		};
-	}
+    public static PlotModelStrategy downSamplingStrategy( final int capacity, final long maximumXValueSpan )
+    {
+        return new PlotModelStrategy()
+        {
+            SeriesData createSeriesData()
+            {
+                if ( maximumXValueSpan <= 0 )
+                {
+                    return new DownsamplingSeriesData( capacity );
+                }
+                return new FixedSpanDownsamplingSeriesData( capacity, maximumXValueSpan );
+            }
+        };
+    }
 
-	public static PlotModelStrategy slidingWindowStrategy(final int capacity,
-			final long maximumXValueSpan) {
-		return new PlotModelStrategy() {
-			SeriesData createSeriesData() {
-				if (maximumXValueSpan <= 0) {
-					return new FixedSizeSeriesData(capacity);
-				}
-				return new FixedSpanFixedSizeSeriesData(capacity,
-						maximumXValueSpan);
-			}
-		};
-	}
+    public static PlotModelStrategy slidingWindowStrategy( final int capacity, final long maximumXValueSpan )
+    {
+        return new PlotModelStrategy()
+        {
+            SeriesData createSeriesData()
+            {
+                if ( maximumXValueSpan <= 0 )
+                {
+                    return new FixedSizeSeriesData( capacity );
+                }
+                return new FixedSpanFixedSizeSeriesData( capacity, maximumXValueSpan );
+            }
+        };
+    }
 
-	public static PlotModelStrategy slidingWindowStrategy(final int capacity) {
-		return slidingWindowStrategy(capacity, 0);
-	}
+    public static PlotModelStrategy slidingWindowStrategy( final int capacity )
+    {
+        return slidingWindowStrategy( capacity, 0 );
+    }
 
-	abstract SeriesData createSeriesData();
+    abstract SeriesData createSeriesData();
 
 }

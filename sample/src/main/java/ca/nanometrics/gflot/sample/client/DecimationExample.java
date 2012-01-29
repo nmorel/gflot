@@ -52,7 +52,7 @@ public class DecimationExample
                 return label + " formated";
             }
         } ) );
-        plotOptions.setXAxisOptions( new AxisOptions().setShow( false ) );
+        plotOptions.addXAxisOptions( new AxisOptions().setShow( false ) );
 
         final SeriesHandler series = model.addSeries( "Random Series", "#003366" );
 

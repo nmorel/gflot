@@ -28,7 +28,6 @@ import ca.nanometrics.gflot.client.options.AbstractSeriesOptions;
  */
 public class SeriesHandler
 {
-
     private final Series m_series;
 
     private SeriesData m_data;
@@ -47,6 +46,28 @@ public class SeriesHandler
     public void clear()
     {
         m_data.clear();
+    }
+
+    /**
+     * Bind this series to a different X axis.
+     *
+     * @param axis the axis number such as 2, 3, etc. Starting at 1.
+     */
+    public void setXAxis( int axis )
+    {
+        assert axis > 0 : "axis starts at 1";
+        m_series.setXAxis( axis );
+    }
+
+    /**
+     * Bind this series to a different Y axis.
+     *
+     * @param axis the axis number such as 2, 3, etc. Starting at 1.
+     */
+    public void setYAxis( int axis )
+    {
+        assert axis > 0 : "axis starts at 1";
+        m_series.setYAxis( axis );
     }
 
     public void setOptions( SeriesType type, AbstractSeriesOptions<?> options )

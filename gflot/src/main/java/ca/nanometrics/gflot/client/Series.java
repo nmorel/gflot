@@ -73,11 +73,34 @@ public class Series
     }
 
     /**
+     * Binds this series to a different X axis, i.e. "xaxis: 2"
+     *
+     * @param axis the axis number such as 2, 3, etc.
+     */
+    public Series setXAxis( int axis )
+    {
+        put( "xaxis", axis );
+        return this;
+    }
+
+    /**
+     * Binds this series to a different Y axis, i.e. "yaxis: 2"
+     *
+     * @param axis the axis number such as 2, 3, etc.
+     */
+    public Series setYAxis( int axis )
+    {
+        put( "yaxis", axis );
+        return this;
+    }
+
+    /**
      * Set the color. If you don't specify color, the series will get a color from the auto-generated colors.
      */
-    public void setColor( String color )
+    public Series setColor( String color )
     {
         put( "color", color );
+        return this;
     }
 
     /**
@@ -85,9 +108,10 @@ public class Series
      * the user add and remove series, in which case you can hard-code the color index to prevent the colors from
      * jumping around between the series.
      */
-    public void setColor( int color )
+    public Series setColor( int color )
     {
         put( "color", color );
+        return this;
     }
 
     /**
@@ -117,9 +141,10 @@ public class Series
      * Set the label. The label is used for the legend, if you don't specify one, the series will not show up in the
      * legend.
      */
-    public void setLabel( String label )
+    public Series setLabel( String label )
     {
         put( "label", label );
+        return this;
     }
 
     /**
@@ -133,9 +158,10 @@ public class Series
     /**
      * Set the size of shadows in pixels. Set it to 0 to remove shadows.
      */
-    public void setShadowSize( int shadowSize )
+    public Series setShadowSize( int shadowSize )
     {
         put( "shadowSize", shadowSize );
+        return this;
     }
 
     public Integer getShadowSize()
@@ -143,9 +169,12 @@ public class Series
         return getInteger( "shadowSize" );
     }
 
-    public void setSeriesOptions( SeriesType type, AbstractSeriesOptions<?> options )
+    public Series setSeriesOptions( SeriesType type, AbstractSeriesOptions<?> options )
     {
-        put( type.toString(), options );
+        assert null != type : "type can't be null";
+
+        put( type.getType(), options );
+        return this;
     }
 
     /**

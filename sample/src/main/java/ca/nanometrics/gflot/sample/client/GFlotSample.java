@@ -38,6 +38,7 @@ public class GFlotSample
         addExample( new DecimationExample() );
         addExample( new MarkingsExample() );
         addExample( new ImageExample() );
+        addExample( new MultipleAxesExample() );
     }
 
     private void addExample( GFlotExample example )

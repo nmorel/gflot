@@ -31,7 +31,7 @@ public class SimplePlotExample
         PlotOptions plotOptions = new PlotOptions();
 
         // add tick formatter to the options
-        plotOptions.setXAxisOptions( new AxisOptions().setTicks( 12 ).setTickFormatter( new TickFormatter()
+        plotOptions.addXAxisOptions( new AxisOptions().setTicks( 12 ).setTickFormatter( new TickFormatter()
         {
             public String formatTickValue( double tickValue, Axis axis )
             {

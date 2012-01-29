@@ -32,84 +32,102 @@ import com.google.gwt.json.client.JSONNumber;
 /**
  * @author AlexanderDeleon
  */
-public class SeriesData extends JSONArrayWrapper {
-	/**
-	 * default constructor
-	 */
-	public SeriesData() {
-		// empty
-	}
+public class SeriesData
+    extends JSONArrayWrapper
+{
+    /**
+     * default constructor
+     */
+    public SeriesData()
+    {
+        // empty
+    }
 
-	public SeriesData(DataPoint[] points) {
-		for (int i = 0; i < points.length; i++) {
-			add(points[i]);
-		}
-	}
+    public SeriesData( DataPoint[] points )
+    {
+        for ( int i = 0; i < points.length; i++ )
+        {
+            add( points[i] );
+        }
+    }
 
-	protected SeriesData(JSONArray array) {
-		super(array);
-	}
+    protected SeriesData( JSONArray array )
+    {
+        super( array );
+    }
 
-	public void add(double x, double y) {
-		push(new DataPoint(x, y));
-	}
+    public void add( double x, double y )
+    {
+        push( new DataPoint( x, y ) );
+    }
 
-	public void add(DataPoint dataPoint) {
-		push(dataPoint);
-	}
+    public void add( DataPoint dataPoint )
+    {
+        push( dataPoint );
+    }
 
-	public int size() {
-		return super.size();
-	}
+    public int size()
+    {
+        return super.size();
+    }
 
-	public boolean isEmpty() {
-		return size() == 0;
-	}
+    public boolean isEmpty()
+    {
+        return size() == 0;
+    }
 
-	public double getX(int index) {
-		if ((JSONArray) super.get(index) == null) {
-			System.out.println("null");
-		}
-		return ((JSONNumber) ((JSONArray) super.get(index)).get(0)).doubleValue();
-	}
+    public double getX( int index )
+    {
+        return ( (JSONNumber) ( (JSONArray) super.get( index ) ).get( 0 ) ).doubleValue();
+    }
 
-	public double getY(int index) {
-		return ((JSONNumber) ((JSONArray) super.get(index)).get(1)).doubleValue();
-	}
+    public double getY( int index )
+    {
+        return ( (JSONNumber) ( (JSONArray) super.get( index ) ).get( 1 ) ).doubleValue();
+    }
 
-	public SeriesData slice(int start) {
-		return slice(start, size() - 1);
-	}
+    public SeriesData slice( int start )
+    {
+        return slice( start, size() - 1 );
+    }
 
-	public SeriesData slice(int start, int end) {
-		SeriesData newData = new SeriesData();
-		for (int j = start; j <= end; j++) {
-			newData.add(new DataPoint(getX(j), getY(j)));
-		}
-		return newData;
-	}
+    public SeriesData slice( int start, int end )
+    {
+        SeriesData newData = new SeriesData();
+        for ( int j = start; j <= end; j++ )
+        {
+            newData.add( new DataPoint( getX( j ), getY( j ) ) );
+        }
+        return newData;
+    }
 
-	public DataPoint[] getDatapoints() {
-		List<DataPoint> list = new ArrayList<DataPoint>(size());
-		for (int i = 0; i < size(); i++) {
-			JSONArray array = getArray(i);
-			if (array != null) {
-				DataPoint datapoint = new DataPoint(array);
-				list.add(datapoint);
-			}
-		}
-		return list.toArray(new DataPoint[list.size()]);
-	}
+    public DataPoint[] getDatapoints()
+    {
+        List<DataPoint> list = new ArrayList<DataPoint>( size() );
+        for ( int i = 0; i < size(); i++ )
+        {
+            JSONArray array = getArray( i );
+            if ( array != null )
+            {
+                DataPoint datapoint = new DataPoint( array );
+                list.add( datapoint );
+            }
+        }
+        return list.toArray( new DataPoint[list.size()] );
+    }
 
-	public void clear() {
-		super.clear();
-	}
+    public void clear()
+    {
+        super.clear();
+    }
 
-	protected void setData(SeriesData data) {
-		DataPoint[] points = data.getDatapoints();
-		super.clear();
-		for (DataPoint point : points) {
-			super.push(point);
-		}
-	}
+    protected void setData( SeriesData data )
+    {
+        DataPoint[] points = data.getDatapoints();
+        super.clear();
+        for ( DataPoint point : points )
+        {
+            super.push( point );
+        }
+    }
 }

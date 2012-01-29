@@ -33,60 +33,66 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @author Alexander De Leon
  */
-public class PlotWithRightInteractiveLegend extends PlotWithInteractiveLegend {
+public class PlotWithRightInteractiveLegend
+    extends PlotWithInteractiveLegend
+{
 
-	private class RightLegendItem extends DefaultLegendItem {
+    private class RightLegendItem
+        extends DefaultLegendItem
+    {
+        public RightLegendItem( String color, String label )
+        {
+            super( color, label );
+        }
 
-		public RightLegendItem(String color, String label) {
-			super(color, label);
-		}
+        @Override
+        protected void init()
+        {
+            FlexTable table = new FlexTable();
+            table.setWidth( "100%" );
 
-		@Override
-		protected void init() {
+            HTML colorBand = new HTML( "<div style=\"width: 100%; height: " + COLOR_BAND_HEIGHT + "; background-color: " + color + ";\"></div>" );
+            table.setWidget( 0, 0, colorBand );
+            table.getFlexCellFormatter().setColSpan( 0, 0, 2 );
 
-			FlexTable table = new FlexTable();
-			table.setWidth("100%");
+            checkBox = new CheckBox();
+            checkBox.setValue( true );
+            table.setWidget( 1, 0, checkBox );
+            table.getCellFormatter().setHorizontalAlignment( 1, 0, HasHorizontalAlignment.ALIGN_LEFT );
 
-			HTML colorBand = new HTML("<div style=\"width: 100%; height: " + COLOR_BAND_HEIGHT + "; background-color: " + color + ";\"></div>");
-			table.setWidget(0, 0, colorBand);
-			table.getFlexCellFormatter().setColSpan(0, 0, 2);
+            m_labelsPanel = new HorizontalPanel();
+            m_labelsPanel.add( new Label( label ) );
+            table.setWidget( 1, 1, m_labelsPanel );
+            table.getCellFormatter().setHorizontalAlignment( 1, 1, HasHorizontalAlignment.ALIGN_LEFT );
+            table.getCellFormatter().setWidth( 1, 1, "100%" );
 
-			checkBox = new CheckBox();
-			checkBox.setValue(true);
-			table.setWidget(1, 0, checkBox);
-			table.getCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_LEFT);
+            initWidget( table );
+        }
+    }
 
-			m_labelsPanel = new HorizontalPanel();
-			m_labelsPanel.add(new Label(label));
-			table.setWidget(1, 1, m_labelsPanel);
-			table.getCellFormatter().setHorizontalAlignment(1, 1, HasHorizontalAlignment.ALIGN_LEFT);
-			table.getCellFormatter().setWidth(1, 1, "100%");
+    public PlotWithRightInteractiveLegend( PlotWidget plot )
+    {
+        super( plot );
+    }
 
-			initWidget(table);
-		}
+    @Override
+    protected Widget createUi()
+    {
+        HorizontalPanel panel = new HorizontalPanel();
+        Widget plotWidget = m_plot.getWidget();
 
-	}
+        m_legendPanel = new VerticalPanel();
 
-	public PlotWithRightInteractiveLegend(PlotWidget plot) {
-		super(plot);
-	}
+        panel.add( plotWidget );
+        panel.add( m_legendPanel );
 
-	@Override
-	protected Widget createUi() {
-		HorizontalPanel panel = new HorizontalPanel();
-		Widget plotWidget = m_plot.getWidget();
+        return panel;
+    }
 
-		m_legendPanel = new VerticalPanel();
-
-		panel.add(plotWidget);
-		panel.add(m_legendPanel);
-
-		return panel;
-	}
-
-	@Override
-	protected LegendItem createLegendItem(String color, String label) {
-		return new RightLegendItem(color, label);
-	}
+    @Override
+    protected LegendItem createLegendItem( String color, String label )
+    {
+        return new RightLegendItem( color, label );
+    }
 
 }

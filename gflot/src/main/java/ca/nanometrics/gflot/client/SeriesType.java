@@ -24,27 +24,21 @@ package ca.nanometrics.gflot.client;
 /**
  * @author Alexander De Leon
  */
-public class SeriesType
+public enum SeriesType
 {
 
-    public static final SeriesType LINES = new SeriesType( "lines" );
+    LINES( "lines" ), BARS( "bars" ), POINTS( "points" ), IMAGE( "images" );
 
-    public static final SeriesType BARS = new SeriesType( "bars" );
-
-    public static final SeriesType POINTS = new SeriesType( "points" );
-
-    public static final SeriesType IMAGE = new SeriesType( "images" );
-
-    private final String m_type;
+    private final String type;
 
     private SeriesType( String type )
     {
-        m_type = type;
+        this.type = type;
     }
 
-    public String toString()
+    public String getType()
     {
-        return m_type;
+        return type;
     }
 
 }
