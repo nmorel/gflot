@@ -77,9 +77,6 @@ public class MultipleAxesExample
         final Label labelPosition = new Label( "position:" );
         panel.add( labelPosition );
 
-        final Label labelItem = new Label( "item:" );
-        panel.add( labelItem );
-
         // add hover listener
         plot.addHoverListener( new PlotHoverListener()
         {
