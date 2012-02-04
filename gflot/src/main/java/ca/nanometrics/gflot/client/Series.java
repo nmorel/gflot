@@ -42,7 +42,7 @@ public class Series
         super();
     }
 
-    protected Series( JSONObject obj )
+    public Series( JSONObject obj )
     {
         super( obj );
     }

@@ -27,9 +27,12 @@ import java.util.List;
 import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
-import ca.nanometrics.gflot.client.event.SelectionListener;
+import ca.nanometrics.gflot.client.event.PlotSelectedListener;
+import ca.nanometrics.gflot.client.event.PlotSelectingListener;
+import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
 import ca.nanometrics.gflot.client.jsni.Plot;
 import ca.nanometrics.gflot.client.options.PlotOptions;
+import ca.nanometrics.gflot.client.options.Range;
 import ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader;
 import ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.FlotJavaScriptCallback;
 
@@ -133,21 +136,19 @@ public class SimplePlot
 
     public void setLinearSelection( double x1, double x2 )
     {
-        assertLoaded();
-        plot.setLinearSelection( x1, x2 );
+        setSelection( new PlotSelectionArea().setX( new Range( x1, x2 ) ) );
     }
 
     public void setRectangularSelection( double x1, double y1, double x2, double y2 )
     {
-        assertLoaded();
-        plot.setRectangularSelection( x1, y1, x2, y2 );
+        setSelection( new PlotSelectionArea().setX( new Range( x1, x2 ) ).setY( new Range( y1, y2 ) ) );
     }
 
-    public void addSelectionListener( final SelectionListener listener )
+    public void addSelectedListener( final PlotSelectedListener listener )
     {
         if ( loaded )
         {
-            plot.addSelectionListener( getElement(), listener );
+            plot.addPlotSelectedListener( getElement(), listener );
         }
         else
         {
@@ -155,10 +156,96 @@ public class SimplePlot
             {
                 public void execute()
                 {
-                    plot.addSelectionListener( getElement(), listener );
+                    plot.addPlotSelectedListener( getElement(), listener );
                 }
             } );
         }
+    }
+
+    @Override
+    public void addSelectingListener( final PlotSelectingListener listener )
+    {
+        if ( loaded )
+        {
+            plot.addPlotSelectingListener( getElement(), listener );
+        }
+        else
+        {
+            onLoadOperations.add( new Command()
+            {
+                public void execute()
+                {
+                    plot.addPlotSelectingListener( getElement(), listener );
+                }
+            } );
+        }
+    }
+
+    @Override
+    public void addUnselectedListener( final PlotUnselectedListener listener )
+    {
+        if ( loaded )
+        {
+            plot.addPlotUnselectedListener( getElement(), listener );
+        }
+        else
+        {
+            onLoadOperations.add( new Command()
+            {
+                public void execute()
+                {
+                    plot.addPlotUnselectedListener( getElement(), listener );
+                }
+            } );
+        }
+    }
+
+    @Override
+    public PlotSelectionArea getSelection()
+    {
+        if ( loaded )
+        {
+            return plot.getSelection( getElement() );
+        }
+        return null;
+    }
+
+    @Override
+    public void setSelection( PlotSelectionArea area )
+    {
+        setSelection( area, false );
+    }
+
+    @Override
+    public void setSelection( final PlotSelectionArea area, final boolean preventEvent )
+    {
+        if ( loaded )
+        {
+            plot.setSelection( area, preventEvent );
+        }
+        else
+        {
+            onLoadOperations.add( new Command()
+            {
+                public void execute()
+                {
+                    plot.setSelection( area, preventEvent );
+                }
+            } );
+        }
+    }
+
+    @Override
+    public void clearSelection()
+    {
+        clearSelection( false );
+    }
+
+    @Override
+    public void clearSelection( boolean preventEvent )
+    {
+        assertLoaded();
+        plot.clearSelection( preventEvent );
     }
 
     public void addHoverListener( final PlotHoverListener listener, final boolean onlyOnDatapoint )

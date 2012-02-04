@@ -19,52 +19,17 @@
  *	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *	THE SOFTWARE.
  */
-package ca.nanometrics.gflot.client;
-
-import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
-
-import com.google.gwt.json.client.JSONArray;
+package ca.nanometrics.gflot.client.event;
 
 /**
- * @author AlexanderDeleon
+ * @author Nicolas Morel
  */
-public class DataPoint
-    extends JSONArrayWrapper
+public interface PlotUnselectedListener
 {
-
-    public DataPoint()
-    {
-    }
-
-    public DataPoint( JSONArray array )
-    {
-        super( array );
-    }
-
-    public DataPoint( double x, double y )
-    {
-        setX( x );
-        setY( y );
-    }
-
-    public void setX( double x )
-    {
-        set( 0, new Double( x ) );
-    }
-
-    public void setY( double y )
-    {
-        set( 1, new Double( y ) );
-    }
-
-    public double getX()
-    {
-        return get( 0 ).isNumber().doubleValue();
-    }
-
-    public double getY()
-    {
-        return get( 1 ).isNumber().doubleValue();
-    }
-
+    /**
+     * Called when the user clicks the mouse to remove the selection
+     *
+     * @param area the area selected
+     */
+    void onPlotUnselected();
 }

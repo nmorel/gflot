@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +21,12 @@
  */
 package ca.nanometrics.gflot.client.event;
 
-import ca.nanometrics.gflot.client.PlotItem;
-import ca.nanometrics.gflot.client.PlotPosition;
 import ca.nanometrics.gflot.client.jsni.Plot;
 
 /**
  * @author Alexander De Leon
  */
-public interface PlotClickListener {
-
-	void onPlotClick(Plot plot, PlotPosition position, PlotItem item);
-
+public interface PlotClickListener
+{
+    void onPlotClick( Plot plot, PlotPosition position, PlotItem item );
 }

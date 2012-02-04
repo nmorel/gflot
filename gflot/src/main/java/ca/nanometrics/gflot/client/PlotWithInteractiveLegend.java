@@ -27,7 +27,9 @@ import java.util.Map;
 import ca.nanometrics.gflot.client.PlotModel.PlotModelListener;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
-import ca.nanometrics.gflot.client.event.SelectionListener;
+import ca.nanometrics.gflot.client.event.PlotSelectedListener;
+import ca.nanometrics.gflot.client.event.PlotSelectingListener;
+import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -52,16 +54,16 @@ public class PlotWithInteractiveLegend
     implements PlotWidget, PlotModelListener
 {
 
-    protected final PlotWidget m_plot;
-    protected Panel m_legendPanel;
-    private final Map<SeriesHandler, LegendItem> m_legend;
+    protected final PlotWidget plot;
+    protected Panel legendPanel;
+    private final Map<SeriesHandler, LegendItem> legend;
 
     public PlotWithInteractiveLegend( PlotWidget plot )
     {
-        m_legend = new HashMap<SeriesHandler, LegendItem>();
-        m_plot = plot;
+        legend = new HashMap<SeriesHandler, LegendItem>();
+        this.plot = plot;
         initWidget( createUi() );
-        buildLegendFromModel( m_plot.getModel() );
+        buildLegendFromModel( plot.getModel() );
     }
 
     private void buildLegendFromModel( PlotModel model )
@@ -75,52 +77,94 @@ public class PlotWithInteractiveLegend
 
     public void addClickListener( PlotClickListener listener, boolean onlyOnDatapoint )
     {
-        m_plot.addClickListener( listener, onlyOnDatapoint );
+        plot.addClickListener( listener, onlyOnDatapoint );
     }
 
     public void addHoverListener( PlotHoverListener listener, boolean onlyOnDatapoint )
     {
-        m_plot.addHoverListener( listener, onlyOnDatapoint );
+        plot.addHoverListener( listener, onlyOnDatapoint );
     }
 
-    public void addSelectionListener( SelectionListener listener )
+    public void addSelectedListener( PlotSelectedListener listener )
     {
-        m_plot.addSelectionListener( listener );
+        plot.addSelectedListener( listener );
+    }
+
+    @Override
+    public void addSelectingListener( final PlotSelectingListener listener )
+    {
+        plot.addSelectingListener( listener );
+    }
+
+    @Override
+    public void addUnselectedListener( final PlotUnselectedListener listener )
+    {
+        plot.addUnselectedListener( listener );
+    }
+
+    @Override
+    public PlotSelectionArea getSelection()
+    {
+        return plot.getSelection();
+    }
+
+    @Override
+    public void setSelection( PlotSelectionArea area )
+    {
+        plot.setSelection( area );
+    }
+
+    @Override
+    public void setSelection( PlotSelectionArea area, boolean preventEvent )
+    {
+        plot.setSelection( area, preventEvent );
+    }
+
+    @Override
+    public void clearSelection()
+    {
+        plot.clearSelection();
+    }
+
+    @Override
+    public void clearSelection( boolean preventEvent )
+    {
+        plot.clearSelection( preventEvent );
     }
 
     public int getHeight()
     {
-        return m_plot.getHeight();
+        return plot.getHeight();
     }
 
     public int getWidth()
     {
-        return m_plot.getWidth();
+        return plot.getWidth();
     }
 
     public void setHeight( int height )
     {
-        m_plot.setHeight( height );
+        plot.setHeight( height );
     }
 
     public void setLinearSelection( double x1, double x2 )
     {
-        m_plot.setLinearSelection( x1, x2 );
+        plot.setLinearSelection( x1, x2 );
     }
 
     public void setRectangularSelection( double x1, double y1, double x2, double y2 )
     {
-        m_plot.setRectangularSelection( x1, y1, x2, y2 );
+        plot.setRectangularSelection( x1, y1, x2, y2 );
     }
 
     public void setWidth( int width )
     {
-        m_plot.setWidth( width );
+        plot.setWidth( width );
     }
 
     public void redraw()
     {
-        m_plot.redraw();
+        plot.redraw();
     }
 
     public Widget getWidget()
@@ -130,12 +174,12 @@ public class PlotWithInteractiveLegend
 
     public PlotModel getModel()
     {
-        return m_plot.getModel();
+        return plot.getModel();
     }
 
     public void addLegendWidget( SeriesHandler handler, Widget widget )
     {
-        m_legend.get( handler ).addWidget( widget );
+        legend.get( handler ).addWidget( widget );
     }
 
     public void onAddSeries( PlotModel model, String label, String color, SeriesHandler handler )
@@ -146,7 +190,7 @@ public class PlotWithInteractiveLegend
 
     public void onRemoveSeries( PlotModel model, SeriesHandler handler )
     {
-        m_legendPanel.remove( m_legend.get( handler ) );
+        legendPanel.remove( legend.get( handler ) );
     }
 
     /* --------------------- helper methods -- */
@@ -159,11 +203,11 @@ public class PlotWithInteractiveLegend
             public void onValueChange( ValueChangeEvent<Boolean> event )
             {
                 handler.setVisible( event.getValue() );
-                m_plot.redraw();
+                plot.redraw();
             }
         } );
-        m_legend.put( handler, item );
-        m_legendPanel.add( item );
+        legend.put( handler, item );
+        legendPanel.add( item );
     }
 
     protected LegendItem createLegendItem( String color, String label )
@@ -174,11 +218,11 @@ public class PlotWithInteractiveLegend
     protected Widget createUi()
     {
         VerticalPanel panel = new VerticalPanel();
-        Widget plotWidget = m_plot.getWidget();
+        Widget plotWidget = plot.getWidget();
 
-        m_legendPanel = new HorizontalPanel();
+        legendPanel = new HorizontalPanel();
 
-        panel.add( m_legendPanel );
+        panel.add( legendPanel );
         panel.add( plotWidget );
 
         return panel;
@@ -187,10 +231,10 @@ public class PlotWithInteractiveLegend
     public void setSerieVisible( SeriesHandler handler, boolean visible, boolean redraw )
     {
         handler.setVisible( visible );
-        m_legend.get( handler ).setValue( visible, false );
+        legend.get( handler ).setValue( visible, false );
         if ( redraw )
         {
-            m_plot.redraw();
+            plot.redraw();
         }
     }
 

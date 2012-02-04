@@ -19,52 +19,19 @@
  *	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *	THE SOFTWARE.
  */
-package ca.nanometrics.gflot.client;
+package ca.nanometrics.gflot.client.event;
 
-import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
-
-import com.google.gwt.json.client.JSONArray;
+import ca.nanometrics.gflot.client.PlotSelectionArea;
 
 /**
- * @author AlexanderDeleon
+ * @author Nicolas Morel
  */
-public class DataPoint
-    extends JSONArrayWrapper
+public interface PlotSelectingListener
 {
-
-    public DataPoint()
-    {
-    }
-
-    public DataPoint( JSONArray array )
-    {
-        super( array );
-    }
-
-    public DataPoint( double x, double y )
-    {
-        setX( x );
-        setY( y );
-    }
-
-    public void setX( double x )
-    {
-        set( 0, new Double( x ) );
-    }
-
-    public void setY( double y )
-    {
-        set( 1, new Double( y ) );
-    }
-
-    public double getX()
-    {
-        return get( 0 ).isNumber().doubleValue();
-    }
-
-    public double getY()
-    {
-        return get( 1 ).isNumber().doubleValue();
-    }
-
+    /**
+     * Called when the user has finished making the selection
+     *
+     * @param area the area selected
+     */
+    void onPlotSelecting( PlotSelectionArea area );
 }

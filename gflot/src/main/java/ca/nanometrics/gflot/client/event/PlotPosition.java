@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2008 Nanometrics Inc. All Rights Reserved.
  */
-package ca.nanometrics.gflot.client;
+package ca.nanometrics.gflot.client.event;
 
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 

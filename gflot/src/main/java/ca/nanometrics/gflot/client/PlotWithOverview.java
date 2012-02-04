@@ -23,11 +23,14 @@ package ca.nanometrics.gflot.client;
 
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
-import ca.nanometrics.gflot.client.event.SelectionListener;
+import ca.nanometrics.gflot.client.event.PlotSelectedListener;
+import ca.nanometrics.gflot.client.event.PlotSelectingListener;
+import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
+import ca.nanometrics.gflot.client.options.Range;
 import ca.nanometrics.gflot.client.options.SelectionOptions;
 import ca.nanometrics.gflot.client.options.SelectionOptions.SelectionMode;
 
@@ -42,7 +45,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class PlotWithOverview
     extends Composite
-    implements PlotWidget, SelectionListener
+    implements PlotWidget, PlotSelectedListener
 {
     public static final int DEFAULT_OVERVIEW_HEIGHT = 100; // px
 
@@ -52,13 +55,11 @@ public class PlotWithOverview
             new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) ).setShadowSize( 0d ) )
         .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) );
 
-    private final SimplePlot m_windowPlot;
+    private final SimplePlot windowPlot;
 
-    private final SimplePlot m_overviewPlot;
+    private final SimplePlot overviewPlot;
 
-    private final PlotWithOverviewModel m_model;
-
-    private boolean m_ignoreSelectionEvent;
+    private final PlotWithOverviewModel model;
 
     public PlotWithOverview( PlotWithOverviewModel model )
     {
@@ -72,18 +73,18 @@ public class PlotWithOverview
 
     public PlotWithOverview( PlotWithOverviewModel model, PlotOptions windowPlotOptions, PlotOptions overviewPlotOptions )
     {
-        m_model = model;
-        m_windowPlot = new SimplePlot( m_model.getWindowPlotModel(), windowPlotOptions );
-        m_overviewPlot = new SimplePlot( m_model.getOverviewPlotModel(), overviewPlotOptions );
+        this.model = model;
+        this.windowPlot = new SimplePlot( model.getWindowPlotModel(), windowPlotOptions );
+        this.overviewPlot = new SimplePlot( model.getOverviewPlotModel(), overviewPlotOptions );
         setupPlots();
         initWidget( createUi() );
     }
 
     public PlotWithOverview( PlotWithOverviewModel model, PlotOptions windowPlotOptions, Element windowPlotContainer, Element overviewPlotContainer )
     {
-        m_model = model;
-        m_windowPlot = new SimplePlot( windowPlotContainer, m_model.getWindowPlotModel(), windowPlotOptions );
-        m_overviewPlot = new SimplePlot( overviewPlotContainer, m_model.getOverviewPlotModel(), null );
+        this.model = model;
+        this.windowPlot = new SimplePlot( windowPlotContainer, model.getWindowPlotModel(), windowPlotOptions );
+        this.overviewPlot = new SimplePlot( overviewPlotContainer, model.getOverviewPlotModel(), null );
         setupPlots();
         initWidget( createUi() );
     }
@@ -91,9 +92,9 @@ public class PlotWithOverview
     public PlotWithOverview( PlotWithOverviewModel model, PlotOptions windowPlotOptions, PlotOptions overviewPlotOptions,
                              Element windowPlotContainer, Element overviewPlotContainer )
     {
-        m_model = model;
-        m_windowPlot = new SimplePlot( windowPlotContainer, m_model.getWindowPlotModel(), windowPlotOptions );
-        m_overviewPlot = new SimplePlot( overviewPlotContainer, m_model.getOverviewPlotModel(), overviewPlotOptions );
+        this.model = model;
+        this.windowPlot = new SimplePlot( windowPlotContainer, model.getWindowPlotModel(), windowPlotOptions );
+        this.overviewPlot = new SimplePlot( overviewPlotContainer, model.getOverviewPlotModel(), overviewPlotOptions );
         setupPlots();
         initWidget( createUi() );
     }
@@ -101,95 +102,136 @@ public class PlotWithOverview
     /* ---------------------- PlotWidget API -- */
     public void addClickListener( PlotClickListener listener, boolean onlyOnDatapoint )
     {
-        m_windowPlot.addClickListener( listener, onlyOnDatapoint );
+        windowPlot.addClickListener( listener, onlyOnDatapoint );
     }
 
     public void addHoverListener( PlotHoverListener listener, boolean onlyOnDatapoint )
     {
-        m_windowPlot.addHoverListener( listener, onlyOnDatapoint );
+        windowPlot.addHoverListener( listener, onlyOnDatapoint );
     }
 
-    public void addSelectionListener( SelectionListener listener )
+    public void addSelectedListener( PlotSelectedListener listener )
     {
-        m_windowPlot.addSelectionListener( listener );
+        overviewPlot.addSelectedListener( listener );
+    }
+
+    @Override
+    public void addSelectingListener( final PlotSelectingListener listener )
+    {
+        overviewPlot.addSelectingListener( listener );
+    }
+
+    @Override
+    public void addUnselectedListener( final PlotUnselectedListener listener )
+    {
+        overviewPlot.addUnselectedListener( listener );
+    }
+
+    @Override
+    public PlotSelectionArea getSelection()
+    {
+        return overviewPlot.getSelection();
+    }
+
+    @Override
+    public void setSelection( PlotSelectionArea area )
+    {
+        overviewPlot.setSelection( area );
+    }
+
+    @Override
+    public void setSelection( PlotSelectionArea area, boolean preventEvent )
+    {
+        overviewPlot.setSelection( area, preventEvent );
+    }
+
+    @Override
+    public void clearSelection()
+    {
+        overviewPlot.clearSelection();
+    }
+
+    @Override
+    public void clearSelection( boolean preventEvent )
+    {
+        overviewPlot.clearSelection( preventEvent );
     }
 
     public int getHeight()
     {
-        return m_windowPlot.getHeight() + m_overviewPlot.getHeight();
+        return windowPlot.getHeight() + overviewPlot.getHeight();
     }
 
     public int getWindowHeight()
     {
-        return m_windowPlot.getHeight();
+        return windowPlot.getHeight();
     }
 
     public int getOverviewHeight()
     {
-        return m_overviewPlot.getHeight();
+        return overviewPlot.getHeight();
     }
 
     public PlotModel getModel()
     {
-        return m_model;
+        return model;
     }
 
     public PlotOptions getWindowPlotOptions()
     {
-    	return m_windowPlot.getPlotOptions();
+        return windowPlot.getPlotOptions();
     }
 
     public PlotOptions getOverviewPlotOptions()
     {
-    	return m_overviewPlot.getPlotOptions();
+        return overviewPlot.getPlotOptions();
     }
 
     public int getWidth()
     {
-        return m_windowPlot.getWidth();
+        return windowPlot.getWidth();
     }
 
     public void redraw()
     {
-        double[] selection = m_model.getSelection();
+        double[] selection = model.getSelection();
         if ( selection[0] < selection[1] )
         {
-            m_ignoreSelectionEvent = true;
-            m_overviewPlot.setLinearSelection( selection[0], selection[1] );
+            overviewPlot.setSelection( new PlotSelectionArea().setX( new Range( selection[0], selection[1] ) ), true );
         }
-        m_windowPlot.redraw();
-        m_overviewPlot.redraw();
+        windowPlot.redraw();
+        overviewPlot.redraw();
     }
 
     public void setHeight( int height )
     {
-        m_windowPlot.setHeight( height - getOverviewHeight() );
+        windowPlot.setHeight( height - getOverviewHeight() );
     }
 
     public void setWindowHeight( int height )
     {
-        m_windowPlot.setHeight( height );
+        windowPlot.setHeight( height );
     }
 
     public void setOverviewHeight( int height )
     {
-        m_overviewPlot.setHeight( height );
+        overviewPlot.setHeight( height );
     }
 
     public void setLinearSelection( double x1, double x2 )
     {
-        m_overviewPlot.setLinearSelection( x1, x2 );
+        overviewPlot.setSelection( new PlotSelectionArea().setX( new Range( x1, x2 ) ), false );
     }
 
     public void setRectangularSelection( double x1, double y1, double x2, double y2 )
     {
-        m_overviewPlot.setRectangularSelection( x1, y1, x2, y2 );
+        overviewPlot.setSelection( new PlotSelectionArea().setX( new Range( x1, x2 ) ).setY( new Range( y1, y2 ) ), false );
     }
 
     public void setWidth( int width )
     {
-        m_overviewPlot.setWidth( width );
-        m_windowPlot.setWidth( width );
+        overviewPlot.setWidth( width );
+        windowPlot.setWidth( width );
     }
 
     public Widget getWidget()
@@ -197,47 +239,42 @@ public class PlotWithOverview
         return this;
     }
 
-    /* ------------------------- SelectionListener API -- */
-    public void selected( double x1, double y1, double x2, double y2 )
+    public SimplePlot getWindowPlot()
     {
-        if ( m_ignoreSelectionEvent )
-        {
-            m_ignoreSelectionEvent = false;
-            return;
-        }
-        m_model.setSelection( x1, x2, new Command()
+        return windowPlot;
+    }
+
+    public SimplePlot getOverviewPlot()
+    {
+        return overviewPlot;
+    }
+
+    /* ------------------------- SelectionListener API -- */
+    public void onPlotSelected( PlotSelectionArea area )
+    {
+        Range xRange = area.getX();
+        model.setSelection( xRange.getFrom(), xRange.getTo(), new Command()
         {
             public void execute()
             {
-                m_windowPlot.redraw();
+                windowPlot.redraw();
             }
         } );
-
     }
 
     /* -------------------------- Helper Methods -- */
     private Widget createUi()
     {
         FlexTable mainPanel = new FlexTable();
-        mainPanel.setWidget( 0, 0, m_windowPlot );
-        mainPanel.setWidget( 1, 0, m_overviewPlot );
-        m_overviewPlot.setHeight( DEFAULT_OVERVIEW_HEIGHT );
+        mainPanel.setWidget( 0, 0, windowPlot );
+        mainPanel.setWidget( 1, 0, overviewPlot );
+        overviewPlot.setHeight( DEFAULT_OVERVIEW_HEIGHT );
         return mainPanel;
     }
 
     private void setupPlots()
     {
-        m_overviewPlot.addSelectionListener( this );
-    }
-
-    SimplePlot getWindowPlot()
-    {
-        return m_windowPlot;
-    }
-
-    SimplePlot getOverviewPlot()
-    {
-        return m_overviewPlot;
+        overviewPlot.addSelectedListener( this );
     }
 
 }

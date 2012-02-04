@@ -2,12 +2,12 @@ package ca.nanometrics.gflot.sample.client;
 
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
-import ca.nanometrics.gflot.client.PlotItem;
 import ca.nanometrics.gflot.client.PlotModel;
-import ca.nanometrics.gflot.client.PlotPosition;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
+import ca.nanometrics.gflot.client.event.PlotItem;
+import ca.nanometrics.gflot.client.event.PlotPosition;
 import ca.nanometrics.gflot.client.jsni.Plot;
 import ca.nanometrics.gflot.client.options.AxisOptions;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;

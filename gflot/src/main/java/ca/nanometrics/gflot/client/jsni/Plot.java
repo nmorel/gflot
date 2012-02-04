@@ -21,16 +21,18 @@
  */
 package ca.nanometrics.gflot.client.jsni;
 
+import ca.nanometrics.gflot.client.PlotSelectionArea;
 import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
-import ca.nanometrics.gflot.client.event.SelectionListener;
+import ca.nanometrics.gflot.client.event.PlotSelectedListener;
+import ca.nanometrics.gflot.client.event.PlotSelectingListener;
+import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.util.JSONHelper;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -113,9 +115,34 @@ public class Plot
         PlotImpl.setRectangularSelection( this, x1, y1, x2, y2 );
     }
 
-    public final void addSelectionListener( Element container, SelectionListener listener )
+    public final void addPlotSelectedListener( Element container, PlotSelectedListener listener )
     {
-        PlotImpl.addSelectionListener( container, listener );
+        PlotImpl.addPlotSelectedListener( container, listener );
+    }
+
+    public final void addPlotSelectingListener( Element container, PlotSelectingListener listener )
+    {
+        PlotImpl.addPlotSelectingListener( container, listener );
+    }
+
+    public final void addPlotUnselectedListener( Element container, PlotUnselectedListener listener )
+    {
+        PlotImpl.addPlotUnselectedListener( container, listener );
+    }
+
+    public final PlotSelectionArea getSelection( Element container )
+    {
+        return PlotImpl.getSelection( this );
+    }
+
+    public final void setSelection( PlotSelectionArea area, boolean preventEvent )
+    {
+        PlotImpl.setSelection( this, JSONHelper.getJSONObject( area ).getJavaScriptObject(), preventEvent );
+    }
+
+    public final void clearSelection( boolean preventEvent )
+    {
+        PlotImpl.clearSelection( this, preventEvent );
     }
 
     public final void addPlotHoverListener( Element container, PlotHoverListener listener, boolean onlyOnDatapoint )
@@ -150,6 +177,6 @@ public class Plot
 
     public final PlotOptions getPlotOptions()
     {
-        return new PlotOptions( new JSONObject( PlotImpl.getPlotOptions( this ) ) );
+        return PlotImpl.getPlotOptions( this );
     }
 }

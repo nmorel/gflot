@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -23,36 +23,119 @@ package ca.nanometrics.gflot.client;
 
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
-import ca.nanometrics.gflot.client.event.SelectionListener;
+import ca.nanometrics.gflot.client.event.PlotSelectedListener;
+import ca.nanometrics.gflot.client.event.PlotSelectingListener;
+import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
 
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Alexander De Leon
  */
-public interface PlotWidget {
+public interface PlotWidget
+{
 
-	int getWidth();
+    /**
+     * @return the width of the plot in pixel
+     */
+    int getWidth();
 
-	void setWidth(int width);
+    /**
+     * Set the width of the plot in pixel
+     */
+    void setWidth( int width );
 
-	int getHeight();
+    /**
+     * @return the height of the plot in pixel
+     */
+    int getHeight();
 
-	void setHeight(int height);
+    /**
+     * Set the height of the plot in pixel
+     */
+    void setHeight( int height );
 
-	void setLinearSelection(double x1, double x2);
+    void setLinearSelection( double x1, double x2 );
 
-	void setRectangularSelection(double x1, double y1, double x2, double y2);
+    void setRectangularSelection( double x1, double y1, double x2, double y2 );
 
-	void addSelectionListener(SelectionListener listener);
+    /**
+     * Add a selected listener to the plot
+     *
+     * @param listener listener to add to the plot
+     */
+    void addSelectedListener( PlotSelectedListener listener );
 
-	void addHoverListener(PlotHoverListener listener, boolean onlyOnDatapoint);
+    /**
+     * Add a selecting listener to the plot
+     *
+     * @param listener listener to add to the plot
+     */
+    void addSelectingListener( PlotSelectingListener listener );
 
-	void addClickListener(PlotClickListener listener, boolean onlyOnDatapoint);
+    /**
+     * Add a unselected listener to the plot
+     *
+     * @param listener listener to add to the plot
+     */
+    void addUnselectedListener( PlotUnselectedListener listener );
 
-	Widget getWidget();
+    /**
+     * @return the current selection in the plot. If there's currently no selection, the function returns null.
+     */
+    PlotSelectionArea getSelection();
 
-	PlotModel getModel();
+    /**
+     * Set the selection rectangle. "plotselected" event is fired.
+     *
+     * @param area area to select
+     */
+    void setSelection( PlotSelectionArea area );
 
-	void redraw();
+    /**
+     * Set the selection rectangle.
+     *
+     * @param area area to select
+     * @param preventEvent true to avoid getting a "plotselected" event
+     */
+    void setSelection( PlotSelectionArea area, boolean preventEvent );
+
+    /**
+     * Clear the selection rectangle. "plotunselected" event is fired.
+     */
+    void clearSelection();
+
+    /**
+     * Clear the selection rectangle. Pass in true to avoid getting a "plotunselected" event.
+     */
+    void clearSelection( boolean preventEvent );
+
+    /**
+     * Add a hover listener to the plot
+     *
+     * @param listener listener to add to the plot
+     */
+    void addHoverListener( PlotHoverListener listener, boolean onlyOnDatapoint );
+
+    /**
+     * Add a click listener to the plot
+     *
+     * @param listener listener to add to the plot
+     */
+    void addClickListener( PlotClickListener listener, boolean onlyOnDatapoint );
+
+    /**
+     * @return the plot as a widget
+     */
+    Widget getWidget();
+
+    /**
+     * @return the model
+     */
+    PlotModel getModel();
+
+    /**
+     * Redraw the plot
+     */
+    void redraw();
 }

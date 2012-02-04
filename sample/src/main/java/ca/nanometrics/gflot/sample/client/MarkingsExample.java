@@ -1,14 +1,13 @@
 package ca.nanometrics.gflot.sample.client;
 
 import ca.nanometrics.gflot.client.DataPoint;
-import ca.nanometrics.gflot.client.PlotItem;
 import ca.nanometrics.gflot.client.PlotModelStrategy;
-import ca.nanometrics.gflot.client.PlotPosition;
 import ca.nanometrics.gflot.client.PlotWithOverview;
 import ca.nanometrics.gflot.client.PlotWithOverviewModel;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
-import ca.nanometrics.gflot.client.event.SelectionListener;
+import ca.nanometrics.gflot.client.event.PlotItem;
+import ca.nanometrics.gflot.client.event.PlotPosition;
 import ca.nanometrics.gflot.client.jsni.Plot;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.GridOptions;
@@ -20,8 +19,6 @@ import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
 import ca.nanometrics.gflot.client.options.Range;
 
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -44,8 +41,8 @@ public class MarkingsExample
         PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.defaultStrategy() );
         PlotOptions plotOptions = new PlotOptions();
         plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
-        .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
-        .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 1 ) );
+            .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
+            .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 1 ) );
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
 
         final PlotWithOverview plot = new PlotWithOverview( model, plotOptions );
@@ -64,14 +61,7 @@ public class MarkingsExample
                 }
             }
         }, false );
-        plot.addSelectionListener( new SelectionListener()
-        {
 
-            public void selected( double x1, double y1, double x2, double y2 )
-            {
-                plot.setLinearSelection( x1, x2 );
-            }
-        } );
         SeriesHandler s = plot.getModel().addSeries( "Series 1" );
         s.add( new DataPoint( 1, 2 ) );
         s.add( new DataPoint( 2, 5 ) );
@@ -111,19 +101,11 @@ public class MarkingsExample
         plot.setHeight( 250 );
         plot.setOverviewHeight( 60 );
 
+        plot.setLinearSelection( 1, 8 );
+
         FlowPanel panel = new FlowPanel();
         panel.add( selectedPointLabel );
         panel.add( plot );
-
-        // have to wait the plot to be loaded before calling the setLinearSelection method
-        Scheduler.get().scheduleDeferred( new ScheduledCommand()
-        {
-            @Override
-            public void execute()
-            {
-                plot.setLinearSelection( 1, 8 );
-            }
-        } );
         return panel;
     }
 

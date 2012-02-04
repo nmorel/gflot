@@ -31,6 +31,7 @@ public class GFlotSample
 
         addExample( new SimplePlotExample() );
         addExample( new BarChartExample() );
+        addExample( new SelectionExample() );
         addExample( new PlotWithInteractiveLegendExample() );
         addExample( new PlotWithOverviewExample() );
         addExample( new HoverExample() );

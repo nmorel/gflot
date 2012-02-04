@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -21,20 +21,17 @@
  */
 package ca.nanometrics.gflot.client.event;
 
+import ca.nanometrics.gflot.client.PlotSelectionArea;
+
 /**
  * @author AlexanderDeleon
  */
-public interface SelectionListener {
-
-	/**
-	 * The area defined by the points (x1,y1) and (x2,y2) has been selected in
-	 * the plot.
-	 * 
-	 * @param x1
-	 * @param y1
-	 * @param x2
-	 * @param y2
-	 */
-	public void selected(double x1, double y1, double x2, double y2);
-
+public interface PlotSelectedListener
+{
+    /**
+     * Called when the user has finished making the selection
+     *
+     * @param area the area selected
+     */
+    void onPlotSelected( PlotSelectionArea area );
 }

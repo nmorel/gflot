@@ -19,8 +19,10 @@
  *	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *	THE SOFTWARE.
  */
-package ca.nanometrics.gflot.client;
+package ca.nanometrics.gflot.client.event;
 
+import ca.nanometrics.gflot.client.DataPoint;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 
 import com.google.gwt.json.client.JSONArray;

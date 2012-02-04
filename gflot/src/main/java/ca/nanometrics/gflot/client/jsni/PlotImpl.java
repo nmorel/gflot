@@ -21,10 +21,14 @@
  */
 package ca.nanometrics.gflot.client.jsni;
 
+import ca.nanometrics.gflot.client.PlotSelectionArea;
 import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
-import ca.nanometrics.gflot.client.event.SelectionListener;
+import ca.nanometrics.gflot.client.event.PlotSelectedListener;
+import ca.nanometrics.gflot.client.event.PlotSelectingListener;
+import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
+import ca.nanometrics.gflot.client.options.PlotOptions;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.Element;
@@ -48,9 +52,13 @@ public class PlotImpl
 
     static native void loadDataImages( JavaScriptObject data, JavaScriptObject options, LoadImagesCallback callback )
     /*-{
-		$wnd.jQuery.plot.image.loadDataImages(data, options, function() {
-            callback.@ca.nanometrics.gflot.client.event.LoadImagesCallback::onImagesLoaded(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;)(data, options);
-		});
+		$wnd.jQuery.plot.image
+				.loadDataImages(
+						data,
+						options,
+						function() {
+							callback.@ca.nanometrics.gflot.client.event.LoadImagesCallback::onImagesLoaded(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;)(data, options);
+						});
     }-*/;
 
     static native void setData( Plot plot, JavaScriptObject series )
@@ -86,24 +94,68 @@ public class PlotImpl
 		});
     }-*/;
 
-    static native void addSelectionListener( Element container, SelectionListener listener )
+    static native void addPlotSelectedListener( Element container, PlotSelectedListener listener )
     /*-{
 		$wnd
 				.jQuery("#" + container.id)
 				.bind(
-						"selected",
+						"plotselected",
 						function(event, area) {
-							listener.@ca.nanometrics.gflot.client.event.SelectionListener::selected(DDDD)(area.x1, area.y1, area.x2, area.y2);
+							var range = @ca.nanometrics.gflot.client.PlotSelectionArea::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(area));
+							listener.@ca.nanometrics.gflot.client.event.PlotSelectedListener::onPlotSelected(Lca/nanometrics/gflot/client/PlotSelectionArea;)(range);
 						});
+    }-*/;
+
+    static native void addPlotSelectingListener( Element container, PlotSelectingListener listener )
+    /*-{
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plotselecting",
+                        function(event, area) {
+                            var range = @ca.nanometrics.gflot.client.PlotSelectionArea::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(area));
+                            listener.@ca.nanometrics.gflot.client.event.PlotSelectingListener::onPlotSelecting(Lca/nanometrics/gflot/client/PlotSelectionArea;)(range);
+                        });
+    }-*/;
+
+    static native void addPlotUnselectedListener( Element container, PlotUnselectedListener listener )
+    /*-{
+		$wnd
+				.jQuery("#" + container.id)
+				.bind(
+						"plotunselected",
+						function(event) {
+							listener.@ca.nanometrics.gflot.client.event.PlotUnselectedListener::onPlotUnselected()();
+						});
+    }-*/;
+
+    static native PlotSelectionArea getSelection( Plot plot )
+    /*-{
+        var jsSelection = plot.getSelection();
+        if(jsSelection==null){
+            return null;
+        }
+        var selection = @ca.nanometrics.gflot.client.PlotSelectionArea::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(jsSelection));
+        return selection;
+    }-*/;
+
+    static native void setSelection( Plot plot, JavaScriptObject area, boolean preventEvent )
+    /*-{
+		plot.setSelection(area, preventEvent);
+    }-*/;
+
+    static native void clearSelection( Plot plot, boolean preventEvent )
+    /*-{
+		plot.clearSelection(preventEvent);
     }-*/;
 
     static native void addPlotHoverListener( Element container, PlotHoverListener listener, boolean onlyOnDatapoint, Plot plot )
     /*-{
         $wnd.jQuery("#"+container.id).bind("plothover", function(event, pos, item) {
-            var javaPos = pos==null?null:@ca.nanometrics.gflot.client.PlotPosition::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(pos));
-            var javaItem = item==null?null:@ca.nanometrics.gflot.client.PlotItem::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(item));
             if(item != null || !onlyOnDatapoint){
-                listener.@ca.nanometrics.gflot.client.event.PlotHoverListener::onPlotHover(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/PlotPosition;Lca/nanometrics/gflot/client/PlotItem;)(plot, javaPos, javaItem);
+                var javaPos = pos==null?null:@ca.nanometrics.gflot.client.event.PlotPosition::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(pos));
+                var javaItem = item==null?null:@ca.nanometrics.gflot.client.event.PlotItem::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(item));
+                listener.@ca.nanometrics.gflot.client.event.PlotHoverListener::onPlotHover(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/event/PlotPosition;Lca/nanometrics/gflot/client/event/PlotItem;)(plot, javaPos, javaItem);
             }
         });
     }-*/;
@@ -111,10 +163,10 @@ public class PlotImpl
     static native void addPlotClickListener( Element container, PlotClickListener listener, boolean onlyOnDatapoint, Plot plot )
     /*-{
         $wnd.jQuery("#"+container.id).bind("plotclick", function(event, pos, item) {
-            var javaPos = pos==null?null:@ca.nanometrics.gflot.client.PlotPosition::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(pos));
-            var javaItem = item==null?null:@ca.nanometrics.gflot.client.PlotItem::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(item));
             if(item != null || !onlyOnDatapoint){
-                listener.@ca.nanometrics.gflot.client.event.PlotClickListener::onPlotClick(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/PlotPosition;Lca/nanometrics/gflot/client/PlotItem;)(plot, javaPos, javaItem);
+                var javaPos = pos==null?null:@ca.nanometrics.gflot.client.event.PlotPosition::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(pos));
+                var javaItem = item==null?null:@ca.nanometrics.gflot.client.event.PlotItem::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(item));
+                listener.@ca.nanometrics.gflot.client.event.PlotClickListener::onPlotClick(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/event/PlotPosition;Lca/nanometrics/gflot/client/event/PlotItem;)(plot, javaPos, javaItem);
             }
         });
     }-*/;
@@ -143,8 +195,10 @@ public class PlotImpl
 		return (offset === undefined) ? -1 : offset;
     }-*/;
 
-    static native JavaScriptObject getPlotOptions( Plot plot )
+    static native PlotOptions getPlotOptions( Plot plot )
     /*-{
-		return plot.getOptions();
+        var jsOptions = plot.getOptions();
+        var options = @ca.nanometrics.gflot.client.options.PlotOptions::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(jsOptions));
+		return options;
     }-*/;
 }

@@ -79,12 +79,12 @@ public class PlotWithRightInteractiveLegend
     protected Widget createUi()
     {
         HorizontalPanel panel = new HorizontalPanel();
-        Widget plotWidget = m_plot.getWidget();
+        Widget plotWidget = plot.getWidget();
 
-        m_legendPanel = new VerticalPanel();
+        legendPanel = new VerticalPanel();
 
         panel.add( plotWidget );
-        panel.add( m_legendPanel );
+        panel.add( legendPanel );
 
         return panel;
     }

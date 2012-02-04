@@ -10,8 +10,6 @@ import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
 
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -54,21 +52,12 @@ public class PlotWithOverviewExample
 
         // create the plot
         final PlotWithOverview plot = new PlotWithOverview( model, plotOptions );
+        plot.setLinearSelection( 150, 199 );
 
         // put it on a panel
         FlowPanel panel = new FlowPanel();
         panel.add( plot );
         panel.add( new Label( "Click on the overview to change the selection." ) );
-
-        // have to wait the plot to be loaded before calling the setLinearSelection method
-        Scheduler.get().scheduleDeferred( new ScheduledCommand()
-        {
-            @Override
-            public void execute()
-            {
-                plot.setLinearSelection( 150, 199 );
-            }
-        } );
 
         return panel;
     }
