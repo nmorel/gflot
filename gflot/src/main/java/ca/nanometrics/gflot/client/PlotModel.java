@@ -53,9 +53,7 @@ public class PlotModel
 
     public SeriesHandler addSeries( String label, String color )
     {
-        Series series = new Series();
-        series.setLabel( label );
-
+        Series series = new Series( label );
         if ( color != null )
         {
             series.setColor( color );

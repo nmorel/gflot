@@ -6,6 +6,7 @@ import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.PlotModelStrategy;
 import ca.nanometrics.gflot.client.PlotWithInteractiveLegend;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
@@ -38,12 +39,11 @@ public class PlotWithInteractiveLegendExample
     @SuppressWarnings( "deprecation" )
     public Widget createExample()
     {
-
         PlotModel model = new PlotModel( PlotModelStrategy.defaultStrategy() );
         PlotOptions plotOptions = new PlotOptions();
         plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
-        .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
-        .setPointsOptions( new PointsSeriesOptions().setRadius( 3 ).setShow( true ).setSymbol( PointSymbol.DIAMOND ) ) );
+            .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) ).setPointsOptions(
+                new PointsSeriesOptions().setRadius( 3 ).setShow( true ).setSymbol( PointSymbol.DIAMOND ) ) );
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
 
         // add tick formatter to the options
@@ -53,7 +53,8 @@ public class PlotWithInteractiveLegendExample
         // Note: you need to specified the colors in other for the legend to
         // work properly
         SeriesHandler ottawaSeries = model.addSeries( "Ottawa", "#edc240" );
-        SeriesHandler vancouverSeries = model.addSeries( "Vancouver", "#afd8f8" );
+        SeriesHandler vancouverSeries =
+            model.addSeries( new Series( "Vancouver" ).setColor( "#afd8f8" ).setPointsOptions( new PointsSeriesOptions().setShow( false ) ) );
 
         // add data
         ottawaSeries.add( new DataPoint( Date.UTC( 110, 0, 1, 0, 0, 0 ), -10.5 ) );

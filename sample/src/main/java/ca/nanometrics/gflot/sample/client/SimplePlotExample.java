@@ -26,7 +26,6 @@ public class SimplePlotExample
 
     public Widget createExample()
     {
-
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
 

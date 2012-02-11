@@ -21,58 +21,39 @@
  */
 package ca.nanometrics.gflot.client;
 
-import ca.nanometrics.gflot.client.options.AbstractSeriesOptions;
-
 /**
+ * Handler used to manipulate a series and its data.
+ *
  * @author Alexander De Leon
  */
 public class SeriesHandler
 {
-    private final Series m_series;
+    private final Series series;
 
-    private SeriesData m_data;
+    private SeriesData data;
 
     public SeriesHandler( Series series, SeriesData data )
     {
-        m_series = series;
-        m_data = data;
+        this.series = series;
+        this.data = data;
     }
 
+    /**
+     * Add a datapoint
+     *
+     * @param datapoint datapoint to add
+     */
     public void add( DataPoint datapoint )
     {
-        m_data.add( datapoint );
+        data.add( datapoint );
     }
 
+    /**
+     * Clear data
+     */
     public void clear()
     {
-        m_data.clear();
-    }
-
-    /**
-     * Bind this series to a different X axis.
-     *
-     * @param axis the axis number such as 2, 3, etc. Starting at 1.
-     */
-    public void setXAxis( int axis )
-    {
-        assert axis > 0 : "axis starts at 1";
-        m_series.setXAxis( axis );
-    }
-
-    /**
-     * Bind this series to a different Y axis.
-     *
-     * @param axis the axis number such as 2, 3, etc. Starting at 1.
-     */
-    public void setYAxis( int axis )
-    {
-        assert axis > 0 : "axis starts at 1";
-        m_series.setYAxis( axis );
-    }
-
-    public void setOptions( SeriesType type, AbstractSeriesOptions<?> options )
-    {
-        m_series.setSeriesOptions( type, options );
+        data.clear();
     }
 
     /**
@@ -84,11 +65,11 @@ public class SeriesHandler
     {
         if ( visible )
         {
-            m_series.setData( m_data );
+            series.setData( data );
         }
         else
         {
-            m_series.setData( null );
+            series.setData( null );
         }
     }
 
@@ -97,17 +78,23 @@ public class SeriesHandler
      */
     public boolean isVisible()
     {
-        return null != m_series.getData();
+        return null != series.getData();
     }
 
+    /**
+     * @return the series associated to this handler
+     */
     public Series getSeries()
     {
-        return m_series;
+        return series;
     }
 
+    /**
+     * @return the data associated to this handler
+     */
     public SeriesData getData()
     {
-        return m_data;
+        return data;
     }
 
     @Override
@@ -119,7 +106,7 @@ public class SeriesHandler
         }
         if ( obj instanceof SeriesHandler )
         {
-            return m_series.equals( ( (SeriesHandler) obj ).m_series );
+            return series.equals( ( (SeriesHandler) obj ).series );
         }
         return false;
     }
@@ -127,17 +114,17 @@ public class SeriesHandler
     @Override
     public int hashCode()
     {
-        return m_series.hashCode();
+        return series.hashCode();
     }
 
     /* ------------- for internal use */
     void setData( SeriesData newData )
     {
-        m_data = newData;
+        data = newData;
         // set the data if the series is visible
         if ( isVisible() )
         {
-            m_series.setData( m_data );
+            series.setData( data );
         }
     }
 
