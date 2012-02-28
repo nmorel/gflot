@@ -44,6 +44,8 @@ public class Series
     private static final String Y_AXIS_KEY = "yaxis";
     private static final String CLICKABLE_KEY = "clickable";
     private static final String HOVERABLE_KEY = "hoverable";
+    private static final String PERCENT_KEY = "percent";
+    private static final String ANGLE_KEY = "angle";
 
     public Series()
     {
@@ -250,6 +252,26 @@ public class Series
     public Boolean getHoverable()
     {
         return getBoolean( HOVERABLE_KEY );
+    }
+
+    /**
+     * Only available for pie plot!
+     *
+     * @return the percent of the series
+     */
+    public Integer getPercent()
+    {
+        return getInteger( PERCENT_KEY );
+    }
+
+    /**
+     * Only available for pie plot!
+     *
+     * @return the angle of the series
+     */
+    public Double getAngle()
+    {
+        return getDouble( ANGLE_KEY );
     }
 
 }

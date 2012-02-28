@@ -40,6 +40,7 @@ public class GFlotSample
         addExample( new MarkingsExample() );
         addExample( new ImageExample() );
         addExample( new MultipleAxesExample() );
+        addExample( new PieExample() );
     }
 
     private void addExample( GFlotExample example )

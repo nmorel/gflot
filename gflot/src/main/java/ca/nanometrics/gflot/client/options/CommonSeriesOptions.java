@@ -21,6 +21,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
     private static final String IMAGES_SERIES_KEY = "images";
 
+    private static final String PIE_SERIES_KEY = "pie";
+
     private static final String SHADOW_SIZE_KEY = "shadowSize";
 
     private LineSeriesOptions lineSeriesOptions;
@@ -30,6 +32,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     private PointsSeriesOptions pointsSeriesOptions;
 
     private ImageSeriesOptions imageSeriesOptions;
+
+    private PieSeriesOptions pieSeriesOptions;
 
     public CommonSeriesOptions()
     {
@@ -42,6 +46,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
         barSeriesOptions = new BarSeriesOptions( getObject( BAR_SERIES_KEY ) );
         pointsSeriesOptions = new PointsSeriesOptions( getObject( POINTS_SERIES_KEY ) );
         imageSeriesOptions = new ImageSeriesOptions( getObject( IMAGES_SERIES_KEY ) );
+        pieSeriesOptions = new PieSeriesOptions( getObject( PIE_SERIES_KEY ) );
     }
 
     /**
@@ -109,11 +114,29 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     }
 
     /**
-     * @return global Points series options
+     * @return global Image series options
      */
     public ImageSeriesOptions getImageSeriesOptions()
     {
         return imageSeriesOptions;
+    }
+
+    /**
+     * Set global Pie series options that will be used unless options are set directly to the series
+     */
+    public T setPieSeriesOptions( PieSeriesOptions pieSeriesOptions )
+    {
+        this.pieSeriesOptions = pieSeriesOptions;
+        put( PIE_SERIES_KEY, pieSeriesOptions );
+        return (T) this;
+    }
+
+    /**
+     * @return global Pie series options
+     */
+    public PieSeriesOptions getPieSeriesOptions()
+    {
+        return pieSeriesOptions;
     }
 
     /**

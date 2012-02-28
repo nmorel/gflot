@@ -21,6 +21,9 @@ public interface FlotJavaScriptBundle
     @Source( "jquery.flot.image.min.modified.js" )
     TextResource flotImage();
 
+    @Source( "jquery.flot.pie.min.js" )
+    TextResource flotPie();
+
     @Source( "excanvas.min.js" )
     TextResource excanvas();
 }
