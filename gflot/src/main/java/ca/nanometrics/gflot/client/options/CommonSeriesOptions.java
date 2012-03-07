@@ -25,6 +25,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
     private static final String SHADOW_SIZE_KEY = "shadowSize";
 
+    private static final String STACK_KEY = "stack";
+
     private LineSeriesOptions lineSeriesOptions;
 
     private BarSeriesOptions barSeriesOptions;
@@ -156,5 +158,62 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     public Double getShadowSize()
     {
         return getDouble( SHADOW_SIZE_KEY );
+    }
+
+    /**
+     * Set the stack key option. Two or more series are stacked when their "stack" attribute is set to the same key
+     * (which can be any number or string or just "true"). The stacking order is determined by the order of the data
+     * series in the array (later series end up on top of the previous).
+     */
+    public T setStack( String key )
+    {
+        put( STACK_KEY, key );
+        return (T) this;
+    }
+
+    /**
+     * Set the stack key option. Two or more series are stacked when their "stack" attribute is set to the same key
+     * (which can be any number or string or just "true"). The stacking order is determined by the order of the data
+     * series in the array (later series end up on top of the previous).
+     */
+    public T setStack( int key )
+    {
+        put( STACK_KEY, key );
+        return (T) this;
+    }
+
+    /**
+     * Set the stack key option. Two or more series are stacked when their "stack" attribute is set to the same key
+     * (which can be any number or string or just "true"). The stacking order is determined by the order of the data
+     * series in the array (later series end up on top of the previous).
+     */
+    public T setStack( boolean stack )
+    {
+        put( STACK_KEY, stack );
+        return (T) this;
+    }
+
+    /**
+     * @return the stack option
+     */
+    public String getStackAsKeyString()
+    {
+        return getString( STACK_KEY );
+    }
+
+    /**
+     * @return the stack option
+     */
+    public Integer getStackAsKeyNumber()
+    {
+        return getInteger( STACK_KEY );
+    }
+
+    /**
+     * @return the stack option
+     */
+    public Boolean getStackAsBoolean()
+    {
+        return getBoolean( STACK_KEY );
     }
 }
