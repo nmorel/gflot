@@ -1,0 +1,27 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style>
+    .important {
+    	font-weight: bold;
+    }
+  </ui:style>
+  <g:HTMLPanel>
+    <g:SimplePanel ui:field="placeholder" />
+
+    <p>With the stack plugin, you can have Flot stack the
+      series. This is useful if you wish to display both a total and
+      the
+      constituents it is made of. The only requirement is that you provide
+      the input sorted on x.</p>
+
+    <p class="stackControls">
+      <g:CheckBox ui:field="stacking" text="Stacking" value="true"/>
+    </p>
+
+    <p class="graphControls">
+      <g:RadioButton ui:field="bars" text="Bars" name="graphControls" value="true"/>
+      <g:RadioButton ui:field="lines" text="Lines" name="graphControls" />
+      <g:RadioButton ui:field="linesStep" text="Lines with steps" name="graphControls" />
+    </p>
+  </g:HTMLPanel>
+</ui:UiBinder>

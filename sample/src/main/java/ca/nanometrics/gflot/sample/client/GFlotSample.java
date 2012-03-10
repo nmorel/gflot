@@ -3,6 +3,8 @@ package ca.nanometrics.gflot.sample.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.nanometrics.gflot.sample.client.stack.StackExample;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -41,6 +43,7 @@ public class GFlotSample
         addExample( new ImageExample() );
         addExample( new MultipleAxesExample() );
         addExample( new PieExample() );
+        addExample( new StackExample() );
     }
 
     private void addExample( GFlotExample example )
