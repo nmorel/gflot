@@ -1,0 +1,19 @@
+body {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.menuLink {
+	margin: 5px;
+}
+
+.menuLink a {
+	font-weight: bold;
+	padding: 3px;
+	color: black;
+}
+
+.menuLinkSelected a {
+	background-color: #FF7100;
+	color: white;
+}

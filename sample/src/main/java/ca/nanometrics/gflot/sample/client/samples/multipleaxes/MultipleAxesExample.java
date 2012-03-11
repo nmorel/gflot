@@ -1,4 +1,4 @@
-package ca.nanometrics.gflot.sample.client;
+package ca.nanometrics.gflot.sample.client.samples.multipleaxes;
 
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
@@ -18,6 +18,8 @@ import ca.nanometrics.gflot.client.options.LegendOptions.LegendPosition;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.TickFormatter;
 import ca.nanometrics.gflot.client.options.TimeSeriesAxisOptions;
+import ca.nanometrics.gflot.sample.client.mvp.DefaultActivity;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -33,12 +35,16 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Nicolas Morel
  */
 public class MultipleAxesExample
-    implements GFlotExample
+    extends DefaultActivity
 {
 
-    public Widget createExample()
+    public MultipleAxesExample( Resources resources )
     {
+        super( resources );
+    }
 
+    public Widget createWidget()
+    {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
 
@@ -1087,11 +1093,6 @@ public class MultipleAxesExample
         oilPrices.add( new DataPoint( 1220392800000d, 109.35 ) );
         oilPrices.add( new DataPoint( 1220565600000d, 106.23 ) );
         oilPrices.add( new DataPoint( 1220824800000d, 106.34 ) );
-    }
-
-    public String getName()
-    {
-        return "Multiple Axes";
     }
 
 }

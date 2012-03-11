@@ -1,4 +1,4 @@
-package ca.nanometrics.gflot.sample.client;
+package ca.nanometrics.gflot.sample.client.samples.interactivelegend;
 
 import java.util.Date;
 
@@ -17,27 +17,29 @@ import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions.PointSymbol;
 import ca.nanometrics.gflot.client.options.TimeSeriesAxisOptions;
 import ca.nanometrics.gflot.client.options.TimeSeriesAxisOptions.TickTimeUnit;
+import ca.nanometrics.gflot.sample.client.mvp.DefaultActivity;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Alexander De Leon
+ * @author Nicolas Morel
  */
-public class PlotWithInteractiveLegendExample
-    implements GFlotExample
+public class InteractiveLegendExample
+    extends DefaultActivity
 {
 
     private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
-    public String getName()
+    public InteractiveLegendExample( Resources resources )
     {
-        return "PlotWithInteractiveLegend";
+        super( resources );
     }
 
     @SuppressWarnings( "deprecation" )
-    public Widget createExample()
+    public Widget createWidget()
     {
         PlotModel model = new PlotModel( PlotModelStrategy.defaultStrategy() );
         PlotOptions plotOptions = new PlotOptions();

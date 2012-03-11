@@ -1,4 +1,4 @@
-package ca.nanometrics.gflot.sample.client;
+package ca.nanometrics.gflot.sample.client.samples.simple;
 
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
@@ -9,22 +9,27 @@ import ca.nanometrics.gflot.client.options.AxisOptions;
 import ca.nanometrics.gflot.client.options.GridOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.TickFormatter;
+import ca.nanometrics.gflot.sample.client.mvp.DefaultActivity;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SimplePlotExample
-    implements GFlotExample
+/**
+ * @author Nicolas Morel
+ */
+public class SimpleExample
+    extends DefaultActivity
 {
 
     private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
-    public String getName()
+    public SimpleExample( Resources resources )
     {
-        return "SimplePlot";
+        super( resources );
     }
 
-    public Widget createExample()
+    public Widget createWidget()
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
@@ -64,7 +69,6 @@ public class SimplePlotExample
         FlowPanel panel = new FlowPanel();
         panel.add( plot );
         return panel;
-
     }
 
 }

@@ -1,4 +1,4 @@
-package ca.nanometrics.gflot.sample.client.stack;
+package ca.nanometrics.gflot.sample.client.samples.stack;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
@@ -9,7 +9,8 @@ import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
-import ca.nanometrics.gflot.sample.client.GFlotExample;
+import ca.nanometrics.gflot.sample.client.mvp.DefaultActivity;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -22,11 +23,12 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Alexander De Leon
+ * @author Nicolas Morel
  */
 public class StackExample
-    implements GFlotExample
+    extends DefaultActivity
 {
+
     private static Binder binder = GWT.create( Binder.class );
 
     interface Binder
@@ -48,12 +50,12 @@ public class StackExample
 
     private SimplePlot plot;
 
-    public String getName()
+    public StackExample( Resources resources )
     {
-        return "Stack";
+        super( resources );
     }
 
-    public Widget createExample()
+    protected Widget createWidget()
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();

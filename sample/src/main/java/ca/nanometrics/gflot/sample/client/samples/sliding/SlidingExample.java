@@ -1,4 +1,4 @@
-package ca.nanometrics.gflot.sample.client;
+package ca.nanometrics.gflot.sample.client.samples.sliding;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModelStrategy;
@@ -12,8 +12,10 @@ import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
 import ca.nanometrics.gflot.client.options.SelectionOptions;
-import ca.nanometrics.gflot.client.options.TimeSeriesAxisOptions;
 import ca.nanometrics.gflot.client.options.SelectionOptions.SelectionMode;
+import ca.nanometrics.gflot.client.options.TimeSeriesAxisOptions;
+import ca.nanometrics.gflot.sample.client.mvp.DefaultActivity;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
@@ -28,13 +30,18 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Alexander De Leon
+ * @author Nicolas Morel
  */
-public class SlidingWindowExample
-    implements GFlotExample
+public class SlidingExample
+    extends DefaultActivity
 {
 
-    public Widget createExample()
+    public SlidingExample( Resources resources )
+    {
+        super( resources );
+    }
+
+    public Widget createWidget()
     {
         PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.slidingWindowStrategy( 20 ) );
         PlotOptions plotOptions = new PlotOptions();
@@ -47,10 +54,8 @@ public class SlidingWindowExample
             new PlotOptions()
                 .setLegendOptions( new LegendOptions().setShow( false ) )
                 .setGlobalSeriesOptions(
-                    new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) )
-                        .setShadowSize( 0d ) )
-                .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) )
-                .addXAxisOptions( new TimeSeriesAxisOptions() );
+                    new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) ).setShadowSize( 0d ) )
+                .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) ).addXAxisOptions( new TimeSeriesAxisOptions() );
 
         final SeriesHandler series = model.addSeries( "Random Series", "#FF9900" );
 
@@ -90,11 +95,6 @@ public class SlidingWindowExample
         return panel;
     }
 
-    public String getName()
-    {
-        return "Sliding Window";
-    }
-
     private void update( final SeriesHandler series, final PlotWidget plot )
     {
         FakeRpcServiceAsync service = getRpcService();
@@ -114,7 +114,6 @@ public class SlidingWindowExample
                 plot.redraw();
             }
         } );
-
     }
 
     private FakeRpcServiceAsync getRpcService()
@@ -131,8 +130,6 @@ public class SlidingWindowExample
     /** The Async interface of the service */
     interface FakeRpcServiceAsync
     {
-
         void getNewData( AsyncCallback<DataPoint[]> callback );
-
     }
 }

@@ -1,4 +1,4 @@
-package ca.nanometrics.gflot.sample.client;
+package ca.nanometrics.gflot.sample.client.samples.selection;
 
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
@@ -20,6 +20,8 @@ import ca.nanometrics.gflot.client.options.Range;
 import ca.nanometrics.gflot.client.options.SelectionOptions;
 import ca.nanometrics.gflot.client.options.SelectionOptions.SelectionMode;
 import ca.nanometrics.gflot.client.options.TickFormatter;
+import ca.nanometrics.gflot.sample.client.mvp.DefaultActivity;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -29,8 +31,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * @author Nicolas Morel
+ */
 public class SelectionExample
-    implements GFlotExample
+    extends DefaultActivity
 {
 
     private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
@@ -39,12 +44,12 @@ public class SelectionExample
 
     private static final String SELECTED = "selected : ";
 
-    public String getName()
+    public SelectionExample( Resources resources )
     {
-        return "Selection";
+        super( resources );
     }
 
-    public Widget createExample()
+    public Widget createWidget()
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();

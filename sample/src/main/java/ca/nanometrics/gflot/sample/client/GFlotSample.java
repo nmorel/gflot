@@ -1,101 +1,45 @@
 package ca.nanometrics.gflot.sample.client;
 
-import java.util.ArrayList;
-import java.util.List;
+import ca.nanometrics.gflot.sample.client.mvp.AppActivityMapper;
+import ca.nanometrics.gflot.sample.client.mvp.AppPlaceHistoryMapper;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
+import ca.nanometrics.gflot.sample.client.samples.simple.SimplePlace;
 
-import ca.nanometrics.gflot.sample.client.stack.StackExample;
-
+import com.google.gwt.activity.shared.ActivityManager;
+import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.user.client.DOM;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
-import com.google.gwt.user.client.ui.SimpleLayoutPanel;
-import com.google.gwt.user.client.ui.TabLayoutPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class GFlotSample
     implements EntryPoint
 {
-    private TabLayoutPanel tabPanel;
-
-    private List<SimpleLayoutPanel> panels;
-
-    private List<GFlotExample> samples;
-
-    private void addExamples()
-    {
-        panels = new ArrayList<SimpleLayoutPanel>();
-        samples = new ArrayList<GFlotExample>();
-
-        addExample( new SimplePlotExample() );
-        addExample( new BarChartExample() );
-        addExample( new SelectionExample() );
-        addExample( new PlotWithInteractiveLegendExample() );
-        addExample( new PlotWithOverviewExample() );
-        addExample( new HoverExample() );
-        addExample( new SlidingWindowExample() );
-        addExample( new DecimationExample() );
-        addExample( new MarkingsExample() );
-        addExample( new ImageExample() );
-        addExample( new MultipleAxesExample() );
-        addExample( new PieExample() );
-        addExample( new StackExample() );
-    }
-
-    private void addExample( GFlotExample example )
-    {
-        SimpleLayoutPanel panel = new SimpleLayoutPanel();
-        tabPanel.add( panel, example.getName() );
-        panels.add( panel );
-        samples.add( example );
-    }
-
     public void onModuleLoad()
     {
-        tabPanel = new TabLayoutPanel( 30, Unit.PX );
+        Resources resources = GWT.create( Resources.class );
+        resources.style().ensureInjected();
 
-        addExamples();
+        EventBus eventBus = new SimpleEventBus();
 
-        tabPanel.addSelectionHandler( new SelectionHandler<Integer>()
-        {
-            @Override
-            public void onSelection( SelectionEvent<Integer> event )
-            {
-                initSample( event.getSelectedItem() );
-            }
-        } );
+        MainView mainView = new MainView( eventBus, resources );
+        RootLayoutPanel.get().add( mainView );
 
-        RootLayoutPanel.get().add( tabPanel );
+        ActivityMapper activityMapper = new AppActivityMapper(resources);
+        PlaceHistoryMapper placeHistoryMapper = new AppPlaceHistoryMapper();
 
-        // selected by default
-        initSample( 0 );
-    }
+        PlaceController placeController = new PlaceController( eventBus );
+        PlaceHistoryHandler placeHistoryHandler = new PlaceHistoryHandler( placeHistoryMapper );
+        placeHistoryHandler.register( placeController, eventBus, new SimplePlace() );
 
-    private void initSample( final int index )
-    {
-        // deferred to prevent a bug where the axis are not correctly drawn
-        Scheduler.get().scheduleDeferred( new ScheduledCommand()
-        {
-            @Override
-            public void execute()
-            {
-                SimpleLayoutPanel panel = panels.get( index );
-                if ( null == panel.getWidget() )
-                {
-                    Widget sample = samples.get( index ).createExample();
-                    DOM.setStyleAttribute( sample.getElement(), "marginTop", "10px" );
-                    panel.setWidget( sample );
+        ActivityManager activityManager = new ActivityManager( activityMapper, eventBus );
+        activityManager.setDisplay( mainView.getContainer() );
 
-                    // setting size to 100% to avoid a bug on IE6 and IE7 where the panel don't take all the space
-                    // available
-                    panel.setSize( "100%", "100%" );
-                }
-            }
-        } );
+        placeHistoryHandler.handleCurrentHistory();
     }
 
 }

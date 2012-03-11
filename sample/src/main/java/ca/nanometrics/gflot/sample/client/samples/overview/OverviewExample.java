@@ -1,4 +1,4 @@
-package ca.nanometrics.gflot.sample.client;
+package ca.nanometrics.gflot.sample.client.samples.overview;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModelStrategy;
@@ -9,6 +9,8 @@ import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
+import ca.nanometrics.gflot.sample.client.mvp.DefaultActivity;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
 
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -16,31 +18,24 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Alexander De Leon
+ * @author Nicolas Morel
  */
-public class PlotWithOverviewExample
-    implements GFlotExample
+public class OverviewExample
+    extends DefaultActivity
 {
 
-    /**
-     * @see ca.nanometrics.gflot.client.example.GFlotExample#getName()
-     */
-    public String getName()
+    public OverviewExample( Resources resources )
     {
-        return "PlotWithOverview";
+        super( resources );
     }
 
-    /**
-     * @see ca.nanometrics.gflot.client.example.GFlotExample#createExample()
-     */
-    public Widget createExample()
+    public Widget createWidget()
     {
-
         PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.defaultStrategy() );
         PlotOptions plotOptions = new PlotOptions();
         plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
-        .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
-        .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
+            .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
+            .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
 
         SeriesHandler series = model.addSeries( "Random Series", "#2c1d54" );
 

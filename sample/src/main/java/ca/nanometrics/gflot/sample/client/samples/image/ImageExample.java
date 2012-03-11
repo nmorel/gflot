@@ -1,4 +1,4 @@
-package ca.nanometrics.gflot.sample.client;
+package ca.nanometrics.gflot.sample.client.samples.image;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.ImageDataPoint;
@@ -9,19 +9,22 @@ import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.AxisOptions;
 import ca.nanometrics.gflot.client.options.ImageSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
+import ca.nanometrics.gflot.sample.client.mvp.DefaultActivity;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ImageExample
-    implements GFlotExample
+    extends DefaultActivity
 {
-    public String getName()
+
+    public ImageExample( Resources resources )
     {
-        return "Image";
+        super( resources );
     }
 
-    public Widget createExample()
+    public Widget createWidget()
     {
         final PlotModel model = new PlotModel();
         final PlotOptions plotOptions = new PlotOptions();
@@ -48,6 +51,5 @@ public class ImageExample
         final FlowPanel panel = new FlowPanel();
         panel.add( plot );
         return panel;
-
     }
 }

@@ -1,4 +1,4 @@
-package ca.nanometrics.gflot.sample.client;
+package ca.nanometrics.gflot.sample.client.samples.decimation;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModelStrategy;
@@ -7,13 +7,15 @@ import ca.nanometrics.gflot.client.PlotWithOverview;
 import ca.nanometrics.gflot.client.PlotWithOverviewModel;
 import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
+import ca.nanometrics.gflot.client.options.AxisOptions;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions.LabelFormatter;
-import ca.nanometrics.gflot.client.options.AxisOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
+import ca.nanometrics.gflot.sample.client.mvp.DefaultActivity;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -27,17 +29,22 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Alexander De Leon
+ * @author Nicolas Morel
  */
 public class DecimationExample
-    implements GFlotExample
+    extends DefaultActivity
 {
 
     private double previous = 0;
 
     private int timeCounter = 0;
 
-    public Widget createExample()
+    public DecimationExample( Resources resources )
+    {
+        super( resources );
+    }
+
+    public Widget createWidget()
     {
         PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.downSamplingStrategy( 20 ) );
         PlotOptions plotOptions = new PlotOptions();
@@ -92,11 +99,6 @@ public class DecimationExample
         return panel;
     }
 
-    public String getName()
-    {
-        return "Decimation";
-    }
-
     private void update( final SeriesHandler series, final PlotWidget plot )
     {
         FakeRpcServiceAsync service = getRpcService();
@@ -123,7 +125,6 @@ public class DecimationExample
     {
         return new FakeRpcServiceAsync()
         {
-
             public void getNewData( final AsyncCallback<DataPoint[]> callback )
             {
                 double up = Random.nextDouble();
@@ -138,8 +139,6 @@ public class DecimationExample
     /** The Async interface of the service */
     interface FakeRpcServiceAsync
     {
-
         void getNewData( AsyncCallback<DataPoint[]> callback );
-
     }
 }

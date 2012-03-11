@@ -1,4 +1,4 @@
-package ca.nanometrics.gflot.sample.client;
+package ca.nanometrics.gflot.sample.client.samples.markings;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModelStrategy;
@@ -18,24 +18,28 @@ import ca.nanometrics.gflot.client.options.Markings;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
 import ca.nanometrics.gflot.client.options.Range;
+import ca.nanometrics.gflot.sample.client.mvp.DefaultActivity;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Alexander De Leon
- * @author Mohamed M. El-Kalioby
+ * @author Nicolas Morel
  */
 public class MarkingsExample
-    implements GFlotExample
+    extends DefaultActivity
 {
-
     private static final String INSTRUCTION = "Hover over a point";
 
-    public Widget createExample()
+    public MarkingsExample( Resources resources )
     {
+        super( resources );
+    }
 
+    public Widget createWidget()
+    {
         final Label selectedPointLabel = new Label( INSTRUCTION );
 
         PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.defaultStrategy() );
@@ -107,11 +111,6 @@ public class MarkingsExample
         panel.add( selectedPointLabel );
         panel.add( plot );
         return panel;
-    }
-
-    public String getName()
-    {
-        return "Markings Example";
     }
 
 }

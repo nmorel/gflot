@@ -1,4 +1,4 @@
-package ca.nanometrics.gflot.sample.client;
+package ca.nanometrics.gflot.sample.client.samples.pie;
 
 import ca.nanometrics.gflot.client.PieDataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
@@ -12,20 +12,26 @@ import ca.nanometrics.gflot.client.options.PieSeriesOptions.Label;
 import ca.nanometrics.gflot.client.options.PieSeriesOptions.Label.Background;
 import ca.nanometrics.gflot.client.options.PieSeriesOptions.Label.Formatter;
 import ca.nanometrics.gflot.client.options.PlotOptions;
+import ca.nanometrics.gflot.sample.client.mvp.DefaultActivity;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
 
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * @author Nicolas Morel
+ */
 public class PieExample
-    implements GFlotExample
+    extends DefaultActivity
 {
-    public String getName()
+
+    public PieExample( Resources resources )
     {
-        return "Pie";
+        super( resources );
     }
 
-    public Widget createExample()
+    public Widget createWidget()
     {
         final PlotModel model = new PlotModel();
         final PlotOptions plotOptions = new PlotOptions();
@@ -60,6 +66,5 @@ public class PieExample
         final FlowPanel panel = new FlowPanel();
         panel.add( plot );
         return panel;
-
     }
 }

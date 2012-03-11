@@ -1,4 +1,4 @@
-package ca.nanometrics.gflot.sample.client;
+package ca.nanometrics.gflot.sample.client.samples.bar;
 
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
@@ -7,27 +7,33 @@ import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.AxisOptions;
 import ca.nanometrics.gflot.client.options.BarSeriesOptions;
+import ca.nanometrics.gflot.client.options.BarSeriesOptions.BarAlignment;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.TickFormatter;
-import ca.nanometrics.gflot.client.options.BarSeriesOptions.BarAlignment;
+import ca.nanometrics.gflot.sample.client.mvp.DefaultActivity;
+import ca.nanometrics.gflot.sample.client.resources.Resources;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Alexander De Leon
+ * @author Nicolas Morel
  */
-public class BarChartExample
-    implements GFlotExample
+public class BarExample
+    extends DefaultActivity
 {
 
     private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
-    public Widget createExample()
+    public BarExample( Resources resources )
     {
+        super( resources );
+    }
 
+    public Widget createWidget()
+    {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
 
@@ -77,11 +83,6 @@ public class BarChartExample
         FlowPanel panel = new FlowPanel();
         panel.add( plot );
         return panel;
-    }
-
-    public String getName()
-    {
-        return "Bar Chart";
     }
 
 }
