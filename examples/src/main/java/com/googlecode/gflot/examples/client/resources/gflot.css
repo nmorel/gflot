@@ -3,6 +3,18 @@ body {
 	font-size: 12px;
 }
 
+.headerContainer {
+
+}
+
+.menuScrollContainer {
+
+}
+
+.menuContainer {
+
+}
+
 .menuLink {
 	margin: 5px;
 }
@@ -16,4 +28,8 @@ body {
 .menuLinkSelected a {
 	background-color: #FF7100;
 	color: white;
+}
+
+.mainScrollContainer {
+	padding: 10px;
 }

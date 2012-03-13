@@ -116,7 +116,7 @@
         </executions>
         <configuration>
           <runTarget>GFlotExamples.html</runTarget>
-          <module>com.google.code.gflot.examples.GFlotExamples</module>
+          <module>com.googlecode.gflot.examples.GFlotExamples</module>
           <appEngineVersion>${gae.version}</appEngineVersion>
           <appEngineHome>${gae.home}</appEngineHome>
           <server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>

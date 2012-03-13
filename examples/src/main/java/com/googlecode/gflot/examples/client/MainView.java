@@ -3,7 +3,6 @@ package com.googlecode.gflot.examples.client;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceChangeEvent;
@@ -13,7 +12,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Hyperlink;
-import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gflot.examples.client.examples.bar.BarPlace;
@@ -116,7 +114,7 @@ public class MainView
     Hyperlink stackLink;
 
     @UiField
-    SimpleLayoutPanel container;
+    AcceptsOneWidget container;
 
     public MainView( EventBus eventBus, Resources res )
     {

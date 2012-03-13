@@ -12,8 +12,16 @@ public interface Resources
     public interface Style
         extends CssResource
     {
+        String headerContainer();
+
+        String menuScrollContainer();
+
+        String menuContainer();
+
         String menuLink();
 
         String menuLinkSelected();
+
+        String mainScrollContainer();
     }
 }
