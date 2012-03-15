@@ -7,6 +7,11 @@
 
   <inherits name="ca.nanometrics.gflot.GFlot" />
 
+  <!-- Generator to create the source code -->
+  <generate-with class="com.googlecode.gflot.examples.generator.SourceGenerator">
+    <when-type-assignable class="com.googlecode.gflot.examples.client.GFlotExamples.GeneratorInfo" />
+  </generate-with>
+
   <entry-point class="com.googlecode.gflot.examples.client.GFlotExamples" />
 
 </module>

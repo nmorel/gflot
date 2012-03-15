@@ -18,11 +18,23 @@ import com.googlecode.gflot.examples.client.resources.Resources;
 public class GFlotExamples
     implements EntryPoint
 {
+    /**
+     * The type passed into the
+     * {@link com.googlecode.gflot.examples.generator.SourceGenerator}.
+     */
+    private static final class GeneratorInfo {
+    }
+
     public void onModuleLoad()
     {
+        // Generate the source code for the examples
+        GWT.create(GeneratorInfo.class);
+
+        // Inject styles
         Resources resources = GWT.create( Resources.class );
         resources.style().ensureInjected();
 
+        // Initialize the history handler and activity manager
         EventBus eventBus = new SimpleEventBus();
 
         MainView mainView = new MainView( eventBus, resources );
@@ -39,6 +51,7 @@ public class GFlotExamples
         activityManager.setDisplay( mainView.getContainer() );
 
         placeHistoryHandler.handleCurrentHistory();
+
     }
 
 }

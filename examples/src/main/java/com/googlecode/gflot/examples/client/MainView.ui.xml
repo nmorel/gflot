@@ -5,8 +5,8 @@
 
   </ui:style>
 
-  <ui:with type="com.googlecode.gflot.examples.client.resources.Resources" field="res"/>
-  <ui:with type="com.googlecode.gflot.examples.client.mvp.NameTokens" field="tokens"/>
+  <ui:with type="com.googlecode.gflot.examples.client.resources.Resources" field="res" />
+  <ui:with type="com.googlecode.gflot.examples.client.mvp.NameTokens" field="tokens" />
 
   <g:DockLayoutPanel unit="PX">
 
@@ -20,24 +20,31 @@
       <g:ScrollPanel styleName='{res.style.menuScrollContainer}'>
         <g:HTMLPanel styleName='{res.style.menuContainer}'>
           <g:Hyperlink ui:field="barLink" text="Bar" targetHistoryToken="{tokens.bar}" styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="decimationLink" text="Decimation" targetHistoryToken="{tokens.decimation}" styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="decimationLink" text="Decimation" targetHistoryToken="{tokens.decimation}"
+            styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="hoverLink" text="Hover" targetHistoryToken="{tokens.hover}" styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="imageLink" text="Image" targetHistoryToken="{tokens.image}" styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="interactiveLegendLink" text="Interactive Legend" targetHistoryToken="{tokens.interactiveLegend}" styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="markingsLink" text="Markings" targetHistoryToken="{tokens.markings}" styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="multipleAxesLink" text="Multiple axes" targetHistoryToken="{tokens.multiplesAxes}" styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="overviewLink" text="Overview" targetHistoryToken="{tokens.overview}" styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="interactiveLegendLink" text="Interactive Legend" targetHistoryToken="{tokens.interactiveLegend}"
+            styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="markingsLink" text="Markings" targetHistoryToken="{tokens.markings}"
+            styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="multipleAxesLink" text="Multiple axes" targetHistoryToken="{tokens.multiplesAxes}"
+            styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="overviewLink" text="Overview" targetHistoryToken="{tokens.overview}"
+            styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="pieLink" text="Pie" targetHistoryToken="{tokens.pie}" styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="selectionLink" text="Selection" targetHistoryToken="{tokens.selection}" styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="selectionLink" text="Selection" targetHistoryToken="{tokens.selection}"
+            styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="simpleLink" text="Simple" targetHistoryToken="{tokens.simple}" styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="slidingLink" text="Sliding" targetHistoryToken="{tokens.sliding}" styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="slidingLink" text="Sliding" targetHistoryToken="{tokens.sliding}"
+            styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="stackLink" text="Stack" targetHistoryToken="{tokens.stack}" styleName='{res.style.menuLink}' />
         </g:HTMLPanel>
       </g:ScrollPanel>
     </g:west>
 
     <g:center>
-      <g:ScrollPanel styleName='{res.style.mainScrollContainer}' ui:field="container" />
+      <g:SimpleLayoutPanel styleName='{res.style.mainScrollContainer}' ui:field="container" />
     </g:center>
 
   </g:DockLayoutPanel>
