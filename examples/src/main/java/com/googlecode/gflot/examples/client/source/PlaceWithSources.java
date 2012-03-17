@@ -64,7 +64,7 @@ public abstract class PlaceWithSources<P extends PlaceWithSources<?>>
         return filename;
     }
 
-    private void setFilename( String filename )
+    void setFilename( String filename )
     {
         this.filename = filename;
     }
@@ -74,7 +74,7 @@ public abstract class PlaceWithSources<P extends PlaceWithSources<?>>
         return rawSource;
     }
 
-    private void setRawSource( boolean rawSource )
+    void setRawSource( boolean rawSource )
     {
         this.rawSource = rawSource;
     }
