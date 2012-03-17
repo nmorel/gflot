@@ -1,4 +1,4 @@
-package com.googlecode.gflot.examples.client.mvp;
+package com.googlecode.gflot.examples.client.examples;
 
 
 import com.google.gwt.activity.shared.AbstractActivity;

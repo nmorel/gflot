@@ -10,29 +10,28 @@ import ca.nanometrics.gflot.client.options.GridOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.TickFormatter;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.googlecode.gflot.examples.client.ContentActivity;
-import com.googlecode.gflot.examples.client.GFlotExamplesAnnotations.GFlotExamplesSource;
+import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
 /**
  * @author Nicolas Morel
  */
 public class SimpleExample
-    extends ContentActivity
+    extends DefaultActivity
 {
 
     private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
     public SimpleExample( Resources resources )
     {
-        super( "Simple", "SimpleDescription", resources );
+        super( resources );
     }
 
     /**
-     * Init blabla
+     * Create plot
      */
     @GFlotExamplesSource
     public Widget createWidget()
@@ -75,18 +74,6 @@ public class SimpleExample
         FlowPanel panel = new FlowPanel();
         panel.add( plot );
         return panel;
-    }
-
-    @Override
-    public Widget onInitialize()
-    {
-        return createWidget();
-    }
-
-    @Override
-    protected void asyncOnInitialize( AsyncCallback<Widget> callback )
-    {
-        callback.onSuccess(onInitialize());
     }
 
 }

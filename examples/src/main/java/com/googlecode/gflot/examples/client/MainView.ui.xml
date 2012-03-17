@@ -43,6 +43,14 @@
       </g:ScrollPanel>
     </g:west>
 
+    <g:north size="40">
+      <g:FlowPanel ui:field='contentButtons'>
+        <g:Anchor ui:field='exampleLink'>Example</g:Anchor>
+        <g:Anchor ui:field='sourceLink'>Source Code</g:Anchor>
+        <g:ListBox ui:field='sourceList' />
+      </g:FlowPanel>
+    </g:north>
+
     <g:center>
       <g:SimpleLayoutPanel styleName='{res.style.mainScrollContainer}' ui:field="container" />
     </g:center>

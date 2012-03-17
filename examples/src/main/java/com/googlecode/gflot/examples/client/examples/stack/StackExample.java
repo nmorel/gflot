@@ -19,8 +19,9 @@ import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.googlecode.gflot.examples.client.mvp.DefaultActivity;
+import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
 /**
  * @author Nicolas Morel
@@ -55,6 +56,10 @@ public class StackExample
         super( resources );
     }
 
+    /**
+     * Create plot
+     */
+    @GFlotExamplesSource
     protected Widget createWidget()
     {
         PlotModel model = new PlotModel();

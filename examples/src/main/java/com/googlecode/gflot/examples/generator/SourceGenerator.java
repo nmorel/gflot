@@ -29,11 +29,11 @@ import com.google.gwt.core.ext.TreeLogger;
 import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.NotFoundException;
-import com.googlecode.gflot.examples.client.ContentActivity;
-import com.googlecode.gflot.examples.client.ExamplesConstants;
-import com.googlecode.gflot.examples.client.GFlotExamplesAnnotations.GFlotExamplesData;
-import com.googlecode.gflot.examples.client.GFlotExamplesAnnotations.GFlotExamplesRaw;
-import com.googlecode.gflot.examples.client.GFlotExamplesAnnotations.GFlotExamplesSource;
+import com.googlecode.gflot.examples.client.examples.DefaultActivity;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
+import com.googlecode.gflot.examples.client.source.SourceConstants;
 
 /**
  * Generate the source code and raw source used in the GFlot examples.
@@ -81,7 +81,7 @@ public class SourceGenerator
         JClassType cwType = null;
         try
         {
-            cwType = context.getTypeOracle().getType( ContentActivity.class.getName() );
+            cwType = context.getTypeOracle().getType( DefaultActivity.class.getName() );
         }
         catch ( NotFoundException e )
         {
@@ -130,9 +130,9 @@ public class SourceGenerator
     }
 
     /**
-     * Generate the raw files used by a {@link ContentActivity}.
+     * Generate the raw files used by a {@link ExampleActivity}.
      *
-     * @param type the {@link ContentActivity} subclass
+     * @param type the {@link ExampleActivity} subclass
      */
     private void generateRawFiles( JClassType type )
         throws UnableToCompleteException
@@ -169,15 +169,15 @@ public class SourceGenerator
             fileContents = "<pre>" + fileContents + "</pre>";
 
             // Save the raw source in the public directory
-            String dstPath = ExamplesConstants.DST_SOURCE_RAW + filename + ".html";
+            String dstPath = SourceConstants.DST_SOURCE_RAW + filename + ".html";
             createPublicResource( dstPath, fileContents );
         }
     }
 
     /**
-     * Generate the formatted source code for a {@link ContentActivity}.
+     * Generate the formatted source code for a {@link ExampleActivity}.
      *
-     * @param type the {@link ContentActivity} subclass
+     * @param type the {@link ExampleActivity} subclass
      */
     private void generateSourceFiles( JClassType type )
         throws UnableToCompleteException
@@ -233,7 +233,7 @@ public class SourceGenerator
         formattedSource = "<pre>" + formattedSource + "</pre>";
 
         // Save the source code to a file
-        String dstPath = ExamplesConstants.DST_SOURCE_EXAMPLE + type.getSimpleSourceName() + ".html";
+        String dstPath = SourceConstants.DST_SOURCE_EXAMPLE + type.getSimpleSourceName() + ".html";
         createPublicResource( dstPath, formattedSource );
     }
 
@@ -295,7 +295,7 @@ public class SourceGenerator
      */
     private boolean isFirstPass()
     {
-        String placeholder = ExamplesConstants.DST_SOURCE + "generated";
+        String placeholder = SourceConstants.DST_SOURCE + "generated";
         try
         {
             OutputStream outStream = context.tryCreateResource( logger, placeholder );

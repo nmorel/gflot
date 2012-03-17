@@ -1,6 +1,5 @@
 package com.googlecode.gflot.examples.client.mvp;
 
-
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
@@ -31,6 +30,8 @@ import com.googlecode.gflot.examples.client.examples.sliding.SlidingPlace;
 import com.googlecode.gflot.examples.client.examples.stack.StackExample;
 import com.googlecode.gflot.examples.client.examples.stack.StackPlace;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.PlaceWithSources;
+import com.googlecode.gflot.examples.client.source.SourceActivity;
 
 public class AppActivityMapper
     implements ActivityMapper
@@ -71,6 +72,11 @@ public class AppActivityMapper
     @Override
     public Activity getActivity( Place place )
     {
+        if ( place instanceof PlaceWithSources && ( (PlaceWithSources<?>) place ).getFilename() != null )
+        {
+            return new SourceActivity().withPlace( (PlaceWithSources<?>) place );
+        }
+
         if ( place instanceof BarPlace )
         {
             if ( null == barActivity )

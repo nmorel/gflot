@@ -13,17 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.googlecode.gflot.examples.client;
+package com.googlecode.gflot.examples.client.source;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.googlecode.gflot.examples.client.GFlotExamples;
+
 /**
  * The annotations used in {@link GFlotExamples}.
  */
-public class GFlotExamplesAnnotations {
+public class SourceAnnotations {
   /**
    * Indicates that a class variable should be included as source data in the
    * example. All data must have a JavaDoc style comment.

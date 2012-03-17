@@ -37,9 +37,6 @@ public class GFlotExamples
         // Initialize the history handler and activity manager
         EventBus eventBus = new SimpleEventBus();
 
-        MainView mainView = new MainView( eventBus, resources );
-        RootLayoutPanel.get().add( mainView );
-
         ActivityMapper activityMapper = new AppActivityMapper( resources );
         PlaceHistoryMapper placeHistoryMapper = new AppPlaceHistoryMapper();
 
@@ -47,11 +44,13 @@ public class GFlotExamples
         PlaceHistoryHandler placeHistoryHandler = new PlaceHistoryHandler( placeHistoryMapper );
         placeHistoryHandler.register( placeController, eventBus, new SimplePlace() );
 
+        MainView mainView = new MainView( eventBus, placeController, resources );
+        RootLayoutPanel.get().add( mainView );
+
         ActivityManager activityManager = new ActivityManager( activityMapper, eventBus );
         activityManager.setDisplay( mainView.getContainer() );
 
         placeHistoryHandler.handleCurrentHistory();
-
     }
 
 }

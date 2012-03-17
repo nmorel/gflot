@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceChangeEvent;
 import com.google.gwt.place.shared.PlaceChangeEvent.Handler;
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.ResizeComposite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.EventBus;
@@ -28,6 +34,7 @@ import com.googlecode.gflot.examples.client.examples.simple.SimplePlace;
 import com.googlecode.gflot.examples.client.examples.sliding.SlidingPlace;
 import com.googlecode.gflot.examples.client.examples.stack.StackPlace;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.PlaceWithSources;
 
 public class MainView
     extends ResizeComposite
@@ -68,6 +75,8 @@ public class MainView
             return link;
         }
     }
+
+    private final PlaceController placeController;
 
     private List<Link> links;
 
@@ -114,10 +123,20 @@ public class MainView
     Hyperlink stackLink;
 
     @UiField
+    Anchor exampleLink;
+
+    @UiField
+    Anchor sourceLink;
+
+    @UiField
+    ListBox sourceList;
+
+    @UiField
     AcceptsOneWidget container;
 
-    public MainView( EventBus eventBus, Resources res )
+    public MainView( EventBus eventBus, PlaceController placeController, Resources res )
     {
+        this.placeController = placeController;
         this.res = res;
 
         initWidget( uiBinder.createAndBindUi( this ) );
@@ -252,6 +271,83 @@ public class MainView
                 link.getLink().removeStyleName( res.style().menuLinkSelected() );
             }
         }
+
+        sourceList.clear();
+
+        if ( newPlace instanceof PlaceWithSources )
+        {
+            exampleLink.setVisible( true );
+            sourceLink.setVisible( true );
+
+            PlaceWithSources<?> place = (PlaceWithSources<?>) newPlace;
+            sourceList.addItem( "Example", place.getSourceFilename() );
+            String[] rawFilenames = place.getRawSourceFilenames();
+            if ( null != rawFilenames && rawFilenames.length > 0 )
+            {
+                String text = sourceLink.getText();
+                if ( !text.endsWith( ":" ) )
+                {
+                    sourceLink.setText( text + ":" );
+                }
+                sourceList.setVisible( true );
+                for ( String filename : rawFilenames )
+                {
+                    sourceList.addItem( filename, filename );
+                }
+                sourceList.setSelectedIndex( 0 );
+            }
+            else
+            {
+                String text = sourceLink.getText();
+                if ( text.endsWith( ":" ) )
+                {
+                    sourceLink.setText( text.substring( 0, text.length() - 1 ) );
+                }
+                sourceList.setVisible( false );
+            }
+        }
+        else
+        {
+            exampleLink.setVisible( false );
+            sourceLink.setVisible( false );
+            sourceList.setVisible( false );
+        }
     }
 
+    @UiHandler( "exampleLink" )
+    void onClickExampleLink( ClickEvent e )
+    {
+        Place currentPlace = placeController.getWhere();
+        if ( currentPlace instanceof PlaceWithSources )
+        {
+            PlaceWithSources<?> place = (PlaceWithSources<?>) currentPlace;
+            if ( null != place.getFilename() )
+            {
+                placeController.goTo( place.createPlace() );
+            }
+        }
+    }
+
+    @UiHandler( "sourceLink" )
+    void onClickSourceLink( ClickEvent e )
+    {
+        Place currentPlace = placeController.getWhere();
+        if ( currentPlace instanceof PlaceWithSources )
+        {
+            PlaceWithSources<?> place = (PlaceWithSources<?>) currentPlace;
+            placeController.goTo( place.createPlace( place.getSourceFilename(), sourceList.isVisible() && sourceList.getSelectedIndex() > 0 ) );
+        }
+    }
+
+    @UiHandler( "sourceList" )
+    void onChangeSourceList( ChangeEvent e )
+    {
+        Place currentPlace = placeController.getWhere();
+        if ( currentPlace instanceof PlaceWithSources )
+        {
+            PlaceWithSources<?> place = (PlaceWithSources<?>) currentPlace;
+            int selectedIndex = sourceList.getSelectedIndex();
+            placeController.goTo( place.createPlace( sourceList.getValue( selectedIndex ), selectedIndex > 0 ) );
+        }
+    }
 }

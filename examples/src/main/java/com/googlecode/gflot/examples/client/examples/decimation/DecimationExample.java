@@ -25,8 +25,9 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.googlecode.gflot.examples.client.mvp.DefaultActivity;
+import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
 /**
  * @author Nicolas Morel
@@ -44,6 +45,10 @@ public class DecimationExample
         super( resources );
     }
 
+    /**
+     * Create plot
+     */
+    @GFlotExamplesSource
     public Widget createWidget()
     {
         PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.downSamplingStrategy( 20 ) );

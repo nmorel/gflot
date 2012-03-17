@@ -1,6 +1,6 @@
-package com.googlecode.gflot.examples.client;
+package com.googlecode.gflot.examples.client.source;
 
-public interface ExamplesConstants
+public interface SourceConstants
 {
     /**
      * The path to source code for examples, raw files, and style definitions.
