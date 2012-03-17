@@ -43,10 +43,10 @@
       </g:ScrollPanel>
     </g:west>
 
-    <g:north size="40">
+    <g:north size="30">
       <g:FlowPanel ui:field='contentButtons'>
-        <g:Anchor ui:field='exampleLink'>Example</g:Anchor>
-        <g:Anchor ui:field='sourceLink'>Source Code</g:Anchor>
+        <g:Anchor ui:field='exampleLink' styleName='{res.style.sourceLink}'>Example</g:Anchor>
+        <g:Anchor ui:field='sourceLink' styleName='{res.style.sourceLink}'>Source Code</g:Anchor>
         <g:ListBox ui:field='sourceList' />
       </g:FlowPanel>
     </g:north>

@@ -17,6 +17,11 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.googlecode.gflot.examples.client.mvp.ActivityWithPlace;
 
+/**
+ * This activity shows source and raw source code.
+ *
+ * @author Nicolas Morel
+ */
 public class SourceActivity
     extends ActivityWithPlace<PlaceWithSources<?>>
 {
@@ -72,6 +77,34 @@ public class SourceActivity
      * A mapping of filenames to their source or raw source code. The map is populated as source is loaded.
      */
     private final Map<String, String> source = new HashMap<String, String>();
+
+    /**
+     * Widget containing the source code
+     */
+    private HTML contentSource;
+
+    @Override
+    public void start( AcceptsOneWidget panel, EventBus eventBus )
+    {
+        ScrollPanel scroll = new ScrollPanel();
+        scroll.getElement().getStyle().setMargin( 10.0, Unit.PX );
+        scroll.getElement().getStyle().setBackgroundColor( "#eee" );
+        scroll.getElement().getStyle().setProperty( "border", "1px solid #c3c3c3" );
+
+        contentSource = new HTML( "loading" );
+        scroll.add( contentSource );
+
+        if ( getPlace().isRawSource() )
+        {
+            getRawSource( getPlace().getFilename(), new CustomCallback() );
+        }
+        else
+        {
+            getSource( getPlace().getFilename(), new CustomCallback() );
+        }
+
+        panel.setWidget( scroll );
+    }
 
     /**
      * Get the source code for a raw file.
@@ -147,30 +180,5 @@ public class SourceActivity
         {
             callback.onError( null, e );
         }
-    }
-
-    private HTML contentSource;
-
-    @Override
-    public void start( AcceptsOneWidget panel, EventBus eventBus )
-    {
-        ScrollPanel scroll = new ScrollPanel();
-        contentSource = new HTML( "loading" );
-        contentSource.getElement().getStyle().setBackgroundColor( "#eee" );
-        contentSource.getElement().getStyle().setMargin( 10.0, Unit.PX );
-        contentSource.getElement().getStyle().setProperty( "border", "1px solid #c3c3c3" );
-        contentSource.getElement().getStyle().setProperty( "padding", "10px 2px" );
-        scroll.add( contentSource );
-
-        if ( getPlace().isRawSource() )
-        {
-            getRawSource( getPlace().getFilename(), new CustomCallback() );
-        }
-        else
-        {
-            getSource( getPlace().getFilename(), new CustomCallback() );
-        }
-
-        panel.setWidget( scroll );
     }
 }

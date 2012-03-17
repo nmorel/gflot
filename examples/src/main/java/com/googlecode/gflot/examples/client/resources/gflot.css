@@ -30,6 +30,26 @@ body {
 	color: white;
 }
 
+.sourceLink {
+	font-weight: bold;
+	padding: 3px;
+	color: black;
+}
+
+.sourceLink:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.sourceLinkSelected {
+	color: grey;
+}
+
+.sourceLinkSelected:hover {
+	cursor: auto;
+	text-decoration: none;
+}
+
 .mainScrollContainer {
 	padding: 10px;
 }

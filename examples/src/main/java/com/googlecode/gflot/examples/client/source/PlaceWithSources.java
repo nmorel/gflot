@@ -5,12 +5,31 @@ import java.util.Map;
 
 import com.googlecode.gflot.examples.client.mvp.PlaceWithParameters;
 
+/**
+ * Abstract place to handle the source and raw source file
+ *
+ * @author Nicolas Morel
+ * @param <P> type of the place
+ */
 public abstract class PlaceWithSources<P extends PlaceWithSources<?>>
     extends PlaceWithParameters
 {
+    /**
+     * Key of the filename's parameter
+     */
     private static final String PARAM_FILENAME = "filename";
+
+    /**
+     * Key of the rawSource's parameter
+     */
     private static final String PARAM_RAW_SOURCE = "rawSource";
 
+    /**
+     * Extract the source's filename from class name
+     *
+     * @param className Name of the class
+     * @return the source's filename
+     */
     protected static String extractSourceFilenameFromClassName( String className )
     {
         return className.substring( className.lastIndexOf( "." ) + 1 );
@@ -60,8 +79,14 @@ public abstract class PlaceWithSources<P extends PlaceWithSources<?>>
         this.rawSource = rawSource;
     }
 
+    /**
+     * @return the source filename
+     */
     public abstract String getSourceFilename();
 
+    /**
+     * @return the raw source filenames. can be null
+     */
     public String[] getRawSourceFilenames()
     {
         return null;
@@ -90,6 +115,12 @@ public abstract class PlaceWithSources<P extends PlaceWithSources<?>>
         }
     }
 
+    /**
+     * Create a new place from this one with the filename and rawSource specified. This method is used to switch between
+     * place showing example and place showing source. Implementations can copy their specific attributes.
+     *
+     * @return the created place
+     */
     public P createPlace( String filename, boolean rawSource )
     {
         P place = createPlace();
@@ -98,6 +129,12 @@ public abstract class PlaceWithSources<P extends PlaceWithSources<?>>
         return place;
     }
 
+    /**
+     * Create a new place from this one without the filename and rawSource attributes. This method is used to switch
+     * between place showing example and place showing source. Implementations can copy their specific attrbutes.
+     *
+     * @return the created place
+     */
     public abstract P createPlace();
 
 }

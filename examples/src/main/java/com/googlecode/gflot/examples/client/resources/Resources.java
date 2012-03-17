@@ -22,6 +22,10 @@ public interface Resources
 
         String menuLinkSelected();
 
+        String sourceLink();
+
+        String sourceLinkSelected();
+
         String mainScrollContainer();
     }
 }

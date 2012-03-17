@@ -260,6 +260,7 @@ public class MainView
     {
         Place newPlace = event.getNewPlace();
 
+        // select the link corresponding to the place
         for ( Link link : links )
         {
             if ( link.isPlaceMatchLink( newPlace ) )
@@ -272,6 +273,8 @@ public class MainView
             }
         }
 
+        // clear the source list because we are going to update it with the raw source file corresponding to the new
+        // place
         sourceList.clear();
 
         if ( newPlace instanceof PlaceWithSources )
@@ -280,24 +283,36 @@ public class MainView
             sourceLink.setVisible( true );
 
             PlaceWithSources<?> place = (PlaceWithSources<?>) newPlace;
+
             sourceList.addItem( "Example", place.getSourceFilename() );
+
             String[] rawFilenames = place.getRawSourceFilenames();
+
             if ( null != rawFilenames && rawFilenames.length > 0 )
             {
+                // add the raw source files to the list and show the list
                 String text = sourceLink.getText();
                 if ( !text.endsWith( ":" ) )
                 {
                     sourceLink.setText( text + ":" );
                 }
                 sourceList.setVisible( true );
+                int indexRawSource = 0;
+                int i = 0;
                 for ( String filename : rawFilenames )
                 {
                     sourceList.addItem( filename, filename );
+                    if ( place.isRawSource() && filename.equals( place.getFilename() ) )
+                    {
+                        indexRawSource = i;
+                    }
+                    i++;
                 }
-                sourceList.setSelectedIndex( 0 );
+                sourceList.setSelectedIndex( indexRawSource );
             }
             else
             {
+                // no raw source file, we hide the list
                 String text = sourceLink.getText();
                 if ( text.endsWith( ":" ) )
                 {
@@ -305,9 +320,21 @@ public class MainView
                 }
                 sourceList.setVisible( false );
             }
+
+            if ( null == place.getFilename() )
+            {
+                sourceLink.removeStyleName( res.style().sourceLinkSelected() );
+                exampleLink.addStyleName( res.style().sourceLinkSelected() );
+            }
+            else
+            {
+                exampleLink.removeStyleName( res.style().sourceLinkSelected() );
+                sourceLink.addStyleName( res.style().sourceLinkSelected() );
+            }
         }
         else
         {
+            // should not happen
             exampleLink.setVisible( false );
             sourceLink.setVisible( false );
             sourceList.setVisible( false );
@@ -323,6 +350,7 @@ public class MainView
             PlaceWithSources<?> place = (PlaceWithSources<?>) currentPlace;
             if ( null != place.getFilename() )
             {
+                // we were on the source page, we create a new place from the previous one and go to this new place
                 placeController.goTo( place.createPlace() );
             }
         }
@@ -335,6 +363,7 @@ public class MainView
         if ( currentPlace instanceof PlaceWithSources )
         {
             PlaceWithSources<?> place = (PlaceWithSources<?>) currentPlace;
+            // we were on the example page, we create a new place from the previous one and go to this new place
             placeController.goTo( place.createPlace( place.getSourceFilename(), sourceList.isVisible() && sourceList.getSelectedIndex() > 0 ) );
         }
     }
@@ -347,6 +376,7 @@ public class MainView
         {
             PlaceWithSources<?> place = (PlaceWithSources<?>) currentPlace;
             int selectedIndex = sourceList.getSelectedIndex();
+            // we were on the example page, we create a new place from the previous one and go to this new place
             placeController.goTo( place.createPlace( sourceList.getValue( selectedIndex ), selectedIndex > 0 ) );
         }
     }
