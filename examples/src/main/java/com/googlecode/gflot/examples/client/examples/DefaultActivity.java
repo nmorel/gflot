@@ -1,11 +1,13 @@
 package com.googlecode.gflot.examples.client.examples;
 
-
 import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.resources.Resources;
 
@@ -23,13 +25,24 @@ public abstract class DefaultActivity
     }
 
     @Override
-    public void start( AcceptsOneWidget panel, EventBus eventBus )
+    public void start( final AcceptsOneWidget panel, EventBus eventBus )
     {
         if ( null == widget )
         {
             widget = createWidget();
         }
         panel.setWidget( widget );
+        Scheduler.get().scheduleDeferred( new ScheduledCommand()
+        {
+            @Override
+            public void execute()
+            {
+                // trick under IE6 to force a dom reconstruction
+                PopupPanel pop = new PopupPanel();
+                pop.show();
+                pop.hide();
+            }
+        } );
     }
 
     @UiFactory

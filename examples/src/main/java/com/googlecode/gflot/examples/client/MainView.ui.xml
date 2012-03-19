@@ -10,35 +10,50 @@
 
   <g:DockLayoutPanel unit="PX">
 
-    <g:north size="40">
+    <g:north size="60">
       <g:HTMLPanel styleName='{res.style.headerContainer}'>
-        <h2>GFlot Examples</h2>
+        <span class="{res.style.headerTitle}">GFlot Examples</span>
+        <!-- <span class="{res.style.headerDescription}">GFlot is a GWT adaptation of <a href="http://code.google.com/p/flot/">Flot</a>
+          which combines the high quality charting capabilities of Flot with the power of GWT</span> -->
+        <span class="{res.style.headerHomePageLink}">
+          <a href="http://code.google.com/p/gflot/">Home page</a>
+          <a href="http://code.google.com/p/gflot/downloads/list" style="margin-left: 10px;">Downloads</a>
+        </span>
       </g:HTMLPanel>
     </g:north>
 
     <g:west size="200">
       <g:ScrollPanel styleName='{res.style.menuScrollContainer}'>
         <g:HTMLPanel styleName='{res.style.menuContainer}'>
+          <div class="{res.style.menuCategory}">Simples charts</div>
+          <g:Hyperlink ui:field="simpleLink" text="Line" targetHistoryToken="{tokens.simple}" styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="barLink" text="Bar" targetHistoryToken="{tokens.bar}" styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="decimationLink" text="Decimation" targetHistoryToken="{tokens.decimation}"
-            styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="hoverLink" text="Hover" targetHistoryToken="{tokens.hover}" styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="imageLink" text="Image" targetHistoryToken="{tokens.image}" styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="interactiveLegendLink" text="Interactive Legend" targetHistoryToken="{tokens.interactiveLegend}"
-            styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="markingsLink" text="Markings" targetHistoryToken="{tokens.markings}"
-            styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="pieLink" text="Pie" targetHistoryToken="{tokens.pie}" styleName='{res.style.menuLink}' />
+
+          <div class="{res.style.menuCategory}">Complex charts</div>
+          <g:Hyperlink ui:field="stackLink" text="Stack" targetHistoryToken="{tokens.stack}" styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="multipleAxesLink" text="Multiple axes" targetHistoryToken="{tokens.multiplesAxes}"
             styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="overviewLink" text="Overview" targetHistoryToken="{tokens.overview}"
             styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="pieLink" text="Pie" targetHistoryToken="{tokens.pie}" styleName='{res.style.menuLink}' />
+
+          <div class="{res.style.menuCategory}">Interactive charts</div>
+          <g:Hyperlink ui:field="interactiveLegendLink" text="Interactive Legend" targetHistoryToken="{tokens.interactiveLegend}"
+            styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="selectionLink" text="Selection" targetHistoryToken="{tokens.selection}"
             styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="simpleLink" text="Simple" targetHistoryToken="{tokens.simple}" styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="hoverLink" text="Hover" targetHistoryToken="{tokens.hover}" styleName='{res.style.menuLink}' />
+
+          <div class="{res.style.menuCategory}">Real-time charts</div>
+          <g:Hyperlink ui:field="decimationLink" text="Decimation" targetHistoryToken="{tokens.decimation}"
+            styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="slidingLink" text="Sliding" targetHistoryToken="{tokens.sliding}"
             styleName='{res.style.menuLink}' />
-          <g:Hyperlink ui:field="stackLink" text="Stack" targetHistoryToken="{tokens.stack}" styleName='{res.style.menuLink}' />
+
+          <div class="{res.style.menuCategory}">Customizations</div>
+          <g:Hyperlink ui:field="imageLink" text="Image" targetHistoryToken="{tokens.image}" styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="markingsLink" text="Markings" targetHistoryToken="{tokens.markings}"
+            styleName='{res.style.menuLink}' />
         </g:HTMLPanel>
       </g:ScrollPanel>
     </g:west>

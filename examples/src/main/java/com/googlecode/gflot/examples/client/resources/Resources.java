@@ -14,9 +14,17 @@ public interface Resources
     {
         String headerContainer();
 
+        String headerTitle();
+
+        String headerDescription();
+
+        String headerHomePageLink();
+
         String menuScrollContainer();
 
         String menuContainer();
+
+        String menuCategory();
 
         String menuLink();
 
