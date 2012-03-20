@@ -17,7 +17,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.RadioButton;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
@@ -38,9 +37,6 @@ public class StackExample
     }
 
     @UiField
-    SimplePanel placeholder;
-
-    @UiField
     RadioButton bars;
 
     @UiField
@@ -49,7 +45,8 @@ public class StackExample
     @UiField
     RadioButton linesStep;
 
-    private SimplePlot plot;
+    @UiField( provided = true )
+    SimplePlot plot;
 
     public StackExample( Resources resources )
     {
@@ -83,11 +80,8 @@ public class StackExample
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );
-        plot.setSize( "600px", "300px" );
 
-        Widget w = binder.createAndBindUi( this );
-        placeholder.setWidget( plot );
-        return w;
+        return binder.createAndBindUi( this );
     }
 
     @UiHandler( "stacking" )

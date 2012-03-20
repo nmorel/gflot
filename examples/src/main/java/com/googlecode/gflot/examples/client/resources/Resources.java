@@ -30,6 +30,8 @@ public interface Resources
 
         String menuLinkSelected();
 
+        String sourceContainer();
+
         String sourceLink();
 
         String sourceLinkSelected();

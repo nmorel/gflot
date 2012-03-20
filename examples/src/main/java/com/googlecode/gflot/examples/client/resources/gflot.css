@@ -35,7 +35,6 @@ body {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-
 	-moz-box-shadow: 5px 5px 5px #888;
 	-webkit-box-shadow: 5px 5px 5px #888;
 	box-shadow: 5px 5px 5px #888;
@@ -87,7 +86,6 @@ body {
 .menuLinkSelected a {
 	background-color: #8C2E0B;
 	color: white;
-
 	-moz-box-shadow: 5px 5px 5px #888;
 	-webkit-box-shadow: 5px 5px 5px #888;
 	box-shadow: 5px 5px 5px #888;
@@ -98,12 +96,15 @@ body {
 .menuLink a:hover {
 	background-color: #8C501C;
 	color: white;
-
 	-moz-box-shadow: 5px 5px 5px #888;
 	-webkit-box-shadow: 5px 5px 5px #888;
 	box-shadow: 5px 5px 5px #888;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
+}
+
+.sourceContainer {
+	padding: 10px;
 }
 
 .sourceLink {
