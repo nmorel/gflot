@@ -96,7 +96,7 @@ public class SeriesData
         SeriesData newData = new SeriesData();
         for ( int j = start; j <= end; j++ )
         {
-            newData.add( new DataPoint( getX( j ), getY( j ) ) );
+            newData.add( new DataPoint( getArray( j ) ) );
         }
         return newData;
     }

@@ -41,10 +41,26 @@ public class DataPoint
         super( array );
     }
 
+    /**
+     * @param x Coordinate for x axis
+     * @param y Coordinate for y axis
+     */
     public DataPoint( double x, double y )
     {
         setX( x );
         setY( y );
+    }
+
+    /**
+     * @param x Coordinate for x axis
+     * @param y Coordinate for y axis
+     * @param bottomY Bottom of the filled area/bar for filled lines and bars. Default to 0.
+     */
+    public DataPoint( double x, double y, double bottomY )
+    {
+        setX( x );
+        setY( y );
+        setBottomY( bottomY );
     }
 
     public void setX( double x )
@@ -57,6 +73,11 @@ public class DataPoint
         set( 1, new Double( y ) );
     }
 
+    public void setBottomY( double bottomY )
+    {
+        set( 2, new Double( bottomY ) );
+    }
+
     public double getX()
     {
         return get( 0 ).isNumber().doubleValue();
@@ -65,6 +86,11 @@ public class DataPoint
     public double getY()
     {
         return get( 1 ).isNumber().doubleValue();
+    }
+
+    public double getBottomY()
+    {
+        return get( 2 ).isNumber().doubleValue();
     }
 
 }

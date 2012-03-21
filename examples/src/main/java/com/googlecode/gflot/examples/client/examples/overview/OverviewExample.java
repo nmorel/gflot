@@ -8,7 +8,6 @@ import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
-import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
 
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -38,16 +37,15 @@ public class OverviewExample
     {
         PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.defaultStrategy() );
         PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
-            .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
-            .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
+        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 0 ).setShow( true )
+            .setFill( true ) ) );
 
         SeriesHandler series = model.addSeries( "Random Series", "#2c1d54" );
 
         // generate random data
         for ( int i = 0; i < 200; i++ )
         {
-            series.add( new DataPoint( i, Random.nextDouble() ) );
+            series.add( new DataPoint( i, 1.5 + Random.nextDouble(), 1.5 - Random.nextDouble() ) );
         }
 
         // create the plot
