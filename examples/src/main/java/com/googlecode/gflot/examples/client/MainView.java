@@ -298,7 +298,8 @@ public class MainView
                 }
                 sourceList.setVisible( true );
                 int indexRawSource = 0;
-                int i = 0;
+                // starting at 1 because the first item is the example
+                int i = 1;
                 for ( String filename : rawFilenames )
                 {
                     sourceList.addItem( filename, filename );

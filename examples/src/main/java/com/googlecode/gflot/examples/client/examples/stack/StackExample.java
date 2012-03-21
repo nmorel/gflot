@@ -20,11 +20,13 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
 /**
  * @author Nicolas Morel
  */
+@GFlotExamplesRaw(StackPlace.UI_RAW_SOURCE_FILENAME)
 public class StackExample
     extends DefaultActivity
 {
@@ -84,7 +86,11 @@ public class StackExample
         return binder.createAndBindUi( this );
     }
 
+    /**
+     * When the stacking value changes
+     */
     @UiHandler( "stacking" )
+    @GFlotExamplesSource
     void onValueChangeStacking( ValueChangeEvent<Boolean> event )
     {
         if ( event.getValue() )
@@ -98,7 +104,11 @@ public class StackExample
         plot.redraw();
     }
 
+    /**
+     * When the type of graph changes
+     */
     @UiHandler( { "bars", "lines", "linesStep" } )
+    @GFlotExamplesSource
     void onValueChangeGraphType( ValueChangeEvent<Boolean> event )
     {
         GlobalSeriesOptions options = plot.getPlotOptions().getGlobalSeriesOptions();
