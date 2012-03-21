@@ -134,7 +134,7 @@ public class PlotWithOverviewModel
         return m_selection;
     }
 
-    class PlotWithOverviewSeriesHandler
+    public class PlotWithOverviewSeriesHandler
         extends SeriesHandler
     {
         private AsyncDataProvider m_provider;
@@ -257,6 +257,16 @@ public class PlotWithOverviewModel
                 return m_lastDataPoint.getX();
             }
             return x;
+        }
+
+        public Series getOverviewSeries()
+        {
+            return m_overviewHandler.getSeries();
+        }
+
+        public Series getWindowSeries()
+        {
+            return m_windowHandler.getSeries();
         }
     }
 
