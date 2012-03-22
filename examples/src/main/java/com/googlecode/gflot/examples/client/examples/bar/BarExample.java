@@ -13,21 +13,40 @@ import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.TickFormatter;
 
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
 /**
  * @author Nicolas Morel
  */
+@GFlotExamplesRaw( BarPlace.UI_RAW_SOURCE_FILENAME )
 public class BarExample
     extends DefaultActivity
 {
 
+    private static Binder binder = GWT.create( Binder.class );
+
+    interface Binder
+        extends UiBinder<Widget, BarExample>
+    {
+    }
+
     private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
         "nov", "dec" };
+
+    /**
+     * Plot
+     */
+    @GFlotExamplesData
+    @UiField( provided = true )
+    SimplePlot plot;
 
     public BarExample( Resources resources )
     {
@@ -38,7 +57,7 @@ public class BarExample
      * Create plot
      */
     @GFlotExamplesSource
-    public Widget createWidget()
+    public Widget createPlot()
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
@@ -83,12 +102,9 @@ public class BarExample
         handler.add( new DataPoint( 12, -6.6 ) );
 
         // create the plot
-        SimplePlot plot = new SimplePlot( model, plotOptions );
+        plot = new SimplePlot( model, plotOptions );
 
-        // put it on a panel
-        FlowPanel panel = new FlowPanel();
-        panel.add( plot );
-        return panel;
+        return binder.createAndBindUi( this );
     }
 
 }

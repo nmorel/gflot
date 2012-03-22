@@ -6,25 +6,50 @@ import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.AxisOptions;
-import ca.nanometrics.gflot.client.options.GridOptions;
+import ca.nanometrics.gflot.client.options.LegendOptions;
+import ca.nanometrics.gflot.client.options.LegendOptions.LegendPosition;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.TickFormatter;
 
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
 /**
  * @author Nicolas Morel
  */
+@GFlotExamplesRaw( SimplePlace.UI_RAW_SOURCE_FILENAME )
 public class SimpleExample
     extends DefaultActivity
 {
 
+    private static Binder binder = GWT.create( Binder.class );
+
+    interface Binder
+        extends UiBinder<Widget, SimpleExample>
+    {
+    }
+
+    /**
+     * Month names used by the tick formatter
+     */
+    @GFlotExamplesData
     private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
         "nov", "dec" };
+
+    /**
+     * Plot
+     */
+    @GFlotExamplesData
+    @UiField( provided = true )
+    SimplePlot plot;
 
     public SimpleExample( Resources resources )
     {
@@ -35,12 +60,12 @@ public class SimpleExample
      * Create plot
      */
     @GFlotExamplesSource
-    public Widget createWidget()
+    public Widget createPlot()
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
 
-        // add tick formatter to the options
+        // Add tick formatter to the options
         plotOptions.addXAxisOptions( new AxisOptions().setTicks( 12 ).setTickFormatter( new TickFormatter()
         {
             public String formatTickValue( double tickValue, Axis axis )
@@ -48,33 +73,23 @@ public class SimpleExample
                 return MONTH_NAMES[(int) ( tickValue - 1 )];
             }
         } ) );
-
-        plotOptions.setGridOptions( new GridOptions().setAboveData( true ) );
+        plotOptions.setLegendOptions( new LegendOptions().setBackgroundOpacity( 0 ).setPosition( LegendPosition.NORTH_WEST ) );
 
         // create a series
-        SeriesHandler handler = model.addSeries( "Ottawa's Month Temperatures (Daily Average in &deg;C)", "blue" );
+        SeriesHandler series1 = model.addSeries( "Random Series 1" );
+        SeriesHandler series2 = model.addSeries( "Random Series 2" );
 
         // add data
-        handler.add( new DataPoint( 1, -10.5 ) );
-        handler.add( new DataPoint( 2, -8.6 ) );
-        handler.add( new DataPoint( 3, -2.4 ) );
-        handler.add( new DataPoint( 4, 6 ) );
-        handler.add( new DataPoint( 5, 13.6 ) );
-        handler.add( new DataPoint( 6, 18.4 ) );
-        handler.add( new DataPoint( 7, 21 ) );
-        handler.add( new DataPoint( 8, 19.7 ) );
-        handler.add( new DataPoint( 9, 14.7 ) );
-        handler.add( new DataPoint( 10, 8.2 ) );
-        handler.add( new DataPoint( 11, 1.5 ) );
-        handler.add( new DataPoint( 12, -6.6 ) );
+        for ( int i = 1; i < 13; i++ )
+        {
+            series1.add( new DataPoint( i, Random.nextInt( 30 ) ) );
+            series2.add( new DataPoint( i, Random.nextInt( 30 ) ) );
+        }
 
         // create the plot
-        SimplePlot plot = new SimplePlot( model, plotOptions );
+        plot = new SimplePlot( model, plotOptions );
 
-        // put it on a panel
-        FlowPanel panel = new FlowPanel();
-        panel.add( plot );
-        return panel;
+        return binder.createAndBindUi( this );
     }
 
 }

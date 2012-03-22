@@ -59,7 +59,7 @@ public class StackExample
      * Create plot
      */
     @GFlotExamplesSource
-    protected Widget createWidget()
+    protected Widget createPlot()
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();

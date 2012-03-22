@@ -19,19 +19,31 @@ import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
 import ca.nanometrics.gflot.client.options.Range;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
 /**
  * @author Nicolas Morel
  */
+@GFlotExamplesRaw( MarkingsPlace.UI_RAW_SOURCE_FILENAME )
 public class MarkingsExample
     extends DefaultActivity
 {
+
+    private static Binder binder = GWT.create( Binder.class );
+
+    interface Binder
+        extends UiBinder<Widget, MarkingsExample>
+    {
+    }
+
     private static final String INSTRUCTION = "Hover over a point";
 
     public MarkingsExample( Resources resources )
@@ -43,7 +55,7 @@ public class MarkingsExample
      * Create plot
      */
     @GFlotExamplesSource
-    public Widget createWidget()
+    public Widget createPlot()
     {
         final Label selectedPointLabel = new Label( INSTRUCTION );
 

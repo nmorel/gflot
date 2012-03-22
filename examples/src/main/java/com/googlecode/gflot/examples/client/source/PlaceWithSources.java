@@ -87,10 +87,7 @@ public abstract class PlaceWithSources<P extends PlaceWithSources<?>>
     /**
      * @return the raw source filenames. can be null
      */
-    public String[] getRawSourceFilenames()
-    {
-        return null;
-    }
+    public abstract String[] getRawSourceFilenames();
 
     @Override
     public Map<String, String> getParameters()

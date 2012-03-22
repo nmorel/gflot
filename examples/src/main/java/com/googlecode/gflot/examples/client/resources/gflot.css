@@ -9,22 +9,22 @@ body {
 
 @external gwt-Button;
 .gwt-Button {
-	background-color: #D14836;
-	background-image: -webkit-linear-gradient(top, #DD4B39, #D14836);
-	background-image: -moz-linear-gradient(top, #DD4B39, #D14836);
-	background-image: -ms-linear-gradient(top, #DD4B39, #D14836);
-	background-image: -o-linear-gradient(top, #DD4B39, #D14836);
-	background-image: linear-gradient(top, #DD4B39, #D14836);
-	border: 1px solid transparent;
-	height: 27px;
-	line-height: 27px;
-	padding: 0px 8px;
-	outline: 0;
-	font-weight: bold;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	cursor: pointer;
+/* 	background-color: #D14836; */
+/* 	background-image: -webkit-linear-gradient(top, #DD4B39, #D14836); */
+/* 	background-image: -moz-linear-gradient(top, #DD4B39, #D14836); */
+/* 	background-image: -ms-linear-gradient(top, #DD4B39, #D14836); */
+/* 	background-image: -o-linear-gradient(top, #DD4B39, #D14836); */
+/* 	background-image: linear-gradient(top, #DD4B39, #D14836); */
+/* 	border: 1px solid transparent; */
+/* 	height: 27px; */
+/* 	line-height: 27px; */
+/* 	padding: 0px 8px; */
+/* 	outline: 0; */
+/* 	font-weight: bold; */
+/* 	-webkit-border-radius: 5px; */
+/* 	-moz-border-radius: 5px; */
+/* 	border-radius: 5px; */
+/* 	cursor: pointer; */
 }
 
 .headerContainer {

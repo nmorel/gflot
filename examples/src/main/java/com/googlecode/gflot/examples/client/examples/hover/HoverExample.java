@@ -17,28 +17,50 @@ import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
 import ca.nanometrics.gflot.client.options.TickFormatter;
 
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
 /**
  * @author Nicolas Morel
  */
+@GFlotExamplesRaw( HoverPlace.UI_RAW_SOURCE_FILENAME )
 public class HoverExample
     extends DefaultActivity
 {
 
-    private static final String INSTRUCTIONS = "Point your mouse to a data point on the chart";
+    private static Binder binder = GWT.create( Binder.class );
+
+    interface Binder
+        extends UiBinder<Widget, HoverExample>
+    {
+    }
 
     private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
         "nov", "dec" };
 
-    private final Label selectedPointLabel = new Label( INSTRUCTIONS );
-    private final Label positionLabel = new Label();
+    private static final String INSTRUCTIONS = "Point your mouse to a data point on the chart";
+
+    /**
+     * Plot
+     */
+    @GFlotExamplesData
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    @UiField( provided = true )
+    Label hoverPoint = new Label( INSTRUCTIONS );
+
+    @UiField
+    Label cursorPosition;
 
     public HoverExample( Resources resources )
     {
@@ -49,7 +71,7 @@ public class HoverExample
      * Create plot
      */
     @GFlotExamplesSource
-    public Widget createWidget()
+    public Widget createPlot()
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
@@ -87,7 +109,7 @@ public class HoverExample
         handler.add( new DataPoint( 12, -6.6 ) );
 
         // create the plot
-        SimplePlot plot = new SimplePlot( model, plotOptions );
+        plot = new SimplePlot( model, plotOptions );
 
         final PopupPanel popup = new PopupPanel();
         final Label label = new Label();
@@ -100,13 +122,13 @@ public class HoverExample
             {
                 if ( position != null )
                 {
-                    positionLabel.setText( "position: (" + position.getX() + "," + position.getY() + ")" );
+                    cursorPosition.setText( "Position : {x=" + position.getX() + ", y=" + position.getY() + "}" );
                 }
                 if ( item != null )
                 {
                     String text = "x: " + item.getDataPoint().getX() + ", y: " + item.getDataPoint().getY();
 
-                    selectedPointLabel.setText( text );
+                    hoverPoint.setText( text );
 
                     label.setText( text );
                     popup.setPopupPosition( item.getPageX() + 10, item.getPageY() - 25 );
@@ -114,19 +136,13 @@ public class HoverExample
                 }
                 else
                 {
-                    selectedPointLabel.setText( INSTRUCTIONS );
+                    hoverPoint.setText( INSTRUCTIONS );
                     popup.hide();
                 }
             }
         }, false );
 
-        // put it on a panel
-        FlowPanel panel = new FlowPanel();
-        panel.add( plot );
-        panel.add( selectedPointLabel );
-        panel.add( positionLabel );
-
-        return panel;
+        return binder.createAndBindUi( this );
     }
 
 }

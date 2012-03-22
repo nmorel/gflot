@@ -13,19 +13,38 @@ import ca.nanometrics.gflot.client.options.PieSeriesOptions.Label.Background;
 import ca.nanometrics.gflot.client.options.PieSeriesOptions.Label.Formatter;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Random;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
 /**
  * @author Nicolas Morel
  */
+@GFlotExamplesRaw( PiePlace.UI_RAW_SOURCE_FILENAME )
 public class PieExample
     extends DefaultActivity
 {
+
+    private static Binder binder = GWT.create( Binder.class );
+
+    interface Binder
+        extends UiBinder<Widget, PieExample>
+    {
+    }
+
+    /**
+     * Plot
+     */
+    @GFlotExamplesData
+    @UiField( provided = true )
+    SimplePlot plot;
 
     public PieExample( Resources resources )
     {
@@ -36,7 +55,7 @@ public class PieExample
      * Create plot
      */
     @GFlotExamplesSource
-    public Widget createWidget()
+    public Widget createPlot()
     {
         final PlotModel model = new PlotModel();
         final PlotOptions plotOptions = new PlotOptions();
@@ -67,10 +86,9 @@ public class PieExample
             handlerLine.add( new PieDataPoint( Random.nextInt( 100 ) + 1 ) );
         }
 
-        SimplePlot plot = new SimplePlot( model, plotOptions );
-        plot.setSize( "400px", "300px" );
-        final FlowPanel panel = new FlowPanel();
-        panel.add( plot );
-        return panel;
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        return binder.createAndBindUi( this );
     }
 }

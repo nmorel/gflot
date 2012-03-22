@@ -21,30 +21,57 @@ import ca.nanometrics.gflot.client.options.SelectionOptions;
 import ca.nanometrics.gflot.client.options.SelectionOptions.SelectionMode;
 import ca.nanometrics.gflot.client.options.TickFormatter;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
 /**
  * @author Nicolas Morel
  */
+@GFlotExamplesRaw( SelectionPlace.UI_RAW_SOURCE_FILENAME )
 public class SelectionExample
     extends DefaultActivity
 {
 
+    private static Binder binder = GWT.create( Binder.class );
+
+    interface Binder
+        extends UiBinder<Widget, SelectionExample>
+    {
+    }
+
     private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
         "nov", "dec" };
 
-    private static final String SELECTING = "selecting : ";
+    private static final String SELECTING = "Selecting :";
 
-    private static final String SELECTED = "selected : ";
+    private static final String SELECTED = "Selected :";
+
+    private static final String UNSELECTED = "No selection";
+
+    /**
+     * Plot
+     */
+    @GFlotExamplesData
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    @UiField
+    Label selectionLabel;
+
+    @UiField
+    Button clear;
 
     public SelectionExample( Resources resources )
     {
@@ -55,7 +82,7 @@ public class SelectionExample
      * Create plot
      */
     @GFlotExamplesSource
-    public Widget createWidget()
+    public Widget createPlot()
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
@@ -90,7 +117,7 @@ public class SelectionExample
         handler.add( new DataPoint( 12, -6.6 ) );
 
         // create the plot
-        final SimplePlot plot = new SimplePlot( model, plotOptions );
+        plot = new SimplePlot( model, plotOptions );
 
         final PopupPanel popup = new PopupPanel();
         final Label hoverLabel = new Label( "You are hovering the selected zone" );
@@ -124,13 +151,13 @@ public class SelectionExample
             }
         }, false );
 
-        final Label selectLabel = new Label( SELECTING );
         plot.addSelectedListener( new PlotSelectedListener()
         {
             @Override
             public void onPlotSelected( PlotSelectionArea area )
             {
-                selectLabel.setText( buildSelectString( SELECTED, area ) );
+                selectionLabel.setText( buildSelectString( SELECTED, area ) );
+                clear.setEnabled( true );
             }
         } );
         plot.addSelectingListener( new PlotSelectingListener()
@@ -138,7 +165,7 @@ public class SelectionExample
             @Override
             public void onPlotSelecting( PlotSelectionArea area )
             {
-                selectLabel.setText( buildSelectString( SELECTING, area ) );
+                selectionLabel.setText( buildSelectString( SELECTING, area ) );
             }
         } );
         plot.addUnselectedListener( new PlotUnselectedListener()
@@ -146,29 +173,14 @@ public class SelectionExample
             @Override
             public void onPlotUnselected()
             {
-                selectLabel.setText( SELECTED );
-            }
-        } );
-
-        Button clear = new Button( "Clear" );
-        clear.addClickHandler( new ClickHandler()
-        {
-            @Override
-            public void onClick( ClickEvent event )
-            {
-                plot.clearSelection( false );
+                selectionLabel.setText( UNSELECTED );
+                clear.setEnabled( false );
             }
         } );
 
         plot.setSelection( new PlotSelectionArea().setX( new Range( 2, 4 ) ).setY( new Range( 0, 20 ) ), false );
 
-        // put it on a panel
-        FlowPanel panel = new FlowPanel();
-        panel.add( plot );
-        panel.add( selectLabel );
-        panel.add( clear );
-
-        return panel;
+        return binder.createAndBindUi( this );
     }
 
     private String buildSelectString( String start, PlotSelectionArea area )
@@ -178,6 +190,14 @@ public class SelectionExample
             .append( area.getX().getTo() ).append( "\"], y=[from:\"" ).append( area.getY().getFrom() )
             .append( "\", to=\"" ).append( area.getY().getTo() ).append( "\"]" );
         return builder.toString();
+    }
+
+    @UiHandler( "clear" )
+    void onClickClear( ClickEvent e )
+    {
+        plot.clearSelection( false );
+        selectionLabel.setText( UNSELECTED );
+        clear.setEnabled( false );
     }
 
 }

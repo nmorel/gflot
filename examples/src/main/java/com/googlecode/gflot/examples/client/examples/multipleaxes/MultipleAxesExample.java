@@ -19,25 +19,47 @@ import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.TickFormatter;
 import ca.nanometrics.gflot.client.options.TimeSeriesAxisOptions;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
 /**
  * @author Nicolas Morel
  */
+@GFlotExamplesRaw( MultipleAxesPlace.UI_RAW_SOURCE_FILENAME )
 public class MultipleAxesExample
     extends DefaultActivity
 {
+
+    private static Binder binder = GWT.create( Binder.class );
+
+    interface Binder
+        extends UiBinder<Widget, MultipleAxesExample>
+    {
+    }
+
+    /**
+     * Plot
+     */
+    @GFlotExamplesData
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    /**
+     * Position label
+     */
+    @GFlotExamplesData
+    @UiField
+    Label cursorPosition;
 
     public MultipleAxesExample( Resources resources )
     {
@@ -48,7 +70,7 @@ public class MultipleAxesExample
      * Create plot
      */
     @GFlotExamplesSource
-    public Widget createWidget()
+    public Widget createPlot()
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
@@ -78,14 +100,7 @@ public class MultipleAxesExample
         addExchangeRatesDate( exchangeRates );
 
         // create the plot
-        final SimplePlot plot = new SimplePlot( model, plotOptions );
-
-        // put it on a panel
-        FlowPanel panel = new FlowPanel();
-        panel.add( plot );
-
-        final Label labelPosition = new Label( "position:" );
-        panel.add( labelPosition );
+        plot = new SimplePlot( model, plotOptions );
 
         // add hover listener
         plot.addHoverListener( new PlotHoverListener()
@@ -94,49 +109,35 @@ public class MultipleAxesExample
             {
                 if ( position != null )
                 {
-                    labelPosition.setText( "position: (x=" + position.getX() + ", y1=" + position.getY() + ", y2="
-                        + position.getY( 2 ) + ")" );
+                    cursorPosition.setText( "{x=" + position.getX() + ", y1=" + position.getY() + ", y2="
+                        + position.getY( 2 ) + "}" );
                 }
             }
         }, false );
 
-        panel
-            .add( new HTML(
-                "<p>Multiple axis support showing the raw oil price in US $/barrel of crude oil vs. the exchange rate from US $ to €.</p><p>As illustrated, you can put in multiple axes if you need to. For each data series, simply specify the axis number. In the options, you can then configure where you want the extra axes to appear.</p>" ) );
+        return binder.createAndBindUi( this );
+    }
 
-        HorizontalPanel toolbarPanel = new HorizontalPanel();
-        toolbarPanel.setSpacing( 5 );
-        toolbarPanel.setVerticalAlignment( HasVerticalAlignment.ALIGN_MIDDLE );
-        toolbarPanel.add( new Label( "Position axis" ) );
-        Button left = new Button( "left" );
-        toolbarPanel.add( left );
-        toolbarPanel.add( new Label( "or" ) );
-        Button right = new Button( "right" );
-        toolbarPanel.add( right );
+    /**
+     * When user clicks on left button
+     */
+    @UiHandler( "left" )
+    @GFlotExamplesSource
+    void onClickLeft( ClickEvent e )
+    {
+        plot.getPlotOptions().getYAxisOptions( 2 ).setPosition( AxisPosition.LEFT );
+        plot.redraw();
+    }
 
-        left.addClickHandler( new ClickHandler()
-        {
-            @Override
-            public void onClick( ClickEvent event )
-            {
-                plot.getPlotOptions().getYAxisOptions( 2 ).setPosition( AxisPosition.LEFT );
-                plot.redraw();
-            }
-        } );
-
-        right.addClickHandler( new ClickHandler()
-        {
-            @Override
-            public void onClick( ClickEvent event )
-            {
-                plot.getPlotOptions().getYAxisOptions( 2 ).setPosition( AxisPosition.RIGHT );
-                plot.redraw();
-            }
-        } );
-
-        panel.add( toolbarPanel );
-
-        return panel;
+    /**
+     * When user clicks on right button
+     */
+    @UiHandler( "right" )
+    @GFlotExamplesSource
+    void onClickRight( ClickEvent e )
+    {
+        plot.getPlotOptions().getYAxisOptions( 2 ).setPosition( AxisPosition.RIGHT );
+        plot.redraw();
     }
 
     private void addExchangeRatesDate( SeriesHandler exchangeRates )

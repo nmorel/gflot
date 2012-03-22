@@ -115,7 +115,8 @@ public class SourceGenerator
             if ( outStream == null )
             {
                 String message =
-                    "Attempting to generate duplicate public resource: " + partialPath + ".\nAll generated source files must have unique names.";
+                    "Attempting to generate duplicate public resource: " + partialPath
+                        + ".\nAll generated source files must have unique names.";
                 logger.log( TreeLogger.ERROR, message );
                 throw new UnableToCompleteException();
             }
@@ -197,14 +198,16 @@ public class SourceGenerator
             if ( dataTagIndex >= 0 && ( dataTagIndex < srcTagIndex || srcTagIndex < 0 ) )
             {
                 // Get the boundaries of a DATA tag
-                int beginIndex = fileContents.lastIndexOf( "  /*", dataTagIndex );
+                int beginIndex = fileContents.lastIndexOf( "/*", dataTagIndex );
                 int beginTagIndex = fileContents.lastIndexOf( "\n", dataTagIndex ) + 1;
                 int endTagIndex = fileContents.indexOf( "\n", dataTagIndex ) + 1;
                 int endIndex = fileContents.indexOf( ";", beginIndex ) + 1;
 
                 // Add to the formatted source
-                String srcData = fileContents.substring( beginIndex, beginTagIndex ) + fileContents.substring( endTagIndex, endIndex );
-                formattedSource += srcData + "\n\n";
+                String srcData =
+                    fileContents.substring( beginIndex, beginTagIndex )
+                        + fileContents.substring( endTagIndex, endIndex );
+                formattedSource += "    " + srcData + "\n\n";
 
                 // Get next tag
                 dataTagIndex = fileContents.indexOf( dataTag, endIndex + 1 );
@@ -218,7 +221,9 @@ public class SourceGenerator
                 int endIndex = fileContents.indexOf( "\n    }", beginIndex ) + 6;
 
                 // Add to the formatted source
-                String srcCode = fileContents.substring( beginIndex, beginTagIndex ) + fileContents.substring( endTagIndex, endIndex );
+                String srcCode =
+                    fileContents.substring( beginIndex, beginTagIndex )
+                        + fileContents.substring( endTagIndex, endIndex );
                 formattedSource += srcCode + "\n\n";
 
                 // Get the next tag

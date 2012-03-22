@@ -29,7 +29,7 @@ public abstract class DefaultActivity
     {
         if ( null == widget )
         {
-            widget = createWidget();
+            widget = createPlot();
         }
         panel.setWidget( widget );
         Scheduler.get().scheduleDeferred( new ScheduledCommand()
@@ -51,7 +51,7 @@ public abstract class DefaultActivity
         return resources;
     }
 
-    protected abstract Widget createWidget();
+    protected abstract Widget createPlot();
 
     @Override
     public Widget asWidget()

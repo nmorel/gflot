@@ -1,0 +1,16 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:p="urn:import:ca.nanometrics.gflot.client">
+
+  <ui:style>
+
+  </ui:style>
+
+  <ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' />
+
+  <g:HTMLPanel>
+    <p:PlotWithOverview ui:field="plot" width="600px" windowHeight="300" overviewHeight="100"/>
+
+    <p>Select a portion on the overview chart.</p>
+  </g:HTMLPanel>
+</ui:UiBinder>

@@ -18,22 +18,40 @@ import ca.nanometrics.gflot.client.options.PointsSeriesOptions.PointSymbol;
 import ca.nanometrics.gflot.client.options.TimeSeriesAxisOptions;
 import ca.nanometrics.gflot.client.options.TimeSeriesAxisOptions.TickTimeUnit;
 
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
 /**
  * @author Nicolas Morel
  */
+@GFlotExamplesRaw( InteractiveLegendPlace.UI_RAW_SOURCE_FILENAME )
 public class InteractiveLegendExample
     extends DefaultActivity
 {
 
+    private static Binder binder = GWT.create( Binder.class );
+
+    interface Binder
+        extends UiBinder<Widget, InteractiveLegendExample>
+    {
+    }
+
     private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
         "nov", "dec" };
+
+    /**
+     * Plot
+     */
+    @GFlotExamplesData
+    @UiField( provided = true )
+    PlotWithInteractiveLegend plot;
 
     public InteractiveLegendExample( Resources resources )
     {
@@ -45,7 +63,7 @@ public class InteractiveLegendExample
      */
     @GFlotExamplesSource
     @SuppressWarnings( "deprecation" )
-    public Widget createWidget()
+    public Widget createPlot()
     {
         PlotModel model = new PlotModel( PlotModelStrategy.defaultStrategy() );
         PlotOptions plotOptions = new PlotOptions();
@@ -94,16 +112,8 @@ public class InteractiveLegendExample
         vancouverSeries.add( new DataPoint( Date.UTC( 110, 11, 1, 0, 0, 0 ), 4.8 ) );
 
         // create the plot
-        SimplePlot plot = new SimplePlot( model, plotOptions );
+        plot = new PlotWithInteractiveLegend( new SimplePlot( model, plotOptions ) );
 
-        // put it on a panel
-        FlowPanel panel = new FlowPanel();
-        panel
-            .add( new HTML(
-                "<div style=\"font-weight: bold; align: center; margin: 0px 0px 5px 5px;\">Month Temperatures (Daily Average in &deg;C)</div>" ) );
-        panel.add( new PlotWithInteractiveLegend( plot ) );
-
-        return panel;
+        return binder.createAndBindUi( this );
     }
-
 }

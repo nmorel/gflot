@@ -1,0 +1,17 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:p="urn:import:ca.nanometrics.gflot.client">
+
+  <ui:style>
+
+  </ui:style>
+
+  <ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' />
+
+  <g:HTMLPanel>
+    <div style="font-weight: bold; align: center; margin: 0px 0px 5px 5px;">Month
+      Temperatures (Daily Average in &deg;C)
+    </div>
+    <p:PlotWithInteractiveLegend ui:field="plot" width="600" height="300" />
+  </g:HTMLPanel>
+</ui:UiBinder>

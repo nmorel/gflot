@@ -10,6 +10,10 @@ public class SelectionPlace
 {
     private static final String SOURCE_FILENAME;
 
+    static final String UI_RAW_SOURCE_FILENAME = "SelectionExample.ui.xml";
+
+    private static final String[] RAW_SOURCE_FILENAMES = new String[] { UI_RAW_SOURCE_FILENAME };
+
     static
     {
         SOURCE_FILENAME = extractSourceFilenameFromClassName( SelectionExample.class.getName() );
@@ -19,6 +23,12 @@ public class SelectionPlace
     public String getSourceFilename()
     {
         return SOURCE_FILENAME;
+    }
+
+    @Override
+    public String[] getRawSourceFilenames()
+    {
+        return RAW_SOURCE_FILENAMES;
     }
 
     /**

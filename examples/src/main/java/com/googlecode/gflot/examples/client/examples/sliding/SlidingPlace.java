@@ -10,6 +10,10 @@ public class SlidingPlace
 {
     private static final String SOURCE_FILENAME;
 
+    static final String UI_RAW_SOURCE_FILENAME = "SlidingExample.ui.xml";
+
+    private static final String[] RAW_SOURCE_FILENAMES = new String[] { UI_RAW_SOURCE_FILENAME };
+
     static
     {
         SOURCE_FILENAME = extractSourceFilenameFromClassName( SlidingExample.class.getName() );
@@ -19,6 +23,12 @@ public class SlidingPlace
     public String getSourceFilename()
     {
         return SOURCE_FILENAME;
+    }
+
+    @Override
+    public String[] getRawSourceFilenames()
+    {
+        return RAW_SOURCE_FILENAMES;
     }
 
     /**
