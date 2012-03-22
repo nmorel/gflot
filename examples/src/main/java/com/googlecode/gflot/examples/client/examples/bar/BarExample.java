@@ -26,7 +26,8 @@ public class BarExample
     extends DefaultActivity
 {
 
-    private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
+    private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
+        "nov", "dec" };
 
     public BarExample( Resources resources )
     {

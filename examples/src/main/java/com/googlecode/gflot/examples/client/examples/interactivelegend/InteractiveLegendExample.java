@@ -32,7 +32,8 @@ public class InteractiveLegendExample
     extends DefaultActivity
 {
 
-    private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
+    private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
+        "nov", "dec" };
 
     public InteractiveLegendExample( Resources resources )
     {
@@ -48,20 +49,22 @@ public class InteractiveLegendExample
     {
         PlotModel model = new PlotModel( PlotModelStrategy.defaultStrategy() );
         PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
-            .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) ).setPointsOptions(
-                new PointsSeriesOptions().setRadius( 3 ).setShow( true ).setSymbol( PointSymbol.DIAMOND ) ) );
+        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions(
+            new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) ).setPointsOptions(
+            new PointsSeriesOptions().setRadius( 3 ).setShow( true ).setSymbol( PointSymbol.DIAMOND ) ) );
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
 
         // add tick formatter to the options
-        plotOptions.addXAxisOptions( new TimeSeriesAxisOptions().setTickSize( 2, TickTimeUnit.MONTH ).setMonthNames( MONTH_NAMES ) );
+        plotOptions.addXAxisOptions( new TimeSeriesAxisOptions().setTickSize( 2, TickTimeUnit.MONTH ).setMonthNames(
+            MONTH_NAMES ) );
 
         // create a series
         // Note: you need to specified the colors in other for the legend to
         // work properly
         SeriesHandler ottawaSeries = model.addSeries( "Ottawa", "#edc240" );
         SeriesHandler vancouverSeries =
-            model.addSeries( new Series( "Vancouver" ).setColor( "#afd8f8" ).setPointsOptions( new PointsSeriesOptions().setShow( false ) ) );
+            model.addSeries( new Series( "Vancouver" ).setColor( "#afd8f8" ).setPointsOptions(
+                new PointsSeriesOptions().setShow( false ) ) );
 
         // add data
         ottawaSeries.add( new DataPoint( Date.UTC( 110, 0, 1, 0, 0, 0 ), -10.5 ) );
@@ -95,8 +98,9 @@ public class InteractiveLegendExample
 
         // put it on a panel
         FlowPanel panel = new FlowPanel();
-        panel.add( new HTML(
-            "<div style=\"font-weight: bold; align: center; margin: 0px 0px 5px 5px;\">Month Temperatures (Daily Average in &deg;C)</div>" ) );
+        panel
+            .add( new HTML(
+                "<div style=\"font-weight: bold; align: center; margin: 0px 0px 5px 5px;\">Month Temperatures (Daily Average in &deg;C)</div>" ) );
         panel.add( new PlotWithInteractiveLegend( plot ) );
 
         return panel;

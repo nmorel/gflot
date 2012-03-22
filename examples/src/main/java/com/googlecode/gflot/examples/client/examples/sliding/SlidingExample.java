@@ -59,8 +59,10 @@ public class SlidingExample
             new PlotOptions()
                 .setLegendOptions( new LegendOptions().setShow( false ) )
                 .setGlobalSeriesOptions(
-                    new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) ).setShadowSize( 0d ) )
-                .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) ).addXAxisOptions( new TimeSeriesAxisOptions() );
+                    new GlobalSeriesOptions().setLineSeriesOptions(
+                        new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) ).setShadowSize( 0d ) )
+                .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) )
+                .addXAxisOptions( new TimeSeriesAxisOptions() );
 
         final SeriesHandler series = model.addSeries( "Random Series", "#FF9900" );
 
@@ -127,7 +129,8 @@ public class SlidingExample
         {
             public void getNewData( final AsyncCallback<DataPoint[]> callback )
             {
-                callback.onSuccess( new DataPoint[] { new DataPoint( Duration.currentTimeMillis(), Random.nextDouble() ) } );
+                callback
+                    .onSuccess( new DataPoint[] { new DataPoint( Duration.currentTimeMillis(), Random.nextDouble() ) } );
             }
         };
     }

@@ -134,8 +134,8 @@ public class DecimationExample
             {
                 double up = Random.nextDouble();
                 double down = Random.nextDouble();
-                callback
-                    .onSuccess( new DataPoint[] { new DataPoint( timeCounter++, previous - down ), new DataPoint( timeCounter++, previous + up ) } );
+                callback.onSuccess( new DataPoint[] { new DataPoint( timeCounter++, previous - down ),
+                    new DataPoint( timeCounter++, previous + up ) } );
                 previous = previous + up;
             }
         };

@@ -40,7 +40,8 @@ public class ImageExample
 
         // create a series
         SeriesHandler handlerImage =
-            model.addSeries( new Series( "Image series" ).setImageSeriesOptions( new ImageSeriesOptions().setShow( true ).setAlpha( 0.5 ) ) );
+            model.addSeries( new Series( "Image series" ).setImageSeriesOptions( new ImageSeriesOptions()
+                .setShow( true ).setAlpha( 0.5 ) ) );
         handlerImage.add( new ImageDataPoint( "images/hs-2004-27-a-large_web.jpg", -2, -2, 2, 2 ) );
 
         // create a series

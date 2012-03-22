@@ -59,8 +59,8 @@ public class MultipleAxesExample
         // add tick formatter to the options
         plotOptions.addXAxisOptions( new TimeSeriesAxisOptions() );
         plotOptions.addYAxisOptions( new AxisOptions().setMinimum( 0 ) );
-        plotOptions.addYAxisOptions( new AxisOptions().setAlignTicksWithAxis( 1 ).setPosition( AxisPosition.RIGHT ).setTickDecimals( 3 )
-            .setTickFormatter( new TickFormatter()
+        plotOptions.addYAxisOptions( new AxisOptions().setAlignTicksWithAxis( 1 ).setPosition( AxisPosition.RIGHT )
+            .setTickDecimals( 3 ).setTickFormatter( new TickFormatter()
             {
                 @Override
                 public String formatTickValue( double tickValue, Axis axis )
@@ -94,7 +94,8 @@ public class MultipleAxesExample
             {
                 if ( position != null )
                 {
-                    labelPosition.setText( "position: (x=" + position.getX() + ", y1=" + position.getY() + ", y2=" + position.getY( 2 ) + ")" );
+                    labelPosition.setText( "position: (x=" + position.getX() + ", y1=" + position.getY() + ", y2="
+                        + position.getY( 2 ) + ")" );
                 }
             }
         }, false );

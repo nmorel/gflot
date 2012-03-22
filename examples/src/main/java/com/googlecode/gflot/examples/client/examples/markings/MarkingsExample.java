@@ -62,7 +62,8 @@ public class MarkingsExample
             {
                 if ( item != null )
                 {
-                    selectedPointLabel.setText( "x: " + item.getDataPoint().getX() + ", y: " + item.getDataPoint().getY() );
+                    selectedPointLabel.setText( "x: " + item.getDataPoint().getX() + ", y: "
+                        + item.getDataPoint().getY() );
                 }
                 else
                 {

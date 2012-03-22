@@ -37,8 +37,8 @@ public class OverviewExample
     {
         PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.defaultStrategy() );
         PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 0 ).setShow( true )
-            .setFill( true ) ) );
+        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions()
+            .setLineWidth( 0 ).setShow( true ).setFill( true ) ) );
 
         SeriesHandler series = model.addSeries( "Random Series", "#2c1d54" );
 

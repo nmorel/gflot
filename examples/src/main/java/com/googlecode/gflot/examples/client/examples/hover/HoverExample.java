@@ -34,7 +34,8 @@ public class HoverExample
 
     private static final String INSTRUCTIONS = "Point your mouse to a data point on the chart";
 
-    private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
+    private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
+        "nov", "dec" };
 
     private final Label selectedPointLabel = new Label( INSTRUCTIONS );
     private final Label positionLabel = new Label();

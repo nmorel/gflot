@@ -26,7 +26,7 @@ import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExampl
 /**
  * @author Nicolas Morel
  */
-@GFlotExamplesRaw(StackPlace.UI_RAW_SOURCE_FILENAME)
+@GFlotExamplesRaw( StackPlace.UI_RAW_SOURCE_FILENAME )
 public class StackExample
     extends DefaultActivity
 {
@@ -63,7 +63,8 @@ public class StackExample
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setShow( false ).setFill( true ) )
+        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
+            .setLineSeriesOptions( new LineSeriesOptions().setShow( false ).setFill( true ) )
             .setBarsSeriesOptions( new BarSeriesOptions().setShow( true ).setBarWidth( 0.6 ) ).setStack( true ) );
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
 
@@ -112,7 +113,8 @@ public class StackExample
     void onValueChangeGraphType( ValueChangeEvent<Boolean> event )
     {
         GlobalSeriesOptions options = plot.getPlotOptions().getGlobalSeriesOptions();
-        options.getLineSeriesOptions().setShow( lines.getValue() || linesStep.getValue() ).setSteps( linesStep.getValue() );
+        options.getLineSeriesOptions().setShow( lines.getValue() || linesStep.getValue() )
+            .setSteps( linesStep.getValue() );
         options.getBarSeriesOptions().setShow( bars.getValue() );
 
         plot.redraw();

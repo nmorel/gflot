@@ -39,7 +39,8 @@ public class SelectionExample
     extends DefaultActivity
 {
 
-    private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
+    private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
+        "nov", "dec" };
 
     private static final String SELECTING = "selecting : ";
 
@@ -110,7 +111,8 @@ public class SelectionExample
                 double xTo = area.getX().getTo();
                 double yFrom = area.getY().getFrom();
                 double yTo = area.getY().getTo();
-                if ( xFrom <= position.getX() && xTo >= position.getX() && yFrom <= position.getY() && yTo >= position.getY() )
+                if ( xFrom <= position.getX() && xTo >= position.getX() && yFrom <= position.getY()
+                    && yTo >= position.getY() )
                 {
                     popup.setPopupPosition( position.getPageX() + 10, position.getPageY() - 25 );
                     popup.show();
@@ -172,8 +174,9 @@ public class SelectionExample
     private String buildSelectString( String start, PlotSelectionArea area )
     {
         StringBuilder builder = new StringBuilder( start );
-        builder.append( "x=[from:\"" ).append( area.getX().getFrom() ).append( "\", to=\"" ).append( area.getX().getTo() ).append( "\"], y=[from:\"" )
-            .append( area.getY().getFrom() ).append( "\", to=\"" ).append( area.getY().getTo() ).append( "\"]" );
+        builder.append( "x=[from:\"" ).append( area.getX().getFrom() ).append( "\", to=\"" )
+            .append( area.getX().getTo() ).append( "\"], y=[from:\"" ).append( area.getY().getFrom() )
+            .append( "\", to=\"" ).append( area.getY().getTo() ).append( "\"]" );
         return builder.toString();
     }
 

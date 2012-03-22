@@ -7,7 +7,7 @@
   </ui:style>
 
   <g:HTMLPanel>
-    <p:SimplePlot ui:field="plot" width="600px" height="300px"/>
+    <p:SimplePlot ui:field="plot" width="600px" height="300px" />
 
     <p>With the stack plugin, you can have Flot stack the
       series. This is useful if you wish to display both a total and

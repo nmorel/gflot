@@ -47,15 +47,16 @@ public class PieExample
             .setRadius( 1 )
             .setInnerRadius( 0.2 )
             .setLabel(
-                new Label().setShow( true ).setRadius( 3d / 4d ).setBackground( new Background().setOpacity( 0.8 ) ).setFormatter( new Formatter()
-                {
-                    @Override
-                    public String format( String label, Series series )
+                new Label().setShow( true ).setRadius( 3d / 4d ).setBackground( new Background().setOpacity( 0.8 ) )
+                    .setFormatter( new Formatter()
                     {
-                        return "<div style=\"font-size:8pt;text-align:center;padding:2px;color:white;\">" + label + "<br/>" + series.getPercent()
-                            + "%</div>";
-                    }
-                } ) ) ) );
+                        @Override
+                        public String format( String label, Series series )
+                        {
+                            return "<div style=\"font-size:8pt;text-align:center;padding:2px;color:white;\">" + label
+                                + "<br/>" + series.getPercent() + "%</div>";
+                        }
+                    } ) ) ) );
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
 
         // create series
