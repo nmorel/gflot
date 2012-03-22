@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.ResizeComposite;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gflot.examples.client.examples.bar.BarPlace;
@@ -132,7 +133,7 @@ public class MainView
     ListBox sourceList;
 
     @UiField
-    AcceptsOneWidget container;
+    ScrollPanel container;
 
     public MainView( EventBus eventBus, PlaceController placeController, Resources res )
     {
@@ -326,11 +327,15 @@ public class MainView
             {
                 sourceLink.removeStyleName( res.style().sourceLinkSelected() );
                 exampleLink.addStyleName( res.style().sourceLinkSelected() );
+                container.getElement().getStyle().clearBackgroundColor();
+                container.getElement().getStyle().clearProperty( "border" );
             }
             else
             {
                 exampleLink.removeStyleName( res.style().sourceLinkSelected() );
                 sourceLink.addStyleName( res.style().sourceLinkSelected() );
+                container.getElement().getStyle().setBackgroundColor( "#eee" );
+                container.getElement().getStyle().setProperty( "border", "1px solid #c3c3c3" );
             }
         }
         else

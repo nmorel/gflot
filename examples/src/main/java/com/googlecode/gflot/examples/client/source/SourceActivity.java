@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -14,7 +13,6 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.i18n.client.HasDirection.Direction;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.googlecode.gflot.examples.client.mvp.ActivityWithPlace;
 
 /**
@@ -48,7 +46,6 @@ public class SourceActivity
     private class CustomCallback
         implements Callback<String>
     {
-
         private int id;
 
         public CustomCallback()
@@ -86,13 +83,7 @@ public class SourceActivity
     @Override
     public void start( AcceptsOneWidget panel, EventBus eventBus )
     {
-        ScrollPanel scroll = new ScrollPanel();
-        scroll.getElement().getStyle().setMargin( 10.0, Unit.PX );
-        scroll.getElement().getStyle().setBackgroundColor( "#eee" );
-        scroll.getElement().getStyle().setProperty( "border", "1px solid #c3c3c3" );
-
-        contentSource = new HTML( "loading" );
-        scroll.add( contentSource );
+        contentSource = new HTML( "Loading..." );
 
         if ( getPlace().isRawSource() )
         {
@@ -103,7 +94,7 @@ public class SourceActivity
             getSource( getPlace().getFilename(), new CustomCallback() );
         }
 
-        panel.setWidget( scroll );
+        panel.setWidget( contentSource );
     }
 
     /**
