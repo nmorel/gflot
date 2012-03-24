@@ -5,3 +5,6 @@ jquery.flot.images :
 
 jquery.flot.pie :
 - Modified so a pie chart can be rezised and redrawn (see http://code.google.com/p/flot/issues/detail?id=577)
+
+jquery.flot.text (v0.1):
+- Plugin to render the label directly to the canvas (see http://www.lessaworld.com/projects/flotCanvasText/)

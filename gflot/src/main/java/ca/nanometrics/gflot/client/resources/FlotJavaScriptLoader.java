@@ -1,14 +1,12 @@
 package ca.nanometrics.gflot.client.resources;
 
-import ca.nanometrics.gflot.client.util.JavaScriptInjector;
-
 import com.google.gwt.core.client.GWT;
 
 public class FlotJavaScriptLoader
 {
     public interface FlotJavaScriptCallback
     {
-        void onError(Throwable caught);
+        void onError( Throwable caught );
 
         void onSuccess();
     }
@@ -34,56 +32,138 @@ public class FlotJavaScriptLoader
     {
         private boolean loaded = false;
 
-        private FlotJavaScriptBundle bundle;
+        private PluginLoader jqueryLoader;
 
-        private FlotJavaScriptBundle getBundle()
-        {
-            if ( null == bundle )
-            {
-                bundle = GWT.create( FlotJavaScriptBundle.class );
-            }
-            return bundle;
-        }
+        private PluginLoader flotLoader;
+
+        private PluginLoader flotSelectionLoader;
+
+        private PluginLoader flotSymbolLoader;
+
+        private PluginLoader flotImageLoader;
+
+        private PluginLoader flotPieLoader;
+
+        private PluginLoader flotStackLoader;
+
+        private PluginLoader flotTextLoader;
+
+        private PluginLoader flotResizeLoader;
+
+        private PluginLoader excanvasLoader;
 
         public void loadRequiredFlotLibrary( final FlotJavaScriptCallback callback )
         {
             if ( !loaded )
             {
-                load( getBundle() );
+                load();
                 loaded = true;
             }
             callback.onSuccess();
         }
 
-        protected void load( FlotJavaScriptBundle bundle )
+        private PluginLoader getJqueryLoader()
         {
-            JavaScriptInjector.inject( bundle.jquery().getText() );
-            JavaScriptInjector.inject( bundle.flot().getText() );
-            JavaScriptInjector.inject( bundle.flotSelection().getText() );
-            JavaScriptInjector.inject( bundle.flotSymbol().getText() );
-            JavaScriptInjector.inject( bundle.flotImage().getText() );
-            JavaScriptInjector.inject( bundle.flotPie().getText() );
-            JavaScriptInjector.inject( bundle.flotStack().getText() );
+            if ( null == jqueryLoader )
+            {
+                jqueryLoader = GWT.create( JQueryLoader.class );
+            }
+            return jqueryLoader;
         }
-    }
 
-    public static class SynchronousIEUnder9Impl
-        extends SynchronousImpl
-    {
-        @Override
-        protected void load( FlotJavaScriptBundle bundle )
+        private PluginLoader getFlotLoader()
         {
-            super.load( bundle );
-            JavaScriptInjector.inject( bundle.excanvas().getText() );
+            if ( null == flotLoader )
+            {
+                flotLoader = GWT.create( FlotLoader.class );
+            }
+            return flotLoader;
         }
-    }
 
-    public static class NoInjectionImpl
-        implements Impl
-    {
-        public void loadRequiredFlotLibrary( final FlotJavaScriptCallback callback )
+        private PluginLoader getFlotSelectionLoader()
         {
-            callback.onSuccess();
+            if ( null == flotSelectionLoader )
+            {
+                flotSelectionLoader = GWT.create( FlotSelectionLoader.class );
+            }
+            return flotSelectionLoader;
+        }
+
+        private PluginLoader getFlotSymbolLoader()
+        {
+            if ( null == flotSymbolLoader )
+            {
+                flotSymbolLoader = GWT.create( FlotSymbolLoader.class );
+            }
+            return flotSymbolLoader;
+        }
+
+        private PluginLoader getFlotImageLoader()
+        {
+            if ( null == flotImageLoader )
+            {
+                flotImageLoader = GWT.create( FlotImageLoader.class );
+            }
+            return flotImageLoader;
+        }
+
+        private PluginLoader getFlotPieLoader()
+        {
+            if ( null == flotPieLoader )
+            {
+                flotPieLoader = GWT.create( FlotPieLoader.class );
+            }
+            return flotPieLoader;
+        }
+
+        private PluginLoader getFlotStackLoader()
+        {
+            if ( null == flotStackLoader )
+            {
+                flotStackLoader = GWT.create( FlotStackLoader.class );
+            }
+            return flotStackLoader;
+        }
+
+        private PluginLoader getFlotTextLoader()
+        {
+            if ( null == flotTextLoader )
+            {
+                flotTextLoader = GWT.create( FlotTextLoader.class );
+            }
+            return flotTextLoader;
+        }
+
+        private PluginLoader getExcanvasLoader()
+        {
+            if ( null == excanvasLoader )
+            {
+                excanvasLoader = GWT.create( ExplorerCanvasLoader.class );
+            }
+            return excanvasLoader;
+        }
+
+        private PluginLoader getFlotResizeLoader()
+        {
+            if ( null == flotResizeLoader )
+            {
+                flotResizeLoader = GWT.create( FlotResizeLoader.class );
+            }
+            return flotResizeLoader;
+        }
+
+        private void load()
+        {
+            getJqueryLoader().load();
+            getFlotLoader().load();
+            getFlotSelectionLoader().load();
+            getFlotSymbolLoader().load();
+            getFlotImageLoader().load();
+            getFlotPieLoader().load();
+            getFlotStackLoader().load();
+            getFlotTextLoader().load();
+            getFlotResizeLoader().load();
+            getExcanvasLoader().load();
         }
     }
 }

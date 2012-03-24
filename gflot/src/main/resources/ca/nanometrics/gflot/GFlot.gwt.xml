@@ -7,12 +7,112 @@
     <when-type-is class="ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.Impl" />
   </replace-with>
 
-  <replace-with class="ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.SynchronousIEUnder9Impl">
-    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.Impl" />
-    <any>
+  <define-property name="gflot.load" values="ENABLED, EXTERNAL" />
+  <define-property name="gflot.load.flot.selection" values="ENABLED, DISABLED" />
+  <define-property name="gflot.load.flot.symbol" values="ENABLED, DISABLED" />
+  <define-property name="gflot.load.flot.image" values="ENABLED, DISABLED" />
+  <define-property name="gflot.load.flot.pie" values="ENABLED, DISABLED" />
+  <define-property name="gflot.load.flot.stack" values="ENABLED, DISABLED" />
+  <define-property name="gflot.load.flot.text" values="ENABLED, DISABLED" />
+  <define-property name="gflot.load.flot.resize" values="ENABLED, DISABLED" />
+
+  <!-- Default values -->
+  <set-property name="gflot.load" value="ENABLED" />
+  <set-property name="gflot.load.flot.selection" value="ENABLED" />
+  <set-property name="gflot.load.flot.symbol" value="ENABLED" />
+  <set-property name="gflot.load.flot.image" value="ENABLED" />
+  <set-property name="gflot.load.flot.pie" value="ENABLED" />
+  <set-property name="gflot.load.flot.stack" value="ENABLED" />
+  <set-property name="gflot.load.flot.text" value="ENABLED" />
+  <set-property name="gflot.load.flot.resize" value="ENABLED" />
+
+  <!-- Load excanvas only for IE < 9 -->
+  <replace-with class="ca.nanometrics.gflot.client.resources.NullLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.ExplorerCanvasLoader" />
+    <when-property-is name="gflot.load" value="ENABLED" />
+    <none>
       <when-property-is name="user.agent" value="ie6" />
       <when-property-is name="user.agent" value="ie8" />
-    </any>
+    </none>
+  </replace-with>
+
+  <!-- Load plugins only if load is enabled and if the plugin is enabled -->
+  <replace-with class="ca.nanometrics.gflot.client.resources.NullLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotSelectionLoader" />
+    <when-property-is name="gflot.load" value="ENABLED" />
+    <when-property-is name="gflot.load.flot.selection" value="DISABLED" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.NullLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotSymbolLoader" />
+    <when-property-is name="gflot.load" value="ENABLED" />
+    <when-property-is name="gflot.load.flot.symbol" value="DISABLED" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.NullLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotImageLoader" />
+    <when-property-is name="gflot.load" value="ENABLED" />
+    <when-property-is name="gflot.load.flot.image" value="DISABLED" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.NullLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotPieLoader" />
+    <when-property-is name="gflot.load" value="ENABLED" />
+    <when-property-is name="gflot.load.flot.pie" value="DISABLED" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.NullLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotStackLoader" />
+    <when-property-is name="gflot.load" value="ENABLED" />
+    <when-property-is name="gflot.load.flot.stack" value="DISABLED" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.NullLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotTextLoader" />
+    <when-property-is name="gflot.load" value="ENABLED" />
+    <when-property-is name="gflot.load.flot.text" value="DISABLED" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.NullLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotResizeLoader" />
+    <when-property-is name="gflot.load" value="ENABLED" />
+    <when-property-is name="gflot.load.flot.resize" value="DISABLED" />
+  </replace-with>
+
+  <!-- External loading -->
+  <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.JQueryLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.ExplorerCanvasLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotSelectionLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotSymbolLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotImageLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotPieLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotStackLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotTextLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotResizeLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
   </replace-with>
 
 </module>
