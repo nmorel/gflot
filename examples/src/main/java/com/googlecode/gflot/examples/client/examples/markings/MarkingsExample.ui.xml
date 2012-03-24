@@ -9,6 +9,6 @@
   <ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' />
 
   <g:HTMLPanel>
-    <p:SimplePlot ui:field="plot" width="600px" height="300px" />
+    <p:SimplePlot ui:field="plot" width="600px" height="250px" />
   </g:HTMLPanel>
 </ui:UiBinder>

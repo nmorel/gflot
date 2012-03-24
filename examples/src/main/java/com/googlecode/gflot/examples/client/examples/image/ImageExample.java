@@ -75,6 +75,7 @@ public class ImageExample
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );
+        plot.setLoadDataImages( true );
 
         return binder.createAndBindUi( this );
     }

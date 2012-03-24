@@ -1,34 +1,34 @@
 package com.googlecode.gflot.examples.client.examples.sliding;
 
+import java.util.Date;
+
 import ca.nanometrics.gflot.client.DataPoint;
+import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.PlotModelStrategy;
 import ca.nanometrics.gflot.client.PlotWidget;
-import ca.nanometrics.gflot.client.PlotWithOverview;
-import ca.nanometrics.gflot.client.PlotWithOverviewModel;
 import ca.nanometrics.gflot.client.SeriesHandler;
+import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
-import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
-import ca.nanometrics.gflot.client.options.SelectionOptions;
-import ca.nanometrics.gflot.client.options.SelectionOptions.SelectionMode;
 import ca.nanometrics.gflot.client.options.TimeSeriesAxisOptions;
 
-import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
@@ -47,6 +47,31 @@ public class SlidingExample
     {
     }
 
+    /**
+     * The Async interface of the service
+     */
+    @GFlotExamplesSource
+    interface FakeRpcServiceAsync
+    {
+        void getNewData( AsyncCallback<DataPoint[]> callback );
+    }
+
+    /**
+     * Plot
+     */
+    @GFlotExamplesData
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    @UiField
+    Button startStop;
+
+    /**
+     * Timer
+     */
+    @GFlotExamplesData
+    private Timer updater;
+
     public SlidingExample( Resources resources )
     {
         super( resources );
@@ -58,29 +83,17 @@ public class SlidingExample
     @GFlotExamplesSource
     public Widget createPlot()
     {
-        PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.slidingWindowStrategy( 20 ) );
+        PlotModel model = new PlotModel( PlotModelStrategy.slidingWindowStrategy( 20 ) );
         PlotOptions plotOptions = new PlotOptions();
         plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
             .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
             .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
         plotOptions.addXAxisOptions( new TimeSeriesAxisOptions() );
 
-        PlotOptions overviewPlotOptions =
-            new PlotOptions()
-                .setLegendOptions( new LegendOptions().setShow( false ) )
-                .setGlobalSeriesOptions(
-                    new GlobalSeriesOptions().setLineSeriesOptions(
-                        new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) ).setShadowSize( 0d ) )
-                .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) )
-                .addXAxisOptions( new TimeSeriesAxisOptions() );
-
         final SeriesHandler series = model.addSeries( "Random Series", "#FF9900" );
 
-        // create the plot
-        final PlotWithOverview plot = new PlotWithOverview( model, plotOptions, overviewPlotOptions );
-
         // pull the "fake" RPC service for new data
-        final Timer updater = new Timer()
+        updater = new Timer()
         {
             @Override
             public void run()
@@ -89,29 +102,75 @@ public class SlidingExample
             }
         };
 
-        // put it on a panel
-        FlowPanel panel = new FlowPanel();
-        panel.add( plot );
-        HorizontalPanel buttonsPanel = new HorizontalPanel();
-        buttonsPanel.setSpacing( 5 );
-        buttonsPanel.add( new Button( "Start", new ClickHandler()
-        {
-            public void onClick( ClickEvent event )
-            {
-                updater.scheduleRepeating( 1000 );
-            }
-        } ) );
-        buttonsPanel.add( new Button( "Stop", new ClickHandler()
-        {
-            public void onClick( ClickEvent event )
-            {
-                updater.cancel();
-            }
-        } ) );
-        panel.add( buttonsPanel );
-        return panel;
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        return binder.createAndBindUi( this );
     }
 
+    /**
+     * Start the timer when the activity starts
+     */
+    @GFlotExamplesSource
+    @Override
+    public void start( AcceptsOneWidget panel, EventBus eventBus )
+    {
+        super.start( panel, eventBus );
+        start();
+    }
+
+    /**
+     * Stop the timer when the activity stops
+     */
+    @GFlotExamplesSource
+    @Override
+    public void onStop()
+    {
+        stop();
+        super.onStop();
+    }
+
+    /**
+     * On click on the start/stop button
+     */
+    @GFlotExamplesSource
+    @UiHandler( "startStop" )
+    void onClickStartStop( ClickEvent e )
+    {
+        if ( "Stop".equals( startStop.getText() ) )
+        {
+            stop();
+        }
+        else
+        {
+            start();
+        }
+    }
+
+    /**
+     * Start the timer
+     */
+    @GFlotExamplesSource
+    private void start()
+    {
+        startStop.setText( "Stop" );
+        updater.scheduleRepeating( 1000 );
+    }
+
+    /**
+     * Stop the timer
+     */
+    @GFlotExamplesSource
+    private void stop()
+    {
+        startStop.setText( "Start" );
+        updater.cancel();
+    }
+
+    /**
+     * Fake a rpc call and update the data
+     */
+    @GFlotExamplesSource
     private void update( final SeriesHandler series, final PlotWidget plot )
     {
         FakeRpcServiceAsync service = getRpcService();
@@ -133,21 +192,22 @@ public class SlidingExample
         } );
     }
 
+    /**
+     * @return a fake rpc service
+     */
+    @GFlotExamplesSource
     private FakeRpcServiceAsync getRpcService()
     {
         return new FakeRpcServiceAsync()
         {
+            @SuppressWarnings( "deprecation" )
             public void getNewData( final AsyncCallback<DataPoint[]> callback )
             {
-                callback
-                    .onSuccess( new DataPoint[] { new DataPoint( Duration.currentTimeMillis(), Random.nextDouble() ) } );
+                Date currentDate = new Date();
+                callback.onSuccess( new DataPoint[] { new DataPoint( Date.UTC( currentDate.getYear(),
+                    currentDate.getMonth(), currentDate.getDate(), currentDate.getHours(), currentDate.getMinutes(),
+                    currentDate.getSeconds() ), Random.nextDouble() ) } );
             }
         };
-    }
-
-    /** The Async interface of the service */
-    interface FakeRpcServiceAsync
-    {
-        void getNewData( AsyncCallback<DataPoint[]> callback );
     }
 }
