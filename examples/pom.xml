@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.googlecode.gflot</groupId>
   <artifactId>gflot-examples</artifactId>
-  <version>2.3.3-SNAPSHOT</version>
+  <version>2.4.0</version>
   <packaging>war</packaging>
   <name>gflot-examples</name>
 
@@ -15,7 +15,7 @@
     <gwt.version>2.4.0</gwt.version>
     <gae.version>1.6.1</gae.version>
     <gae.home>${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
-    <gflot.version>2.3.3-SNAPSHOT</gflot.version>
+    <gflot.version>2.4.0</gflot.version>
   </properties>
 
   <repositories>
