@@ -6,14 +6,17 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
 
-public class FlotTextLoader
+public class Canvas2ImageLoader
     extends DefaultLoader
 {
     interface Bundle
         extends ClientBundle
     {
-        @Source( "jquery.flot.text.min.js" )
-        TextResource flotText();
+        @Source( "canvas2image.min.js" )
+        TextResource canvasToImage();
+
+        @Source( "base64.min.js" )
+        TextResource base64();
     }
 
     private Bundle bundle;
@@ -34,7 +37,8 @@ public class FlotTextLoader
     {
         if ( !loaded )
         {
-            JavaScriptInjector.inject( getBundle().flotText().getText() );
+            JavaScriptInjector.inject( getBundle().canvasToImage().getText() );
+            JavaScriptInjector.inject( getBundle().base64().getText() );
             loaded = true;
         }
     }

@@ -7,6 +7,8 @@ import com.googlecode.gflot.examples.client.examples.bar.BarExample;
 import com.googlecode.gflot.examples.client.examples.bar.BarPlace;
 import com.googlecode.gflot.examples.client.examples.decimation.DecimationExample;
 import com.googlecode.gflot.examples.client.examples.decimation.DecimationPlace;
+import com.googlecode.gflot.examples.client.examples.export.ExportExample;
+import com.googlecode.gflot.examples.client.examples.export.ExportPlace;
 import com.googlecode.gflot.examples.client.examples.hover.HoverExample;
 import com.googlecode.gflot.examples.client.examples.hover.HoverPlace;
 import com.googlecode.gflot.examples.client.examples.image.ImageExample;
@@ -63,6 +65,8 @@ public class AppActivityMapper
     private Activity slidingActivity;
 
     private Activity stackActivity;
+
+    private Activity exportActivity;
 
     public AppActivityMapper( Resources resources )
     {
@@ -180,6 +184,14 @@ public class AppActivityMapper
                 stackActivity = new StackExample( resources );
             }
             return stackActivity;
+        }
+        if ( place instanceof ExportPlace )
+        {
+            if ( null == exportActivity )
+            {
+                exportActivity = new ExportExample( resources );
+            }
+            return exportActivity;
         }
         return null;
     }

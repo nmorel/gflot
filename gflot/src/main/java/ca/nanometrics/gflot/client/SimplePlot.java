@@ -40,6 +40,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -388,6 +389,62 @@ public class SimplePlot
             cmd.execute();
         }
         onLoadOperations.clear();
+    }
+
+    public boolean isExportAsImageEnabled()
+    {
+        return FlotJavaScriptLoader.get().getCanvas2ImageLoader().isPluginEnabled();
+    }
+
+    /**
+     * Prompt the user to save the plot as an image
+     */
+    public void saveAsImage()
+    {
+        if ( isExportAsImageEnabled() )
+        {
+            plot.saveAsImage();
+        }
+    }
+
+    /**
+     * Prompt the user to save the plot as an image. The image is scaled at the given dimensions.
+     *
+     * @param width
+     * @param height
+     */
+    public void saveAsImage( int width, int height )
+    {
+        if ( isExportAsImageEnabled() )
+        {
+            plot.saveAsImage( width, height );
+        }
+    }
+
+    /**
+     * @return an image of the plot
+     */
+    public Image getImage()
+    {
+        if ( isExportAsImageEnabled() )
+        {
+            return plot.getImage();
+        }
+        return null;
+    }
+
+    /**
+     * @param width
+     * @param height
+     * @return an image of the plot scaled at the given dimensions
+     */
+    public Image getImage( int width, int height )
+    {
+        if ( isExportAsImageEnabled() )
+        {
+            return plot.getImage( width, height );
+        }
+        return null;
     }
 
     /* ------------------ Helper methods -- */

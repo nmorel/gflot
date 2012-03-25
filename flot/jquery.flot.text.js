@@ -3,34 +3,34 @@
  * Released by Andre Lessa, September 2010, v.0.1
  * http://www.lessaworld.com/projects/flotCanvasText
  *
- * Check the site above for updates. 
+ * Check the site above for updates.
 
   As of FLOT's release 0.6, tick labels and the legends are all created using
   HTML DIVs (i.e. not created on the Canvas). As one of the consequences, you can't use
   the canvasInstance.toDataURL("image/png") method to export the graph to an image.
   source: http://code.google.com/p/flot/
-   
+
   This plugin is compatible with Internet Explorer when you use the ExCanvas library.
   It does render the text in Internet Explorer.
   However, since IE doesn't implement the .toDataURL() method, you still cannot export the graph.
- 
+
   This plugin has been tested in Safari 4, Firefox 3+, and IE 7+
 
   Some Examples:
- 
+
        plot = $.plot(...);
 
        // enables the canvasText plugin
-       
+
             plot.grid({ canvasText: {show: true});
-   
+
        // enables the canvasText plugin, sets the font size to 9px, and requests that the Y-AXIS values for series 0, 2 and 5 be plotted on the graph..
-       
+
             plot.grid({ canvasText: {show: true, font: "sans 9px", series: [0,2,5] }});
- 
+
        // optionally, you can also provide a function to format the plotting of a specific series Y values
        // and if you do that, you can also provide a Scope object that becomes accessible within that function call
-       
+
            scopeObj = {someValue: 323};
            seriesValueFormat = function(contextObj, paramObj){
                 var r = {};
@@ -42,11 +42,11 @@
                 r.color = "#7C7C7C";  // You can also use the special values #series and #grid to use those specific colors.
                }
                return r;
-           };      
+           };
            plot.grid({ canvasText: {show: true, font: "sans 9px", series: [[0, seriesValueFormat, scopeObj]], seriesFont: "sans 8px"}});
-       
+
        // optionally, you can also request X-AXIS tick labels to have line breaks after each word
-       
+
            plot.grid({ canvasText: {show: true, font: "sans 9px", lineBreaks: {show: true} }});
 
        // further format control is also made available so you can play with the placements of the labels
@@ -65,12 +65,12 @@
              lineBreaks: {show: false, marginTop: 3, marginBottom: 5, lineSpacing: 1}
          }
      }
-   
-  By having canvasText default to false, it defaults to FLOT's out-of-the-box HTML-driven approach. 
+
+  By having canvasText default to false, it defaults to FLOT's out-of-the-box HTML-driven approach.
   Setting it to true, enables this plugin and draws all the text (ticks and legends) on the canvas.
   Although the *only* font available is "sans", you can use the canvasText.font setting to set the font size.
   If canvasText.font is not provided, it defaults to 8px.
- 
+
   IMPORTANT NOTE:
   The original code for the CanvasTextFunctions object was released to the public domain by Jim Studt, 2007.
   source: http://jim.studt.net/canvastext/
@@ -99,16 +99,16 @@
     };
 
     function init(plot) {
-    
+
         /**
         * Starting here, I used the code in the Public Domain.
         * A few modifications were made, but almost all of it came from the canvastext project.
         */
         var CanvasTextFunctions = { };
-        
+
         CanvasTextFunctions.font = "sans";
         CanvasTextFunctions.fontSize = 8;
-            
+
         // [0,0] indicates the left bottom position
         // Fixed the ; character and added the '≥' character to the set as it was necessary for my project.
         CanvasTextFunctions.letters = {
@@ -227,7 +227,7 @@
         {
             var font = CanvasTextFunctions.fontName;
             var size = CanvasTextFunctions.fontSize;
-            
+
             return 7.0*size/25.0;
         }
 
@@ -300,44 +300,44 @@
             CanvasTextFunctions.fontSize = parseInt(size[0].replace('px','').replace(' ',''));
             return true;
         }
-        
+
         CanvasTextFunctions.enable = function(ctx)
         {
             /**
             * Changed the signature of some methods to start trying to match the official
             * HTML5 specification. Unfortunately, AFAIK, there's no way to get the height of the
             * text in a canvas object using the HTML5 spec at its current state.
-            */          
+            */
             ctx.fillText = function(text,x,y) { return CanvasTextFunctions.draw(ctx,x,y,text); };
             ctx.measureText = function(text) { return CanvasTextFunctions.measure(text); };
             ctx.fontFamily = function(fontfamily) { return CanvasTextFunctions.fontFamily(fontfamily); };
             ctx.fontAscent = function() { return CanvasTextFunctions.ascent(); }
-    
+
             /**
             * The following helper methods are currently not required by this plugin
-            */          
+            */
             ctx.fontDescent = function() { return CanvasTextFunctions.descent(); }
-            ctx.drawTextRight = function(text,x,y) { 
+            ctx.drawTextRight = function(text,x,y) {
                 var w = CanvasTextFunctions.measure(text);
-                return CanvasTextFunctions.draw(ctx, x-w,y,text); 
+                return CanvasTextFunctions.draw(ctx, x-w,y,text);
             };
-            ctx.drawTextCenter = function(text,x,y) { 
+            ctx.drawTextCenter = function(text,x,y) {
                 var w = CanvasTextFunctions.measure(text);
-                return CanvasTextFunctions.draw(ctx, x-w/2,y,text); 
+                return CanvasTextFunctions.draw(ctx, x-w/2,y,text);
             };
         }
         /**
         * The code found in the Public Domain (along with my modifications) ends here.
-        * The code below is based on FLOT's original html-driven logic, which I modified to get things done 
+        * The code below is based on FLOT's original html-driven logic, which I modified to get things done
         * using the canvas context
         */
-        
+
         /**
         * Adds the new text-related functions to the Flot canvas context (ctx)
         */
         function enableCanvasText(plot, ctx){
             var options = plot.getOptions();
-            var placeholder = plot.getPlaceholder();            
+            var placeholder = plot.getPlaceholder();
 
             /**
             * Check if the user has requested canvas-based text support
@@ -349,8 +349,8 @@
                 if (options.grid.show) {
                     /**
                     * Remove any div-based tickLabels from the page
-                    */              
-                    placeholder.find(".tickLabel").remove();                
+                    */
+                    placeholder.find(".tickLabel").remove();
                     plot.insertLabelsCanvasText(ctx);
                 }
 
@@ -362,7 +362,7 @@
                 * Although FLOT's original implementation allows the legend to show up anywhere on the page,
                 * this implementation (so far) only allows the legend to be created on the canvas context.
                 */
-                if (options.legend.container == null) { 
+                if (options.legend.container == null) {
                     placeholder.find(".legendLabel").each(function(i,el) {
                         el = $(el);
                         elWidth = el.width();
@@ -382,16 +382,15 @@
 
         /**
         * This is the modified version of FLOT's insertLabels function.
-        */  
+        */
         plot.insertLabelsCanvasText = function (ctx) {
             var options = plot.getOptions();
-            var axes = plot.getAxes();
             var plotOffset = plot.getPlotOffset();
             var plotHeight = plot.height();
             var plotWidth = plot.width();
 
             ctx.strokeStyle = options.grid.color;
-            
+
             function addLabels(axis, labelGenerator) {
                 for (var i = 0; i < axis.ticks.length; ++i) {
                     var tick = axis.ticks[i];
@@ -403,125 +402,120 @@
 
             var margin = options.grid.labelMargin + options.grid.borderWidth;
 
-            addLabels(axes.xaxis, function (tick, axis) {
-                var label = tick.label;
-                var labels;
+            var xaxes = plot.getXAxes();
+            for(var j = 0; j < xaxes.length; ++j){
+	            addLabels(xaxes[j], function (tick, axis) {
+	                var label = tick.label;
+	                var labels;
 
-                /**
-                * If user requests, tick labels are displayed one word per line
-                */
-                labels = (options.grid.canvasText.lineBreaks.show)?label.split(" "):[label];
-                
-                y = (plotOffset.top + plotHeight + margin); 
-                if (labels.length > 1) {
-                    y -= options.grid.canvasText.lineBreaks.marginBottom; // move up the labels a bit
-                }
-                for(var j=0; j < labels.length; j++){
-                    labelWidth = ctx.measureText(labels[j]);
-                    /**
-                    * implements an equivalent to the text-align:center CSS option
-                    */                                                  
-                    x = Math.round(plotOffset.left + axis.p2c(tick.v) - labelWidth/2);
-                    /**
-                    * where:
-                    *   plotOffset.left = area where the Y axis is plotted (left of the actual graph)
-                    *   axis.p2c(tick.v) = # of pixels associated with the tick value
-                    *   labelWidth/2 = half of the length of the label so it's centered 
-                    */              
-                    y += ctx.fontAscent();
-                    /**
-                    * where:
-                    *   ctx.fontAscent() = height of the character
-                    */              
-                    ctx.fillText(labels[j],x,y);
-                    y += options.grid.canvasText.lineBreaks.lineSpacing; // for line-spacing
-                }
-            });
-            
-            addLabels(axes.yaxis, function (tick, axis) {
-                label = tick.label;
-                labelWidth = ctx.measureText(label);
-                labelHeight = ctx.fontAscent();
-                plotOffsetLeftArea = plotOffset.left - margin;
-        
-                x = 0;
+	                /**
+	                * If user requests, tick labels are displayed one word per line
+	                */
+	                labels = (options.grid.canvasText.lineBreaks.show)?label.split(" "):[label];
 
-                /**
-                * implements an equivalent to the text-align:right CSS option
-                */                              
-                x +=(Math.round(labelWidth) < plotOffsetLeftArea)?plotOffsetLeftArea-Math.round(labelWidth):0;
-                x -=(Math.round(labelWidth) > plotOffsetLeftArea)?Math.round(labelWidth)-plotOffsetLeftArea:0;
-                                                    
-                y = Math.round(plotOffset.top + axis.p2c(tick.v) - labelHeight/2);
-                y += ctx.fontAscent(); 
+	                if(axis.position == "bottom"){
+		                y = (plotOffset.top + plotHeight + margin);
+		                if (labels.length > 1) {
+		                    y -= options.grid.canvasText.lineBreaks.marginBottom; // move up the labels a bit
+		                }
+		                for(var j=0; j < labels.length; j++){
+		                    labelWidth = ctx.measureText(labels[j]);
+		                    /**
+		                    * implements an equivalent to the text-align:center CSS option
+		                    */
+		                    x = Math.round(plotOffset.left + axis.p2c(tick.v) - labelWidth/2);
+		                    /**
+		                    * where:
+		                    *   plotOffset.left = area where the Y axis is plotted (left of the actual graph)
+		                    *   axis.p2c(tick.v) = # of pixels associated with the tick value
+		                    *   labelWidth/2 = half of the length of the label so it's centered
+		                    */
+		                    y += ctx.fontAscent();
+		                    /**
+		                    * where:
+		                    *   ctx.fontAscent() = height of the character
+		                    */
+		                    ctx.fillText(labels[j],x,y);
+		                    y += options.grid.canvasText.lineBreaks.lineSpacing; // for line-spacing
+		                }
+	                }else{
+		                y = (plotOffset.bottom);
 
-                ctx.fillText(label, x, y);
-            }); 
+		                if (labels.length > 1) {
+		                    y += options.grid.canvasText.lineBreaks.marginTop; // move up the labels down a bit
+		                }
 
-            addLabels(axes.x2axis, function (tick, axis) {
-                var label = tick.label;
-                var labels;
+		                for(var j=0; j < labels.length; j++){
+		                    labelWidth = ctx.measureText(labels[j]);
+		                    /**
+		                    * implements an equivalent to the text-align:center CSS option
+		                    */
+		                    x = Math.round(plotOffset.left + axis.p2c(tick.v) - labelWidth/2);
+		                    /**
+		                    * where:
+		                    *   plotOffset.left = area where the Y axis is plotted (left of the actual graph)
+		                    *   axis.p2c(tick.v) = # of pixels associated with the tick value
+		                    *   labelWidth/2 = half of the length of the label so it's centered
+		                    */
+		                    y -= ctx.fontAscent();
+		                    /**
+		                    * where:
+		                    *   ctx.fontAscent() = height of the character
+		                    */
+		                    ctx.fillText(labels[j],x,y);
+		                    y -= options.grid.canvasText.lineBreaks.lineSpacing; // for line-spacing
+		                }
+	                }
+	            });
+            }
 
-                /**
-                * If user requests, tick labels are displayed one word per line
-                */
-                labels = (options.grid.canvasText.lineBreaks.show)?label.split(" "):[label];
-                
-                y = (plotOffset.bottom); 
+            var yaxes = plot.getYAxes();
+            for(var j = 0; j < yaxes.length; ++j){
+	            addLabels(yaxes[j], function (tick, axis) {
+	                label = tick.label;
+	                labelWidth = ctx.measureText(label);
+	                labelHeight = ctx.fontAscent();
 
-                if (labels.length > 1) {
-                    y += options.grid.canvasText.lineBreaks.marginTop; // move up the labels down a bit
-                }
+	                if(axis.position == "left"){
+		                plotOffsetLeftArea = plotOffset.left - margin;
 
-                for(var j=0; j < labels.length; j++){
-                    labelWidth = ctx.measureText(labels[j]);
-                    /**
-                    * implements an equivalent to the text-align:center CSS option
-                    */                                                  
-                    x = Math.round(plotOffset.left + axis.p2c(tick.v) - labelWidth/2);
-                    /**
-                    * where:
-                    *   plotOffset.left = area where the Y axis is plotted (left of the actual graph)
-                    *   axis.p2c(tick.v) = # of pixels associated with the tick value
-                    *   labelWidth/2 = half of the length of the label so it's centered 
-                    */              
-                    y -= ctx.fontAscent();
-                    /**
-                    * where:
-                    *   ctx.fontAscent() = height of the character
-                    */              
-                    ctx.fillText(labels[j],x,y);
-                    y -= options.grid.canvasText.lineBreaks.lineSpacing; // for line-spacing
-                }   
-            });
+		                x = 0;
 
-            addLabels(axes.y2axis, function (tick, axis) {
-                label = tick.label;
-                labelWidth = ctx.measureText(label);
-                labelHeight = ctx.fontAscent();
+		                /**
+		                * implements an equivalent to the text-align:right CSS option
+		                */
+		                x +=(Math.round(labelWidth) < plotOffsetLeftArea)?plotOffsetLeftArea-Math.round(labelWidth):0;
+		                x -=(Math.round(labelWidth) > plotOffsetLeftArea)?Math.round(labelWidth)-plotOffsetLeftArea:0;
 
-                /**
-                * implements an equivalent to the text-align:left CSS option
-                */                                              
-                x = plotOffset.left + plotWidth + margin;
-                                                    
-                y = Math.round(plotOffset.top + axis.p2c(tick.v) - labelHeight/2); 
-                y += ctx.fontAscent(); 
+		                y = Math.round(plotOffset.top + axis.p2c(tick.v) - labelHeight/2);
+		                y += ctx.fontAscent();
 
-                ctx.fillText(label, x, y);
-            });
+		                ctx.fillText(label, x, y);
+	                }else{
+						/**
+						* implements an equivalent to the text-align:left CSS option
+						*/
+						x = plotOffset.left + plotWidth + margin;
+
+						y = Math.round(plotOffset.top + axis.p2c(tick.v) - labelHeight/2);
+						y += ctx.fontAscent();
+
+						ctx.fillText(label, x, y);
+                 }
+	            });
+            }
         }
 
         /**
         * Plots the series values as labels on the graph
-        */  
+        */
         plot.insertSeriesDataPointsCanvasText = function (ctx) {
             var options = plot.getOptions();
             var plotOffset = plot.getPlotOffset();
             var plotHeight = plot.height();
             var plotWidth = plot.width();
             var seriesData, o, contextObj, paramObj, resultObj;
-            
+
             function defaultFormatFunction (contextObj, scopeObj){
                 var r = {};
                 r.leftOffset = 10;
@@ -540,26 +534,26 @@
             for (var i = 0; i < seriesOption.length; ++i) {
                     paramObj = null;
                     contextObj = {};
-                    
+
                     if (typeof seriesOption[i] == "number") {
                         contextObj.series = seriesOption[i];
                         formatLabelFunction = defaultFormatFunction;
                     } else if (typeof seriesOption[i][0] == "number" && typeof seriesOption[i][1] == "function") {
                         contextObj.series = seriesOption[i][0];
-                        formatLabelFunction = seriesOption[i][1];                       
+                        formatLabelFunction = seriesOption[i][1];
                         if (typeof seriesOption[i][2] == "object") {
                             paramObj = seriesOption[i][2];
-                        }                       
+                        }
                     } else {
                         continue;
                     }
                     if (plot.getData()[contextObj.series]) {
                         seriesData = plot.getData()[contextObj.series].data;
-                        var seriesLength = seriesData.length / 2;   // as each seriesData[j] object counts twice (x,y)                      
+                        var seriesLength = seriesData.length / 2;   // as each seriesData[j] object counts twice (x,y)
                         for (var j = 0; j < seriesLength; ++j) {
                              contextObj.index = j;
-                             contextObj.x = seriesData[j][0];                           
-                             contextObj.y = seriesData[j][1];                                                       
+                             contextObj.x = seriesData[j][0];
+                             contextObj.y = seriesData[j][1];
                              resultObj = formatLabelFunction(contextObj, paramObj);
                              resultObj.leftOffset = (resultObj.leftOffset)?resultObj.leftOffset:0;
                              resultObj.topOffset = (resultObj.topOffset)?resultObj.topOffset:0;
@@ -577,12 +571,12 @@
                              }
                              o = plot.pointOffset({x: contextObj.x, y: contextObj.y});
                              x = o.left  + margin + resultObj.leftOffset;
-                             y = o.top + margin + resultObj.topOffset;                      
+                             y = o.top + margin + resultObj.topOffset;
                              y += ctx.fontAscent();
-                             ctx.strokeStyle = resultObj.color; 
-                             ctx.fillText(resultObj.label,x,y);             
+                             ctx.strokeStyle = resultObj.color;
+                             ctx.fillText(resultObj.label,x,y);
                         }
-                    }   
+                    }
                 }
                 ctx.fontFamily(options.grid.canvasText.font);
         }
@@ -592,14 +586,14 @@
         * This is the modified version of FLOT's insertLegend function.
         * All the N/E/W/S placements are currently supported
         * todo: add support to off-plot placement
-        */  
+        */
         plot.insertLegendCanvasText = function (ctx) {
             var options = plot.getOptions();
             var series = plot.getData();
             var plotOffset = plot.getPlotOffset();
             var plotHeight = plot.height();
             var plotWidth = plot.width();
-            
+
             if (!options.legend.show)
                 return;
 
@@ -607,10 +601,10 @@
 
             legendWidth = 0;
             legendHeight = 0;
-            
+
             /**
             * Calculates the width of the legend area
-            */  
+            */
             for (var i = 0; i < series.length; ++i) {
                 s = series[i];
                 label = s.label;
@@ -625,16 +619,16 @@
                     legendWidth = labelWidth
                 }
             }
-            
+
             /**
             * 22 is the width of the color boxes to the left of the series legend labels
             * 18 is the line-height of those boxes (i.e. series)
-            */ 
+            */
             LEGEND_BOX_WIDTH = 22;
             LEGEND_BOX_LINE_HEIGHT = 18;
             legendWidth = legendWidth + LEGEND_BOX_WIDTH;
             legendHeight = (series.length * LEGEND_BOX_LINE_HEIGHT);
-            
+
             var x, y;
             if (options.legend.container != null) {
                 x = $(options.legend.container).offset().left;
@@ -651,7 +645,7 @@
                     y = Math.round(plotOffset.top + options.grid.borderWidth + plotHeight - m[0] - legendHeight);
                 }
                 if (p.charAt(1) == "e") {
-                    x = Math.round(plotOffset.left + options.grid.borderWidth + plotWidth - m[0] - legendWidth); 
+                    x = Math.round(plotOffset.left + options.grid.borderWidth + plotWidth - m[0] - legendWidth);
                 } else if (p.charAt(1) == "w") {
                     x = Math.round(plotOffset.left + options.grid.borderWidth + m[0]);
                 }
@@ -662,12 +656,12 @@
                         c = options.grid.backgroundColor;
                     }
                     if (c && typeof c == "string") {
-                        ctx.globalAlpha = options.legend.backgroundOpacity; 
+                        ctx.globalAlpha = options.legend.backgroundOpacity;
                         ctx.fillStyle = c;
                         ctx.fillRect(x,y,legendWidth,legendHeight);
-                        ctx.globalAlpha = 1.0;                              
-                    }                       
-                }   
+                        ctx.globalAlpha = 1.0;
+                    }
+                }
             }
 
             var posx, posy;
@@ -681,30 +675,30 @@
                 if (lf) {
                     label = lf(label, s);
                 }
-                
+
                 posy = y + (i * 18);
-                ctx.fillStyle = options.legend.labelBoxBorderColor;                 
-                ctx.fillRect(x,posy,18,14);  
+                ctx.fillStyle = options.legend.labelBoxBorderColor;
+                ctx.fillRect(x,posy,18,14);
                 // ctx.clearRect(x+1,posy+1,16,12); // It turns out ExplorerCanvas doesn't handle clearRect() very well (issue #20)
-                ctx.fillStyle = "#FFF";             // Since I just wanted to mirror the look and feel of the HTML version               
+                ctx.fillStyle = "#FFF";             // Since I just wanted to mirror the look and feel of the HTML version
                 ctx.fillRect(x+1,posy+1,16,12);     // I opted for just using a white rectangle here
 
-                ctx.fillStyle = s.color;                    
+                ctx.fillStyle = s.color;
                 ctx.fillRect(x+2,posy+2,14,10);
 
                 posx = x + 22;
                 posy = posy + ctx.fontAscent() + 2;
-                                    
+
                 ctx.fillText(label, posx, posy);
             }
         }
 
         /**
         * Adds hook to enable this plugin's logic shortly after drawing the whole graph
-        */  
+        */
         plot.hooks.draw.push(enableCanvasText);
     }
-    
+
     $.plot.plugins.push({
         init: init,
         options: options,

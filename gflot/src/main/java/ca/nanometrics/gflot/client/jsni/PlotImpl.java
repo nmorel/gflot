@@ -31,7 +31,7 @@ import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.user.client.Element;
+import com.google.gwt.dom.client.Element;
 
 /**
  * @author AlexanderDeleon
@@ -200,5 +200,26 @@ public class PlotImpl
         var jsOptions = plot.getOptions();
         var options = @ca.nanometrics.gflot.client.options.PlotOptions::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(jsOptions));
 		return options;
+    }-*/;
+
+    native static void saveAsImage( Plot plot )
+    /*-{
+		$wnd.Canvas2Image.saveAsPNG(plot.getCanvas());
+    }-*/;
+
+    native static void saveAsImage( Plot plot, int width, int height )
+    /*-{
+		$wnd.Canvas2Image.saveAsPNG(plot.getCanvas(), false, width, height);
+    }-*/;
+
+    native static Element getImage( Plot plot )
+    /*-{
+		return $wnd.Canvas2Image.saveAsPNG(plot.getCanvas(), true);
+    }-*/;
+
+    native static Element getImage( Plot plot, int width, int height )
+    /*-{
+		return $wnd.Canvas2Image.saveAsPNG(plot.getCanvas(), true, width,
+				height);
     }-*/;
 }

@@ -54,6 +54,9 @@
           <g:Hyperlink ui:field="imageLink" text="Image" targetHistoryToken="{tokens.image}" styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="markingsLink" text="Markings" targetHistoryToken="{tokens.markings}"
             styleName='{res.style.menuLink}' />
+
+          <div class="{res.style.menuCategory}">Others</div>
+          <g:Hyperlink ui:field="exportLink" text="Export" targetHistoryToken="{tokens.export}" styleName='{res.style.menuLink}' />
         </g:HTMLPanel>
       </g:ScrollPanel>
     </g:west>

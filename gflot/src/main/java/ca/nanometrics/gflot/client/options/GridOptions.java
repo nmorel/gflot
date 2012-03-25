@@ -21,13 +21,13 @@
  */
 package ca.nanometrics.gflot.client.options;
 
+import ca.nanometrics.gflot.client.util.JSONHelper;
+import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-
-import ca.nanometrics.gflot.client.util.JSONHelper;
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 
 /**
  * The grid is the thing with the axes and a number of ticks.
@@ -70,6 +70,8 @@ public class GridOptions
     private static final String AUTO_HIGHLIGHT_KEY = "autoHighlight";
 
     private static final String MOUSE_ACTIVE_RADIUS_KEY = "mouseActiveRadius";
+
+    private static final String CANVAS_TEXT_KEY = "canvasText";
 
     public GridOptions()
     {
@@ -398,6 +400,31 @@ public class GridOptions
     public Integer getMouseActiveRadius()
     {
         return getInteger( MOUSE_ACTIVE_RADIUS_KEY );
+    }
+
+    /**
+     * Set canvas text plugin options
+     */
+    public GridOptions setCanvasText( CanvasTextOptions canvasText )
+    {
+        put( CANVAS_TEXT_KEY, canvasText );
+        return this;
+    }
+
+    /**
+     * @return the canvas text options
+     */
+    public CanvasTextOptions getCanvasText()
+    {
+        JSONObject object = getObject( CANVAS_TEXT_KEY );
+        if ( null == object )
+        {
+            return null;
+        }
+        else
+        {
+            return new CanvasTextOptions( object );
+        }
     }
 
 }

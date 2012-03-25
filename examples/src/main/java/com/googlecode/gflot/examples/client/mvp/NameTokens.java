@@ -33,6 +33,8 @@ public final class NameTokens
 
     public static final String IMAGE = "image";
 
+    public static final String EXPORT = "export";
+
     public static String simple()
     {
         return SIMPLE;
@@ -96,6 +98,11 @@ public final class NameTokens
     public static String image()
     {
         return IMAGE;
+    }
+
+    public static String export()
+    {
+        return EXPORT;
     }
 
     private NameTokens()

@@ -128,6 +128,25 @@ public class JSONObjectWrapper
         return result;
     }
 
+    protected Integer[] getIntegerArray( String key )
+    {
+        JSONArray array = getArray( key );
+        if ( array == null )
+        {
+            return null;
+        }
+        Integer[] result = new Integer[array.size()];
+        for ( int i = 0; i < array.size(); i++ )
+        {
+            JSONNumber value = array.get( i ).isNumber();
+            if ( null != value )
+            {
+                result[i] = (int) value.doubleValue();
+            }
+        }
+        return result;
+    }
+
     protected Boolean getBoolean( String key )
     {
         JSONValue value = get( key );

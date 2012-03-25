@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gflot.examples.client.examples.bar.BarPlace;
 import com.googlecode.gflot.examples.client.examples.decimation.DecimationPlace;
+import com.googlecode.gflot.examples.client.examples.export.ExportPlace;
 import com.googlecode.gflot.examples.client.examples.hover.HoverPlace;
 import com.googlecode.gflot.examples.client.examples.image.ImagePlace;
 import com.googlecode.gflot.examples.client.examples.interactivelegend.InteractiveLegendPlace;
@@ -122,6 +123,9 @@ public class MainView
 
     @UiField
     Hyperlink stackLink;
+
+    @UiField
+    Hyperlink exportLink;
 
     @UiField
     Anchor exampleLink;
@@ -245,6 +249,14 @@ public class MainView
             public boolean apply( Place place )
             {
                 return place instanceof StackPlace;
+            }
+        } ) );
+        links.add( new Link( exportLink, new Predicate()
+        {
+            @Override
+            public boolean apply( Place place )
+            {
+                return place instanceof ExportPlace;
             }
         } ) );
 

@@ -33,7 +33,8 @@ import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.util.JSONHelper;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.user.client.Element;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.ui.Image;
 
 /**
  * @author AlexanderDeleon
@@ -41,6 +42,14 @@ import com.google.gwt.user.client.Element;
 public class Plot
     extends JavaScriptObject
 {
+    private static class PlotImage
+        extends Image
+    {
+        PlotImage( Element element )
+        {
+            super( element );
+        }
+    }
 
     protected Plot()
     {
@@ -178,5 +187,35 @@ public class Plot
     public final PlotOptions getPlotOptions()
     {
         return PlotImpl.getPlotOptions( this );
+    }
+
+    public final void saveAsImage()
+    {
+        PlotImpl.saveAsImage( this );
+    }
+
+    public final void saveAsImage( int width, int height )
+    {
+        PlotImpl.saveAsImage( this, width, height );
+    }
+
+    public final Image getImage()
+    {
+        Element img = PlotImpl.getImage( this );
+        if ( null == img )
+        {
+            return null;
+        }
+        return new PlotImage( img );
+    }
+
+    public final Image getImage( int width, int height )
+    {
+        Element img = PlotImpl.getImage( this, width, height );
+        if ( null == img )
+        {
+            return null;
+        }
+        return new PlotImage( img );
     }
 }

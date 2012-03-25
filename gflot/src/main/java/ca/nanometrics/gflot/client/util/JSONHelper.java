@@ -56,6 +56,13 @@ public class JSONHelper
         return wrapper;
     }
 
+    public static JSONArrayWrapper wrapArray( Integer[] values )
+    {
+        JSONArrayWrapper wrapper = new JSONArrayWrapper();
+        wrapper.pushAll( values );
+        return wrapper;
+    }
+
     public static JSONArrayWrapper wrapArray( JSONWrapper[] values )
     {
         JSONArrayWrapper wrapper = new JSONArrayWrapper();

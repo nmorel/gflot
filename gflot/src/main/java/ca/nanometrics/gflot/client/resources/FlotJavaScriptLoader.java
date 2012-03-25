@@ -25,6 +25,28 @@ public class FlotJavaScriptLoader
     public static interface Impl
     {
         void loadRequiredFlotLibrary( final FlotJavaScriptCallback callback );
+
+        PluginLoader getJqueryLoader();
+
+        PluginLoader getFlotLoader();
+
+        PluginLoader getFlotSelectionLoader();
+
+        PluginLoader getFlotSymbolLoader();
+
+        PluginLoader getFlotImageLoader();
+
+        PluginLoader getFlotPieLoader();
+
+        PluginLoader getFlotStackLoader();
+
+        PluginLoader getFlotTextLoader();
+
+        PluginLoader getExcanvasLoader();
+
+        PluginLoader getFlotResizeLoader();
+
+        PluginLoader getCanvas2ImageLoader();
     }
 
     public static class SynchronousImpl
@@ -52,6 +74,8 @@ public class FlotJavaScriptLoader
 
         private PluginLoader excanvasLoader;
 
+        private PluginLoader canvas2ImageLoader;
+
         public void loadRequiredFlotLibrary( final FlotJavaScriptCallback callback )
         {
             if ( !loaded )
@@ -62,7 +86,7 @@ public class FlotJavaScriptLoader
             callback.onSuccess();
         }
 
-        private PluginLoader getJqueryLoader()
+        public PluginLoader getJqueryLoader()
         {
             if ( null == jqueryLoader )
             {
@@ -71,7 +95,7 @@ public class FlotJavaScriptLoader
             return jqueryLoader;
         }
 
-        private PluginLoader getFlotLoader()
+        public PluginLoader getFlotLoader()
         {
             if ( null == flotLoader )
             {
@@ -80,7 +104,7 @@ public class FlotJavaScriptLoader
             return flotLoader;
         }
 
-        private PluginLoader getFlotSelectionLoader()
+        public PluginLoader getFlotSelectionLoader()
         {
             if ( null == flotSelectionLoader )
             {
@@ -89,7 +113,7 @@ public class FlotJavaScriptLoader
             return flotSelectionLoader;
         }
 
-        private PluginLoader getFlotSymbolLoader()
+        public PluginLoader getFlotSymbolLoader()
         {
             if ( null == flotSymbolLoader )
             {
@@ -98,7 +122,7 @@ public class FlotJavaScriptLoader
             return flotSymbolLoader;
         }
 
-        private PluginLoader getFlotImageLoader()
+        public PluginLoader getFlotImageLoader()
         {
             if ( null == flotImageLoader )
             {
@@ -107,7 +131,7 @@ public class FlotJavaScriptLoader
             return flotImageLoader;
         }
 
-        private PluginLoader getFlotPieLoader()
+        public PluginLoader getFlotPieLoader()
         {
             if ( null == flotPieLoader )
             {
@@ -116,7 +140,7 @@ public class FlotJavaScriptLoader
             return flotPieLoader;
         }
 
-        private PluginLoader getFlotStackLoader()
+        public PluginLoader getFlotStackLoader()
         {
             if ( null == flotStackLoader )
             {
@@ -125,7 +149,7 @@ public class FlotJavaScriptLoader
             return flotStackLoader;
         }
 
-        private PluginLoader getFlotTextLoader()
+        public PluginLoader getFlotTextLoader()
         {
             if ( null == flotTextLoader )
             {
@@ -134,7 +158,7 @@ public class FlotJavaScriptLoader
             return flotTextLoader;
         }
 
-        private PluginLoader getExcanvasLoader()
+        public PluginLoader getExcanvasLoader()
         {
             if ( null == excanvasLoader )
             {
@@ -143,13 +167,22 @@ public class FlotJavaScriptLoader
             return excanvasLoader;
         }
 
-        private PluginLoader getFlotResizeLoader()
+        public PluginLoader getFlotResizeLoader()
         {
             if ( null == flotResizeLoader )
             {
                 flotResizeLoader = GWT.create( FlotResizeLoader.class );
             }
             return flotResizeLoader;
+        }
+
+        public PluginLoader getCanvas2ImageLoader()
+        {
+            if ( null == canvas2ImageLoader )
+            {
+                canvas2ImageLoader = GWT.create( Canvas2ImageLoader.class );
+            }
+            return canvas2ImageLoader;
         }
 
         private void load()
@@ -164,6 +197,7 @@ public class FlotJavaScriptLoader
             getFlotTextLoader().load();
             getFlotResizeLoader().load();
             getExcanvasLoader().load();
+            getCanvas2ImageLoader().load();
         }
     }
 }
