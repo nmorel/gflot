@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>ca.nanometrics</groupId>
+  <groupId>com.googlecode.gflot</groupId>
   <artifactId>gflot</artifactId>
   <packaging>jar</packaging>
   <version>2.4.0</version>
@@ -45,24 +45,16 @@
   </developers>
 
   <distributionManagement>
-    <repository>
-      <id>gflot-repo-release</id>
-      <url>svn:https://gflot.googlecode.com/svn/repo/releases</url>
-    </repository>
     <snapshotRepository>
-      <id>gflot-repo-snapshot</id>
-      <url>svn:https://gflot.googlecode.com/svn/repo/snapshots</url>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
     </snapshotRepository>
-    <!-- <snapshotRepository> -->
-    <!-- <id>sonatype-nexus-snapshots</id> -->
-    <!-- <name>Sonatype Nexus Snapshots</name> -->
-    <!-- <url>https://oss.sonatype.org/content/repositories/snapshots/</url> -->
-    <!-- </snapshotRepository> -->
-    <!-- <repository> -->
-    <!-- <id>sonatype-nexus-staging</id> -->
-    <!-- <name>Nexus Release Repository</name> -->
-    <!-- <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url> -->
-    <!-- </repository> -->
+    <repository>
+      <id>sonatype-nexus-staging</id>
+      <name>Nexus Release Repository</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
   </distributionManagement>
 
   <properties>

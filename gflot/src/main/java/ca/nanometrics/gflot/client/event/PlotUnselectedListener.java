@@ -28,8 +28,6 @@ public interface PlotUnselectedListener
 {
     /**
      * Called when the user clicks the mouse to remove the selection
-     *
-     * @param area the area selected
      */
     void onPlotUnselected();
 }

@@ -18,13 +18,6 @@
     <gflot.version>2.4.0</gflot.version>
   </properties>
 
-  <repositories>
-    <repository>
-      <id>gflot</id>
-      <url>https://gflot.googlecode.com/svn/repo/releases</url>
-    </repository>
-  </repositories>
-
   <dependencies>
     <dependency>
       <groupId>com.google.gwt</groupId>
@@ -40,7 +33,7 @@
     </dependency>
 
     <dependency>
-      <groupId>ca.nanometrics</groupId>
+      <groupId>com.googlecode.gflot</groupId>
       <artifactId>gflot</artifactId>
       <version>${gflot.version}</version>
       <scope>provided</scope>

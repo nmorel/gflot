@@ -136,8 +136,8 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     }
 
     /**
-     * Set the overall placement of the legend within the plot ({@link #BOTTOM}, {@link #TOP}, {@link #LEFT},
-     * {@link #RIGHT}). By default, the placement is {@link #BOTTOM} for x axis and {@link #LEFT} for y axis.
+     * Set the overall placement of the legend within the plot ({@link AxisPosition#BOTTOM BOTTOM}, {@link AxisPosition#TOP TOP}, {@link AxisPosition#LEFT LEFT},
+     * {@link AxisPosition#RIGHT RIGHT}). By default, the placement is {@link AxisPosition#BOTTOM BOTTOM} for x axis and {@link AxisPosition#LEFT LEFT} for y axis.
      */
     public T setPosition( AxisPosition position )
     {
