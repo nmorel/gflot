@@ -65,11 +65,10 @@
     <!-- Plugins version -->
     <maven-compiler.version>2.3.2</maven-compiler.version>
     <maven-eclipse.version>2.8</maven-eclipse.version>
-    <maven-deploy.version>2.7</maven-deploy.version>
-    <maven-svn-wagon.version>1.4</maven-svn-wagon.version>
     <maven-source.version>2.1.2</maven-source.version>
     <maven-javadoc.version>2.8.1</maven-javadoc.version>
     <maven-gpg.version>1.4</maven-gpg.version>
+    <maven-jar.version>2.4</maven-jar.version>
 
     <!-- GWT dependencies version -->
     <gwt.version>2.0.0</gwt.version>
@@ -134,19 +133,6 @@
           </additionalProjectnatures>
         </configuration>
       </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>${maven-deploy.version}</version>
-        <dependencies>
-          <dependency>
-            <groupId>com.google.code.maven-svn-wagon</groupId>
-            <artifactId>maven-svn-wagon</artifactId>
-            <version>${maven-svn-wagon.version}</version>
-          </dependency>
-        </dependencies>
-      </plugin>
     </plugins>
   </build>
 
@@ -194,6 +180,32 @@
                 <goals>
                   <goal>sign</goal>
                 </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>${maven-jar.version}</version>
+            <executions>
+              <execution>
+                <id>bundle</id>
+                <phase>install</phase>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+                <configuration>
+                  <finalName>bundle</finalName>
+                  <classesDirectory>${project.build.directory}</classesDirectory>
+                  <useDefaultManifestFile>true</useDefaultManifestFile>
+                  <includes>
+                    <include>gflot-${project.version}*</include>
+                  </includes>
+                  <archive>
+                    <addMavenDescriptor>false</addMavenDescriptor>
+                  </archive>
+                </configuration>
               </execution>
             </executions>
           </plugin>
