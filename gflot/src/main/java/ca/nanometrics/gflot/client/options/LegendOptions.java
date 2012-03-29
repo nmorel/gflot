@@ -27,12 +27,11 @@ import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 
 /**
  * The legend is generated as a table with the data series labels and small label boxes with the color of the series.
@@ -262,11 +261,11 @@ public class LegendOptions
     {
         assert null != container : "container can't be null";
 
-        String id = DOM.getElementProperty( container, "id" );
+        String id = container.getId();
         if ( id == null || id.length() == 0 )
         {
             id = Document.get().createUniqueId();
-            DOM.setElementProperty( container, "id", id );
+            container.setId( id );
         }
         put( CONTAINER_KEY, "#" + id );
         return this;
