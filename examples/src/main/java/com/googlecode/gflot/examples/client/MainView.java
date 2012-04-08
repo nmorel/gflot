@@ -27,12 +27,12 @@ import com.googlecode.gflot.examples.client.examples.export.ExportPlace;
 import com.googlecode.gflot.examples.client.examples.hover.HoverPlace;
 import com.googlecode.gflot.examples.client.examples.image.ImagePlace;
 import com.googlecode.gflot.examples.client.examples.interactivelegend.InteractiveLegendPlace;
+import com.googlecode.gflot.examples.client.examples.line.LinePlace;
 import com.googlecode.gflot.examples.client.examples.markings.MarkingsPlace;
 import com.googlecode.gflot.examples.client.examples.multipleaxes.MultipleAxesPlace;
 import com.googlecode.gflot.examples.client.examples.overview.OverviewPlace;
 import com.googlecode.gflot.examples.client.examples.pie.PiePlace;
 import com.googlecode.gflot.examples.client.examples.selection.SelectionPlace;
-import com.googlecode.gflot.examples.client.examples.simple.SimplePlace;
 import com.googlecode.gflot.examples.client.examples.sliding.SlidingPlace;
 import com.googlecode.gflot.examples.client.examples.stack.StackPlace;
 import com.googlecode.gflot.examples.client.resources.Resources;
@@ -232,7 +232,7 @@ public class MainView
             @Override
             public boolean apply( Place place )
             {
-                return place instanceof SimplePlace;
+                return place instanceof LinePlace;
             }
         } ) );
         links.add( new Link( slidingLink, new Predicate()

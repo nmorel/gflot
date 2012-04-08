@@ -47,6 +47,8 @@ public class FlotJavaScriptLoader
         PluginLoader getFlotResizeLoader();
 
         PluginLoader getCanvas2ImageLoader();
+
+        PluginLoader getFlotAxisLabelsLoader();
     }
 
     public static class SynchronousImpl
@@ -75,6 +77,8 @@ public class FlotJavaScriptLoader
         private PluginLoader excanvasLoader;
 
         private PluginLoader canvas2ImageLoader;
+
+        private PluginLoader flotAxisLabelsLoader;
 
         public void loadRequiredFlotLibrary( final FlotJavaScriptCallback callback )
         {
@@ -185,6 +189,15 @@ public class FlotJavaScriptLoader
             return canvas2ImageLoader;
         }
 
+        public PluginLoader getFlotAxisLabelsLoader()
+        {
+            if ( null == flotAxisLabelsLoader )
+            {
+                flotAxisLabelsLoader = GWT.create( FlotAxisLabelsLoader.class );
+            }
+            return flotAxisLabelsLoader;
+        }
+
         private void load()
         {
             getJqueryLoader().load();
@@ -198,6 +211,7 @@ public class FlotJavaScriptLoader
             getFlotResizeLoader().load();
             getExcanvasLoader().load();
             getCanvas2ImageLoader().load();
+            getFlotAxisLabelsLoader().load();
         }
     }
 }

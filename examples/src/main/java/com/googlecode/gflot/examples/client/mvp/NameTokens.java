@@ -7,7 +7,7 @@ package com.googlecode.gflot.examples.client.mvp;
  */
 public final class NameTokens
 {
-    public static final String SIMPLE = "simple";
+    public static final String LINE = "line";
 
     public static final String STACK = "stack";
 
@@ -35,9 +35,9 @@ public final class NameTokens
 
     public static final String EXPORT = "export";
 
-    public static String simple()
+    public static String line()
     {
-        return SIMPLE;
+        return LINE;
     }
 
     public static String stack()

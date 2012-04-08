@@ -8,12 +8,12 @@ import com.googlecode.gflot.examples.client.examples.export.ExportPlace;
 import com.googlecode.gflot.examples.client.examples.hover.HoverPlace;
 import com.googlecode.gflot.examples.client.examples.image.ImagePlace;
 import com.googlecode.gflot.examples.client.examples.interactivelegend.InteractiveLegendPlace;
+import com.googlecode.gflot.examples.client.examples.line.LinePlace;
 import com.googlecode.gflot.examples.client.examples.markings.MarkingsPlace;
 import com.googlecode.gflot.examples.client.examples.multipleaxes.MultipleAxesPlace;
 import com.googlecode.gflot.examples.client.examples.overview.OverviewPlace;
 import com.googlecode.gflot.examples.client.examples.pie.PiePlace;
 import com.googlecode.gflot.examples.client.examples.selection.SelectionPlace;
-import com.googlecode.gflot.examples.client.examples.simple.SimplePlace;
 import com.googlecode.gflot.examples.client.examples.sliding.SlidingPlace;
 import com.googlecode.gflot.examples.client.examples.stack.StackPlace;
 
@@ -64,9 +64,9 @@ public class AppPlaceHistoryMapper
         {
             return new SelectionPlace();
         }
-        else if ( token.startsWith( NameTokens.SIMPLE ) )
+        else if ( token.startsWith( NameTokens.LINE ) )
         {
-            return new SimplePlace();
+            return new LinePlace();
         }
         else if ( token.startsWith( NameTokens.SLIDING ) )
         {
@@ -129,9 +129,9 @@ public class AppPlaceHistoryMapper
         {
             return NameTokens.SELECTION;
         }
-        else if ( place instanceof SimplePlace )
+        else if ( place instanceof LinePlace )
         {
-            return NameTokens.SIMPLE;
+            return NameTokens.LINE;
         }
         else if ( place instanceof SlidingPlace )
         {

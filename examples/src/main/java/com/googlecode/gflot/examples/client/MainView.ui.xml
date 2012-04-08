@@ -26,7 +26,7 @@
       <g:ScrollPanel styleName='{res.style.menuScrollContainer}'>
         <g:HTMLPanel styleName='{res.style.menuContainer}'>
           <div class="{res.style.menuCategory}">Simples charts</div>
-          <g:Hyperlink ui:field="simpleLink" text="Line" targetHistoryToken="{tokens.simple}" styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="simpleLink" text="Line" targetHistoryToken="{tokens.line}" styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="barLink" text="Bar" targetHistoryToken="{tokens.bar}" styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="pieLink" text="Pie" targetHistoryToken="{tokens.pie}" styleName='{res.style.menuLink}' />
 

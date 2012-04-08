@@ -9,6 +9,7 @@ import ca.nanometrics.gflot.client.PlotWithInteractiveLegend;
 import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
+import ca.nanometrics.gflot.client.options.AxisOptions;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
@@ -75,6 +76,8 @@ public class InteractiveLegendExample
         // add tick formatter to the options
         plotOptions.addXAxisOptions( new TimeSeriesAxisOptions().setTickSize( 2, TickTimeUnit.MONTH ).setMonthNames(
             MONTH_NAMES ) );
+
+        plotOptions.addYAxisOptions( new AxisOptions().setLabel( "Temperature (C\u00b0)" ) );
 
         // create a series
         // Note: you need to specified the colors in other for the legend to

@@ -10,7 +10,7 @@ import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
-import com.googlecode.gflot.examples.client.examples.simple.SimplePlace;
+import com.googlecode.gflot.examples.client.examples.line.LinePlace;
 import com.googlecode.gflot.examples.client.mvp.AppActivityMapper;
 import com.googlecode.gflot.examples.client.mvp.AppPlaceHistoryMapper;
 import com.googlecode.gflot.examples.client.resources.Resources;
@@ -42,7 +42,7 @@ public class GFlotExamples
 
         PlaceController placeController = new PlaceController( eventBus );
         PlaceHistoryHandler placeHistoryHandler = new PlaceHistoryHandler( placeHistoryMapper );
-        placeHistoryHandler.register( placeController, eventBus, new SimplePlace() );
+        placeHistoryHandler.register( placeController, eventBus, new LinePlace() );
 
         MainView mainView = new MainView( eventBus, placeController, resources );
         RootLayoutPanel.get().add( mainView );

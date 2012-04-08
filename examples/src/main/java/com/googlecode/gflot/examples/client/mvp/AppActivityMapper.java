@@ -15,6 +15,8 @@ import com.googlecode.gflot.examples.client.examples.image.ImageExample;
 import com.googlecode.gflot.examples.client.examples.image.ImagePlace;
 import com.googlecode.gflot.examples.client.examples.interactivelegend.InteractiveLegendExample;
 import com.googlecode.gflot.examples.client.examples.interactivelegend.InteractiveLegendPlace;
+import com.googlecode.gflot.examples.client.examples.line.LineExample;
+import com.googlecode.gflot.examples.client.examples.line.LinePlace;
 import com.googlecode.gflot.examples.client.examples.markings.MarkingsExample;
 import com.googlecode.gflot.examples.client.examples.markings.MarkingsPlace;
 import com.googlecode.gflot.examples.client.examples.multipleaxes.MultipleAxesExample;
@@ -25,8 +27,6 @@ import com.googlecode.gflot.examples.client.examples.pie.PieExample;
 import com.googlecode.gflot.examples.client.examples.pie.PiePlace;
 import com.googlecode.gflot.examples.client.examples.selection.SelectionExample;
 import com.googlecode.gflot.examples.client.examples.selection.SelectionPlace;
-import com.googlecode.gflot.examples.client.examples.simple.SimpleExample;
-import com.googlecode.gflot.examples.client.examples.simple.SimplePlace;
 import com.googlecode.gflot.examples.client.examples.sliding.SlidingExample;
 import com.googlecode.gflot.examples.client.examples.sliding.SlidingPlace;
 import com.googlecode.gflot.examples.client.examples.stack.StackExample;
@@ -161,11 +161,11 @@ public class AppActivityMapper
             }
             return selectionActivity;
         }
-        if ( place instanceof SimplePlace )
+        if ( place instanceof LinePlace )
         {
             if ( null == simpleActivity )
             {
-                simpleActivity = new SimpleExample( resources );
+                simpleActivity = new LineExample( resources );
             }
             return simpleActivity;
         }

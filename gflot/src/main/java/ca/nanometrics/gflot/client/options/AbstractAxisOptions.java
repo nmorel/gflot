@@ -73,6 +73,11 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         }
     }
 
+    public enum AxisLabelRenderingMode
+    {
+        CSS, CANVAS, HTML;
+    }
+
     private static final String SHOW_KEY = "show";
 
     private static final String POSITION_KEY = "position";
@@ -107,6 +112,18 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
 
     protected static final String TIME_MODE_KEY = "time";
 
+    private static final String AXIS_LABEL_KEY = "axisLabel";
+
+    private static final String AXIS_LABEL_PADDING_KEY = "axisLabelPadding";
+
+    private static final String AXIS_LABEL_RENDERING_MODE_CANVAS_KEY = "axisLabelUseCanvas";
+
+    private static final String AXIS_LABEL_RENDERING_MODE_HTML_KEY = "axisLabelUseHtml";
+
+    private static final String AXIS_LABEL_CANVAS_FONT_SIZE_KEY = "axisLabelFontSizePixels";
+
+    private static final String AXIS_LABEL_CANVAS_FONT_FAMILY_KEY = "axisLabelFontFamily";
+
     public AbstractAxisOptions()
     {
         super();
@@ -136,8 +153,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     }
 
     /**
-     * Set the overall placement of the legend within the plot ({@link AxisPosition#BOTTOM BOTTOM}, {@link AxisPosition#TOP TOP}, {@link AxisPosition#LEFT LEFT},
-     * {@link AxisPosition#RIGHT RIGHT}). By default, the placement is {@link AxisPosition#BOTTOM BOTTOM} for x axis and {@link AxisPosition#LEFT LEFT} for y axis.
+     * Set the overall placement of the legend within the plot ({@link AxisPosition#BOTTOM BOTTOM},
+     * {@link AxisPosition#TOP TOP}, {@link AxisPosition#LEFT LEFT}, {@link AxisPosition#RIGHT RIGHT}). By default, the
+     * placement is {@link AxisPosition#BOTTOM BOTTOM} for x axis and {@link AxisPosition#LEFT LEFT} for y axis.
      */
     public T setPosition( AxisPosition position )
     {
@@ -479,6 +497,120 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     public Integer getAlignTicksWithAxis()
     {
         return getInteger( ALIGN_TICKS_KEY );
+    }
+
+    /**
+     * Set the label of the axis
+     */
+    public T setLabel( String label )
+    {
+        put( AXIS_LABEL_KEY, label );
+        return (T) this;
+    }
+
+    /**
+     * @return the label of the axis
+     */
+    public String getLabel()
+    {
+        return getString( AXIS_LABEL_KEY );
+    }
+
+    /**
+     * Set the padding, in pixels, between the tick labels and the axis label (default: 2)
+     */
+    public T setLabelPadding( int labelPadding )
+    {
+        put( AXIS_LABEL_PADDING_KEY, labelPadding );
+        return (T) this;
+    }
+
+    /**
+     * @return the padding, in pixels, between the tick labels and the axis label (default: 2)
+     */
+    public Integer getLabelPadding()
+    {
+        return getInteger( AXIS_LABEL_PADDING_KEY );
+    }
+
+    /**
+     * By default, if supported, flot-axislabels uses CSS transforms to render label. You can force either canvas or
+     * HTML mode.
+     */
+    public T setLabelRenderingMode( AxisLabelRenderingMode mode )
+    {
+        assert null != mode : "mode can't be null";
+
+        switch ( mode )
+        {
+            case CSS:
+                put( AXIS_LABEL_RENDERING_MODE_CANVAS_KEY, false );
+                put( AXIS_LABEL_RENDERING_MODE_HTML_KEY, false );
+                break;
+            case CANVAS:
+                put( AXIS_LABEL_RENDERING_MODE_CANVAS_KEY, true );
+                put( AXIS_LABEL_RENDERING_MODE_HTML_KEY, false );
+                break;
+            case HTML:
+                put( AXIS_LABEL_RENDERING_MODE_CANVAS_KEY, false );
+                put( AXIS_LABEL_RENDERING_MODE_HTML_KEY, true );
+                break;
+        }
+        return (T) this;
+    }
+
+    /**
+     * @return the axis label rendering mode
+     */
+    public AxisLabelRenderingMode getLabelRenderingMode()
+    {
+        Boolean mode = getBoolean( AXIS_LABEL_RENDERING_MODE_HTML_KEY );
+        if ( null != mode && mode )
+        {
+            return AxisLabelRenderingMode.HTML;
+        }
+
+        mode = getBoolean( AXIS_LABEL_RENDERING_MODE_CANVAS_KEY );
+        if ( null != mode && mode )
+        {
+            return AxisLabelRenderingMode.CANVAS;
+        }
+
+        return AxisLabelRenderingMode.CSS;
+    }
+
+    /**
+     * Set the font family of the font (default: sans-serif). Only the canvas mode supports this option.
+     */
+    public T setLabelFontFamily( String label )
+    {
+        put( AXIS_LABEL_CANVAS_FONT_FAMILY_KEY, label );
+        return (T) this;
+    }
+
+    /**
+     * @return the font family of the font (default: sans-serif). Only the canvas mode supports this option.
+     */
+    public String getLabelFontFamily()
+    {
+        return getString( AXIS_LABEL_CANVAS_FONT_FAMILY_KEY );
+    }
+
+    /**
+     * Set the size, in pixels, of the font (default: 14). Only the canvas mode supports this option.
+     */
+    public T setLabelFontSize( int labelPadding )
+    {
+        put( AXIS_LABEL_CANVAS_FONT_SIZE_KEY, labelPadding );
+        return (T) this;
+    }
+
+    /**
+     * @return the size, in pixels, of the font (default: 14). Only the canvas mode supports this option.
+     */
+    public Integer getLabelFontSize()
+    {
+        return getInteger( AXIS_LABEL_CANVAS_FONT_SIZE_KEY );
     }
 
 }

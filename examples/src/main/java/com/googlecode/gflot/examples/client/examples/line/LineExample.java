@@ -1,4 +1,4 @@
-package com.googlecode.gflot.examples.client.examples.simple;
+package com.googlecode.gflot.examples.client.examples.line;
 
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
@@ -25,15 +25,15 @@ import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExampl
 /**
  * @author Nicolas Morel
  */
-@GFlotExamplesRaw( SimplePlace.UI_RAW_SOURCE_FILENAME )
-public class SimpleExample
+@GFlotExamplesRaw( LinePlace.UI_RAW_SOURCE_FILENAME )
+public class LineExample
     extends DefaultActivity
 {
 
     private static Binder binder = GWT.create( Binder.class );
 
     interface Binder
-        extends UiBinder<Widget, SimpleExample>
+        extends UiBinder<Widget, LineExample>
     {
     }
 
@@ -51,7 +51,7 @@ public class SimpleExample
     @UiField( provided = true )
     SimplePlot plot;
 
-    public SimpleExample( Resources resources )
+    public LineExample( Resources resources )
     {
         super( resources );
     }

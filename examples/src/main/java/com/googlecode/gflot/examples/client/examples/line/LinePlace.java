@@ -1,22 +1,22 @@
-package com.googlecode.gflot.examples.client.examples.simple;
+package com.googlecode.gflot.examples.client.examples.line;
 
 import com.googlecode.gflot.examples.client.source.PlaceWithSources;
 
 /**
  * @author Nicolas Morel
  */
-public class SimplePlace
-    extends PlaceWithSources<SimplePlace>
+public class LinePlace
+    extends PlaceWithSources<LinePlace>
 {
     private static final String SOURCE_FILENAME;
 
-    static final String UI_RAW_SOURCE_FILENAME = "SimpleExample.ui.xml";
+    static final String UI_RAW_SOURCE_FILENAME = "LineExample.ui.xml";
 
     private static final String[] RAW_SOURCE_FILENAMES = new String[] { UI_RAW_SOURCE_FILENAME };
 
     static
     {
-        SOURCE_FILENAME = extractSourceFilenameFromClassName( SimpleExample.class.getName() );
+        SOURCE_FILENAME = extractSourceFilenameFromClassName( LineExample.class.getName() );
     }
 
     @Override
@@ -34,20 +34,20 @@ public class SimplePlace
     /**
      * Default constructor. It will show the example
      */
-    public SimplePlace()
+    public LinePlace()
     {
         super();
     }
 
-    public SimplePlace( String filename, boolean rawSource )
+    public LinePlace( String filename, boolean rawSource )
     {
         super( filename, rawSource );
     }
 
     @Override
-    public SimplePlace createPlace()
+    public LinePlace createPlace()
     {
-        return new SimplePlace();
+        return new LinePlace();
     }
 
 }
