@@ -37,5 +37,7 @@ public interface Resources
         String sourceLinkSelected();
 
         String mainScrollContainer();
+
+        String mainContainer();
     }
 }

@@ -128,5 +128,9 @@ body {
 }
 
 .mainScrollContainer {
-	margin: 10px;
+	margin: 5px;
+}
+
+.mainContainer {
+	margin: 5px;
 }
