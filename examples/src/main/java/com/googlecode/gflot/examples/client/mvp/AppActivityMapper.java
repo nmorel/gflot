@@ -31,6 +31,8 @@ import com.googlecode.gflot.examples.client.examples.sliding.SlidingExample;
 import com.googlecode.gflot.examples.client.examples.sliding.SlidingPlace;
 import com.googlecode.gflot.examples.client.examples.stack.StackExample;
 import com.googlecode.gflot.examples.client.examples.stack.StackPlace;
+import com.googlecode.gflot.examples.client.examples.threshold.ThresholdExample;
+import com.googlecode.gflot.examples.client.examples.threshold.ThresholdPlace;
 import com.googlecode.gflot.examples.client.resources.Resources;
 import com.googlecode.gflot.examples.client.source.PlaceWithSources;
 import com.googlecode.gflot.examples.client.source.SourceActivity;
@@ -67,6 +69,8 @@ public class AppActivityMapper
     private Activity stackActivity;
 
     private Activity exportActivity;
+
+    private Activity thresholdActivity;
 
     public AppActivityMapper( Resources resources )
     {
@@ -192,6 +196,14 @@ public class AppActivityMapper
                 exportActivity = new ExportExample( resources );
             }
             return exportActivity;
+        }
+        if ( place instanceof ThresholdPlace )
+        {
+            if ( null == thresholdActivity )
+            {
+                thresholdActivity = new ThresholdExample( resources );
+            }
+            return thresholdActivity;
         }
         return null;
     }

@@ -1,6 +1,5 @@
 package com.googlecode.gflot.examples.client.mvp;
 
-
 import com.google.gwt.place.shared.Place;
 import com.googlecode.gflot.examples.client.examples.bar.BarPlace;
 import com.googlecode.gflot.examples.client.examples.decimation.DecimationPlace;
@@ -16,6 +15,7 @@ import com.googlecode.gflot.examples.client.examples.pie.PiePlace;
 import com.googlecode.gflot.examples.client.examples.selection.SelectionPlace;
 import com.googlecode.gflot.examples.client.examples.sliding.SlidingPlace;
 import com.googlecode.gflot.examples.client.examples.stack.StackPlace;
+import com.googlecode.gflot.examples.client.examples.threshold.ThresholdPlace;
 
 public class AppPlaceHistoryMapper
     extends AbstractPlaceHistoryMapper
@@ -79,6 +79,10 @@ public class AppPlaceHistoryMapper
         else if ( token.startsWith( NameTokens.EXPORT ) )
         {
             return new ExportPlace();
+        }
+        else if ( token.startsWith( NameTokens.THRESHOLD ) )
+        {
+            return new ThresholdPlace();
         }
         else
         {
@@ -144,6 +148,10 @@ public class AppPlaceHistoryMapper
         else if ( place instanceof ExportPlace )
         {
             return NameTokens.EXPORT;
+        }
+        else if ( place instanceof ThresholdPlace )
+        {
+            return NameTokens.THRESHOLD;
         }
         else
         {

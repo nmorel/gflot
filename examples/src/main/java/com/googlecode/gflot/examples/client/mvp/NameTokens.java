@@ -35,6 +35,8 @@ public final class NameTokens
 
     public static final String EXPORT = "export";
 
+    public static final String THRESHOLD = "threshold";
+
     public static String line()
     {
         return LINE;
@@ -103,6 +105,11 @@ public final class NameTokens
     public static String export()
     {
         return EXPORT;
+    }
+
+    public static String threshold()
+    {
+        return THRESHOLD;
     }
 
     private NameTokens()

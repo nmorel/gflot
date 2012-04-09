@@ -31,16 +31,24 @@ public abstract class DefaultActivity
         {
             widget = createPlot();
         }
-        panel.setWidget( widget );
+        // deferred to be sure the panel is visible before creating the plot
         Scheduler.get().scheduleDeferred( new ScheduledCommand()
         {
             @Override
             public void execute()
             {
-                // trick under IE6 to force a dom reconstruction
-                PopupPanel pop = new PopupPanel();
-                pop.show();
-                pop.hide();
+                panel.setWidget( widget );
+                Scheduler.get().scheduleDeferred( new ScheduledCommand()
+                {
+                    @Override
+                    public void execute()
+                    {
+                        // trick under IE6 to force a dom reconstruction
+                        PopupPanel pop = new PopupPanel();
+                        pop.show();
+                        pop.hide();
+                    }
+                } );
             }
         } );
     }

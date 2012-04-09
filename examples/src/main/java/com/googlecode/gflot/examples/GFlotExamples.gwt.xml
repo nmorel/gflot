@@ -7,6 +7,7 @@
   <inherits name="ca.nanometrics.gflot.GFlot" />
   <set-property name="gflot.load.flot.text" value="ENABLED" />
   <set-property name="gflot.load.canvas2image" value="ENABLED" />
+  <set-property name="gflot.load.flot.axislabels" value="DISABLED" />
 
   <!-- Generator to create the source code -->
   <generate-with class="com.googlecode.gflot.examples.generator.SourceGenerator">

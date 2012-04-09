@@ -35,6 +35,7 @@ import com.googlecode.gflot.examples.client.examples.pie.PiePlace;
 import com.googlecode.gflot.examples.client.examples.selection.SelectionPlace;
 import com.googlecode.gflot.examples.client.examples.sliding.SlidingPlace;
 import com.googlecode.gflot.examples.client.examples.stack.StackPlace;
+import com.googlecode.gflot.examples.client.examples.threshold.ThresholdPlace;
 import com.googlecode.gflot.examples.client.resources.Resources;
 import com.googlecode.gflot.examples.client.source.PlaceWithSources;
 
@@ -126,6 +127,9 @@ public class MainView
 
     @UiField
     Hyperlink exportLink;
+
+    @UiField
+    Hyperlink thresholdLink;
 
     @UiField
     Anchor exampleLink;
@@ -259,6 +263,14 @@ public class MainView
                 return place instanceof ExportPlace;
             }
         } ) );
+        links.add( new Link( thresholdLink, new Predicate()
+        {
+            @Override
+            public boolean apply( Place place )
+            {
+                return place instanceof ThresholdPlace;
+            }
+        } ) );
 
         eventBus.addHandler( PlaceChangeEvent.TYPE, this );
     }
@@ -382,7 +394,8 @@ public class MainView
         {
             PlaceWithSources<?> place = (PlaceWithSources<?>) currentPlace;
             // we were on the example page, we create a new place from the previous one and go to this new place
-            placeController.goTo( place.createPlace( place.getSourceFilename(), sourceList.isVisible() && sourceList.getSelectedIndex() > 0 ) );
+            placeController.goTo( place.createPlace( place.getSourceFilename(),
+                sourceList.isVisible() && sourceList.getSelectedIndex() > 0 ) );
         }
     }
 

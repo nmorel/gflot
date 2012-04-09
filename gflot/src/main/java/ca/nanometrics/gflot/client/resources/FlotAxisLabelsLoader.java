@@ -12,7 +12,7 @@ public class FlotAxisLabelsLoader
     interface Bundle
         extends ClientBundle
     {
-        @Source( "jquery.flot.axislabels.min.js" )
+        @Source( "jquery.flot.axislabels-20120404.min.js" )
         TextResource flotAxisLabels();
     }
 

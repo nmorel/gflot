@@ -13,6 +13,57 @@ import com.google.gwt.json.client.JSONObject;
 public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     extends JSONObjectWrapper
 {
+
+    public static class Threshold
+        extends JSONObjectWrapper
+    {
+        private static final String BELOW_KEY = "below";
+        private static final String COLOR_KEY = "color";
+
+        public Threshold()
+        {
+        }
+
+        Threshold( JSONObject obj )
+        {
+            super( obj );
+        }
+
+        /**
+         * The data points below "below" are drawn with the specified color.
+         */
+        public Threshold setBelow( double below )
+        {
+            put( BELOW_KEY, below );
+            return this;
+        }
+
+        /**
+         * @return the below number
+         */
+        public Double getBelow()
+        {
+            return getDouble( BELOW_KEY );
+        }
+
+        /**
+         * Set the color.
+         */
+        public Threshold setColor( String color )
+        {
+            put( COLOR_KEY, color );
+            return this;
+        }
+
+        /**
+         * @return the color
+         */
+        public String getColor()
+        {
+            return getString( COLOR_KEY );
+        }
+    }
+
     private static final String LINE_SERIES_KEY = "lines";
 
     private static final String BAR_SERIES_KEY = "bars";
@@ -26,6 +77,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     private static final String SHADOW_SIZE_KEY = "shadowSize";
 
     private static final String STACK_KEY = "stack";
+
+    private static final String THRESHOLD_KEY = "threshold";
 
     private LineSeriesOptions lineSeriesOptions;
 
@@ -215,5 +268,30 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     public Boolean getStackAsBoolean()
     {
         return getBoolean( STACK_KEY );
+    }
+
+    /**
+     * Set the threshold options.
+     */
+    public T setThreshold( Threshold threshold )
+    {
+        put( THRESHOLD_KEY, threshold );
+        return (T) this;
+    }
+
+    /**
+     * @return the threshold options
+     */
+    public Threshold getThreshold()
+    {
+        JSONObject obj = getObject( THRESHOLD_KEY );
+        if ( null == obj )
+        {
+            return null;
+        }
+        else
+        {
+            return new Threshold( obj );
+        }
     }
 }

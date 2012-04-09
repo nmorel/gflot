@@ -6,14 +6,14 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
 
-public class FlotTextLoader
+public class FlotThresholdLoader
     extends DefaultLoader
 {
     interface Bundle
         extends ClientBundle
     {
-        @Source( "jquery.flot.text-0.1.min.js" )
-        TextResource flotText();
+        @Source( "jquery.flot-0.7.threshold.min.js" )
+        TextResource flotThreshold();
     }
 
     private Bundle bundle;
@@ -34,7 +34,7 @@ public class FlotTextLoader
     {
         if ( !loaded )
         {
-            JavaScriptInjector.inject( getBundle().flotText().getText() );
+            JavaScriptInjector.inject( getBundle().flotThreshold().getText() );
             loaded = true;
         }
     }
