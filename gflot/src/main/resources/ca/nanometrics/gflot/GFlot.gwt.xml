@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module rename-to='gflot'>
+<module>
   <inherits name="com.google.gwt.user.User" />
   <inherits name="com.google.gwt.json.JSON" />
 
@@ -8,6 +8,7 @@
   </replace-with>
 
   <define-property name="gflot.load" values="ENABLED, EXTERNAL" />
+  <define-property name="gflot.load.jquery" values="ENABLED, EXTERNAL" />
   <define-property name="gflot.load.flot.selection" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.symbol" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.image" values="ENABLED, DISABLED" />
@@ -21,6 +22,7 @@
 
   <!-- Default values -->
   <set-property name="gflot.load" value="ENABLED" />
+  <set-property name="gflot.load.jquery" value="ENABLED" />
   <set-property name="gflot.load.flot.selection" value="ENABLED" />
   <set-property name="gflot.load.flot.symbol" value="ENABLED" />
   <set-property name="gflot.load.flot.image" value="ENABLED" />
@@ -102,7 +104,10 @@
   <!-- External loading -->
   <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
     <when-type-is class="ca.nanometrics.gflot.client.resources.JQueryLoader" />
-    <when-property-is name="gflot.load" value="EXTERNAL" />
+    <any>
+      <when-property-is name="gflot.load" value="EXTERNAL" />
+      <when-property-is name="gflot.load.jquery" value="EXTERNAL" />
+    </any>
   </replace-with>
   <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
     <when-type-is class="ca.nanometrics.gflot.client.resources.FlotLoader" />
