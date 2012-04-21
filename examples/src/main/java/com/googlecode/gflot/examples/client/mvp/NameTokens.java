@@ -37,6 +37,8 @@ public final class NameTokens
 
     public static final String THRESHOLD = "threshold";
 
+    public static final String NAVIGATE = "navigate";
+
     public static String line()
     {
         return LINE;
@@ -110,6 +112,11 @@ public final class NameTokens
     public static String threshold()
     {
         return THRESHOLD;
+    }
+
+    public static String navigate()
+    {
+        return NAVIGATE;
     }
 
     private NameTokens()

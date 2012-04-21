@@ -10,6 +10,7 @@ import com.googlecode.gflot.examples.client.examples.interactivelegend.Interacti
 import com.googlecode.gflot.examples.client.examples.line.LinePlace;
 import com.googlecode.gflot.examples.client.examples.markings.MarkingsPlace;
 import com.googlecode.gflot.examples.client.examples.multipleaxes.MultipleAxesPlace;
+import com.googlecode.gflot.examples.client.examples.navigate.NavigatePlace;
 import com.googlecode.gflot.examples.client.examples.overview.OverviewPlace;
 import com.googlecode.gflot.examples.client.examples.pie.PiePlace;
 import com.googlecode.gflot.examples.client.examples.selection.SelectionPlace;
@@ -84,6 +85,10 @@ public class AppPlaceHistoryMapper
         {
             return new ThresholdPlace();
         }
+        else if ( token.startsWith( NameTokens.NAVIGATE ) )
+        {
+            return new NavigatePlace();
+        }
         else
         {
             return null;
@@ -152,6 +157,10 @@ public class AppPlaceHistoryMapper
         else if ( place instanceof ThresholdPlace )
         {
             return NameTokens.THRESHOLD;
+        }
+        else if ( place instanceof NavigatePlace )
+        {
+            return NameTokens.NAVIGATE;
         }
         else
         {

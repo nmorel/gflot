@@ -8,3 +8,9 @@ jquery.flot.pie :
 
 jquery.flot.text (v0.1):
 - Plugin to render the label directly to the canvas (see http://www.lessaworld.com/projects/flotCanvasText/)
+
+jquery.flot.navigate :
+- deleted the jquery.event.drag and jquery.mousewheel plugins as they doesn't work with jQuery 1.7+
+
+jquery.event.drag v2.0 (http://threedubmedia.com/code/event/drag) :
+- Modified to works with jQuery 1.7+. Followed the suggestions here http://groups.google.com/group/threedubmedia/browse_thread/thread/732d9537a0b33843 and here https://groups.google.com/forum/#!topic/threedubmedia/94yO2u0TxMc/discussion

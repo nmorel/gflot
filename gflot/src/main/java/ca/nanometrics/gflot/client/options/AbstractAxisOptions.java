@@ -2,6 +2,7 @@ package ca.nanometrics.gflot.client.options;
 
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.Tick;
+import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
 import ca.nanometrics.gflot.client.util.JSONHelper;
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 
@@ -123,6 +124,10 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     private static final String AXIS_LABEL_CANVAS_FONT_SIZE_KEY = "axisLabelFontSizePixels";
 
     private static final String AXIS_LABEL_CANVAS_FONT_FAMILY_KEY = "axisLabelFontFamily";
+
+    private static final String ZOOM_RANGE_KEY = "zoomRange";
+
+    private static final String PAN_RANGE_KEY = "panRange";
 
     public AbstractAxisOptions()
     {
@@ -613,4 +618,103 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return getInteger( AXIS_LABEL_CANVAS_FONT_SIZE_KEY );
     }
 
+    /**
+     * Sets the property of ZoomRange to false to disable it
+     */
+    public T setZoomRange( boolean zoomEnabled )
+    {
+        put( ZOOM_RANGE_KEY, zoomEnabled );
+        return (T) this;
+    }
+
+    /**
+     * Sets the property of ZoomRange, the interval which zooming can happen, receives as parameters the min and max
+     * values
+     */
+    public T setZoomRange( double min, double max )
+    {
+        return setZoomRange( new Double[] { min, max } );
+    }
+
+    /**
+     * Sets the property of ZoomRange, the interval in which zooming can happen, receives as a parameter an array or a
+     * null value
+     */
+    public T setZoomRange( Double[] range )
+    {
+        if ( range != null )
+        {
+            assert range.length == 2 : "Array length must be 2";
+            put( ZOOM_RANGE_KEY, JSONHelper.wrapArray( range ) );
+        }
+        else
+        {
+            put( ZOOM_RANGE_KEY, (JSONArrayWrapper) null );
+        }
+        return (T) this;
+    }
+
+    /**
+     * @return the interval in which zooming can happen
+     */
+    public Double[] getZoomRange()
+    {
+        JSONArray array = getArray( ZOOM_RANGE_KEY );
+        if ( null != array )
+        {
+            return new Double[] { array.get( 0 ).isNumber().doubleValue(), array.get( 1 ).isNumber().doubleValue() };
+        }
+
+        return null;
+    }
+
+    /**
+     * Sets the property of PanRange to false to disable it
+     */
+    public T setPanRange( boolean panEnabled )
+    {
+        put( PAN_RANGE_KEY, panEnabled );
+        return (T) this;
+    }
+
+    /**
+     * Sets the property PanRange, confines the panning to stay within a range, receives as parameters the min and max
+     * values
+     */
+    public T setPanRange( double min, double max )
+    {
+        return setPanRange( new Double[] { min, max } );
+    }
+
+    /**
+     * Sets the property PanRange, confines the panning to stay within a range, receives as a parameter an array or a
+     * null value
+     */
+    public T setPanRange( Double[] range )
+    {
+        if ( range != null )
+        {
+            assert range.length == 2 : "Array length must be 2";
+            put( PAN_RANGE_KEY, JSONHelper.wrapArray( range ) );
+        }
+        else
+        {
+            put( PAN_RANGE_KEY, (JSONArrayWrapper) null );
+        }
+        return (T) this;
+    }
+
+    /**
+     * @return an array with minimum and maximum values for panning
+     */
+    public Double[] getPanRange()
+    {
+        JSONArray array = getArray( PAN_RANGE_KEY );
+        if ( null != array )
+        {
+            return new Double[] { array.get( 0 ).isNumber().doubleValue(), array.get( 1 ).isNumber().doubleValue() };
+        }
+
+        return null;
+    }
 }

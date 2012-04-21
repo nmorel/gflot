@@ -30,6 +30,7 @@ import com.googlecode.gflot.examples.client.examples.interactivelegend.Interacti
 import com.googlecode.gflot.examples.client.examples.line.LinePlace;
 import com.googlecode.gflot.examples.client.examples.markings.MarkingsPlace;
 import com.googlecode.gflot.examples.client.examples.multipleaxes.MultipleAxesPlace;
+import com.googlecode.gflot.examples.client.examples.navigate.NavigatePlace;
 import com.googlecode.gflot.examples.client.examples.overview.OverviewPlace;
 import com.googlecode.gflot.examples.client.examples.pie.PiePlace;
 import com.googlecode.gflot.examples.client.examples.selection.SelectionPlace;
@@ -130,6 +131,9 @@ public class MainView
 
     @UiField
     Hyperlink thresholdLink;
+
+    @UiField
+    Hyperlink navigateLink;
 
     @UiField
     Anchor exampleLink;
@@ -269,6 +273,14 @@ public class MainView
             public boolean apply( Place place )
             {
                 return place instanceof ThresholdPlace;
+            }
+        } ) );
+        links.add( new Link( navigateLink, new Predicate()
+        {
+            @Override
+            public boolean apply( Place place )
+            {
+                return place instanceof NavigatePlace;
             }
         } ) );
 

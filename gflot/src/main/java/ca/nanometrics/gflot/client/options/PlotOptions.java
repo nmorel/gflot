@@ -46,6 +46,10 @@ public class PlotOptions
 
     private static final String SELECTION_KEY = "selection";
 
+    private static final String ZOOM_KEY = "zoom";
+
+    private static final String PAN_KEY = "pan";
+
     private LegendOptions legendOptions;
 
     private AxesOptions xAxesOptions;
@@ -57,6 +61,10 @@ public class PlotOptions
     private GridOptions gridOptions;
 
     private GlobalSeriesOptions globalSeriesOptions;
+
+    private ZoomOptions zoom;
+
+    private PanOptions pan;
 
     public PlotOptions()
     {
@@ -70,6 +78,9 @@ public class PlotOptions
         selectionOptions = new SelectionOptions( getObject( SELECTION_KEY ) );
         gridOptions = new GridOptions( getObject( GRID_KEY ) );
         legendOptions = new LegendOptions( getObject( LEGEND_KEY ) );
+
+        zoom = new ZoomOptions( getObject( ZOOM_KEY ) );
+        pan = new PanOptions( getObject( PAN_KEY ) );
 
         xAxesOptions = new AxesOptions( getArray( X_AXES_KEY ) );
         yAxesOptions = new AxesOptions( getArray( Y_AXES_KEY ) );
@@ -279,4 +290,41 @@ public class PlotOptions
     {
         return globalSeriesOptions;
     }
+
+    /**
+     * Set the zoom options
+     */
+    public PlotOptions setZoomOptions( ZoomOptions zoom )
+    {
+        this.zoom = zoom;
+        put( ZOOM_KEY, zoom );
+        return this;
+    }
+
+    /**
+     * @return the zoom options
+     */
+    public ZoomOptions getZoomOptions()
+    {
+        return zoom;
+    }
+
+    /**
+     * Set the pan options
+     */
+    public PlotOptions setPanOptions( PanOptions pan )
+    {
+        this.pan = pan;
+        put( PAN_KEY, pan );
+        return this;
+    }
+
+    /**
+     * @return the pan options
+     */
+    public PanOptions getPanOptions()
+    {
+        return pan;
+    }
+
 }

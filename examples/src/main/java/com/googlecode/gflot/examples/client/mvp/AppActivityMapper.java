@@ -21,6 +21,8 @@ import com.googlecode.gflot.examples.client.examples.markings.MarkingsExample;
 import com.googlecode.gflot.examples.client.examples.markings.MarkingsPlace;
 import com.googlecode.gflot.examples.client.examples.multipleaxes.MultipleAxesExample;
 import com.googlecode.gflot.examples.client.examples.multipleaxes.MultipleAxesPlace;
+import com.googlecode.gflot.examples.client.examples.navigate.NavigateExample;
+import com.googlecode.gflot.examples.client.examples.navigate.NavigatePlace;
 import com.googlecode.gflot.examples.client.examples.overview.OverviewExample;
 import com.googlecode.gflot.examples.client.examples.overview.OverviewPlace;
 import com.googlecode.gflot.examples.client.examples.pie.PieExample;
@@ -71,6 +73,8 @@ public class AppActivityMapper
     private Activity exportActivity;
 
     private Activity thresholdActivity;
+
+    private Activity navigateActivity;
 
     public AppActivityMapper( Resources resources )
     {
@@ -204,6 +208,14 @@ public class AppActivityMapper
                 thresholdActivity = new ThresholdExample( resources );
             }
             return thresholdActivity;
+        }
+        if ( place instanceof NavigatePlace )
+        {
+            if ( null == navigateActivity )
+            {
+                navigateActivity = new NavigateExample( resources );
+            }
+            return navigateActivity;
         }
         return null;
     }

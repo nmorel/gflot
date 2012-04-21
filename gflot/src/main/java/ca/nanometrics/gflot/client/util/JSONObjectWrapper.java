@@ -43,12 +43,19 @@ public class JSONObjectWrapper
 
     protected JSONObjectWrapper()
     {
-        m_jsonObj = new JSONObject();
+        this( null );
     }
 
     protected JSONObjectWrapper( JSONObject jsonObj )
     {
-        m_jsonObj = jsonObj;
+        if ( null == jsonObj )
+        {
+            m_jsonObj = new JSONObject();
+        }
+        else
+        {
+            m_jsonObj = jsonObj;
+        }
     }
 
     protected void put( String key, String value )

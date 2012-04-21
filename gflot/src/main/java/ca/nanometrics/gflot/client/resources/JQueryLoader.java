@@ -1,7 +1,6 @@
 package ca.nanometrics.gflot.client.resources;
 
 import ca.nanometrics.gflot.client.util.JavaScriptInjector;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
@@ -12,7 +11,7 @@ public class JQueryLoader
     interface Bundle
         extends ClientBundle
     {
-        @Source( "jquery-1.7.1.min.js" )
+        @Source( "jquery-1.7.2.min.js" )
         TextResource jquery();
     }
 
