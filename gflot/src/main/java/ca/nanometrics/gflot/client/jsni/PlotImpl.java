@@ -21,13 +21,16 @@
  */
 package ca.nanometrics.gflot.client.jsni;
 
+import ca.nanometrics.gflot.client.Axes;
 import ca.nanometrics.gflot.client.PlotSelectionArea;
 import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
+import ca.nanometrics.gflot.client.event.PlotPanListener;
 import ca.nanometrics.gflot.client.event.PlotSelectedListener;
 import ca.nanometrics.gflot.client.event.PlotSelectingListener;
 import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
+import ca.nanometrics.gflot.client.event.PlotZoomListener;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 
 import com.google.gwt.core.client.JavaScriptObject;
@@ -221,5 +224,34 @@ public class PlotImpl
     /*-{
 		return $wnd.Canvas2Image.saveAsPNG(plot.getCanvas(), true, width,
 				height);
+    }-*/;
+
+    static native Axes getAxes( Plot plot )
+    /*-{
+        var jsAxes = plot.getAxes();
+        var axes = @ca.nanometrics.gflot.client.Axes::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(jsAxes));
+        return axes;
+    }-*/;
+
+    static native void addPlotPanListener( Element container, PlotPanListener listener )
+    /*-{
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plotpan",
+                        function(event, plot) {
+                            listener.@ca.nanometrics.gflot.client.event.PlotPanListener::onPlotPan(Lca/nanometrics/gflot/client/Axes;)(@ca.nanometrics.gflot.client.jsni.PlotImpl::getAxes(Lca/nanometrics/gflot/client/jsni/Plot;)(plot));
+                        });
+    }-*/;
+
+    static native void addPlotZoomListener( Element container, PlotZoomListener listener )
+    /*-{
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plotzoom",
+                        function(event, plot) {
+                            listener.@ca.nanometrics.gflot.client.event.PlotZoomListener::onPlotZoom(Lca/nanometrics/gflot/client/Axes;)(@ca.nanometrics.gflot.client.jsni.PlotImpl::getAxes(Lca/nanometrics/gflot/client/jsni/Plot;)(plot));
+                        });
     }-*/;
 }

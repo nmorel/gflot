@@ -27,9 +27,11 @@ import java.util.List;
 import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
+import ca.nanometrics.gflot.client.event.PlotPanListener;
 import ca.nanometrics.gflot.client.event.PlotSelectedListener;
 import ca.nanometrics.gflot.client.event.PlotSelectingListener;
 import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
+import ca.nanometrics.gflot.client.event.PlotZoomListener;
 import ca.nanometrics.gflot.client.jsni.Plot;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.Range;
@@ -335,6 +337,42 @@ public class SimplePlot
         this.loadDataImages = loadDataImages;
     }
 
+    public void addPanListener( final PlotPanListener listener )
+    {
+        if ( loaded )
+        {
+            plot.addPlotPanListener( getElement(), listener );
+        }
+        else
+        {
+            onLoadOperations.add( new Command()
+            {
+                public void execute()
+                {
+                    plot.addPlotPanListener( getElement(), listener );
+                }
+            } );
+        }
+    }
+
+    public void addZoomListener( final PlotZoomListener listener )
+    {
+        if ( loaded )
+        {
+            plot.addPlotZoomListener( getElement(), listener );
+        }
+        else
+        {
+            onLoadOperations.add( new Command()
+            {
+                public void execute()
+                {
+                    plot.addPlotZoomListener( getElement(), listener );
+                }
+            } );
+        }
+    }
+
     /* ------------------ Widget API -- */
     protected void onLoad()
     {
@@ -445,6 +483,12 @@ public class SimplePlot
             return plot.getImage( width, height );
         }
         return null;
+    }
+
+    public Axes getAxes()
+    {
+        assertLoaded();
+        return plot.getAxes();
     }
 
     /* ------------------ Helper methods -- */

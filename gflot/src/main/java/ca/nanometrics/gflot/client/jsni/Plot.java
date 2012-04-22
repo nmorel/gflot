@@ -21,14 +21,17 @@
  */
 package ca.nanometrics.gflot.client.jsni;
 
+import ca.nanometrics.gflot.client.Axes;
 import ca.nanometrics.gflot.client.PlotSelectionArea;
 import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
+import ca.nanometrics.gflot.client.event.PlotPanListener;
 import ca.nanometrics.gflot.client.event.PlotSelectedListener;
 import ca.nanometrics.gflot.client.event.PlotSelectingListener;
 import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
+import ca.nanometrics.gflot.client.event.PlotZoomListener;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.util.JSONHelper;
 
@@ -217,5 +220,20 @@ public class Plot
             return null;
         }
         return new PlotImage( img );
+    }
+
+    public final Axes getAxes()
+    {
+        return PlotImpl.getAxes( this );
+    }
+
+    public final void addPlotPanListener( Element container, PlotPanListener listener )
+    {
+        PlotImpl.addPlotPanListener( container, listener );
+    }
+
+    public final void addPlotZoomListener( Element container, PlotZoomListener listener )
+    {
+        PlotImpl.addPlotZoomListener( container, listener );
     }
 }

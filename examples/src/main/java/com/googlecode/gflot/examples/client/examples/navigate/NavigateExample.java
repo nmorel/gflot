@@ -1,9 +1,12 @@
 package com.googlecode.gflot.examples.client.examples.navigate;
 
+import ca.nanometrics.gflot.client.Axes;
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
+import ca.nanometrics.gflot.client.event.PlotPanListener;
+import ca.nanometrics.gflot.client.event.PlotZoomListener;
 import ca.nanometrics.gflot.client.options.AxisOptions;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
@@ -13,8 +16,10 @@ import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.ZoomOptions;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
@@ -38,6 +43,9 @@ public class NavigateExample
 
     @UiField( provided = true )
     SimplePlot plot;
+
+    @UiField
+    Label message;
 
     public NavigateExample( Resources resources )
     {
@@ -72,6 +80,32 @@ public class NavigateExample
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );
+
+        final NumberFormat format = NumberFormat.getDecimalFormat();
+
+        plot.addZoomListener( new PlotZoomListener()
+        {
+            @Override
+            public void onPlotZoom( Axes axes )
+            {
+                message.setText( "Zooming to x=[min:\"" + format.format( axes.getX().getMinimumValue() ) + "\", max:\""
+                    + format.format( axes.getX().getMaximumValue() ) + "\"], y=[min:\""
+                    + format.format( axes.getY().getMinimumValue() ) + "\", max:\""
+                    + format.format( axes.getY().getMaximumValue() ) + "\"]" );
+            }
+        } );
+
+        plot.addPanListener( new PlotPanListener()
+        {
+            @Override
+            public void onPlotPan( Axes axes )
+            {
+                message.setText( "Panning to x=[min:\"" + format.format( axes.getX().getMinimumValue() ) + "\", max:\""
+                    + format.format( axes.getX().getMaximumValue() ) + "\"], y=[min:\""
+                    + format.format( axes.getY().getMinimumValue() ) + "\", max:\""
+                    + format.format( axes.getY().getMaximumValue() ) + "\"]" );
+            }
+        } );
 
         return binder.createAndBindUi( this );
     }

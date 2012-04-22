@@ -10,5 +10,19 @@
 
   <g:HTMLPanel>
     <p:SimplePlot ui:field="plot" width="600px" height="300px" />
+
+    <div style="margin: 10px 0px">
+      <g:InlineLabel ui:field="message" />
+    </div>
+
+    <p>With the navigate plugin it is easy to add panning and zooming.
+      Drag to pan, double click to zoom (or use the
+      mouse scrollwheel).</p>
+
+    <p>The plugin fires events (useful for synchronizing several
+      plots) and adds a couple of public methods so you can
+      easily build
+      a little user interface around it, like the little buttons at the
+      top right in the plot.</p>
   </g:HTMLPanel>
 </ui:UiBinder>
