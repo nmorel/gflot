@@ -2,6 +2,7 @@ package com.googlecode.gflot.examples.client.examples.navigate;
 
 import ca.nanometrics.gflot.client.Axes;
 import ca.nanometrics.gflot.client.DataPoint;
+import ca.nanometrics.gflot.client.Pan;
 import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
@@ -16,13 +17,16 @@ import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.ZoomOptions;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
+import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
@@ -41,9 +45,17 @@ public class NavigateExample
     {
     }
 
+    /**
+     * Plot
+     */
+    @GFlotExamplesData
     @UiField( provided = true )
     SimplePlot plot;
 
+    /**
+     * Message showing panning and zooming information
+     */
+    @GFlotExamplesData
     @UiField
     Label message;
 
@@ -60,12 +72,14 @@ public class NavigateExample
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions()
-            .setShow( true ).setFill( true ) ) );
+        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions(
+            new LineSeriesOptions().setShow( true ).setFill( true ) ).setShadowSize( 0 ) );
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
+
         plotOptions.addXAxisOptions( new AxisOptions().setZoomRange( 0.1d, 10d ).setPanRange(
             new Double[] { -10d, 10d } ) );
-        plotOptions.addYAxisOptions( new AxisOptions().setZoomRange( false ).setPanRange( false ) );
+        plotOptions.addYAxisOptions( new AxisOptions().setZoomRange( 0.1d, 10d )
+            .setPanRange( new Double[] { -10d, 10d } ).setLabelWidth( 20 ) );
         plotOptions.setZoomOptions( new ZoomOptions().setInteractive( true ) ).setPanOptions(
             new PanOptions().setInteractive( true ) );
 
@@ -110,6 +124,10 @@ public class NavigateExample
         return binder.createAndBindUi( this );
     }
 
+    /**
+     *
+     */
+    @GFlotExamplesSource
     private double sumfCos( double t, double m )
     {
         double res = 0;
@@ -120,6 +138,10 @@ public class NavigateExample
         return res;
     }
 
+    /**
+     *
+     */
+    @GFlotExamplesSource
     private double sumfSin( double t, double m )
     {
         double res = 0;
@@ -128,5 +150,55 @@ public class NavigateExample
             res += Math.sin( i * i * t ) / ( i * i );
         }
         return res;
+    }
+
+    /**
+     * On click left arrow
+     */
+    @GFlotExamplesSource
+    @UiHandler( "left" )
+    void onClickLeft( ClickEvent event )
+    {
+        plot.pan( new Pan().setLeft( -100 ) );
+    }
+
+    /**
+     * On click right arrow
+     */
+    @GFlotExamplesSource
+    @UiHandler( "right" )
+    void onClickRight( ClickEvent event )
+    {
+        plot.pan( new Pan().setLeft( 100 ) );
+    }
+
+    /**
+     * On click up arrow
+     */
+    @GFlotExamplesSource
+    @UiHandler( "up" )
+    void onClickUp( ClickEvent event )
+    {
+        plot.pan( new Pan().setTop( -100 ) );
+    }
+
+    /**
+     * On click down arrow
+     */
+    @GFlotExamplesSource
+    @UiHandler( "down" )
+    void onClickDown( ClickEvent event )
+    {
+        plot.pan( new Pan().setTop( 100 ) );
+    }
+
+    /**
+     * On click zoom out
+     */
+    @GFlotExamplesSource
+    @UiHandler( "zoomOut" )
+    void onClickZoomOut( ClickEvent event )
+    {
+        plot.zoomOut();
     }
 }

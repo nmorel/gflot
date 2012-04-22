@@ -373,6 +373,39 @@ public class SimplePlot
         }
     }
 
+    public void zoom()
+    {
+        zoom( new Zoom() );
+    }
+
+    public void zoom( Zoom zoom )
+    {
+        assertLoaded();
+        plot.zoom( zoom );
+    }
+
+    public void zoomOut()
+    {
+        zoomOut( new Zoom() );
+    }
+
+    public void zoomOut( Zoom zoom )
+    {
+        assertLoaded();
+        plot.zoomOut( zoom );
+    }
+
+    public void pan()
+    {
+        pan( new Pan() );
+    }
+
+    public void pan( Pan pan )
+    {
+        assertLoaded();
+        plot.pan( pan );
+    }
+
     /* ------------------ Widget API -- */
     protected void onLoad()
     {

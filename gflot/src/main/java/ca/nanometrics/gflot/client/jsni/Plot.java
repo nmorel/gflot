@@ -22,8 +22,10 @@
 package ca.nanometrics.gflot.client.jsni;
 
 import ca.nanometrics.gflot.client.Axes;
+import ca.nanometrics.gflot.client.Pan;
 import ca.nanometrics.gflot.client.PlotSelectionArea;
 import ca.nanometrics.gflot.client.Series;
+import ca.nanometrics.gflot.client.Zoom;
 import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
@@ -115,16 +117,6 @@ public class Plot
     public final void setupGrid()
     {
         PlotImpl.setupGrid( this );
-    }
-
-    public final void setLinearSelection( double x1, double x2 )
-    {
-        PlotImpl.setLinearSelection( this, x1, x2 );
-    }
-
-    public final void setRectangularSelection( double x1, double y1, double x2, double y2 )
-    {
-        PlotImpl.setRectangularSelection( this, x1, y1, x2, y2 );
     }
 
     public final void addPlotSelectedListener( Element container, PlotSelectedListener listener )
@@ -235,5 +227,20 @@ public class Plot
     public final void addPlotZoomListener( Element container, PlotZoomListener listener )
     {
         PlotImpl.addPlotZoomListener( container, listener );
+    }
+
+    public final void zoom( Zoom zoom )
+    {
+        PlotImpl.zoom( this, JSONHelper.getJSONObject( zoom ).getJavaScriptObject() );
+    }
+
+    public final void zoomOut( Zoom zoom )
+    {
+        PlotImpl.zoomOut( this, JSONHelper.getJSONObject( zoom ).getJavaScriptObject() );
+    }
+
+    public final void pan( Pan pan )
+    {
+        PlotImpl.pan( this, JSONHelper.getJSONObject( pan ).getJavaScriptObject() );
     }
 }

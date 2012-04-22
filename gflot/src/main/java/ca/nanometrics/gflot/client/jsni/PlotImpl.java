@@ -79,24 +79,6 @@ public class PlotImpl
 		plot.setupGrid();
     }-*/;
 
-    static native void setLinearSelection( Plot plot, double x1, double x2 )
-    /*-{
-		plot.setSelection({
-			'x1' : x1,
-			'x2' : x2
-		});
-    }-*/;
-
-    static native void setRectangularSelection( Plot plot, double x1, double y1, double x2, double y2 )
-    /*-{
-		plot.setSelection({
-			'x1' : x1,
-			'y1' : y1,
-			'x2' : x2,
-			'y2' : y2
-		});
-    }-*/;
-
     static native void addPlotSelectedListener( Element container, PlotSelectedListener listener )
     /*-{
 		$wnd
@@ -253,5 +235,20 @@ public class PlotImpl
                         function(event, plot) {
                             listener.@ca.nanometrics.gflot.client.event.PlotZoomListener::onPlotZoom(Lca/nanometrics/gflot/client/Axes;)(@ca.nanometrics.gflot.client.jsni.PlotImpl::getAxes(Lca/nanometrics/gflot/client/jsni/Plot;)(plot));
                         });
+    }-*/;
+
+    static native void zoom( Plot plot, JavaScriptObject option )
+    /*-{
+		plot.zoom(option);
+    }-*/;
+
+    static native void zoomOut( Plot plot, JavaScriptObject option )
+    /*-{
+		plot.zoomOut(option);
+    }-*/;
+
+    static native void pan( Plot plot, JavaScriptObject option )
+    /*-{
+		plot.pan(option);
     }-*/;
 }
