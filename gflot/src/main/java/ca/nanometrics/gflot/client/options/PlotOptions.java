@@ -50,6 +50,8 @@ public class PlotOptions
 
     private static final String PAN_KEY = "pan";
 
+    private static final String CROSSHAIR_KEY = "crosshair";
+
     private LegendOptions legendOptions;
 
     private AxesOptions xAxesOptions;
@@ -66,6 +68,8 @@ public class PlotOptions
 
     private PanOptions pan;
 
+    private CrosshairOptions crosshair;
+
     public PlotOptions()
     {
         super();
@@ -81,6 +85,7 @@ public class PlotOptions
 
         zoom = new ZoomOptions( getObject( ZOOM_KEY ) );
         pan = new PanOptions( getObject( PAN_KEY ) );
+        crosshair = new CrosshairOptions( getObject( CROSSHAIR_KEY ) );
 
         xAxesOptions = new AxesOptions( getArray( X_AXES_KEY ) );
         yAxesOptions = new AxesOptions( getArray( Y_AXES_KEY ) );
@@ -325,6 +330,24 @@ public class PlotOptions
     public PanOptions getPanOptions()
     {
         return pan;
+    }
+
+    /**
+     * Set the crosshair options
+     */
+    public PlotOptions setCrosshairOptions( CrosshairOptions crosshair )
+    {
+        this.crosshair = crosshair;
+        put( CROSSHAIR_KEY, crosshair );
+        return this;
+    }
+
+    /**
+     * @return the crosshair options
+     */
+    public CrosshairOptions getCrosshairOptions()
+    {
+        return crosshair;
     }
 
 }

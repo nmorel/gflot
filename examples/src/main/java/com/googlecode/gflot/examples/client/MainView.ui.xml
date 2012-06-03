@@ -45,6 +45,8 @@
           <g:Hyperlink ui:field="hoverLink" text="Hover" targetHistoryToken="{tokens.hover}" styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="navigateLink" text="Navigate" targetHistoryToken="{tokens.navigate}"
             styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="trackingLink" text="Tracking" targetHistoryToken="{tokens.tracking}"
+            styleName='{res.style.menuLink}' />
 
           <div class="{res.style.menuCategory}">Real-time charts</div>
           <g:Hyperlink ui:field="decimationLink" text="Decimation" targetHistoryToken="{tokens.decimation}"

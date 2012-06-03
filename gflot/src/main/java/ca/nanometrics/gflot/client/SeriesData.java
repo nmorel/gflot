@@ -66,6 +66,7 @@ public class SeriesData
         push( dataPoint );
     }
 
+    @Override
     public int size()
     {
         return super.size();
@@ -116,6 +117,20 @@ public class SeriesData
         return list.toArray( new DataPoint[list.size()] );
     }
 
+    public DataPoint getDataPoint( int index )
+    {
+        JSONArray array = getArray( index );
+        if ( array == null )
+        {
+            return null;
+        }
+        else
+        {
+            return new DataPoint( array );
+        }
+    }
+
+    @Override
     public void clear()
     {
         super.clear();

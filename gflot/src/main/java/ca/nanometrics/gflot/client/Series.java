@@ -78,7 +78,7 @@ public class Series
      * In this case, use the method getDate() of the SeriesHandler
      * <p>
      */
-    SeriesData getData()
+    public SeriesData getData()
     {
         JSONArray data = getArray( DATA_KEY );
         if ( null == data )

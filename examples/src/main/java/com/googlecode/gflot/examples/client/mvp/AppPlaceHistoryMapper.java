@@ -17,11 +17,13 @@ import com.googlecode.gflot.examples.client.examples.selection.SelectionPlace;
 import com.googlecode.gflot.examples.client.examples.sliding.SlidingPlace;
 import com.googlecode.gflot.examples.client.examples.stack.StackPlace;
 import com.googlecode.gflot.examples.client.examples.threshold.ThresholdPlace;
+import com.googlecode.gflot.examples.client.examples.tracking.TrackingPlace;
 
 public class AppPlaceHistoryMapper
     extends AbstractPlaceHistoryMapper
 {
 
+    @Override
     protected Place getPlaceFromToken( String token )
     {
         // Add any new place here
@@ -89,12 +91,17 @@ public class AppPlaceHistoryMapper
         {
             return new NavigatePlace();
         }
+        else if ( token.startsWith( NameTokens.TRACKING ) )
+        {
+            return new TrackingPlace();
+        }
         else
         {
             return null;
         }
     }
 
+    @Override
     protected String getTokenFromPlace( Place place )
     {
         // Add any new place here
@@ -161,6 +168,10 @@ public class AppPlaceHistoryMapper
         else if ( place instanceof NavigatePlace )
         {
             return NameTokens.NAVIGATE;
+        }
+        else if ( place instanceof TrackingPlace )
+        {
+            return NameTokens.TRACKING;
         }
         else
         {

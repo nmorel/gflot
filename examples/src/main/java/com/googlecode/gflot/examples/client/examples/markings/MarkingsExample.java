@@ -55,6 +55,7 @@ public class MarkingsExample
     /**
      * Create plot
      */
+    @Override
     @GFlotExamplesSource
     public Widget createPlot()
     {

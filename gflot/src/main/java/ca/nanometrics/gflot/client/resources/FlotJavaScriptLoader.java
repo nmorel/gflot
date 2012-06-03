@@ -51,8 +51,10 @@ public class FlotJavaScriptLoader
         PluginLoader getFlotAxisLabelsLoader();
 
         PluginLoader getFlotThresholdLoader();
-        
+
         PluginLoader getFlotNavigateLoader();
+
+        PluginLoader getFlotCrosshairLoader();
     }
 
     public static class SynchronousImpl
@@ -85,9 +87,12 @@ public class FlotJavaScriptLoader
         private PluginLoader flotAxisLabelsLoader;
 
         private PluginLoader flotThresholdLoader;
-        
+
         private PluginLoader flotNavigateLoader;
 
+        private PluginLoader flotCrosshairLoader;
+
+        @Override
         public void loadRequiredFlotLibrary( final FlotJavaScriptCallback callback )
         {
             if ( !loaded )
@@ -98,6 +103,7 @@ public class FlotJavaScriptLoader
             callback.onSuccess();
         }
 
+        @Override
         public PluginLoader getJqueryLoader()
         {
             if ( null == jqueryLoader )
@@ -107,6 +113,7 @@ public class FlotJavaScriptLoader
             return jqueryLoader;
         }
 
+        @Override
         public PluginLoader getFlotLoader()
         {
             if ( null == flotLoader )
@@ -116,6 +123,7 @@ public class FlotJavaScriptLoader
             return flotLoader;
         }
 
+        @Override
         public PluginLoader getFlotSelectionLoader()
         {
             if ( null == flotSelectionLoader )
@@ -125,6 +133,7 @@ public class FlotJavaScriptLoader
             return flotSelectionLoader;
         }
 
+        @Override
         public PluginLoader getFlotSymbolLoader()
         {
             if ( null == flotSymbolLoader )
@@ -134,6 +143,7 @@ public class FlotJavaScriptLoader
             return flotSymbolLoader;
         }
 
+        @Override
         public PluginLoader getFlotImageLoader()
         {
             if ( null == flotImageLoader )
@@ -143,6 +153,7 @@ public class FlotJavaScriptLoader
             return flotImageLoader;
         }
 
+        @Override
         public PluginLoader getFlotPieLoader()
         {
             if ( null == flotPieLoader )
@@ -152,6 +163,7 @@ public class FlotJavaScriptLoader
             return flotPieLoader;
         }
 
+        @Override
         public PluginLoader getFlotStackLoader()
         {
             if ( null == flotStackLoader )
@@ -161,6 +173,7 @@ public class FlotJavaScriptLoader
             return flotStackLoader;
         }
 
+        @Override
         public PluginLoader getFlotTextLoader()
         {
             if ( null == flotTextLoader )
@@ -170,6 +183,7 @@ public class FlotJavaScriptLoader
             return flotTextLoader;
         }
 
+        @Override
         public PluginLoader getExcanvasLoader()
         {
             if ( null == excanvasLoader )
@@ -179,6 +193,7 @@ public class FlotJavaScriptLoader
             return excanvasLoader;
         }
 
+        @Override
         public PluginLoader getFlotResizeLoader()
         {
             if ( null == flotResizeLoader )
@@ -188,6 +203,7 @@ public class FlotJavaScriptLoader
             return flotResizeLoader;
         }
 
+        @Override
         public PluginLoader getCanvas2ImageLoader()
         {
             if ( null == canvas2ImageLoader )
@@ -197,6 +213,7 @@ public class FlotJavaScriptLoader
             return canvas2ImageLoader;
         }
 
+        @Override
         public PluginLoader getFlotAxisLabelsLoader()
         {
             if ( null == flotAxisLabelsLoader )
@@ -206,6 +223,7 @@ public class FlotJavaScriptLoader
             return flotAxisLabelsLoader;
         }
 
+        @Override
         public PluginLoader getFlotThresholdLoader()
         {
             if ( null == flotThresholdLoader )
@@ -214,7 +232,8 @@ public class FlotJavaScriptLoader
             }
             return flotThresholdLoader;
         }
-        
+
+        @Override
         public PluginLoader getFlotNavigateLoader()
         {
             if ( null == flotNavigateLoader )
@@ -222,6 +241,16 @@ public class FlotJavaScriptLoader
                 flotNavigateLoader = GWT.create( FlotNavigateLoader.class );
             }
             return flotNavigateLoader;
+        }
+
+        @Override
+        public PluginLoader getFlotCrosshairLoader()
+        {
+            if ( null == flotCrosshairLoader )
+            {
+                flotCrosshairLoader = GWT.create( FlotCrosshairLoader.class );
+            }
+            return flotCrosshairLoader;
         }
 
         private void load()
@@ -240,6 +269,7 @@ public class FlotJavaScriptLoader
             getFlotAxisLabelsLoader().load();
             getFlotThresholdLoader().load();
             getFlotNavigateLoader().load();
+            getFlotCrosshairLoader().load();
         }
     }
 }

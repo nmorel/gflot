@@ -4,7 +4,7 @@
   <groupId>com.googlecode.gflot</groupId>
   <artifactId>gflot</artifactId>
   <packaging>jar</packaging>
-  <version>2.4.1</version>
+  <version>2.4.2-SNAPSHOT</version>
 
   <name>GFlot: a GWT wrapper for Flot charts</name>
   <description>A GWT module that provides widgets for creation and manipulation of charts based on the Flot JavaScript library.</description>

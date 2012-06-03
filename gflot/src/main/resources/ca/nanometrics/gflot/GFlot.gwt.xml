@@ -20,6 +20,7 @@
   <define-property name="gflot.load.flot.axislabels" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.threshold" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.navigate" values="ENABLED, DISABLED" />
+  <define-property name="gflot.load.flot.crosshair" values="ENABLED, DISABLED" />
 
   <!-- Default values -->
   <set-property name="gflot.load" value="ENABLED" />
@@ -35,6 +36,7 @@
   <set-property name="gflot.load.flot.axislabels" value="ENABLED" />
   <set-property name="gflot.load.flot.threshold" value="ENABLED" />
   <set-property name="gflot.load.flot.navigate" value="ENABLED" />
+  <set-property name="gflot.load.flot.crosshair" value="ENABLED" />
 
   <!-- Load excanvas only for IE < 9 -->
   <replace-with class="ca.nanometrics.gflot.client.resources.NullLoader">
@@ -107,6 +109,11 @@
     <when-property-is name="gflot.load" value="ENABLED" />
     <when-property-is name="gflot.load.flot.navigate" value="DISABLED" />
   </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.NullLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotCrosshairLoader" />
+    <when-property-is name="gflot.load" value="ENABLED" />
+    <when-property-is name="gflot.load.flot.crosshair" value="DISABLED" />
+  </replace-with>
 
   <!-- External loading -->
   <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
@@ -166,6 +173,10 @@
   </replace-with>
   <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
     <when-type-is class="ca.nanometrics.gflot.client.resources.FlotNavigateLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="ca.nanometrics.gflot.client.resources.ExternalLoader">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotCrosshairLoader" />
     <when-property-is name="gflot.load" value="EXTERNAL" />
   </replace-with>
 

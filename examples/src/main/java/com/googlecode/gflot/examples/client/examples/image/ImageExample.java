@@ -50,6 +50,7 @@ public class ImageExample
     /**
      * Create plot
      */
+    @Override
     @GFlotExamplesSource
     public Widget createPlot()
     {

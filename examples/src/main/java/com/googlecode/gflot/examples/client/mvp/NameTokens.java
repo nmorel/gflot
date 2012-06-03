@@ -39,6 +39,8 @@ public final class NameTokens
 
     public static final String NAVIGATE = "navigate";
 
+    public static final String TRACKING = "tracking";
+
     public static String line()
     {
         return LINE;
@@ -117,6 +119,11 @@ public final class NameTokens
     public static String navigate()
     {
         return NAVIGATE;
+    }
+
+    public static String tracking()
+    {
+        return TRACKING;
     }
 
     private NameTokens()
