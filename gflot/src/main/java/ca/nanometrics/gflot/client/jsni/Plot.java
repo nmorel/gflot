@@ -30,6 +30,7 @@ import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
 import ca.nanometrics.gflot.client.event.PlotPanListener;
+import ca.nanometrics.gflot.client.event.PlotPosition;
 import ca.nanometrics.gflot.client.event.PlotSelectedListener;
 import ca.nanometrics.gflot.client.event.PlotSelectingListener;
 import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
@@ -63,7 +64,8 @@ public class Plot
 
     public static Plot create( Element container, Series[] series )
     {
-        return PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject() );
+        return PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) )
+            .getJavaScriptObject() );
     }
 
     public static Plot create( Element container, Series[] series, PlotOptions options )
@@ -77,7 +79,8 @@ public class Plot
         {
             optionsJs = JSONHelper.getJSONObject( options ).getJavaScriptObject();
         }
-        return PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject(), optionsJs );
+        return PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) )
+            .getJavaScriptObject(), optionsJs );
     }
 
     public static Plot create( Element container, JavaScriptObject data, JavaScriptObject options )
@@ -96,7 +99,8 @@ public class Plot
         {
             optionsJs = JSONHelper.getJSONObject( options ).getJavaScriptObject();
         }
-        PlotImpl.loadDataImages( JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject(), optionsJs, callback );
+        PlotImpl.loadDataImages( JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject(),
+            optionsJs, callback );
     }
 
     public final void setData( Series[] series )
@@ -242,5 +246,30 @@ public class Plot
     public final void pan( Pan pan )
     {
         PlotImpl.pan( this, JSONHelper.getJSONObject( pan ).getJavaScriptObject() );
+    }
+
+    public final void setCrosshair( PlotPosition pos )
+    {
+        PlotImpl.setCrosshair( this, JSONHelper.getJSONObject( pos ).getJavaScriptObject() );
+    }
+
+    public final void clearCrosshair()
+    {
+        PlotImpl.clearCrosshair( this );
+    }
+
+    public final void lockCrosshair()
+    {
+        PlotImpl.lockCrosshair( this );
+    }
+
+    public final void lockCrosshair( PlotPosition pos )
+    {
+        PlotImpl.lockCrosshair( this, JSONHelper.getJSONObject( pos ).getJavaScriptObject() );
+    }
+
+    public final void unlockCrosshair()
+    {
+        PlotImpl.unlockCrosshair( this );
     }
 }

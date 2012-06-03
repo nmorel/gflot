@@ -9,7 +9,7 @@
   <ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' />
 
   <g:HTMLPanel>
-    <p:SimplePlot ui:field="plot" width="600px" height="300px" />
+    <p:SimplePlot ui:field="plot1" width="600px" height="300px" />
 
     <p>You can add crosshairs that'll track the mouse position, either
       on both axes or as here on only one.</p>
@@ -18,5 +18,20 @@
       interpolating
       the data points :</p>
     <g:Label ui:field='tracker' />
+    <hr />
+    <p:SimplePlot ui:field="plot2" width="600px" height="300px" />
+    <p>The plugin also adds four public methods to control the crosshair</p>
+    <ul>
+      <li>
+        setCrosshair(pos) : Set the position of the crosshair. Note that this is cleared if
+        the user moves the mouse.
+      </li>
+      <li>clearCrosshair() : Clear the crosshair.</li>
+      <li>lockCrosshair(pos) : Cause the crosshair to lock to the current location, no longer
+        updating if the user moves
+        the mouse.</li>
+      <li>unlockCrosshair() : Free the crosshair to move again after locking it.</li>
+    </ul>
+    <p>Here is an example of lock and unlock methods. Move the mouse near a point to lock the crosshair to it.</p>
   </g:HTMLPanel>
 </ui:UiBinder>

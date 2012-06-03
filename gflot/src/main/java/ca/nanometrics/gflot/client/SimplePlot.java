@@ -28,6 +28,7 @@ import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
 import ca.nanometrics.gflot.client.event.PlotPanListener;
+import ca.nanometrics.gflot.client.event.PlotPosition;
 import ca.nanometrics.gflot.client.event.PlotSelectedListener;
 import ca.nanometrics.gflot.client.event.PlotSelectingListener;
 import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
@@ -103,22 +104,26 @@ public class SimplePlot
         this.options = options;
     }
 
+    @Override
     public int getWidth()
     {
         return width;
     }
 
+    @Override
     public void setWidth( int width )
     {
         this.width = width;
         DOM.setStyleAttribute( getElement(), "width", width + "px" );
     }
 
+    @Override
     public int getHeight()
     {
         return height;
     }
 
+    @Override
     public void setHeight( int height )
     {
         this.height = height;
@@ -137,16 +142,19 @@ public class SimplePlot
         plot.draw();
     }
 
+    @Override
     public void setLinearSelection( double x1, double x2 )
     {
         setSelection( new PlotSelectionArea().setX( new Range( x1, x2 ) ) );
     }
 
+    @Override
     public void setRectangularSelection( double x1, double y1, double x2, double y2 )
     {
         setSelection( new PlotSelectionArea().setX( new Range( x1, x2 ) ).setY( new Range( y1, y2 ) ) );
     }
 
+    @Override
     public void addSelectedListener( final PlotSelectedListener listener )
     {
         if ( loaded )
@@ -155,8 +163,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command()
-            {
+            onLoadOperations.add( new Command() {
+                @Override
                 public void execute()
                 {
                     plot.addPlotSelectedListener( getElement(), listener );
@@ -174,8 +182,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command()
-            {
+            onLoadOperations.add( new Command() {
+                @Override
                 public void execute()
                 {
                     plot.addPlotSelectingListener( getElement(), listener );
@@ -193,8 +201,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command()
-            {
+            onLoadOperations.add( new Command() {
+                @Override
                 public void execute()
                 {
                     plot.addPlotUnselectedListener( getElement(), listener );
@@ -228,8 +236,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command()
-            {
+            onLoadOperations.add( new Command() {
+                @Override
                 public void execute()
                 {
                     plot.setSelection( area, preventEvent );
@@ -251,6 +259,7 @@ public class SimplePlot
         plot.clearSelection( preventEvent );
     }
 
+    @Override
     public void addHoverListener( final PlotHoverListener listener, final boolean onlyOnDatapoint )
     {
         if ( loaded )
@@ -259,8 +268,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command()
-            {
+            onLoadOperations.add( new Command() {
+                @Override
                 public void execute()
                 {
                     plot.addPlotHoverListener( getElement(), listener, onlyOnDatapoint );
@@ -270,6 +279,7 @@ public class SimplePlot
 
     }
 
+    @Override
     public void addClickListener( final PlotClickListener listener, final boolean onlyOnDatapoint )
     {
         if ( loaded )
@@ -278,8 +288,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command()
-            {
+            onLoadOperations.add( new Command() {
+                @Override
                 public void execute()
                 {
                     plot.addPlotClickListener( getElement(), listener, onlyOnDatapoint );
@@ -289,16 +299,19 @@ public class SimplePlot
 
     }
 
+    @Override
     public PlotModel getModel()
     {
         return model;
     }
 
+    @Override
     public Widget getWidget()
     {
         return this;
     }
 
+    @Override
     public void redraw()
     {
         assertLoaded();
@@ -345,8 +358,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command()
-            {
+            onLoadOperations.add( new Command() {
+                @Override
                 public void execute()
                 {
                     plot.addPlotPanListener( getElement(), listener );
@@ -363,8 +376,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command()
-            {
+            onLoadOperations.add( new Command() {
+                @Override
                 public void execute()
                 {
                     plot.addPlotZoomListener( getElement(), listener );
@@ -407,20 +420,19 @@ public class SimplePlot
     }
 
     /* ------------------ Widget API -- */
+    @Override
     protected void onLoad()
     {
         super.onLoad();
         if ( !loaded )
         {
-            FlotJavaScriptLoader.get().loadRequiredFlotLibrary( new FlotJavaScriptCallback()
-            {
+            FlotJavaScriptLoader.get().loadRequiredFlotLibrary( new FlotJavaScriptCallback() {
                 @Override
                 public void onSuccess()
                 {
                     if ( loadDataImages )
                     {
-                        Plot.loadDataImages( model.getSeries(), options, new LoadImagesCallback()
-                        {
+                        Plot.loadDataImages( model.getSeries(), options, new LoadImagesCallback() {
                             @Override
                             public void onImagesLoaded( JavaScriptObject data, JavaScriptObject options )
                             {
@@ -524,12 +536,57 @@ public class SimplePlot
         return plot.getAxes();
     }
 
+    /**
+     * Set the position of the crosshair. Note that this is cleared if the user moves the mouse.
+     *
+     * @param pos Position of the crosshair
+     */
+    public void setCrosshair( PlotPosition pos )
+    {
+        plot.setCrosshair( pos );
+    }
+
+    /**
+     * Clear the crosshair.
+     */
+    public void clearCrosshair()
+    {
+        plot.clearCrosshair();
+    }
+
+    /**
+     * Cause the crosshair to lock to the current location, no longer updating if the user moves the mouse.
+     */
+    public void lockCrosshair()
+    {
+        plot.lockCrosshair();
+    }
+
+    /**
+     * Cause the crosshair to lock to the current location, no longer updating if the user moves the mouse.
+     *
+     * @param pos position to lock the crosshair to
+     */
+    public void lockCrosshair( PlotPosition pos )
+    {
+        plot.lockCrosshair( pos );
+    }
+
+    /**
+     * Free the crosshair to move again after locking it.
+     */
+    public void unlockCrosshair()
+    {
+        plot.unlockCrosshair();
+    }
+
     /* ------------------ Helper methods -- */
     protected void assertLoaded()
     {
         if ( !loaded )
         {
-            throw new IllegalStateException( "The widget has not been loaded yet. Please call this method after adding this widget to a panel" );
+            throw new IllegalStateException(
+                "The widget has not been loaded yet. Please call this method after adding this widget to a panel" );
         }
     }
 

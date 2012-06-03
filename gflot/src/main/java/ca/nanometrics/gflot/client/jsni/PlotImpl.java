@@ -81,14 +81,14 @@ public class PlotImpl
 
     static native void addPlotSelectedListener( Element container, PlotSelectedListener listener )
     /*-{
-		$wnd
-				.jQuery("#" + container.id)
-				.bind(
-						"plotselected",
-						function(event, area) {
-							var range = @ca.nanometrics.gflot.client.PlotSelectionArea::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(area));
-							listener.@ca.nanometrics.gflot.client.event.PlotSelectedListener::onPlotSelected(Lca/nanometrics/gflot/client/PlotSelectionArea;)(range);
-						});
+    	$wnd
+    			.jQuery("#" + container.id)
+    			.bind(
+    					"plotselected",
+    					function(event, area) {
+    						var range = @ca.nanometrics.gflot.client.PlotSelectionArea::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(area));
+    						listener.@ca.nanometrics.gflot.client.event.PlotSelectedListener::onPlotSelected(Lca/nanometrics/gflot/client/PlotSelectionArea;)(range);
+    					});
     }-*/;
 
     static native void addPlotSelectingListener( Element container, PlotSelectingListener listener )
@@ -134,7 +134,8 @@ public class PlotImpl
 		plot.clearSelection(preventEvent);
     }-*/;
 
-    static native void addPlotHoverListener( Element container, PlotHoverListener listener, boolean onlyOnDatapoint, Plot plot )
+    static native void addPlotHoverListener( Element container, PlotHoverListener listener, boolean onlyOnDatapoint,
+                                             Plot plot )
     /*-{
         $wnd.jQuery("#"+container.id).bind("plothover", function(event, pos, item) {
             if(item != null || !onlyOnDatapoint){
@@ -145,7 +146,8 @@ public class PlotImpl
         });
     }-*/;
 
-    static native void addPlotClickListener( Element container, PlotClickListener listener, boolean onlyOnDatapoint, Plot plot )
+    static native void addPlotClickListener( Element container, PlotClickListener listener, boolean onlyOnDatapoint,
+                                             Plot plot )
     /*-{
         $wnd.jQuery("#"+container.id).bind("plotclick", function(event, pos, item) {
             if(item != null || !onlyOnDatapoint){
@@ -184,7 +186,7 @@ public class PlotImpl
     /*-{
         var jsOptions = plot.getOptions();
         var options = @ca.nanometrics.gflot.client.options.PlotOptions::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(jsOptions));
-		return options;
+    	return options;
     }-*/;
 
     native static void saveAsImage( Plot plot )
@@ -250,5 +252,30 @@ public class PlotImpl
     static native void pan( Plot plot, JavaScriptObject option )
     /*-{
 		plot.pan(option);
+    }-*/;
+
+    static native void setCrosshair( Plot plot, JavaScriptObject pos )
+    /*-{
+		plot.setCrosshair(pos);
+    }-*/;
+
+    static native void clearCrosshair( Plot plot )
+    /*-{
+		plot.clearCrosshair();
+    }-*/;
+
+    static native void lockCrosshair( Plot plot )
+    /*-{
+        plot.lockCrosshair();
+    }-*/;
+
+    static native void lockCrosshair( Plot plot, JavaScriptObject pos )
+    /*-{
+		plot.lockCrosshair(pos);
+    }-*/;
+
+    static native void unlockCrosshair( Plot plot )
+    /*-{
+		plot.unlockCrosshair();
     }-*/;
 }

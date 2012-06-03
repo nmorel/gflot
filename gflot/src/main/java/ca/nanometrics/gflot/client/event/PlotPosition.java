@@ -20,6 +20,16 @@ public class PlotPosition
     private static final String PAGE_X = "pageX";
     private static final String PAGE_Y = "pageY";
 
+    public PlotPosition()
+    {
+    }
+
+    public PlotPosition( double x, double y )
+    {
+        setX( x );
+        setY( y );
+    }
+
     protected PlotPosition( JSONObject obj )
     {
         super( obj );
@@ -44,6 +54,29 @@ public class PlotPosition
     }
 
     /**
+     * Set the x axis coordinate for the first x axis
+     *
+     * @param x x coordinate
+     */
+    public PlotPosition setX( double x )
+    {
+        return setX( x, 1 );
+    }
+
+    /**
+     * Set the x axis coordinate for the xAxisNumber x axis
+     *
+     * @param x x coordinate
+     * @param xAxisNumber number of the axis, starting at 1
+     */
+    public PlotPosition setX( double x, int xAxisNumber )
+    {
+        assert xAxisNumber > 0 : "xAxisNumber starts at 1";
+        put( X + xAxisNumber, x );
+        return this;
+    }
+
+    /**
      * @return the y axis coordinate for the first y axis
      */
     public Double getY()
@@ -59,6 +92,29 @@ public class PlotPosition
     {
         assert yAxisNumber > 0 : "yAxisNumber starts at 1";
         return getDouble( Y + yAxisNumber );
+    }
+
+    /**
+     * Set the y axis coordinate for the first y axis
+     *
+     * @param y y coordinate
+     */
+    public PlotPosition setY( double y )
+    {
+        return setY( y, 1 );
+    }
+
+    /**
+     * Set the y axis coordinate for the yAxisNumber y axis
+     *
+     * @param y y coordinate
+     * @param yAxisNumber number of the axis, starting at 1
+     */
+    public PlotPosition setY( double y, int yAxisNumber )
+    {
+        assert yAxisNumber > 0 : "yAxisNumber starts at 1";
+        put( Y + yAxisNumber, y );
+        return this;
     }
 
     /**

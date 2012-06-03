@@ -200,11 +200,13 @@ public class JSONObjectWrapper
         return getWrappedObj().get( key );
     }
 
+    @Override
     protected JSONObject getWrappedObj()
     {
         return m_jsonObj;
     }
 
+    @Override
     public String toString()
     {
         return m_jsonObj.toString();

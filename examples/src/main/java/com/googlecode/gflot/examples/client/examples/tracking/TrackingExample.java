@@ -18,11 +18,14 @@ import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.GridOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
+import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
+import ca.nanometrics.gflot.client.options.PointsSeriesOptions.PointSymbol;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -54,11 +57,11 @@ public class TrackingExample
     private static final NumberFormat numberFormat = NumberFormat.getFormat( "#0.00" );
 
     /**
-     * Plot
+     * First Plot
      */
     @GFlotExamplesData
     @UiField( provided = true )
-    SimplePlot plot;
+    SimplePlot plot1;
 
     /**
      * Label to show the tracking
@@ -71,7 +74,7 @@ public class TrackingExample
      * PlotModel
      */
     @GFlotExamplesData
-    private PlotModel model;
+    private PlotModel model1;
 
     /**
      * If the timer is scheduled
@@ -97,6 +100,13 @@ public class TrackingExample
         }
     };
 
+    /**
+     * Second Plot
+     */
+    @GFlotExamplesData
+    @UiField( provided = true )
+    SimplePlot plot2;
+
     public TrackingExample( Resources resources )
     {
         super( resources );
@@ -109,7 +119,19 @@ public class TrackingExample
     @GFlotExamplesSource
     public Widget createPlot()
     {
-        model = new PlotModel();
+        createFirstPlot();
+        createSecondPlot();
+
+        return binder.createAndBindUi( this );
+    }
+
+    /**
+     * Create the first plot
+     */
+    @GFlotExamplesSource
+    private void createFirstPlot()
+    {
+        model1 = new PlotModel();
 
         PlotOptions plotOptions = new PlotOptions();
         plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions()
@@ -119,8 +141,8 @@ public class TrackingExample
         plotOptions.addYAxisOptions( new AxisOptions().setMinimum( -1.2 ).setMaximum( 1.2 ) );
 
         // create a series
-        final SeriesHandler sin = model.addSeries( "sin(x)" );
-        final SeriesHandler cos = model.addSeries( "cos(x)" );
+        final SeriesHandler sin = model1.addSeries( "sin(x)" );
+        final SeriesHandler cos = model1.addSeries( "cos(x)" );
 
         // add data
         for ( double i = 0; i < 14; i += 0.1 )
@@ -130,9 +152,9 @@ public class TrackingExample
         }
 
         // create the plot
-        plot = new SimplePlot( model, plotOptions );
+        plot1 = new SimplePlot( model1, plotOptions );
 
-        plot.addHoverListener( new PlotHoverListener() {
+        plot1.addHoverListener( new PlotHoverListener() {
             @Override
             public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
             {
@@ -144,8 +166,6 @@ public class TrackingExample
                 }
             }
         }, false );
-
-        return binder.createAndBindUi( this );
     }
 
     /**
@@ -158,7 +178,7 @@ public class TrackingExample
 
         PlotPosition position = latestPosition;
 
-        Axes axes = plot.getAxes();
+        Axes axes = plot1.getAxes();
         double xPos = position.getX();
         double yPos = position.getY();
         double xAxisMin = axes.getX().getMinimumValue();
@@ -173,7 +193,7 @@ public class TrackingExample
 
         int i = 0;
         int j = 0;
-        Series[] dataset = model.getSeries();
+        Series[] dataset = model1.getSeries();
         StringBuilder builder = new StringBuilder();
         for ( i = 0; i < dataset.length; i++ )
         {
@@ -214,5 +234,55 @@ public class TrackingExample
             builder.append( numberFormat.format( y ) );
         }
         tracker.setText( builder.toString() );
+    }
+
+    /**
+     * Create the second plot
+     */
+    @GFlotExamplesSource
+    private void createSecondPlot()
+    {
+        PlotModel model = new PlotModel();
+
+        PlotOptions plotOptions = new PlotOptions();
+        plotOptions
+            .setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions(
+                new LineSeriesOptions().setShow( true ) ).setPointsOptions(
+                new PointsSeriesOptions().setShow( true ).setRadius( 5 ).setSymbol( PointSymbol.DIAMOND )
+                    .setFill( true ) ) );
+        plotOptions
+            .setCrosshairOptions( new CrosshairOptions().setMode( Mode.XY ).setLineWidth( 2 ).setColor( "green" ) );
+        plotOptions.setGridOptions( new GridOptions().setHoverable( true ).setAutoHighlight( false )
+            .setMouseActiveRadius( 15 ) );
+
+        // create a series
+        SeriesHandler series1 = model.addSeries( "Random Series 1" );
+        SeriesHandler series2 = model.addSeries( "Random Series 2" );
+
+        // add data
+        for ( int i = 1; i < 13; i++ )
+        {
+            series1.add( new DataPoint( i, Random.nextInt( 30 ) ) );
+            series2.add( new DataPoint( i, Random.nextInt( 30 ) ) );
+        }
+
+        // create the plot
+        plot2 = new SimplePlot( model, plotOptions );
+
+        plot2.addHoverListener( new PlotHoverListener() {
+            @Override
+            public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
+            {
+                if ( null == item )
+                {
+                    plot.unlockCrosshair();
+                }
+                else
+                {
+                    DataPoint dataPoint = item.getDataPoint();
+                    plot.lockCrosshair( new PlotPosition( dataPoint.getX(), dataPoint.getY() ) );
+                }
+            }
+        }, false );
     }
 }
