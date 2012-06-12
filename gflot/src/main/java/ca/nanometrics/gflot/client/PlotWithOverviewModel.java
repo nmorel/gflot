@@ -82,6 +82,7 @@ public class PlotWithOverviewModel
         ( (PlotWithOverviewSeriesHandler) handler ).setDataProvider( provider );
     }
 
+    @Override
     protected SeriesHandler createSeriesHandler( Series series, SeriesData data )
     {
         return new PlotWithOverviewSeriesHandler( series, data );
@@ -210,8 +211,8 @@ public class PlotWithOverviewModel
             m_windowHandler.clear();
             if ( x1 < x2 )
             {
-                m_provider.getData( x1, x2, new AsyncCallback<DataPoint[]>()
-                {
+                m_provider.getData( x1, x2, new AsyncCallback<DataPoint[]>() {
+                    @Override
                     public void onFailure( Throwable caught )
                     {
                         GWT.log( "Failed to obtain data for PlotWithOverview", caught );
@@ -221,6 +222,7 @@ public class PlotWithOverviewModel
                         }
                     }
 
+                    @Override
                     public void onSuccess( DataPoint[] result )
                     {
                         for ( DataPoint point : result )
@@ -291,8 +293,13 @@ public class PlotWithOverviewModel
             m_data = data;
         }
 
+        @Override
         public DataPoint[] getData( double x1, double x2 )
         {
+            if ( x2 < m_data.getX( 0 ) || x1 > m_data.getX( m_data.size() - 1 ) )
+            {
+                return new DataPoint[0];
+            }
             int start = Algorithm.xBinarySearch( m_data, x1 );
             if ( start == -1 )
             {
@@ -318,6 +325,7 @@ public class PlotWithOverviewModel
             m_provider = provider;
         }
 
+        @Override
         public void getData( double x1, double x2, AsyncCallback<DataPoint[]> callback )
         {
             try
