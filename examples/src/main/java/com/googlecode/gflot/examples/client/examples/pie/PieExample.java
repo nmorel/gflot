@@ -16,7 +16,6 @@ import ca.nanometrics.gflot.client.options.PlotOptions;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
@@ -54,6 +53,7 @@ public class PieExample
     /**
      * Create plot
      */
+    @Override
     @GFlotExamplesSource
     public Widget createPlot()
     {
@@ -67,24 +67,31 @@ public class PieExample
             .setInnerRadius( 0.2 )
             .setLabel(
                 new Label().setShow( true ).setRadius( 3d / 4d ).setBackground( new Background().setOpacity( 0.8 ) )
-                    .setFormatter( new Formatter()
-                    {
+                    .setThreshold( 0.05 ).setFormatter( new Formatter() {
                         @Override
                         public String format( String label, Series series )
                         {
                             return "<div style=\"font-size:8pt;text-align:center;padding:2px;color:white;\">" + label
-                                + "<br/>" + series.getPercent() + "%</div>";
+                                + "<br/>" + series.getData().getY( 0 ) + " / " + series.getPercent() + "%</div>";
                         }
                     } ) ) ) );
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
 
         // create series
-        int nbSeries = Random.nextInt( 4 ) + 2;
-        for ( int i = 0; i < nbSeries; i++ )
-        {
-            SeriesHandler handlerLine = model.addSeries( "Series " + ( i + 1 ) );
-            handlerLine.add( new PieDataPoint( Random.nextInt( 100 ) + 1 ) );
-        }
+        SeriesHandler series1 = model.addSeries( "Series 1" );
+        series1.add( new PieDataPoint( 148 ) );
+
+        SeriesHandler series2 = model.addSeries( "Series 2" );
+        series2.add( new PieDataPoint( 221 ) );
+
+        SeriesHandler series3 = model.addSeries( "Series 3" );
+        series3.add( new PieDataPoint( 25 ) );
+
+        SeriesHandler series4 = model.addSeries( "Series 4" );
+        series4.add( new PieDataPoint( 35 ) );
+
+        SeriesHandler series5 = model.addSeries( "Series 5" );
+        series5.add( new PieDataPoint( 102 ) );
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );
