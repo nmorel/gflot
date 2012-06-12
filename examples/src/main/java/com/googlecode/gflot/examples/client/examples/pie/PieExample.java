@@ -5,7 +5,12 @@ import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
+import ca.nanometrics.gflot.client.event.PlotHoverListener;
+import ca.nanometrics.gflot.client.event.PlotItem;
+import ca.nanometrics.gflot.client.event.PlotPosition;
+import ca.nanometrics.gflot.client.jsni.Plot;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
+import ca.nanometrics.gflot.client.options.GridOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.PieSeriesOptions;
 import ca.nanometrics.gflot.client.options.PieSeriesOptions.Label;
@@ -14,6 +19,9 @@ import ca.nanometrics.gflot.client.options.PieSeriesOptions.Label.Formatter;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.ParagraphElement;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
@@ -44,6 +52,13 @@ public class PieExample
     @GFlotExamplesData
     @UiField( provided = true )
     SimplePlot plot;
+
+    /**
+     * Paragraph to add the hovering series
+     */
+    @GFlotExamplesData
+    @UiField
+    ParagraphElement hovering;
 
     public PieExample( Resources resources )
     {
@@ -76,6 +91,7 @@ public class PieExample
                         }
                     } ) ) ) );
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
+        plotOptions.setGridOptions( new GridOptions().setHoverable( true ) );
 
         // create series
         SeriesHandler series1 = model.addSeries( "Series 1" );
@@ -95,6 +111,23 @@ public class PieExample
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );
+
+        plot.addHoverListener( new PlotHoverListener() {
+            @Override
+            public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
+            {
+                hovering.setInnerText( "Hovering series n°" + ( item.getSeriesIndex() + 1 ) + " : "
+                    + item.getSeries().getData().getY( 0 ) + " / " + item.getSeries().getPercent() + "%" );
+            }
+        }, true );
+
+        plot.addDomHandler( new MouseOutHandler() {
+            @Override
+            public void onMouseOut( MouseOutEvent event )
+            {
+                hovering.setInnerText( "" );
+            }
+        }, MouseOutEvent.getType() );
 
         return binder.createAndBindUi( this );
     }
