@@ -140,10 +140,16 @@ public class BarExample
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
 
-        plotOptions.setMultipleBars( true );
+        GlobalSeriesOptions globalSeriesOptions = new GlobalSeriesOptions();
+        globalSeriesOptions.setBarsSeriesOptions( new BarSeriesOptions().setShow( true ).setBarWidth( 0.9 / nbSeries ) );
 
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setBarsSeriesOptions( new BarSeriesOptions()
-            .setShow( true ).setBarWidth( 0.9 / nbSeries ) ) );
+
+        // Activate the plugin for multiple bars support
+        plotOptions.setMultipleBars( true );
+        // Activate the patch for flot. see http://code.google.com/p/flot/issues/detail?id=159
+        globalSeriesOptions.setMultipleBars( true );
+
+        plotOptions.setGlobalSeriesOptions( globalSeriesOptions );
 
         plotOptions.setLegendOptions( new LegendOptions().setMargin( -120, 0 ) );
 

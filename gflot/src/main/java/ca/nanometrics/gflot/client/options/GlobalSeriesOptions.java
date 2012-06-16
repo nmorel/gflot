@@ -22,7 +22,7 @@ public class GlobalSeriesOptions
     }
 
     /**
-     * Enable the multiple bars patch to flot. By default, it is enabled.
+     * Enable the multiple bars patch to flot.
      */
     public GlobalSeriesOptions setMultipleBars( boolean multiplebars )
     {

@@ -112,7 +112,7 @@
                         align: "left", // or "center" 
                         horizontal: false
                     },
-                    multipleBars: true,
+                    multipleBars: false,
                     shadowSize: 3
                 },
                 grid: {
