@@ -9,6 +9,11 @@
   <ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' />
 
   <g:HTMLPanel>
-    <p:SimplePlot ui:field="plot" width="600px" height="300px" />
+    <p:SimplePlot ui:field="plot1" width="600px" height="300px" />
+    <hr />
+    <p:SimplePlot ui:field="plot2" width="600px" height="300px" />
+    <p>
+      This chart is using the multiple bars plugin.
+    </p>
   </g:HTMLPanel>
 </ui:UiBinder>

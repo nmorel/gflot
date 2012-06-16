@@ -112,6 +112,7 @@
                         align: "left", // or "center" 
                         horizontal: false
                     },
+                    multipleBars: true,
                     shadowSize: 3
                 },
                 grid: {
@@ -618,13 +619,16 @@
             }
 
             // give the hooks a chance to run
+            var bars_total_width = 0;
             for (i = 0; i < series.length; ++i) {
                 s = series[i];
                 
                 executeHooks(hooks.processDatapoints, [ s, s.datapoints]);
+                bars_total_width += s.bars.barWidth;
             }
 
             // second pass: find datamax/datamin for auto-scaling
+            var bar_offset = 0;
             for (i = 0; i < series.length; ++i) {
                 s = series[i];
                 points = s.datapoints.points,
@@ -659,8 +663,18 @@
                 }
                 
                 if (s.bars.show) {
-                    // make sure we got room for the bar on the dancing floor
-                    var delta = s.bars.align == "left" ? 0 : -s.bars.barWidth/2;
+                   if ( s.multipleBars ) {
+                       //store barLeft to prevent recalculation allowing overwrite in procDatapoints hook.
+                       if (s.bars.barLeft == undefined)
+                           s.bars.barLeft= s.bars.align == "left" ? bar_offset : bar_offset-bars_total_width/2;
+                       bar_offset += s.bars.barWidth;
+                       // make sure we got room for the bar on the dancing floor
+                       var delta = s.bars.barLeft;
+                    }
+                    else {
+                       // make sure we got room for the bar on the dancing floor
+                       var delta = s.bars.align == "left" ? 0 : -s.bars.barWidth/2;
+                    }
                     if (s.bars.horizontal) {
                         ymin += delta;
                         ymax += delta + s.bars.barWidth;
@@ -2149,7 +2163,12 @@
             // FIXME: figure out a way to add shadows (for instance along the right edge)
             ctx.lineWidth = series.bars.lineWidth;
             ctx.strokeStyle = series.color;
-            var barLeft = series.bars.align == "left" ? 0 : -series.bars.barWidth/2;
+            if ( series.multipleBars ) {
+               var barLeft = series.bars.barLeft;
+            }
+            else {
+               var barLeft = series.bars.align == "left" ? 0 : -series.bars.barWidth/2;
+            }
             var fillStyleCallback = series.bars.fill ? function (bottom, top) { return getFillStyle(series.bars, series.color, bottom, top); } : null;
             plotBars(series.datapoints, barLeft, barLeft + series.bars.barWidth, 0, fillStyleCallback, series.xaxis, series.yaxis);
             ctx.restore();
@@ -2302,8 +2321,14 @@
                 }
                     
                 if (s.bars.show && !item) { // no other point can be nearby
-                    var barLeft = s.bars.align == "left" ? 0 : -s.bars.barWidth/2,
-                        barRight = barLeft + s.bars.barWidth;
+                   if ( s.multipleBars ) {
+                       var barLeft = s.bars.barLeft,
+                           barRight = barLeft + s.bars.barWidth;
+                    }
+                    else {
+                       var barLeft = s.bars.align == "left" ? 0 : -s.bars.barWidth/2,
+                           barRight = barLeft + s.bars.barWidth;
+                    }
                     
                     for (j = 0; j < points.length; j += ps) {
                         var x = points[j], y = points[j + 1], b = points[j + 2];
@@ -2492,9 +2517,15 @@
             octx.lineWidth = series.bars.lineWidth;
             octx.strokeStyle = $.color.parse(series.color).scale('a', 0.5).toString();
             var fillStyle = $.color.parse(series.color).scale('a', 0.5).toString();
-            var barLeft = series.bars.align == "left" ? 0 : -series.bars.barWidth/2;
-            drawBar(point[0], point[1], point[2] || 0, barLeft, barLeft + series.bars.barWidth,
-                    0, function () { return fillStyle; }, series.xaxis, series.yaxis, octx, series.bars.horizontal, series.bars.lineWidth);
+            if ( series.multipleBars ) {
+               drawBar(point[0], point[1], point[2] || 0, series.bars.barLeft, series.bars.barLeft + series.bars.barWidth,
+                       0, function () { return fillStyle; }, series.xaxis, series.yaxis, octx, series.bars.horizontal, series.bars.lineWidth);
+            }
+            else {
+               var barLeft = series.bars.align == "left" ? 0 : -series.bars.barWidth/2;
+               drawBar(point[0], point[1], point[2] || 0, barLeft, barLeft + series.bars.barWidth,
+                       0, function () { return fillStyle; }, series.xaxis, series.yaxis, octx, series.bars.horizontal, series.bars.lineWidth);
+            }
         }
 
         function getColorOrGradient(spec, bottom, top, defaultColor) {

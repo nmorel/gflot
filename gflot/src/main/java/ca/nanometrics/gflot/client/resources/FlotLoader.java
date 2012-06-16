@@ -12,7 +12,7 @@ public class FlotLoader
     interface Bundle
         extends ClientBundle
     {
-        @Source( "jquery.flot-0.7.min.js" )
+        @Source( "jquery.flot-0.7-modified.min.js" )
         TextResource flot();
     }
 

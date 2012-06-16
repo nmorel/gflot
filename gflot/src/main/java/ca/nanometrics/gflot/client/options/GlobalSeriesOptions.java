@@ -10,6 +10,8 @@ import com.google.gwt.json.client.JSONObject;
 public class GlobalSeriesOptions
     extends CommonSeriesOptions<GlobalSeriesOptions>
 {
+    private static final String MULTIPLE_BARS_KEY = "multipleBars";
+
     public GlobalSeriesOptions()
     {
     }
@@ -17,5 +19,22 @@ public class GlobalSeriesOptions
     public GlobalSeriesOptions( JSONObject jsonObj )
     {
         super( jsonObj );
+    }
+
+    /**
+     * Enable the multiple bars patch to flot. By default, it is enabled.
+     */
+    public GlobalSeriesOptions setMultipleBars( boolean multiplebars )
+    {
+        put( MULTIPLE_BARS_KEY, multiplebars );
+        return this;
+    }
+
+    /**
+     * @return true if the multiple bars patch to flot is enabled
+     */
+    public Boolean getMultipleBars()
+    {
+        return getBoolean( MULTIPLE_BARS_KEY );
     }
 }

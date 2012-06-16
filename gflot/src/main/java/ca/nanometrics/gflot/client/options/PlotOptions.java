@@ -52,6 +52,8 @@ public class PlotOptions
 
     private static final String CROSSHAIR_KEY = "crosshair";
 
+    private static final String MULTIPLE_BARS_KEY = "multiplebars";
+
     private LegendOptions legendOptions;
 
     private AxesOptions xAxesOptions;
@@ -348,6 +350,23 @@ public class PlotOptions
     public CrosshairOptions getCrosshairOptions()
     {
         return crosshair;
+    }
+
+    /**
+     * Enable the multiple bars plugin
+     */
+    public PlotOptions setMultipleBars( boolean multiplebars )
+    {
+        put( MULTIPLE_BARS_KEY, multiplebars );
+        return this;
+    }
+
+    /**
+     * @return true if the multiple bars plugin is enabled
+     */
+    public Boolean getMultipleBars()
+    {
+        return getBoolean( MULTIPLE_BARS_KEY );
     }
 
 }

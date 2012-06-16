@@ -116,7 +116,7 @@ public class PieExample
             @Override
             public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
             {
-                hovering.setInnerText( "Hovering series n°" + ( item.getSeriesIndex() + 1 ) + " : "
+                hovering.setInnerText( "Hovering series n\u00b0" + ( item.getSeriesIndex() + 1 ) + " : "
                     + item.getSeries().getData().getY( 0 ) + " / " + item.getSeries().getPercent() + "%" );
             }
         }, true );
