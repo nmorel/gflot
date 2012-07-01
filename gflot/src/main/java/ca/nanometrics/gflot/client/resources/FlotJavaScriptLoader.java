@@ -57,6 +57,8 @@ public class FlotJavaScriptLoader
         PluginLoader getFlotCrosshairLoader();
 
         PluginLoader getFlotMultipleBarsLoader();
+        
+        PluginLoader getFlotFillBetweenLoader();
     }
 
     public static class SynchronousImpl
@@ -95,6 +97,8 @@ public class FlotJavaScriptLoader
         private PluginLoader flotCrosshairLoader;
 
         private PluginLoader flotMultipleBarsLoader;
+        
+        private PluginLoader flotFillBetweenLoader;
 
         @Override
         public void loadRequiredFlotLibrary( final FlotJavaScriptCallback callback )
@@ -266,6 +270,16 @@ public class FlotJavaScriptLoader
             }
             return flotMultipleBarsLoader;
         }
+        
+        @Override
+        public PluginLoader getFlotFillBetweenLoader()
+        {
+            if ( null == flotFillBetweenLoader )
+            {
+                flotFillBetweenLoader = GWT.create( FlotFillBetweenLoader.class );
+            }
+            return flotFillBetweenLoader;
+        }
 
         private void load()
         {
@@ -285,6 +299,7 @@ public class FlotJavaScriptLoader
             getFlotNavigateLoader().load();
             getFlotCrosshairLoader().load();
             getFlotMultipleBarsLoader().load();
+            getFlotFillBetweenLoader().load();
         }
     }
 }

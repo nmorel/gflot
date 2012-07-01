@@ -46,7 +46,9 @@ public class Series
     private static final String HOVERABLE_KEY = "hoverable";
     private static final String PERCENT_KEY = "percent";
     private static final String ANGLE_KEY = "angle";
-
+    private static final String FILL_BETWEEN_KEY = "fillBetween";
+    private static final String ID_KEY = "id";
+    
     public Series()
     {
         super();
@@ -272,6 +274,87 @@ public class Series
     public Double getAngle()
     {
         return getDouble( ANGLE_KEY );
+    }
+    
+    /**
+     * Provides the identifier of another series which is used to fill the area
+     * between these two series. If this identifier was given as a number that
+     * doesn't appear as an id in the series, it is interpreted as the index in
+     * the array instead (so fillBetween: 0 can also mean the first series).
+     * Only for the fillbetween plugin!
+     * 
+     * @return an identifier of another series (a string, integer or null).
+     */
+    public Object getFillBetween()
+    {
+        JSONValue value = get( FILL_BETWEEN_KEY );
+        if ( value == null )
+        {
+            return null;
+        }
+        JSONString str = value.isString();
+        if ( str != null )
+        {
+            return str.stringValue();
+        }
+        JSONNumber number = value.isNumber();
+        if ( number != null )
+        {
+            return new Integer( (int) number.doubleValue() );
+        }
+        return null;
+        
+    }
+    
+    /**
+     * Defines the ID associated with another series which is used to fill the
+     * area between these two series.
+     * Only for the fillbetween plugin!
+     * 
+     * @param seriesId the ID identifying another series.
+     */
+    public Series setFillBetween( String seriesId )
+    {
+        put( FILL_BETWEEN_KEY, seriesId );
+        return this;
+    }
+    
+    /**
+     * Defines another series which is used to fill the area
+     * between these two series. If this identifier was given as a number that
+     * doesn't appear as an id in the series, it is interpreted as the index in
+     * the array instead (so fillBetween: 0 can also mean the first series).
+     * Only for the fillbetween plugin!
+     * 
+     * @param seriesIndex an identifier of another series.
+     */
+    public Series setFillBetween( int seriesIndex )
+    {
+        put( FILL_BETWEEN_KEY, seriesIndex );
+        return this;
+    }
+
+    /**
+     * Provides the ID given to this series.
+     * Only for the fillbetween plugin!
+     * 
+     * @return the series ID
+     */
+    public String getId()
+    {
+        return getString( ID_KEY );
+    }
+    
+    /**
+     * Defines the ID for this series.
+     * Only for the fillbetween plugin!
+     * 
+     * @param id the series ID
+     */
+    public Series setId( String id )
+    {
+        put( ID_KEY, id );
+        return this;
     }
 
 }
