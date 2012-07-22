@@ -64,7 +64,6 @@
 
     <!-- Plugins version -->
     <maven-compiler.version>2.3.2</maven-compiler.version>
-    <maven-eclipse.version>2.8</maven-eclipse.version>
     <maven-source.version>2.1.2</maven-source.version>
     <maven-javadoc.version>2.8.1</maven-javadoc.version>
     <maven-gpg.version>1.4</maven-gpg.version>
@@ -110,27 +109,6 @@
           <encoding>${project.build.sourceEncoding}</encoding>
           <source>${maven.compiler.source}</source>
           <target>${maven.compiler.target}</target>
-        </configuration>
-      </plugin>
-
-      <!-- Mark the project for Google Plugin for Eclipse (GPE) -->
-      <plugin>
-        <artifactId>maven-eclipse-plugin</artifactId>
-        <version>${maven-eclipse.version}</version>
-        <configuration>
-          <downloadSources>true</downloadSources>
-          <downloadJavadocs>true</downloadJavadocs>
-          <wtpversion>2.0</wtpversion>
-          <classpathContainers>
-            <classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
-            <classpathContainer>com.google.gwt.eclipse.core.GWT_CONTAINER</classpathContainer>
-          </classpathContainers>
-          <additionalBuildcommands>
-            <buildcommand>com.google.gwt.eclipse.core.gwtProjectValidator</buildcommand>
-          </additionalBuildcommands>
-          <additionalProjectnatures>
-            <projectnature>com.google.gwt.eclipse.core.gwtNature</projectnature>
-          </additionalProjectnatures>
         </configuration>
       </plugin>
     </plugins>
