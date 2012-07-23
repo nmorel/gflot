@@ -3,12 +3,16 @@
   xmlns:p="urn:import:ca.nanometrics.gflot.client">
 
   <ui:style>
-
+    .generate {
+    	margin-top: 10px;
+    	margin-left: 10px;
+    }
   </ui:style>
 
   <ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' />
 
   <g:HTMLPanel>
     <p:SimplePlot ui:field="plot" width="600px" height="300px" />
+    <g:Button ui:field='generate' addStyleNames='{style.generate}'>Generate</g:Button>
   </g:HTMLPanel>
 </ui:UiBinder>
