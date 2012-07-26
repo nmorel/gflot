@@ -10,8 +10,10 @@ import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
@@ -58,19 +60,48 @@ public class OverviewExample
         plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions()
             .setLineWidth( 0 ).setShow( true ).setFill( true ) ) );
 
-        SeriesHandler series = model.addSeries( "Random Series", "#2c1d54" );
-
-        // generate random data
-        for ( int i = 0; i < 200; i++ )
-        {
-            series.add( new DataPoint( i, 1.5 + Random.nextDouble(), 1.5 - Random.nextDouble() ) );
-        }
-
         // create the plot
         plot = new PlotWithOverview( model, plotOptions );
+
+        generateRandomData();
+
         plot.setLinearSelection( 150, 199 );
 
         return binder.createAndBindUi( this );
+    }
+
+    /**
+     * On click on generate button
+     *
+     * @param e event
+     */
+    @GFlotExamplesSource
+    @UiHandler( "generate" )
+    void onClickGenerate( ClickEvent e )
+    {
+        plot.getModel().removeAllSeries();
+        generateRandomData();
+        plot.redraw();
+    }
+
+    /**
+     * Generate random data
+     */
+    @GFlotExamplesSource
+    private void generateRandomData()
+    {
+        int nbSeries = Random.nextInt( 3 ) + 1;
+        for ( int i = 0; i < nbSeries; i++ )
+        {
+            plot.getModel().addSeries( "Random Series " + i );
+        }
+        for ( int i = 1; i < 200; i++ )
+        {
+            for ( SeriesHandler series : plot.getModel().getHandlers() )
+            {
+                series.add( new DataPoint( i, 1.5 + Random.nextDouble(), 1.5 - Random.nextDouble() ) );
+            }
+        }
     }
 
 }

@@ -9,8 +9,13 @@
   <ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' />
 
   <g:HTMLPanel>
-    <p:PlotWithOverview ui:field="plot" width="600px" windowHeight="300" overviewHeight="100"/>
+    <p:PlotWithOverview ui:field="plot" width="600px" windowHeight="300"
+      overviewHeight="100" />
 
     <p>Select a portion on the overview chart.</p>
+
+    <p>
+      <g:Button ui:field='generate'>Generate</g:Button>
+    </p>
   </g:HTMLPanel>
 </ui:UiBinder>

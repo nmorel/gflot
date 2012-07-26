@@ -52,8 +52,8 @@ public class PlotWithOverview
     public static final PlotOptions DEFAULT_OVERVIEW_OPTIONS = new PlotOptions()
         .setLegendOptions( new LegendOptions().setShow( false ) )
         .setGlobalSeriesOptions(
-            new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) ).setShadowSize( 0d ) )
-        .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) );
+            new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) )
+                .setShadowSize( 0d ) ).setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) );
 
     private final SimplePlot windowPlot;
 
@@ -80,7 +80,8 @@ public class PlotWithOverview
         initWidget( createUi() );
     }
 
-    public PlotWithOverview( PlotWithOverviewModel model, PlotOptions windowPlotOptions, Element windowPlotContainer, Element overviewPlotContainer )
+    public PlotWithOverview( PlotWithOverviewModel model, PlotOptions windowPlotOptions, Element windowPlotContainer,
+                             Element overviewPlotContainer )
     {
         this.model = model;
         this.windowPlot = new SimplePlot( windowPlotContainer, model.getWindowPlotModel(), windowPlotOptions );
@@ -89,8 +90,8 @@ public class PlotWithOverview
         initWidget( createUi() );
     }
 
-    public PlotWithOverview( PlotWithOverviewModel model, PlotOptions windowPlotOptions, PlotOptions overviewPlotOptions,
-                             Element windowPlotContainer, Element overviewPlotContainer )
+    public PlotWithOverview( PlotWithOverviewModel model, PlotOptions windowPlotOptions,
+                             PlotOptions overviewPlotOptions, Element windowPlotContainer, Element overviewPlotContainer )
     {
         this.model = model;
         this.windowPlot = new SimplePlot( windowPlotContainer, model.getWindowPlotModel(), windowPlotOptions );
@@ -172,7 +173,7 @@ public class PlotWithOverview
         return overviewPlot.getHeight();
     }
 
-    public PlotModel getModel()
+    public PlotWithOverviewModel getModel()
     {
         return model;
     }
@@ -197,7 +198,7 @@ public class PlotWithOverview
         double[] selection = model.getSelection();
         if ( selection[0] < selection[1] )
         {
-            overviewPlot.setSelection( new PlotSelectionArea().setX( new Range( selection[0], selection[1] ) ), true );
+            overviewPlot.setSelection( new PlotSelectionArea().setX( new Range( selection[0], selection[1] ) ), false );
         }
         windowPlot.redraw();
         overviewPlot.redraw();
@@ -225,7 +226,8 @@ public class PlotWithOverview
 
     public void setRectangularSelection( double x1, double y1, double x2, double y2 )
     {
-        overviewPlot.setSelection( new PlotSelectionArea().setX( new Range( x1, x2 ) ).setY( new Range( y1, y2 ) ), false );
+        overviewPlot.setSelection( new PlotSelectionArea().setX( new Range( x1, x2 ) ).setY( new Range( y1, y2 ) ),
+            false );
     }
 
     public void setWidth( int width )
@@ -253,8 +255,7 @@ public class PlotWithOverview
     public void onPlotSelected( PlotSelectionArea area )
     {
         Range xRange = area.getX();
-        model.setSelection( xRange.getFrom(), xRange.getTo(), new Command()
-        {
+        model.setSelection( xRange.getFrom(), xRange.getTo(), new Command() {
             public void execute()
             {
                 windowPlot.redraw();

@@ -1,15 +1,12 @@
 package com.googlecode.gflot.examples.client.examples.line;
 
-import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
-import ca.nanometrics.gflot.client.options.AxisOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions.LegendPosition;
 import ca.nanometrics.gflot.client.options.PlotOptions;
-import ca.nanometrics.gflot.client.options.TickFormatter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -40,30 +37,11 @@ public class LineExample
     }
 
     /**
-     * Month names used by the tick formatter
-     */
-    @GFlotExamplesData
-    private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
-        "nov", "dec" };
-
-    /**
      * Plot
      */
     @GFlotExamplesData
     @UiField( provided = true )
     SimplePlot plot;
-
-    /**
-     * First series handler
-     */
-    @GFlotExamplesData
-    private SeriesHandler series1;
-
-    /**
-     * Second series handler
-     */
-    @GFlotExamplesData
-    private SeriesHandler series2;
 
     public LineExample( Resources resources )
     {
@@ -78,26 +56,14 @@ public class LineExample
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = new PlotOptions();
-
-        // Add tick formatter to the options
-        plotOptions.addXAxisOptions( new AxisOptions().setTicks( 12 ).setTickFormatter( new TickFormatter() {
-            public String formatTickValue( double tickValue, Axis axis )
-            {
-                return MONTH_NAMES[(int) ( tickValue - 1 )];
-            }
-        } ) );
         plotOptions.setLegendOptions( new LegendOptions().setBackgroundOpacity( 0 ).setPosition(
             LegendPosition.NORTH_WEST ) );
 
-        // create a series
-        series1 = model.addSeries( "Random Series 1" );
-        series2 = model.addSeries( "Random Series 2" );
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
 
         // add data
         generateRandomData();
-
-        // create the plot
-        plot = new SimplePlot( model, plotOptions );
 
         return binder.createAndBindUi( this );
     }
@@ -111,8 +77,7 @@ public class LineExample
     @UiHandler( "generate" )
     void onClickGenerate( ClickEvent e )
     {
-        series1.clear();
-        series2.clear();
+        plot.getModel().removeAllSeries();
         generateRandomData();
         plot.redraw();
     }
@@ -123,10 +88,17 @@ public class LineExample
     @GFlotExamplesSource
     private void generateRandomData()
     {
+        int nbSeries = Random.nextInt( 5 ) + 1;
+        for ( int i = 0; i < nbSeries; i++ )
+        {
+            plot.getModel().addSeries( "Random Series " + i );
+        }
         for ( int i = 1; i < 13; i++ )
         {
-            series1.add( new DataPoint( i, Random.nextInt( 30 ) ) );
-            series2.add( new DataPoint( i, Random.nextInt( 30 ) ) );
+            for ( SeriesHandler series : plot.getModel().getHandlers() )
+            {
+                series.add( new DataPoint( i, Random.nextInt( 30 ) ) );
+            }
         }
     }
 

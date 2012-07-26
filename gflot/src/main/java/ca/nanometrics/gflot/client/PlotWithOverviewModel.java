@@ -34,6 +34,210 @@ public class PlotWithOverviewModel
     extends PlotModel
 {
 
+    public class PlotWithOverviewSeriesHandler
+        extends SeriesHandler
+    {
+        private AsyncDataProvider provider;
+        private final SeriesHandler overviewHandler;
+        private final SeriesHandler windowHandler;
+        private DataPoint lastDataPoint;
+        private DataPoint firstDataPoint;
+        private boolean lockSelection;
+
+        public PlotWithOverviewSeriesHandler( Series series, SeriesData data )
+        {
+            super( series, data );
+            provider = new AsyncDataProviderWrapper( new LocalDataProvider( data ) );
+            windowHandler = windowModel.addSeries( series.getLabel(), series.getColor() );
+            overviewHandler = overviewModel.addSeries( series.getLabel(), series.getColor() );
+        }
+
+        @Override
+        public void add( DataPoint datapoint )
+        {
+            super.add( datapoint );
+            overviewHandler.add( datapoint );
+            if ( lockSelection && selection[1] < datapoint.getX() )
+            {
+                double diff = datapoint.getX() - lastDataPoint.getX();
+                double x1 = selection[0] + diff;
+                double x2 = selection[1] + diff;
+                setSelection( Math.max( x1, selection[0] ), Math.max( x2, selection[1] ) );
+            }
+            if ( firstDataPoint == null )
+            {
+                firstDataPoint = datapoint;
+            }
+            lastDataPoint = datapoint;
+        }
+
+        @Override
+        public void clear()
+        {
+            super.clear();
+            windowHandler.clear();
+            overviewHandler.clear();
+            lastDataPoint = null;
+            firstDataPoint = null;
+            lockSelection = false;
+        }
+
+        @Override
+        void setData( SeriesData newData )
+        {
+            super.setData( newData );
+            overviewHandler.setData( newData );
+            windowHandler.clear();
+        }
+
+        @Override
+        public void setVisible( boolean visisble )
+        {
+            super.setVisible( visisble );
+            overviewHandler.setVisible( visisble );
+            windowHandler.setVisible( visisble );
+        }
+
+        public void setDataProvider( AsyncDataProvider provider )
+        {
+            this.provider = provider;
+        }
+
+        void populateWindowSeries( final Command toExcuteAfterSelection )
+        {
+            final double x1 = getWindowMinX();
+            final double x2 = getWindowMaxX();
+            windowHandler.clear();
+            if ( x1 < x2 )
+            {
+                provider.getData( x1, x2, new AsyncCallback<DataPoint[]>() {
+                    @Override
+                    public void onFailure( Throwable caught )
+                    {
+                        GWT.log( "Failed to obtain data for PlotWithOverview", caught );
+                        if ( toExcuteAfterSelection != null )
+                        {
+                            toExcuteAfterSelection.execute();
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess( DataPoint[] result )
+                    {
+                        for ( DataPoint point : result )
+                        {
+                            windowHandler.add( point );
+                        }
+                        lockSelection = x2 >= lastDataPoint.getX();
+                        if ( toExcuteAfterSelection != null )
+                        {
+                            toExcuteAfterSelection.execute();
+                        }
+                    }
+                } );
+            }
+        }
+
+        private double getWindowMinX()
+        {
+            double x = selection[0];
+            if ( x == overviewHandler.getData().getX( 0 ) )
+            {
+                return firstDataPoint.getX();
+            }
+            return x;
+        }
+
+        private double getWindowMaxX()
+        {
+            double x = selection[1];
+            SeriesData data = overviewHandler.getData();
+            int size = data.size();
+            if ( size > 0 && x == data.getX( size - 1 ) )
+            {
+                return lastDataPoint.getX();
+            }
+            return x;
+        }
+
+        public Series getOverviewSeries()
+        {
+            return overviewHandler.getSeries();
+        }
+
+        public Series getWindowSeries()
+        {
+            return windowHandler.getSeries();
+        }
+    }
+
+    public interface DataProvider
+    {
+        DataPoint[] getData( double x1, double x2 );
+    }
+
+    private class LocalDataProvider
+        implements DataProvider
+    {
+
+        private final SeriesData data;
+
+        public LocalDataProvider( SeriesData data )
+        {
+            this.data = data;
+        }
+
+        @Override
+        public DataPoint[] getData( double x1, double x2 )
+        {
+            if ( x2 < data.getX( 0 ) || x1 > data.getX( data.size() - 1 ) )
+            {
+                return new DataPoint[0];
+            }
+            int start = Algorithm.xBinarySearch( data, x1 );
+            if ( start == -1 )
+            {
+                start = 0;
+            }
+            int end = Algorithm.xBinarySearch( data, x2 );
+            if ( end == -1 )
+            {
+                return data.slice( start ).getDatapoints();
+            }
+            return data.slice( start, end ).getDatapoints();
+        }
+    }
+
+    public interface AsyncDataProvider
+    {
+        void getData( double x1, double x2, AsyncCallback<DataPoint[]> callback );
+    }
+
+    private class AsyncDataProviderWrapper
+        implements AsyncDataProvider
+    {
+        private final DataProvider provider;
+
+        public AsyncDataProviderWrapper( DataProvider provider )
+        {
+            this.provider = provider;
+        }
+
+        @Override
+        public void getData( double x1, double x2, AsyncCallback<DataPoint[]> callback )
+        {
+            try
+            {
+                DataPoint[] result = provider.getData( x1, x2 );
+                callback.onSuccess( result );
+            }
+            catch ( Throwable e )
+            {
+                callback.onFailure( e );
+            }
+        }
+    }
+
     private static class PopulateCommand
         implements Command
     {
@@ -61,15 +265,15 @@ public class PlotWithOverviewModel
         }
     }
 
-    private final PlotModel m_windowModel;
-    private final PlotModel m_overviewModel;
-    private final double[] m_selection = new double[2];
+    private final PlotModel windowModel;
+    private final PlotModel overviewModel;
+    private final double[] selection = new double[2];
 
     public PlotWithOverviewModel( PlotModelStrategy strategy )
     {
         super( strategy );
-        m_overviewModel = new PlotModel( strategy );
-        m_windowModel = new PlotModel();
+        overviewModel = new PlotModel( strategy );
+        windowModel = new PlotModel();
     }
 
     public void setDataProvider( SeriesHandler handler, DataProvider provider )
@@ -90,22 +294,22 @@ public class PlotWithOverviewModel
 
     PlotModel getWindowPlotModel()
     {
-        return m_windowModel;
+        return windowModel;
     }
 
     PlotModel getOverviewPlotModel()
     {
-        return m_overviewModel;
+        return overviewModel;
     }
 
     public Series[] getWindowsSeries()
     {
-        return m_windowModel.getSeries();
+        return windowModel.getSeries();
     }
 
     public Series[] getOverviewSeries()
     {
-        return m_overviewModel.getSeries();
+        return overviewModel.getSeries();
     }
 
     void setSelection( double x1, double x2 )
@@ -115,8 +319,8 @@ public class PlotWithOverviewModel
 
     void setSelection( double x1, double x2, Command toExcuteAfterSelection )
     {
-        m_selection[0] = x1;
-        m_selection[1] = x2;
+        selection[0] = x1;
+        selection[1] = x2;
 
         Command command = null;
         if ( null != toExcuteAfterSelection )
@@ -132,211 +336,31 @@ public class PlotWithOverviewModel
 
     double[] getSelection()
     {
-        return m_selection;
+        return selection;
     }
 
-    public class PlotWithOverviewSeriesHandler
-        extends SeriesHandler
+    @Override
+    public void removeSeries( int index )
     {
-        private AsyncDataProvider m_provider;
-        private final SeriesHandler m_overviewHandler;
-        private final SeriesHandler m_windowHandler;
-        private DataPoint m_lastDataPoint;
-        private DataPoint m_firstDataPoint;
-        private boolean m_lockSelection;
-
-        public PlotWithOverviewSeriesHandler( Series series, SeriesData data )
-        {
-            super( series, data );
-            m_provider = new AsyncDataProviderWrapper( new LocalDataProvider( data ) );
-            m_windowHandler = m_windowModel.addSeries( series.getLabel(), series.getColor() );
-            m_overviewHandler = m_overviewModel.addSeries( series.getLabel(), series.getColor() );
-        }
-
-        @Override
-        public void add( DataPoint datapoint )
-        {
-            super.add( datapoint );
-            m_overviewHandler.add( datapoint );
-            if ( m_lockSelection && m_selection[1] < datapoint.getX() )
-            {
-                double diff = datapoint.getX() - m_lastDataPoint.getX();
-                double x1 = m_selection[0] + diff;
-                double x2 = m_selection[1] + diff;
-                setSelection( Math.max( x1, m_selection[0] ), Math.max( x2, m_selection[1] ) );
-            }
-            if ( m_firstDataPoint == null )
-            {
-                m_firstDataPoint = datapoint;
-            }
-            m_lastDataPoint = datapoint;
-        }
-
-        @Override
-        public void clear()
-        {
-            super.clear();
-            m_windowHandler.clear();
-            m_overviewHandler.clear();
-            m_lastDataPoint = null;
-            m_firstDataPoint = null;
-            m_lockSelection = false;
-        }
-
-        @Override
-        void setData( SeriesData newData )
-        {
-            super.setData( newData );
-            m_overviewHandler.setData( newData );
-            m_windowHandler.clear();
-        }
-
-        @Override
-        public void setVisible( boolean visisble )
-        {
-            super.setVisible( visisble );
-            m_overviewHandler.setVisible( visisble );
-            m_windowHandler.setVisible( visisble );
-        }
-
-        public void setDataProvider( AsyncDataProvider provider )
-        {
-            m_provider = provider;
-        }
-
-        void populateWindowSeries( final Command toExcuteAfterSelection )
-        {
-            final double x1 = getWindowMinX();
-            final double x2 = getWindowMaxX();
-            m_windowHandler.clear();
-            if ( x1 < x2 )
-            {
-                m_provider.getData( x1, x2, new AsyncCallback<DataPoint[]>() {
-                    @Override
-                    public void onFailure( Throwable caught )
-                    {
-                        GWT.log( "Failed to obtain data for PlotWithOverview", caught );
-                        if ( toExcuteAfterSelection != null )
-                        {
-                            toExcuteAfterSelection.execute();
-                        }
-                    }
-
-                    @Override
-                    public void onSuccess( DataPoint[] result )
-                    {
-                        for ( DataPoint point : result )
-                        {
-                            m_windowHandler.add( point );
-                        }
-                        m_lockSelection = x2 >= m_lastDataPoint.getX();
-                        if ( toExcuteAfterSelection != null )
-                        {
-                            toExcuteAfterSelection.execute();
-                        }
-                    }
-                } );
-            }
-        }
-
-        private double getWindowMinX()
-        {
-            double x = m_selection[0];
-            if ( x == m_overviewHandler.getData().getX( 0 ) )
-            {
-                return m_firstDataPoint.getX();
-            }
-            return x;
-        }
-
-        private double getWindowMaxX()
-        {
-            double x = m_selection[1];
-            SeriesData data = m_overviewHandler.getData();
-            int size = data.size();
-            if ( size > 0 && x == data.getX( size - 1 ) )
-            {
-                return m_lastDataPoint.getX();
-            }
-            return x;
-        }
-
-        public Series getOverviewSeries()
-        {
-            return m_overviewHandler.getSeries();
-        }
-
-        public Series getWindowSeries()
-        {
-            return m_windowHandler.getSeries();
-        }
+        super.removeSeries( index );
+        windowModel.removeSeries( index );
+        overviewModel.removeSeries( index );
     }
 
-    public interface DataProvider
+    @Override
+    public void removeSeries( SeriesHandler series )
     {
-        DataPoint[] getData( double x1, double x2 );
+        super.removeSeries( series );
+        windowModel.removeSeries( series );
+        overviewModel.removeSeries( series );
     }
 
-    public interface AsyncDataProvider
+    @Override
+    public void removeAllSeries()
     {
-        void getData( double x1, double x2, AsyncCallback<DataPoint[]> callback );
+        super.removeAllSeries();
+        windowModel.removeAllSeries();
+        overviewModel.removeAllSeries();
     }
 
-    private class LocalDataProvider
-        implements DataProvider
-    {
-
-        private final SeriesData m_data;
-
-        public LocalDataProvider( SeriesData data )
-        {
-            m_data = data;
-        }
-
-        @Override
-        public DataPoint[] getData( double x1, double x2 )
-        {
-            if ( x2 < m_data.getX( 0 ) || x1 > m_data.getX( m_data.size() - 1 ) )
-            {
-                return new DataPoint[0];
-            }
-            int start = Algorithm.xBinarySearch( m_data, x1 );
-            if ( start == -1 )
-            {
-                start = 0;
-            }
-            int end = Algorithm.xBinarySearch( m_data, x2 );
-            if ( end == -1 )
-            {
-                return m_data.slice( start ).getDatapoints();
-            }
-            return m_data.slice( start, end ).getDatapoints();
-        }
-
-    }
-
-    private class AsyncDataProviderWrapper
-        implements AsyncDataProvider
-    {
-        private final DataProvider m_provider;
-
-        public AsyncDataProviderWrapper( DataProvider provider )
-        {
-            m_provider = provider;
-        }
-
-        @Override
-        public void getData( double x1, double x2, AsyncCallback<DataPoint[]> callback )
-        {
-            try
-            {
-                DataPoint[] result = m_provider.getData( x1, x2 );
-                callback.onSuccess( result );
-            }
-            catch ( Throwable e )
-            {
-                callback.onFailure( e );
-            }
-        }
-    }
 }

@@ -22,6 +22,8 @@
 package ca.nanometrics.gflot.client;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -30,11 +32,18 @@ import java.util.List;
 public class PlotModel
 {
 
-    private PlotModelStrategy m_strategy;
+    public interface PlotModelListener
+    {
+        void onAddSeries( PlotModel model, String label, String color, SeriesHandler handler );
 
-    private final List<SeriesHandler> m_handlers = new ArrayList<SeriesHandler>();
+        void onRemoveSeries( PlotModel model, SeriesHandler handler );
+    }
 
-    private final List<PlotModelListener> m_listeners = new ArrayList<PlotModelListener>();
+    private PlotModelStrategy strategy;
+
+    private final List<SeriesHandler> handlers = new ArrayList<SeriesHandler>();
+
+    private final List<PlotModelListener> listeners = new ArrayList<PlotModelListener>();
 
     public PlotModel()
     {
@@ -43,7 +52,7 @@ public class PlotModel
 
     public PlotModel( PlotModelStrategy strategy )
     {
-        m_strategy = strategy;
+        this.strategy = strategy;
     }
 
     public SeriesHandler addSeries( String label )
@@ -63,28 +72,22 @@ public class PlotModel
 
     public SeriesHandler addSeries( Series series )
     {
-        SeriesData data = m_strategy.createSeriesData();
+        SeriesData data = strategy.createSeriesData();
         series.setData( data );
 
         SeriesHandler handler = createSeriesHandler( series, data );
-        m_handlers.add( handler );
+        handlers.add( handler );
         fireOnAddSeries( series.getLabel(), series.getColor(), handler );
         return handler;
     }
 
-    public void removeSeries( SeriesHandler handler )
-    {
-        m_handlers.remove( handler );
-        fireOnRemoveSeries( handler );
-    }
-
     public void setStrategy( PlotModelStrategy strategy )
     {
-        m_strategy = strategy;
-        for ( SeriesHandler handler : m_handlers )
+        this.strategy = strategy;
+        for ( SeriesHandler handler : handlers )
         {
             DataPoint[] currentData = handler.getData().getDatapoints();
-            handler.setData( m_strategy.createSeriesData() );
+            handler.setData( this.strategy.createSeriesData() );
             for ( DataPoint datapoint : currentData )
             {
                 handler.add( datapoint );
@@ -92,38 +95,96 @@ public class PlotModel
         }
     }
 
+    /**
+     * Clear the data of all series but does not remove the series!
+     */
     public void clear()
     {
-        for ( SeriesHandler handler : m_handlers )
+        for ( SeriesHandler handler : handlers )
         {
             handler.clear();
         }
     }
 
+    /**
+     * Clear the data of the specified series
+     *
+     * @param index index of the series to remove
+     */
+    public void clearSeries( int index )
+    {
+        checkSeriesBound( index );
+        handlers.get( index ).clear();
+    }
+
+    /**
+     * Remove the series from the plot
+     *
+     * @param index index of the series to remove
+     */
+    public void removeSeries( int index )
+    {
+        checkSeriesBound( index );
+        removeSeries( handlers.get( index ) );
+    }
+
+    /**
+     * Remove the series from the plot
+     *
+     * @param series Series to remove
+     */
+    public void removeSeries( SeriesHandler series )
+    {
+        handlers.remove( series );
+        fireOnRemoveSeries( series );
+    }
+
+    /**
+     * Remove all the series from the plot
+     */
+    public void removeAllSeries()
+    {
+        Iterator<SeriesHandler> iterator = handlers.iterator();
+        while ( iterator.hasNext() )
+        {
+            SeriesHandler series = iterator.next();
+            iterator.remove();
+            fireOnRemoveSeries( series );
+        }
+    }
+
+    private void checkSeriesBound( int index )
+    {
+        assert index >= 0 && index < handlers.size() : "Index out of bounds";
+    }
+
     public void addListener( PlotModelListener listener )
     {
-        m_listeners.add( listener );
+        listeners.add( listener );
     }
 
     public void removeListener( PlotModelListener listener )
     {
-        m_listeners.remove( listener );
+        listeners.remove( listener );
     }
 
     public Series[] getSeries()
     {
-        Series[] seriesArray = new Series[m_handlers.size()];
+        Series[] seriesArray = new Series[handlers.size()];
         int i = 0;
-        for ( SeriesHandler handler : m_handlers )
+        for ( SeriesHandler handler : handlers )
         {
             seriesArray[i++] = handler.getSeries();
         }
         return seriesArray;
     }
 
-    protected List<SeriesHandler> getHandlers()
+    /**
+     * @return a read-only list of the series handler
+     */
+    public List<SeriesHandler> getHandlers()
     {
-        return m_handlers;
+        return Collections.unmodifiableList( handlers );
     }
 
     protected SeriesHandler createSeriesHandler( Series series, SeriesData data )
@@ -133,7 +194,7 @@ public class PlotModel
 
     private void fireOnRemoveSeries( SeriesHandler handler )
     {
-        for ( PlotModelListener listener : m_listeners )
+        for ( PlotModelListener listener : listeners )
         {
             listener.onRemoveSeries( this, handler );
         }
@@ -141,18 +202,9 @@ public class PlotModel
 
     private void fireOnAddSeries( String label, String color, SeriesHandler handler )
     {
-        for ( PlotModelListener listener : m_listeners )
+        for ( PlotModelListener listener : listeners )
         {
             listener.onAddSeries( this, label, color, handler );
         }
     }
-
-    public interface PlotModelListener
-    {
-
-        void onAddSeries( PlotModel model, String label, String color, SeriesHandler handler );
-
-        void onRemoveSeries( PlotModel model, SeriesHandler handler );
-    }
-
 }
