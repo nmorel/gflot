@@ -33,16 +33,41 @@ import com.google.gwt.json.client.JSONObject;
 public class ZoomOptions
     extends JSONObjectWrapper
 {
+    public enum ZoomTrigger
+    {
+        SINGLE_CLICK( "click" ), DOUBLE_CLICK( "dblclick" );
 
-    public static final String TRIGGER_SINGLE_CLICK = "click";
+        private String flotValue;
 
-    public static final String TRIGGER_DOUBLE_CLICK = "dblclick";
+        ZoomTrigger( String flotValue )
+        {
+            this.flotValue = flotValue;
+        }
 
-    private static final String INTERACTIVE = "interactive";
+        String getFlotValue()
+        {
+            return flotValue;
+        }
 
-    private static final String TRIGGER = "trigger";
+        static ZoomTrigger findByFlotValue( String flotValue )
+        {
+            if ( null != flotValue && !"".equals( flotValue ) )
+            {
+                for ( ZoomTrigger mode : values() )
+                {
+                    if ( mode.getFlotValue().equals( flotValue ) )
+                    {
+                        return mode;
+                    }
+                }
+            }
+            return null;
+        }
+    }
 
-    private static final String AMOUNT = "amount";
+    private static final String INTERACTIVE_KEY = "interactive";
+    private static final String TRIGGER_KEY = "trigger";
+    private static final String AMOUNT_KEY = "amount";
 
     public ZoomOptions()
     {
@@ -59,7 +84,7 @@ public class ZoomOptions
      */
     public ZoomOptions setInteractive( boolean value )
     {
-        put( INTERACTIVE, value );
+        put( INTERACTIVE_KEY, value );
         return this;
     }
 
@@ -68,7 +93,7 @@ public class ZoomOptions
      */
     public boolean isInteractive()
     {
-        Boolean interactive = getBoolean( INTERACTIVE );
+        Boolean interactive = getBoolean( INTERACTIVE_KEY );
         if ( interactive == null )
         {
             return false;
@@ -78,12 +103,23 @@ public class ZoomOptions
     }
 
     /**
+     * Clear the interactive option
+     */
+    public ZoomOptions clearInteractive()
+    {
+        clear( INTERACTIVE_KEY );
+        return this;
+    }
+
+    /**
      * Sets the number of mouse button clicks used to zoom the current viewport. Use TRIGGER_DOUBLE_CLICK for double
      * click or TRIGGER_SINGLE_CLICK for single click.
      */
-    public ZoomOptions setTrigger( String value )
+    public ZoomOptions setTrigger( ZoomTrigger trigger )
     {
-        put( TRIGGER, value );
+        assert null != trigger : "trigger can't be null";
+
+        put( TRIGGER_KEY, trigger.getFlotValue() );
         return this;
     }
 
@@ -91,9 +127,18 @@ public class ZoomOptions
      * @return a string identifying the number of mouse button clicks used to zoom the current viewport. "dblclick" for
      * double click or "click" for single click.
      */
-    public String getTrigger()
+    public ZoomTrigger getTrigger()
     {
-        return getString( TRIGGER );
+        return ZoomTrigger.findByFlotValue( getString( TRIGGER_KEY ) );
+    }
+
+    /**
+     * Clear the trigger option
+     */
+    public ZoomOptions clearTrigger()
+    {
+        clear( TRIGGER_KEY );
+        return this;
     }
 
     /**
@@ -102,7 +147,7 @@ public class ZoomOptions
      */
     public ZoomOptions setAmount( Double value )
     {
-        put( AMOUNT, value );
+        put( AMOUNT_KEY, value );
         return this;
     }
 
@@ -112,6 +157,15 @@ public class ZoomOptions
      */
     public Double getAmount()
     {
-        return getDouble( AMOUNT );
+        return getDouble( AMOUNT_KEY );
+    }
+
+    /**
+     * Clear the amount
+     */
+    public ZoomOptions clearAmount()
+    {
+        clear( AMOUNT_KEY );
+        return this;
     }
 }

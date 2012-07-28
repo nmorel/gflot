@@ -47,6 +47,15 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
         }
 
         /**
+         * Clear the below number
+         */
+        public Threshold clearBelowNumber()
+        {
+            clear( BELOW_KEY );
+            return this;
+        }
+
+        /**
          * Set the color.
          */
         public Threshold setColor( String color )
@@ -61,6 +70,15 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
         public String getColor()
         {
             return getString( COLOR_KEY );
+        }
+
+        /**
+         * Clear the color
+         */
+        public Threshold clearColor()
+        {
+            clear( COLOR_KEY );
+            return this;
         }
     }
 
@@ -214,6 +232,15 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     }
 
     /**
+     * Clear the size of the shadows
+     */
+    public T clearShadowSize()
+    {
+        clear( SHADOW_SIZE_KEY );
+        return (T) this;
+    }
+
+    /**
      * Set the stack key option. Two or more series are stacked when their "stack" attribute is set to the same key
      * (which can be any number or string or just "true"). The stacking order is determined by the order of the data
      * series in the array (later series end up on top of the previous).
@@ -268,6 +295,15 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     public Boolean getStackAsBoolean()
     {
         return getBoolean( STACK_KEY );
+    }
+
+    /**
+     * Clear the stack option
+     */
+    public T clearStack()
+    {
+        clear( STACK_KEY );
+        return (T) this;
     }
 
     /**

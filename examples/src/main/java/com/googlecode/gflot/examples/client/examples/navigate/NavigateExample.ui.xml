@@ -38,6 +38,21 @@
     	top: 42px;
     	left: 574px;
     }
+
+    .reset {
+    	position: absolute;
+    	font-size: smaller;
+    	color: #999;
+    	background-color: #eee;
+    	padding: 2px;
+    	cursor: pointer;
+    	top: 76px;
+    	left: 553px;
+    }
+
+    .message {
+    	font-style: italic;
+    }
   </ui:style>
 
   <ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' />
@@ -55,19 +70,23 @@
     <g:Image ui:field="up" resource='{arrowUp}' addStyleNames='{style.arrow} {style.arrowUp}' />
     <g:Image ui:field="left" resource='{arrowLeft}' addStyleNames='{style.arrow} {style.arrowLeft}' />
     <g:Image ui:field="right" resource='{arrowRight}' addStyleNames='{style.arrow} {style.arrowRight}' />
+    <g:Label ui:field="reset" addStyleNames='{style.reset}'>reset</g:Label>
 
     <div style="margin: 10px 0px">
-      <g:InlineLabel ui:field="message" />
+      <g:InlineLabel ui:field="message" addStyleNames='{style.message}' />
     </div>
 
     <p>With the navigate plugin it is easy to add panning and zooming.
-      Drag to pan, double click to zoom (or use the
+      Drag to pan, double click to
+      zoom (or use the
       mouse scrollwheel).</p>
 
     <p>The plugin fires events (useful for synchronizing several
-      plots) and adds a couple of public methods so you can
+      plots) and adds a couple of public
+      methods so you can
       easily build
-      a little user interface around it, like the little buttons at the
+      a little user interface around it, like the little buttons at
+      the
       top right in the plot.</p>
   </g:HTMLPanel>
 </ui:UiBinder>

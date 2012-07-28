@@ -166,6 +166,15 @@ public class Marking
     }
 
     /**
+     * Clear the marking color
+     */
+    public Marking clearColor()
+    {
+        clear( COLOR_KEY );
+        return this;
+    }
+
+    /**
      * Set the line width
      */
     public Marking setLineWidth( int lineWidth )
@@ -180,6 +189,15 @@ public class Marking
     public Integer getLineWidth()
     {
         return getInteger( LINE_WIDTH_KEY );
+    }
+
+    /**
+     * Clear the line width
+     */
+    public Marking clearLineWidth()
+    {
+        clear( LINE_WIDTH_KEY );
+        return this;
     }
 
 }

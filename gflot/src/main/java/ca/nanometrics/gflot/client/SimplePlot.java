@@ -580,7 +580,14 @@ public class SimplePlot
         plot.unlockCrosshair();
     }
 
-    /* ------------------ Helper methods -- */
+    /**
+     * @return true if the plot has been created
+     */
+    public boolean isPlotLoaded()
+    {
+        return loaded;
+    }
+
     protected void assertLoaded()
     {
         if ( !loaded )

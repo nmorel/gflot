@@ -45,6 +45,8 @@ public class NavigateExample
     {
     }
 
+    private static final String NO_ZOOM_MESSAGE = "No current zoom or pan";
+
     /**
      * Plot
      */
@@ -97,8 +99,7 @@ public class NavigateExample
 
         final NumberFormat format = NumberFormat.getDecimalFormat();
 
-        plot.addZoomListener( new PlotZoomListener()
-        {
+        plot.addZoomListener( new PlotZoomListener() {
             @Override
             public void onPlotZoom( Axes axes )
             {
@@ -109,8 +110,7 @@ public class NavigateExample
             }
         } );
 
-        plot.addPanListener( new PlotPanListener()
-        {
+        plot.addPanListener( new PlotPanListener() {
             @Override
             public void onPlotPan( Axes axes )
             {
@@ -121,7 +121,9 @@ public class NavigateExample
             }
         } );
 
-        return binder.createAndBindUi( this );
+        Widget widget = binder.createAndBindUi( this );
+        message.setText( NO_ZOOM_MESSAGE );
+        return widget;
     }
 
     /**
@@ -200,5 +202,18 @@ public class NavigateExample
     void onClickZoomOut( ClickEvent event )
     {
         plot.zoomOut();
+    }
+
+    /**
+     * On click reset
+     */
+    @GFlotExamplesSource
+    @UiHandler( "reset" )
+    void onClickReset( ClickEvent event )
+    {
+        message.setText( NO_ZOOM_MESSAGE );
+        plot.getPlotOptions().getXAxisOptions().clearMinimum().clearMaximum();
+        plot.getPlotOptions().getYAxisOptions().clearMinimum().clearMaximum();
+        plot.redraw();
     }
 }

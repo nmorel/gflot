@@ -61,4 +61,13 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
     {
         return getBoolean( SHOW_KEY );
     }
+
+    /**
+     * Clear the visibility of the series
+     */
+    public T clearShow()
+    {
+        clear( SHOW_KEY );
+        return (T) this;
+    }
 }

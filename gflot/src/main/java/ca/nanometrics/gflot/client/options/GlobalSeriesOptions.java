@@ -37,4 +37,14 @@ public class GlobalSeriesOptions
     {
         return getBoolean( MULTIPLE_BARS_KEY );
     }
+
+    /**
+     * Clear if the multiple bars patch to flot is enabled
+     */
+    public GlobalSeriesOptions clearMultipleBars()
+    {
+        clear( MULTIPLE_BARS_KEY );
+        return this;
+    }
+
 }

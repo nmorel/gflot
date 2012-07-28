@@ -92,4 +92,13 @@ public class AxisOptions
     {
         return getDouble( TICK_DECIMALS_KEY );
     }
+
+    /**
+     * Clear the number of decimals to display
+     */
+    public AxisOptions clearTickDecimals()
+    {
+        clear( TICK_DECIMALS_KEY );
+        return this;
+    }
 }

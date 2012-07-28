@@ -97,6 +97,15 @@ public class SelectionOptions
     }
 
     /**
+     * Clear the selection mode
+     */
+    public SelectionOptions clearMode()
+    {
+        clear( MODE_KEY );
+        return this;
+    }
+
+    /**
      * Set the selection color
      */
     public SelectionOptions setColor( String color )
@@ -111,5 +120,14 @@ public class SelectionOptions
     public String getColor()
     {
         return getString( COLOR_KEY );
+    }
+
+    /**
+     * Clear the selection color
+     */
+    public SelectionOptions clearColor()
+    {
+        clear( COLOR_KEY );
+        return this;
     }
 }

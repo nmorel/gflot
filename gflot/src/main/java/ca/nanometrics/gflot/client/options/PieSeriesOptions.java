@@ -47,6 +47,15 @@ public class PieSeriesOptions
         }
 
         /**
+         * Clear the top option
+         */
+        public Offset clearTop()
+        {
+            clear( TOP_KEY );
+            return this;
+        }
+
+        /**
          * Set the left. integer value to move the pie left or right
          */
         public Offset setLeft( int left )
@@ -61,6 +70,15 @@ public class PieSeriesOptions
         public Integer getLeft()
         {
             return getInteger( LEFT_KEY );
+        }
+
+        /**
+         * Clear the left option
+         */
+        public Offset clearLeft()
+        {
+            clear( LEFT_KEY );
+            return this;
         }
     }
 
@@ -98,6 +116,15 @@ public class PieSeriesOptions
         }
 
         /**
+         * Clear the color
+         */
+        public Stroke clearColor()
+        {
+            clear( COLOR_KEY );
+            return this;
+        }
+
+        /**
          * Set the integer pixel width of the stroke
          */
         public Stroke setWidth( int width )
@@ -112,6 +139,15 @@ public class PieSeriesOptions
         public Integer getWidth()
         {
             return getInteger( WIDTH_KEY );
+        }
+
+        /**
+         * Clear the width
+         */
+        public Stroke clearWidth()
+        {
+            clear( WIDTH_KEY );
+            return this;
         }
     }
 
@@ -152,6 +188,15 @@ public class PieSeriesOptions
             }
 
             /**
+             * Clear the color
+             */
+            public Background clearColor()
+            {
+                clear( COLOR_KEY );
+                return this;
+            }
+
+            /**
              * Set the background opacity. Opacity range from 0.0 to 1.0.
              */
             public Background setOpacity( double opacity )
@@ -168,6 +213,15 @@ public class PieSeriesOptions
             public Double getOpacity()
             {
                 return getDouble( OPACITY_KEY );
+            }
+
+            /**
+             * Clear the opacity
+             */
+            public Background clearOpacity()
+            {
+                clear( OPACITY_KEY );
+                return this;
             }
         }
 
@@ -201,11 +255,20 @@ public class PieSeriesOptions
         }
 
         /**
-         * @return the visibility of the series
+         * @return the visibility of the label
          */
         public Boolean getShow()
         {
             return getBoolean( SHOW_KEY );
+        }
+
+        /**
+         * Clear the visibility of the label
+         */
+        public Label clearShow()
+        {
+            clear( SHOW_KEY );
+            return this;
         }
 
         /**
@@ -229,6 +292,15 @@ public class PieSeriesOptions
         }-*/;
 
         /**
+         * Clear the label formatter
+         */
+        public Label clearLabelFormatter()
+        {
+            clear( "formatter" );
+            return this;
+        }
+
+        /**
          * Set the radius. 0-1 for percentage of fullsize, or a specified pixel length
          */
         public Label setRadius( double radius )
@@ -243,6 +315,15 @@ public class PieSeriesOptions
         public Double getRadius()
         {
             return getDouble( RADIUS_KEY );
+        }
+
+        /**
+         * Clear the radius
+         */
+        public Label clearRadius()
+        {
+            clear( RADIUS_KEY );
+            return this;
         }
 
         /**
@@ -271,6 +352,15 @@ public class PieSeriesOptions
         }
 
         /**
+         * Clear the background
+         */
+        public Label clearBackground()
+        {
+            clear( BACKGROUND_KEY );
+            return this;
+        }
+
+        /**
          * Set the threshold. 0-1 for the percentage value at which to hide labels (if they're too small)
          */
         public Label setThreshold( double threshold )
@@ -287,6 +377,15 @@ public class PieSeriesOptions
         public Double getThreshold()
         {
             return getDouble( THRESHOLD_KEY );
+        }
+
+        /**
+         * Clear the threshold
+         */
+        public Label clearThreshold()
+        {
+            clear( THRESHOLD_KEY );
+            return this;
         }
     }
 
@@ -327,6 +426,15 @@ public class PieSeriesOptions
         }
 
         /**
+         * Clear the threshold
+         */
+        public Combine clearThreshold()
+        {
+            clear( THRESHOLD_KEY );
+            return this;
+        }
+
+        /**
          * Set the color. any hexidecimal color value (other formats may or may not work, so best to stick with
          * something like '#CCC'), if null, the plugin will automatically use the color of the first slice to be
          * combined
@@ -346,6 +454,15 @@ public class PieSeriesOptions
         }
 
         /**
+         * Clear the color
+         */
+        public Combine clearColor()
+        {
+            clear( COLOR_KEY );
+            return this;
+        }
+
+        /**
          * Set the label. Any text value of what the combined slice should be labeled
          */
         public Combine setLabel( String label )
@@ -360,6 +477,15 @@ public class PieSeriesOptions
         public String getLabel()
         {
             return getString( LABEL_KEY );
+        }
+
+        /**
+         * Clear the label
+         */
+        public Combine clearLabel()
+        {
+            clear( LABEL_KEY );
+            return this;
         }
     }
 
@@ -394,6 +520,15 @@ public class PieSeriesOptions
         public Double getOpacity()
         {
             return getDouble( OPACITY_KEY );
+        }
+
+        /**
+         * Clear the opacity
+         */
+        public Highlight clearOpacity()
+        {
+            clear( OPACITY_KEY );
+            return this;
         }
     }
 
@@ -435,6 +570,15 @@ public class PieSeriesOptions
     }
 
     /**
+     * Clear the radius
+     */
+    public PieSeriesOptions clearRadius()
+    {
+        clear( RADIUS_KEY );
+        return this;
+    }
+
+    /**
      * Set the inner radius to create a donut effect. 0-1 for percentage of fullsize or a specified pixel length
      */
     public PieSeriesOptions setInnerRadius( double innerRadius )
@@ -449,6 +593,15 @@ public class PieSeriesOptions
     public Double getInnerRadius()
     {
         return getDouble( INNER_RADIUS_KEY );
+    }
+
+    /**
+     * Clear the inner radius
+     */
+    public PieSeriesOptions clearInnerRadius()
+    {
+        clear( INNER_RADIUS_KEY );
+        return this;
     }
 
     /**
@@ -470,6 +623,15 @@ public class PieSeriesOptions
     }
 
     /**
+     * Clear the start angle
+     */
+    public PieSeriesOptions clearStartAngle()
+    {
+        clear( START_ANGLE_KEY );
+        return this;
+    }
+
+    /**
      * Set the tilt. 0-1 for percentage to tilt the pie, where 1 is no tilt, and 0 is completely flat (nothing will
      * show)
      */
@@ -485,6 +647,15 @@ public class PieSeriesOptions
     public Double getTilt()
     {
         return getDouble( TILT_KEY );
+    }
+
+    /**
+     * Clear the tilt
+     */
+    public PieSeriesOptions clearTilt()
+    {
+        clear( TILT_KEY );
+        return this;
     }
 
     /**
@@ -510,6 +681,15 @@ public class PieSeriesOptions
         {
             return new Offset( obj );
         }
+    }
+
+    /**
+     * Clear the offset
+     */
+    public PieSeriesOptions clearOffset()
+    {
+        clear( OFFSET_KEY );
+        return this;
     }
 
     /**

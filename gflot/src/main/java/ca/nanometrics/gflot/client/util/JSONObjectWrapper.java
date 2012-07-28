@@ -39,7 +39,7 @@ public class JSONObjectWrapper
     extends JSONWrapper
 {
 
-    private final JSONObject m_jsonObj;
+    private final JSONObject jsonObj;
 
     protected JSONObjectWrapper()
     {
@@ -50,11 +50,11 @@ public class JSONObjectWrapper
     {
         if ( null == jsonObj )
         {
-            m_jsonObj = new JSONObject();
+            this.jsonObj = new JSONObject();
         }
         else
         {
-            m_jsonObj = jsonObj;
+            this.jsonObj = jsonObj;
         }
     }
 
@@ -65,7 +65,7 @@ public class JSONObjectWrapper
         {
             val = new JSONString( value );
         }
-        m_jsonObj.put( key, val );
+        jsonObj.put( key, val );
     }
 
     protected void put( String key, Number value )
@@ -75,12 +75,12 @@ public class JSONObjectWrapper
         {
             val = new JSONNumber( value.doubleValue() );
         }
-        m_jsonObj.put( key, val );
+        jsonObj.put( key, val );
     }
 
     protected void put( String key, boolean value )
     {
-        m_jsonObj.put( key, JSONBoolean.getInstance( value ) );
+        jsonObj.put( key, JSONBoolean.getInstance( value ) );
     }
 
     protected void put( String key, JSONWrapper value )
@@ -90,7 +90,7 @@ public class JSONObjectWrapper
         {
             val = value.getWrappedObj();
         }
-        m_jsonObj.put( key, val );
+        jsonObj.put( key, val );
     }
 
     protected Double getDouble( String key )
@@ -200,16 +200,24 @@ public class JSONObjectWrapper
         return getWrappedObj().get( key );
     }
 
+    protected void clear( String key )
+    {
+        if ( jsonObj.containsKey( key ) )
+        {
+            jsonObj.put( key, JSONNull.getInstance() );
+        }
+    }
+
     @Override
     protected JSONObject getWrappedObj()
     {
-        return m_jsonObj;
+        return jsonObj;
     }
 
     @Override
     public String toString()
     {
-        return m_jsonObj.toString();
+        return jsonObj.toString();
     }
 
     @Override
@@ -221,7 +229,7 @@ public class JSONObjectWrapper
         }
         if ( obj instanceof JSONObjectWrapper )
         {
-            return m_jsonObj.equals( ( (JSONObjectWrapper) obj ).m_jsonObj );
+            return jsonObj.equals( ( (JSONObjectWrapper) obj ).jsonObj );
         }
         return false;
     }
@@ -229,7 +237,7 @@ public class JSONObjectWrapper
     @Override
     public int hashCode()
     {
-        return m_jsonObj.hashCode();
+        return jsonObj.hashCode();
     }
 
 }

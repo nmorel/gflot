@@ -61,4 +61,13 @@ public class LineSeriesOptions
         return getBoolean( STEPS_KEY );
     }
 
+    /**
+     * Clear the steps option
+     */
+    public LineSeriesOptions clearSteps()
+    {
+        clear( STEPS_KEY );
+        return this;
+    }
+
 }

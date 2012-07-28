@@ -119,6 +119,15 @@ public class PlotOptions
     }
 
     /**
+     * Clear the default color theme
+     */
+    public PlotOptions clearDefaultColorTheme()
+    {
+        clear( COLORS_KEY );
+        return this;
+    }
+
+    /**
      * Set the legend options
      */
     public PlotOptions setLegendOptions( LegendOptions legendOptions )

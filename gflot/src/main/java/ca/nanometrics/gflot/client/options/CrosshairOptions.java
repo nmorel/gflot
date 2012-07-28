@@ -100,6 +100,15 @@ public class CrosshairOptions
     }
 
     /**
+     * Clear the mode
+     */
+    public CrosshairOptions clearMode()
+    {
+        clear( MODE_KEY );
+        return this;
+    }
+
+    /**
      * Set the color of the crosshair. Default is "rgba(170, 0, 0, 0.80)"
      */
     public CrosshairOptions setColor( String color )
@@ -117,6 +126,15 @@ public class CrosshairOptions
     }
 
     /**
+     * Clear the color
+     */
+    public CrosshairOptions clearColor()
+    {
+        clear( COLOR_KEY );
+        return this;
+    }
+
+    /**
      * Set the width of the drawn lines. Default is 1.
      */
     public CrosshairOptions setLineWidth( double width )
@@ -131,5 +149,14 @@ public class CrosshairOptions
     public Double getLineWidth()
     {
         return getDouble( LINE_WIDTH_KEY );
+    }
+
+    /**
+     * Clear the width of the drawn lines
+     */
+    public CrosshairOptions clearLineWidth()
+    {
+        clear( LINE_WIDTH_KEY );
+        return this;
     }
 }

@@ -39,9 +39,9 @@ import com.google.gwt.json.client.JSONValue;
 public class JSONArrayWrapper
     extends JSONWrapper
 {
-    private final JSONArray m_jsonArray;
+    private final JSONArray jsonArray;
 
-    private int m_currentIndex;
+    private int currentIndex;
 
     private static native void shiftJavaScriptArray( JavaScriptObject arrayObject )
     /*-{
@@ -55,8 +55,8 @@ public class JSONArrayWrapper
 
     protected JSONArrayWrapper()
     {
-        m_jsonArray = new JSONArray();
-        m_currentIndex = -1;
+        jsonArray = new JSONArray();
+        currentIndex = -1;
     }
 
     protected JSONArrayWrapper( JSONArrayWrapper array )
@@ -70,8 +70,8 @@ public class JSONArrayWrapper
 
     protected JSONArrayWrapper( JSONArray array )
     {
-        m_jsonArray = array;
-        m_currentIndex = m_jsonArray.size() - 1;
+        jsonArray = array;
+        currentIndex = jsonArray.size() - 1;
     }
 
     protected void set( int index, String value )
@@ -91,7 +91,7 @@ public class JSONArrayWrapper
         {
             val = new JSONString( value );
         }
-        set( ++m_currentIndex, val );
+        set( ++currentIndex, val );
     }
 
     protected void pushAll( String[] values )
@@ -119,7 +119,7 @@ public class JSONArrayWrapper
         {
             val = new JSONNumber( value.doubleValue() );
         }
-        set( ++m_currentIndex, val );
+        set( ++currentIndex, val );
     }
 
     protected void pushAll( Number[] values )
@@ -137,7 +137,7 @@ public class JSONArrayWrapper
 
     protected void push( boolean value )
     {
-        set( ++m_currentIndex, JSONBoolean.getInstance( value ) );
+        set( ++currentIndex, JSONBoolean.getInstance( value ) );
     }
 
     protected void pushAll( boolean[] values )
@@ -165,7 +165,7 @@ public class JSONArrayWrapper
         {
             val = value.getWrappedObj();
         }
-        set( ++m_currentIndex, val );
+        set( ++currentIndex, val );
     }
 
     protected void pushAll( JSONWrapper[] values )
@@ -178,10 +178,10 @@ public class JSONArrayWrapper
 
     protected void set( int index, JSONValue value )
     {
-        m_jsonArray.set( index, value );
-        if ( index > m_currentIndex )
+        jsonArray.set( index, value );
+        if ( index > currentIndex )
         {
-            m_currentIndex = index;
+            currentIndex = index;
         }
     }
 
@@ -240,29 +240,29 @@ public class JSONArrayWrapper
 
     protected JSONValue get( int index )
     {
-        return m_jsonArray.get( index );
+        return jsonArray.get( index );
     }
 
     protected int size()
     {
-        return m_jsonArray.size();
+        return jsonArray.size();
     }
 
     protected JSONValue getWrappedObj()
     {
-        return m_jsonArray;
+        return jsonArray;
     }
 
     protected void shift()
     {
-        shiftJavaScriptArray( m_jsonArray.getJavaScriptObject() );
-        m_currentIndex = m_jsonArray.size() - 1;
+        shiftJavaScriptArray( jsonArray.getJavaScriptObject() );
+        currentIndex = jsonArray.size() - 1;
     }
 
     protected void clear()
     {
-        clearJavaScriptArray( m_jsonArray.getJavaScriptObject() );
-        m_currentIndex = -1;
+        clearJavaScriptArray( jsonArray.getJavaScriptObject() );
+        currentIndex = -1;
     }
 
     protected JSONArrayWrapper _slice( int start, int end )
@@ -283,7 +283,7 @@ public class JSONArrayWrapper
 
     public String toString()
     {
-        return m_jsonArray.toString();
+        return jsonArray.toString();
     }
 
     @Override
@@ -295,7 +295,7 @@ public class JSONArrayWrapper
         }
         if ( obj instanceof JSONArrayWrapper )
         {
-            return m_jsonArray.equals( ( (JSONArrayWrapper) obj ).m_jsonArray );
+            return jsonArray.equals( ( (JSONArrayWrapper) obj ).jsonArray );
         }
         return false;
     }
@@ -303,6 +303,6 @@ public class JSONArrayWrapper
     @Override
     public int hashCode()
     {
-        return m_jsonArray.hashCode();
+        return jsonArray.hashCode();
     }
 }

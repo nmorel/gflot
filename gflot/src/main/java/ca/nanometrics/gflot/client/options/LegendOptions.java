@@ -122,6 +122,15 @@ public class LegendOptions
     }
 
     /**
+     * Clear if the legend is shown or not
+     */
+    public LegendOptions clearShow()
+    {
+        clear( SHOW_KEY );
+        return this;
+    }
+
+    /**
      * Set the border color of the label box.
      */
     public LegendOptions setLabelBoxBorderColor( String cssColor )
@@ -136,6 +145,15 @@ public class LegendOptions
     public String getLabelBoxBorderColor()
     {
         return getString( LABEL_BOX_BORDER_COLOR_KEY );
+    }
+
+    /**
+     * Clear the border color of the label box
+     */
+    public LegendOptions clearLabelBoxBorderColor()
+    {
+        clear( LABEL_BOX_BORDER_COLOR_KEY );
+        return this;
     }
 
     /**
@@ -156,6 +174,15 @@ public class LegendOptions
     }
 
     /**
+     * Clear the number of columns to divide the legend table into
+     */
+    public LegendOptions clearNumOfColumns()
+    {
+        clear( NUM_COLUMNS_KEY );
+        return this;
+    }
+
+    /**
      * Set the overall placement of the legend within the plot (LegendPosition.NORTH_EAST, LegendPosition.NORTH_WEST,
      * LegendPosition.SOUTH_EAST or LegendPosition.SOUTH_WEST). By default, the placement is LegendPosition.NORTH_EAST.
      */
@@ -173,6 +200,15 @@ public class LegendOptions
     public LegendPosition getPosition()
     {
         return LegendPosition.findByFlotValue( getString( POSITION_KEY ) );
+    }
+
+    /**
+     * Clear the position
+     */
+    public LegendOptions clearPosition()
+    {
+        clear( POSITION_KEY );
+        return this;
     }
 
     /**
@@ -218,6 +254,15 @@ public class LegendOptions
     }
 
     /**
+     * Clear the margin
+     */
+    public LegendOptions clearMargin()
+    {
+        clear( MARGIN_KEY );
+        return this;
+    }
+
+    /**
      * Set the background color
      */
     public LegendOptions setBackgroundColor( String cssColor )
@@ -232,6 +277,15 @@ public class LegendOptions
     public String getBackgroundColor()
     {
         return getString( BACKGROUND_COLOR_KEY );
+    }
+
+    /**
+     * Clear the background color
+     */
+    public LegendOptions clearBackgroundColor()
+    {
+        clear( BACKGROUND_COLOR_KEY );
+        return this;
     }
 
     /**
@@ -254,6 +308,15 @@ public class LegendOptions
     }
 
     /**
+     * Clear the background opacity
+     */
+    public LegendOptions clearBackgroundOpacity()
+    {
+        clear( BACKGROUND_OPACITY_KEY );
+        return this;
+    }
+
+    /**
      * Set a custom container to put the legend table into. The "position" and "margin" etc. options will then be
      * ignored. Note that Flot will overwrite the contents of the container.
      */
@@ -268,6 +331,15 @@ public class LegendOptions
             container.setId( id );
         }
         put( CONTAINER_KEY, "#" + id );
+        return this;
+    }
+
+    /**
+     * Clear the container
+     */
+    public LegendOptions clearContainer()
+    {
+        clear( CONTAINER_KEY );
         return this;
     }
 
@@ -290,4 +362,13 @@ public class LegendOptions
 			return labelFormatter.@ca.nanometrics.gflot.client.options.LegendOptions.LabelFormatter::formatLabel(Ljava/lang/String;Lca/nanometrics/gflot/client/Series;)(label, javaSeriesObject);
 		};
     }-*/;
+
+    /**
+     * Clear the legend formatter
+     */
+    public LegendOptions clearLabelFormatter()
+    {
+        clear( "labelFormatter" );
+        return this;
+    }
 }

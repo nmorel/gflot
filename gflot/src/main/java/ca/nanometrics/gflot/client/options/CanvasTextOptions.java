@@ -47,6 +47,15 @@ public class CanvasTextOptions
         }
 
         /**
+         * Clear if the line breaks option is activated
+         */
+        public LineBreaksOptions clearShow()
+        {
+            clear( SHOW_KEY );
+            return this;
+        }
+
+        /**
          * Set the margin top
          */
         public LineBreaksOptions setMarginTop( int marginTop )
@@ -61,6 +70,15 @@ public class CanvasTextOptions
         public Integer getMarginTop()
         {
             return getInteger( MARGIN_TOP_KEY );
+        }
+
+        /**
+         * Clear the margin top
+         */
+        public LineBreaksOptions clearMarginTop()
+        {
+            clear( MARGIN_TOP_KEY );
+            return this;
         }
 
         /**
@@ -81,6 +99,15 @@ public class CanvasTextOptions
         }
 
         /**
+         * Clear the margin bottom
+         */
+        public LineBreaksOptions clearMarginBottom()
+        {
+            clear( MARGIN_BOTTOM_KEY );
+            return this;
+        }
+
+        /**
          * Set the line spacing
          */
         public LineBreaksOptions setLineSpacing( int lineSpacing )
@@ -95,6 +122,15 @@ public class CanvasTextOptions
         public Integer getLineSpacing()
         {
             return getInteger( LINE_SPACING_KEY );
+        }
+
+        /**
+         * Clear the line spacing
+         */
+        public LineBreaksOptions clearLineSpacing()
+        {
+            clear( LINE_SPACING_KEY );
+            return this;
         }
     }
 
@@ -133,6 +169,15 @@ public class CanvasTextOptions
     }
 
     /**
+     * Clear if the canvas text plugin is activated
+     */
+    public CanvasTextOptions clearShow()
+    {
+        clear( SHOW_KEY );
+        return this;
+    }
+
+    /**
      * Set the font size. Default is "8px"
      */
     public CanvasTextOptions setFontSize( String fontSize )
@@ -152,6 +197,15 @@ public class CanvasTextOptions
             return null;
         }
         return font.substring( FONT.length() );
+    }
+
+    /**
+     * Clear the font size
+     */
+    public CanvasTextOptions clearFontSize()
+    {
+        clear( FONT_KEY );
+        return this;
     }
 
     /**
@@ -177,6 +231,15 @@ public class CanvasTextOptions
     }
 
     /**
+     * Clear the series font size
+     */
+    public CanvasTextOptions clearSeriesFontSize()
+    {
+        clear( SERIES_FONT_KEY );
+        return this;
+    }
+
+    /**
      * Set the series to plot Y-AXIS values on the graph
      */
     public CanvasTextOptions setSeries( Integer[] series )
@@ -191,6 +254,15 @@ public class CanvasTextOptions
     public Integer[] getSeries()
     {
         return getIntegerArray( SERIES_KEY );
+    }
+
+    /**
+     * Clear the series to plot Y-AXIS values on the graph
+     */
+    public CanvasTextOptions clearSeries()
+    {
+        clear( SERIES_KEY );
+        return this;
     }
 
     /**

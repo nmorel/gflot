@@ -75,6 +75,15 @@ public class ImageSeriesOptions
     }
 
     /**
+     * Clear the anchor
+     */
+    public ImageSeriesOptions clearAnchor()
+    {
+        clear( ANCHOR_KEY );
+        return this;
+    }
+
+    /**
      * Set the image alpha
      */
     public ImageSeriesOptions setAlpha( double alpha )
@@ -91,6 +100,15 @@ public class ImageSeriesOptions
     public Double getAlpha()
     {
         return getDouble( ALPHA_KEY );
+    }
+
+    /**
+     * Clear the image alpha
+     */
+    public ImageSeriesOptions clearAlpha()
+    {
+        clear( ALPHA_KEY );
+        return this;
     }
 
 }

@@ -97,6 +97,15 @@ public class BarSeriesOptions
     }
 
     /**
+     * Clear the bar width
+     */
+    public BarSeriesOptions clearBarWidth()
+    {
+        clear( BAR_WIDTH_KEY );
+        return this;
+    }
+
+    /**
      * Set whether a bar should be left-aligned (default) or centered on top of the value it represents.
      */
     public BarSeriesOptions setAlignment( BarAlignment alignment )
@@ -116,6 +125,15 @@ public class BarSeriesOptions
     }
 
     /**
+     * Clear the bar alignment
+     */
+    public BarSeriesOptions clearAlignment()
+    {
+        clear( ALIGN_KEY );
+        return this;
+    }
+
+    /**
      * Set if the bars are drawn horizontally, i.e. from the y axis instead of the x axis; note that the bar end points
      * are still defined in the same way so you'll probably want to swap the coordinates if you've been plotting
      * vertical bars first.
@@ -132,5 +150,14 @@ public class BarSeriesOptions
     public Boolean getHorizontal()
     {
         return getBoolean( HORIZONTAL_KEY );
+    }
+
+    /**
+     * Clear if the bars are drawn horizontally
+     */
+    public BarSeriesOptions clearHorizontal()
+    {
+        clear( HORIZONTAL_KEY );
+        return this;
     }
 }

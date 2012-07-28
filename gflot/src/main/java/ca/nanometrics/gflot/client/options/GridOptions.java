@@ -101,6 +101,15 @@ public class GridOptions
     }
 
     /**
+     * Clear the color of the grid
+     */
+    public GridOptions clearColor()
+    {
+        clear( COLOR_KEY );
+        return this;
+    }
+
+    /**
      * Set the background color inside the grid area. null (default) means that the background is transparent.
      */
     public GridOptions setBackgroundColor( String color )
@@ -114,7 +123,8 @@ public class GridOptions
      */
     public GridOptions setBackgroundColor( String fromColor, String toColor )
     {
-        put( BACKGROUND_COLOR_KEY, JSONHelper.wrapArrayIntoObject( BACKGROUND_COLORS_KEY, new String[] { fromColor, toColor } ) );
+        put( BACKGROUND_COLOR_KEY,
+            JSONHelper.wrapArrayIntoObject( BACKGROUND_COLORS_KEY, new String[] { fromColor, toColor } ) );
         return this;
     }
 
@@ -148,6 +158,15 @@ public class GridOptions
     }
 
     /**
+     * Clear the background color inside the grid area
+     */
+    public GridOptions clearBackgroundColor()
+    {
+        clear( BACKGROUND_COLOR_KEY );
+        return this;
+    }
+
+    /**
      * Set if the whole grid including tick labels should be shown.
      */
     public GridOptions setShow( boolean show )
@@ -162,6 +181,15 @@ public class GridOptions
     public Boolean getShow()
     {
         return getBoolean( SHOW_KEY );
+    }
+
+    /**
+     * Clear if the grid is visible or not
+     */
+    public GridOptions clearShow()
+    {
+        clear( SHOW_KEY );
+        return this;
     }
 
     /**
@@ -182,6 +210,15 @@ public class GridOptions
     }
 
     /**
+     * Clear the above data option
+     */
+    public GridOptions clearAboveData()
+    {
+        clear( ABOVE_DATA_KEY );
+        return this;
+    }
+
+    /**
      * Set the space in pixels between tick labels and axis line
      */
     public GridOptions setLabelMargin( int labelMargin )
@@ -199,6 +236,15 @@ public class GridOptions
     }
 
     /**
+     * Clear the space in pixels between tick labels and axis line
+     */
+    public GridOptions clearLabelMargin()
+    {
+        clear( LABEL_MARGIN_KEY );
+        return this;
+    }
+
+    /**
      * Set the space in pixels between axes when there are two next to each other
      */
     public GridOptions setAxisMargin( int axisMargin )
@@ -213,6 +259,15 @@ public class GridOptions
     public Integer getAxisMargin()
     {
         return getInteger( AXIS_MARGIN_KEY );
+    }
+
+    /**
+     * Clear the space in pixels between axes when there are two next to each other
+     */
+    public GridOptions clearAxisMargin()
+    {
+        clear( AXIS_MARGIN_KEY );
+        return this;
     }
 
     /**
@@ -258,6 +313,15 @@ public class GridOptions
     }
 
     /**
+     * Clear the markings color
+     */
+    public GridOptions clearMarkingsColor()
+    {
+        clear( MARKINGS_COLOR_KEY );
+        return this;
+    }
+
+    /**
      * Sets the line width of all markings. Specific line width can be defined in Marking object
      */
     public GridOptions setMarkingsLineWidth( int lineWidth )
@@ -272,6 +336,15 @@ public class GridOptions
     public Integer getMarkingsLineWidth()
     {
         return getInteger( MARKINGS_LINE_WIDTH_KEY );
+    }
+
+    /**
+     * Clear the markings line width
+     */
+    public GridOptions clearMarkingsLineWidth()
+    {
+        clear( MARKINGS_LINE_WIDTH_KEY );
+        return this;
     }
 
     /**
@@ -294,6 +367,15 @@ public class GridOptions
     }
 
     /**
+     * Clear the border's width
+     */
+    public GridOptions clearBorderWidth()
+    {
+        clear( BORDER_WIDTH_KEY );
+        return this;
+    }
+
+    /**
      * Set the color of the border. By default, it's the same color than the grid lines.
      */
     public GridOptions setBorderColor( String borderColor )
@@ -308,6 +390,15 @@ public class GridOptions
     public String getBorderColor()
     {
         return getString( BORDER_COLOR_KEY );
+    }
+
+    /**
+     * Clear the color of the border
+     */
+    public GridOptions clearBorderColor()
+    {
+        clear( BORDER_COLOR_KEY );
+        return this;
     }
 
     /**
@@ -331,6 +422,15 @@ public class GridOptions
     }
 
     /**
+     * Clear the default minimum margin around the border
+     */
+    public GridOptions clearMinBorderMargin()
+    {
+        clear( MIN_BORDER_MARGIN_KEY );
+        return this;
+    }
+
+    /**
      * Set if the plot will listen for click events on the plot area. Add a PlotClickListener to the plot to listen to
      * the event.
      */
@@ -346,6 +446,15 @@ public class GridOptions
     public Boolean getClickable()
     {
         return getBoolean( CLICKABLE_KEY );
+    }
+
+    /**
+     * Clear the clickable option
+     */
+    public GridOptions clearClickable()
+    {
+        clear( CLICKABLE_KEY );
+        return this;
     }
 
     /**
@@ -367,6 +476,15 @@ public class GridOptions
     }
 
     /**
+     * Clear the hoverable option
+     */
+    public GridOptions clearHoverable()
+    {
+        clear( HOVERABLE_KEY );
+        return this;
+    }
+
+    /**
      * Set if nearby data items are highlighted automatically (default is true)
      */
     public GridOptions setAutoHighlight( boolean autoHighlight )
@@ -381,6 +499,15 @@ public class GridOptions
     public Boolean getAutoHighlight()
     {
         return getBoolean( AUTO_HIGHLIGHT_KEY );
+    }
+
+    /**
+     * Clear the auto highlight option
+     */
+    public GridOptions clearAutoHighlight()
+    {
+        clear( AUTO_HIGHLIGHT_KEY );
+        return this;
     }
 
     /**
@@ -400,6 +527,15 @@ public class GridOptions
     public Integer getMouseActiveRadius()
     {
         return getInteger( MOUSE_ACTIVE_RADIUS_KEY );
+    }
+
+    /**
+     * Clear the mouse active radius
+     */
+    public GridOptions clearMouseActiveRadius()
+    {
+        clear( MOUSE_ACTIVE_RADIUS_KEY );
+        return this;
     }
 
     /**

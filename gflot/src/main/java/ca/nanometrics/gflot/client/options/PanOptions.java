@@ -34,11 +34,9 @@ public class PanOptions
     extends JSONObjectWrapper
 {
 
-    public static final String INTERACTIVE = "interactive";
-
-    public static final String CURSOR = "cursor";
-
-    public static final String FRAME_RATE = "frameRate";
+    private static final String INTERACTIVE_KEY = "interactive";
+    private static final String CURSOR_KEY = "cursor";
+    private static final String FRAME_RATE_KEY = "frameRate";
 
     public PanOptions()
     {
@@ -55,7 +53,7 @@ public class PanOptions
      */
     public PanOptions setInteractive( boolean value )
     {
-        put( INTERACTIVE, value );
+        put( INTERACTIVE_KEY, value );
         return this;
     }
 
@@ -64,7 +62,7 @@ public class PanOptions
      */
     public boolean isInteractive()
     {
-        Boolean interactive = getBoolean( INTERACTIVE );
+        Boolean interactive = getBoolean( INTERACTIVE_KEY );
         if ( interactive == null )
         {
             return false;
@@ -74,11 +72,20 @@ public class PanOptions
     }
 
     /**
+     * Clear the interactive option
+     */
+    public PanOptions clearInteractive()
+    {
+        clear( INTERACTIVE_KEY );
+        return this;
+    }
+
+    /**
      * Sets a standard CSS mouse cursor string used for visual feedback to the user when dragging.
      */
     public PanOptions setCursor( String value )
     {
-        put( CURSOR, value );
+        put( CURSOR_KEY, value );
         return this;
     }
 
@@ -87,7 +94,16 @@ public class PanOptions
      */
     public String getCursor()
     {
-        return getString( CURSOR );
+        return getString( CURSOR_KEY );
+    }
+
+    /**
+     * Clear the cursor option
+     */
+    public PanOptions clearCursor()
+    {
+        clear( CURSOR_KEY );
+        return this;
     }
 
     /**
@@ -97,7 +113,7 @@ public class PanOptions
      */
     public PanOptions setFrameRate( int value )
     {
-        put( FRAME_RATE, value );
+        put( FRAME_RATE_KEY, value );
         return this;
     }
 
@@ -108,6 +124,15 @@ public class PanOptions
      */
     public Integer getFrameRate()
     {
-        return getInteger( FRAME_RATE );
+        return getInteger( FRAME_RATE_KEY );
+    }
+
+    /**
+     * Clear the framerate option
+     */
+    public PanOptions clearFrameRate()
+    {
+        clear( FRAME_RATE_KEY );
+        return this;
     }
 }

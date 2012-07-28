@@ -93,6 +93,15 @@ public class PointsSeriesOptions
     }
 
     /**
+     * Clear the radius of the symbol
+     */
+    public PointsSeriesOptions clearRadius()
+    {
+        clear( RADIUS_KEY );
+        return this;
+    }
+
+    /**
      * Set the symbol to represents the points
      */
     public PointsSeriesOptions setSymbol( PointSymbol symbol )
@@ -109,6 +118,15 @@ public class PointsSeriesOptions
     public PointSymbol getSymbol()
     {
         return PointSymbol.findByFlotValue( getString( SYMBOL_KEY ) );
+    }
+
+    /**
+     * Clear the symbol
+     */
+    public PointsSeriesOptions clearSymbol()
+    {
+        clear( SYMBOL_KEY );
+        return this;
     }
 
 }

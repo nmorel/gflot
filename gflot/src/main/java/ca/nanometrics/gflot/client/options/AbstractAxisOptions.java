@@ -158,6 +158,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     }
 
     /**
+     * Clear the visibility of the axis
+     */
+    public T clearShow()
+    {
+        clear( SHOW_KEY );
+        return (T) this;
+    }
+
+    /**
      * Set the overall placement of the legend within the plot ({@link AxisPosition#BOTTOM BOTTOM},
      * {@link AxisPosition#TOP TOP}, {@link AxisPosition#LEFT LEFT}, {@link AxisPosition#RIGHT RIGHT}). By default, the
      * placement is {@link AxisPosition#BOTTOM BOTTOM} for x axis and {@link AxisPosition#LEFT LEFT} for y axis.
@@ -176,6 +185,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     public AxisPosition getPosition()
     {
         return AxisPosition.findByFlotValue( getString( POSITION_KEY ) );
+    }
+
+    /**
+     * Clear the overall placement of the legend within the plot
+     */
+    public T clearPosition()
+    {
+        clear( POSITION_KEY );
+        return (T) this;
     }
 
     /**
@@ -198,6 +216,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     }
 
     /**
+     * Clear the color of the labels and ticks for the axis
+     */
+    public T clearColor()
+    {
+        clear( COLOR_KEY );
+        return (T) this;
+    }
+
+    /**
      * Set the color of the ticks. By default, it's the color of the label with some transparency.
      */
     public T setTickColor( String tickColor )
@@ -212,6 +239,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     public String getTickColor()
     {
         return getString( TICK_COLOR_KEY );
+    }
+
+    /**
+     * Clear the color of the ticks
+     */
+    public T clearTickColor()
+    {
+        clear( TICK_COLOR_KEY );
+        return (T) this;
     }
 
     /**
@@ -234,6 +270,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     }
 
     /**
+     * Clear the precise minimum value on the scale
+     */
+    public T clearMinimum()
+    {
+        clear( MIN_KEY );
+        return (T) this;
+    }
+
+    /**
      * Set the precise maximum value on the scale. If you don't specify it, a value will automatically be chosen based
      * on the maximum data values. Note that Flot always examines all the data values you feed to it, even if a
      * restriction on another axis may make some of them invisible (this makes interactive use more stable).
@@ -250,6 +295,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     public Double getMaximum()
     {
         return getDouble( MAX_KEY );
+    }
+
+    /**
+     * Clear the precise maximum value on the scale
+     */
+    public T clearMaximum()
+    {
+        clear( MAX_KEY );
+        return (T) this;
     }
 
     /**
@@ -275,6 +329,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     public Double getAutoscaleMargin()
     {
         return getDouble( AUTOSCALE_MARGIN_KEY );
+    }
+
+    /**
+     * Clear the autoscaleMargin
+     */
+    public T clearAutoscaleMargin()
+    {
+        clear( AUTOSCALE_MARGIN_KEY );
+        return (T) this;
     }
 
     /**
@@ -315,13 +378,23 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
 
     private static native void setTransformNative( JavaScriptObject axisOptions, TransformAxis transform )
     /*-{
-		axisOptions.transform = function(val) {
-			return transform.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TransformAxis::transform(D)(val);
-		};
-		axisOptions.inverseTransform = function(val) {
-			return transform.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TransformAxis::inverseTransform(D)(val);
-		};
+    	axisOptions.transform = function(val) {
+    		return transform.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TransformAxis::transform(D)(val);
+    	};
+    	axisOptions.inverseTransform = function(val) {
+    		return transform.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TransformAxis::inverseTransform(D)(val);
+    	};
     }-*/;
+
+    /**
+     * Clear the transform generator
+     */
+    public T clearTransform()
+    {
+        clear( "transform" );
+        clear( "inverseTransform" );
+        return (T) this;
+    }
 
     /**
      * Set a fixed width on the tick label in pixels.
@@ -338,6 +411,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     public Double getLabelWidth()
     {
         return getDouble( LABEL_WIDTH_KEY );
+    }
+
+    /**
+     * Clear the width on the tick label
+     */
+    public T clearLabelWidth()
+    {
+        clear( LABEL_WIDTH_KEY );
+        return (T) this;
     }
 
     /**
@@ -358,6 +440,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     }
 
     /**
+     * Clear the height on the tick label
+     */
+    public T clearLabelHeight()
+    {
+        clear( LABEL_HEIGHT_KEY );
+        return (T) this;
+    }
+
+    /**
      * Set if Flot should reserve space for axis even if it's not shown. It is useful in combination with labelWidth and
      * labelHeight for aligning multi-axis charts.
      */
@@ -373,6 +464,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     public Boolean getReserveSpace()
     {
         return getBoolean( RESERVE_SPACE_KEY );
+    }
+
+    /**
+     * Clear the reserve space
+     */
+    public T clearReserveSpace()
+    {
+        clear( RESERVE_SPACE_KEY );
+        return (T) this;
     }
 
     /**
@@ -435,17 +535,26 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
 
     private static native void setTickGeneratorNative( JavaScriptObject axisOptions, TickGenerator generator )
     /*-{
-		axisOptions.ticks = function(axis) {
-			var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
-			var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
+    	axisOptions.ticks = function(axis) {
+    		var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
+    		var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
 
-			var generated = generator.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TickGenerator::generate(Lca/nanometrics/gflot/client/Axis;)(javaAxisObject);
+    		var generated = generator.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TickGenerator::generate(Lca/nanometrics/gflot/client/Axis;)(javaAxisObject);
 
-			var jsonArrayWrapper = @ca.nanometrics.gflot.client.util.JSONHelper::wrapArray([Lca/nanometrics/gflot/client/util/JSONWrapper;)(generated);
-			var jsonArray = @ca.nanometrics.gflot.client.util.JSONHelper::getJSONArray(Lca/nanometrics/gflot/client/util/JSONArrayWrapper;)(jsonArrayWrapper);
-			return jsonArray.@com.google.gwt.json.client.JSONArray::getJavaScriptObject()();
-		};
+    		var jsonArrayWrapper = @ca.nanometrics.gflot.client.util.JSONHelper::wrapArray([Lca/nanometrics/gflot/client/util/JSONWrapper;)(generated);
+    		var jsonArray = @ca.nanometrics.gflot.client.util.JSONHelper::getJSONArray(Lca/nanometrics/gflot/client/util/JSONArrayWrapper;)(jsonArrayWrapper);
+    		return jsonArray.@com.google.gwt.json.client.JSONArray::getJavaScriptObject()();
+    	};
     }-*/;
+
+    /**
+     * Clear the ticks
+     */
+    public T clearTicks()
+    {
+        clear( TICKS_KEY );
+        return (T) this;
+    }
 
     /**
      * Set the tick formatter.
@@ -458,12 +567,21 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
 
     private static native void setTickFormatterNative( JavaScriptObject axisOptions, TickFormatter tickFormatter )
     /*-{
-		axisOptions.tickFormatter = function(val, axis) {
-			var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
-			var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
-			return tickFormatter.@ca.nanometrics.gflot.client.options.TickFormatter::formatTickValue(DLca/nanometrics/gflot/client/Axis;)(val, javaAxisObject);
-		};
+    	axisOptions.tickFormatter = function(val, axis) {
+    		var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
+    		var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
+    		return tickFormatter.@ca.nanometrics.gflot.client.options.TickFormatter::formatTickValue(DLca/nanometrics/gflot/client/Axis;)(val, javaAxisObject);
+    	};
     }-*/;
+
+    /**
+     * Clear the tick formatter
+     */
+    public T clearTickFormatter()
+    {
+        clear( "tickFormatter" );
+        return (T) this;
+    }
 
     /**
      * Set the length of the tick lines in pixels. By default, the innermost axes will have ticks that extend all across
@@ -482,6 +600,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     public Double getTickLength()
     {
         return getDouble( TICK_LENGTH_KEY );
+    }
+
+    /**
+     * Clear the length of the tick lines
+     */
+    public T clearTickLength()
+    {
+        clear( TICK_LENGTH_KEY );
+        return (T) this;
     }
 
     /**
@@ -505,6 +632,33 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     }
 
     /**
+     * Clear the number of the axis aligned with this one
+     */
+    public T clearAlignTicksWithAxis()
+    {
+        clear( ALIGN_TICKS_KEY );
+        return (T) this;
+    }
+
+    /**
+     * Clear the tick size
+     */
+    public T clearTickSize()
+    {
+        clear( TICK_SIZE_KEY );
+        return (T) this;
+    }
+
+    /**
+     * Clear the minimum tick size key
+     */
+    public T clearMinTickSize()
+    {
+        clear( MIN_TICK_SIZE_KEY );
+        return (T) this;
+    }
+
+    /**
      * Set the label of the axis
      */
     public T setLabel( String label )
@@ -522,6 +676,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     }
 
     /**
+     * Clear the label
+     */
+    public T clearLabel()
+    {
+        clear( AXIS_LABEL_KEY );
+        return (T) this;
+    }
+
+    /**
      * Set the padding, in pixels, between the tick labels and the axis label (default: 2)
      */
     public T setLabelPadding( int labelPadding )
@@ -536,6 +699,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     public Integer getLabelPadding()
     {
         return getInteger( AXIS_LABEL_PADDING_KEY );
+    }
+
+    /**
+     * Clear the padding between the tick labels and the aixs label
+     */
+    public T clearLabelPadding()
+    {
+        clear( AXIS_LABEL_PADDING_KEY );
+        return (T) this;
     }
 
     /**
@@ -585,6 +757,16 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     }
 
     /**
+     * Clear the axis label rendering mode
+     */
+    public T clearLabelRenderingMode()
+    {
+        clear( AXIS_LABEL_RENDERING_MODE_CANVAS_KEY );
+        clear( AXIS_LABEL_RENDERING_MODE_HTML_KEY );
+        return (T) this;
+    }
+
+    /**
      * Set the font family of the font (default: sans-serif). Only the canvas mode supports this option.
      */
     public T setLabelFontFamily( String label )
@@ -602,6 +784,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     }
 
     /**
+     * Clear the font family
+     */
+    public T clearLabelFontFamily()
+    {
+        clear( AXIS_LABEL_CANVAS_FONT_FAMILY_KEY );
+        return (T) this;
+    }
+
+    /**
      * Set the size, in pixels, of the font (default: 14). Only the canvas mode supports this option.
      */
     public T setLabelFontSize( int labelPadding )
@@ -616,6 +807,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     public Integer getLabelFontSize()
     {
         return getInteger( AXIS_LABEL_CANVAS_FONT_SIZE_KEY );
+    }
+
+    /**
+     * Clear the size of the font
+     */
+    public T clearLabelFontSize()
+    {
+        clear( AXIS_LABEL_CANVAS_FONT_SIZE_KEY );
+        return (T) this;
     }
 
     /**
@@ -669,6 +869,15 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     }
 
     /**
+     * Clear the zoom range
+     */
+    public T clearZoomRange()
+    {
+        clear( ZOOM_RANGE_KEY );
+        return (T) this;
+    }
+
+    /**
      * Sets the property of PanRange to false to disable it
      */
     public T setPanRange( boolean panEnabled )
@@ -716,5 +925,14 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         }
 
         return null;
+    }
+
+    /**
+     * Clear the pan range
+     */
+    public T clearPanRange()
+    {
+        clear( PAN_RANGE_KEY );
+        return (T) this;
     }
 }

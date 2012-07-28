@@ -45,6 +45,15 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
     }
 
     /**
+     * Clear the thickness of the line or outline
+     */
+    public T clearLineWidth()
+    {
+        clear( LINE_WIDTH_KEY );
+        return (T) this;
+    }
+
+    /**
      * Set if the shape should be filled. For lines, this produces area graphs. You can use setFillColor "fillColor" to
      * specify the color of the fill.
      */
@@ -79,6 +88,15 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
     public Double getFillOpacity()
     {
         return getDouble( FILL_KEY );
+    }
+
+    /**
+     * Clear the fill property and/or opacity
+     */
+    public T clearFill()
+    {
+        clear( FILL_KEY );
+        return (T) this;
     }
 
     /**
@@ -129,5 +147,14 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
         {
             return new SeriesGradient( obj );
         }
+    }
+
+    /**
+     * Clear the fill color
+     */
+    public T clearFillColor()
+    {
+        clear( FILL_COLOR_KEY );
+        return (T) this;
     }
 }
