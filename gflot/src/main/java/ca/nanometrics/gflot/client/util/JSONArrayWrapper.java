@@ -68,7 +68,7 @@ public class JSONArrayWrapper
         }
     }
 
-    protected JSONArrayWrapper( JSONArray array )
+    public JSONArrayWrapper( JSONArray array )
     {
         jsonArray = array;
         currentIndex = jsonArray.size() - 1;

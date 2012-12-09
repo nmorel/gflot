@@ -19,34 +19,40 @@
  *	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *	THE SOFTWARE.
  */
-package ca.nanometrics.gflot.client;
-
-/**
- * @author Alexander De Leon
- */
-public class FixedSizeSeriesData extends SeriesData {
-	private final int m_capacity;
-
-	public FixedSizeSeriesData(int capacity) {
-		m_capacity = capacity;
-	}
-
-	@Override
-	public void add(DataPoint dataPoint) {
-		int currentSize = size();
-		if (currentSize + 1 > m_capacity) {
-			// Shift all of the values down one position
-			shiftDown();
-			super.set(currentSize - 1, dataPoint);
-		} else {
-			super.add(dataPoint);
-		}
-	}
-
-	private void shiftDown() {
-		int currentSize = size();
-		for (int i = 0; i < currentSize - 1; i++) {
-			set(i, get(i + 1));
-		}
-	}
-}
+//FIXME overlay
+//package ca.nanometrics.gflot.client;
+//
+///**
+// * @author Alexander De Leon
+// */
+//public class FixedSizeSeriesData
+//    extends SeriesData
+//{
+//
+//    private final int m_capacity;
+//
+//    public FixedSizeSeriesData( int capacity )
+//    {
+//        m_capacity = capacity;
+//    }
+//
+//    
+//     @Override
+//     public void push(DataPoint dataPoint) {
+//     int currentSize = length();
+//     if (currentSize + 1 > m_capacity) {
+//     // Shift all of the values down one position
+//     shiftDown();
+//     super.set(currentSize - 1, dataPoint);
+//     } else {
+//     super.add(dataPoint);
+//     }
+//     }
+//    
+//     private void shiftDown() {
+//     int currentSize = size();
+//     for (int i = 0; i < currentSize - 1; i++) {
+//     set(i, get(i + 1));
+//     }
+//     }
+// }

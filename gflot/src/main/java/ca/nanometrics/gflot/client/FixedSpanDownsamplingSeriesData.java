@@ -19,37 +19,38 @@
  *	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *	THE SOFTWARE.
  */
-package ca.nanometrics.gflot.client;
-
-/**
- * @author Alexander De Leon
- */
-public class FixedSpanDownsamplingSeriesData extends DownsamplingSeriesData {
-
-	private final long m_maximumSpan;
-
-	public FixedSpanDownsamplingSeriesData(int capacity, long maximumSpan) {
-		super(capacity);
-		m_maximumSpan = maximumSpan;
-	}
-
-	@Override
-	public void add(DataPoint dataPoint) {
-		// The super class will observe the downsampling requirement
-		super.add(dataPoint);
-
-		// Now that the new point has been added, drop any point(s) from the
-		// beginning that are outside the span requirement
-		double lowerXbound = dataPoint.getX() - m_maximumSpan;
-		boolean done = false;
-		while (!done) {
-			double xValue = getX(0);
-			if (xValue < lowerXbound) {
-				super.shift();
-			} else {
-				done = true;
-			}
-		}
-	}
-
-}
+//FIXME overlay
+//package ca.nanometrics.gflot.client;
+//
+///**
+// * @author Alexander De Leon
+// */
+//public class FixedSpanDownsamplingSeriesData extends DownsamplingSeriesData {
+//
+//	private final long m_maximumSpan;
+//
+//	public FixedSpanDownsamplingSeriesData(int capacity, long maximumSpan) {
+//		super(capacity);
+//		m_maximumSpan = maximumSpan;
+//	}
+//
+//	@Override
+//	public void add(DataPoint dataPoint) {
+//		// The super class will observe the downsampling requirement
+//		super.add(dataPoint);
+//
+//		// Now that the new point has been added, drop any point(s) from the
+//		// beginning that are outside the span requirement
+//		double lowerXbound = dataPoint.getX() - m_maximumSpan;
+//		boolean done = false;
+//		while (!done) {
+//			double xValue = getX(0);
+//			if (xValue < lowerXbound) {
+//				super.shift();
+//			} else {
+//				done = true;
+//			}
+//		}
+//	}
+//
+//}

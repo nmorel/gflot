@@ -32,11 +32,10 @@ public abstract class PlotModelStrategy
      */
     public static PlotModelStrategy defaultStrategy()
     {
-        return new PlotModelStrategy()
-        {
+        return new PlotModelStrategy() {
             SeriesData createSeriesData()
             {
-                return new SeriesData();
+                return SeriesData.create();
             }
         };
     }
@@ -48,32 +47,36 @@ public abstract class PlotModelStrategy
 
     public static PlotModelStrategy downSamplingStrategy( final int capacity, final long maximumXValueSpan )
     {
-        return new PlotModelStrategy()
-        {
-            SeriesData createSeriesData()
-            {
-                if ( maximumXValueSpan <= 0 )
-                {
-                    return new DownsamplingSeriesData( capacity );
-                }
-                return new FixedSpanDownsamplingSeriesData( capacity, maximumXValueSpan );
-            }
-        };
+        // FIXME overlay
+        // return new PlotModelStrategy()
+        // {
+        // SeriesData createSeriesData()
+        // {
+        // if ( maximumXValueSpan <= 0 )
+        // {
+        // return new DownsamplingSeriesData( capacity );
+        // }
+        // return new FixedSpanDownsamplingSeriesData( capacity, maximumXValueSpan );
+        // }
+        // };
+        return defaultStrategy();
     }
 
     public static PlotModelStrategy slidingWindowStrategy( final int capacity, final long maximumXValueSpan )
     {
-        return new PlotModelStrategy()
-        {
-            SeriesData createSeriesData()
-            {
-                if ( maximumXValueSpan <= 0 )
-                {
-                    return new FixedSizeSeriesData( capacity );
-                }
-                return new FixedSpanFixedSizeSeriesData( capacity, maximumXValueSpan );
-            }
-        };
+        // FIXME overlay
+        // return new PlotModelStrategy()
+        // {
+        // SeriesData createSeriesData()
+        // {
+        // if ( maximumXValueSpan <= 0 )
+        // {
+        // return new FixedSizeSeriesData( capacity );
+        // }
+        // return new FixedSpanFixedSizeSeriesData( capacity, maximumXValueSpan );
+        // }
+        // };
+        return defaultStrategy();
     }
 
     public static PlotModelStrategy slidingWindowStrategy( final int capacity )

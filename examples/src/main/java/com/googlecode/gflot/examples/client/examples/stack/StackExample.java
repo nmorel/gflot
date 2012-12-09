@@ -76,9 +76,9 @@ public class StackExample
         // add data
         for ( int i = 0; i < 10; i++ )
         {
-            series1.add( new DataPoint( i, Random.nextInt( 30 ) ) );
-            series2.add( new DataPoint( i, Random.nextInt( 30 ) ) );
-            series3.add( new DataPoint( i, Random.nextInt( 30 ) ) );
+            series1.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+            series2.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+            series3.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
         }
 
         // create the plot

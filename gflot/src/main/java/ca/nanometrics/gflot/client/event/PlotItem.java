@@ -57,7 +57,7 @@ public class PlotItem
         {
             return null;
         }
-        return new DataPoint( array );
+        return array.getJavaScriptObject().cast();
     }
 
     /**

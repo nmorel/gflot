@@ -204,7 +204,7 @@ public class SlidingExample
             public void getNewData( final AsyncCallback<DataPoint[]> callback )
             {
                 Date currentDate = new Date();
-                callback.onSuccess( new DataPoint[] { new DataPoint( Date.UTC( currentDate.getYear(),
+                callback.onSuccess( new DataPoint[] { DataPoint.of( Date.UTC( currentDate.getYear(),
                     currentDate.getMonth(), currentDate.getDate(), currentDate.getHours(), currentDate.getMinutes(),
                     currentDate.getSeconds() ), Random.nextDouble() ) } );
             }

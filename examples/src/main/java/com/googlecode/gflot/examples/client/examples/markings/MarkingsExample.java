@@ -67,16 +67,16 @@ public class MarkingsExample
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
 
         SeriesHandler s = model.addSeries( "Series 1" );
-        s.add( new DataPoint( 1, 2 ) );
-        s.add( new DataPoint( 2, 5 ) );
-        s.add( new DataPoint( 3, 7 ) );
-        s.add( new DataPoint( 4, 5 ) );
-        s.add( new DataPoint( 5, 3 ) );
-        s.add( new DataPoint( 6, 2 ) );
-        s.add( new DataPoint( 7, 5 ) );
-        s.add( new DataPoint( 8, 7 ) );
-        s.add( new DataPoint( 9, 5 ) );
-        s.add( new DataPoint( 10, 3 ) );
+        s.add( DataPoint.of( 1, 2 ) );
+        s.add( DataPoint.of( 2, 5 ) );
+        s.add( DataPoint.of( 3, 7 ) );
+        s.add( DataPoint.of( 4, 5 ) );
+        s.add( DataPoint.of( 5, 3 ) );
+        s.add( DataPoint.of( 6, 2 ) );
+        s.add( DataPoint.of( 7, 5 ) );
+        s.add( DataPoint.of( 8, 7 ) );
+        s.add( DataPoint.of( 9, 5 ) );
+        s.add( DataPoint.of( 10, 3 ) );
 
         // Start of Marking Code
         Marking m = new Marking().setX( new Range( 2, 2 ) ).setLineWidth( 2 ).setColor( "#3BEFc3" );

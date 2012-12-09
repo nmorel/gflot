@@ -21,76 +21,80 @@
  */
 package ca.nanometrics.gflot.client;
 
-import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
-
-import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.core.client.JsArrayMixed;
 
 /**
  * @author AlexanderDeleon
  */
 public class DataPoint
-    extends JSONArrayWrapper
+    extends JsArrayMixed
 {
-
-    public DataPoint()
-    {
-    }
-
-    public DataPoint( JSONArray array )
-    {
-        super( array );
-    }
+    /**
+     * Creates an empty {@link DataPoint}
+     */
+    public static final native DataPoint of()
+    /*-{
+        return [x, y];
+    }-*/;
 
     /**
+     * Creates a {@link DataPoint} with the specified coordinates.
+     * 
      * @param x Coordinate for x axis
      * @param y Coordinate for y axis
      */
-    public DataPoint( double x, double y )
-    {
-        setX( x );
-        setY( y );
-    }
+    public static final native DataPoint of( double x, double y )
+    /*-{
+        return [x, y];
+    }-*/;
 
     /**
+     * Creates a {@link DataPoint} with the specified coordinates.
+     * 
      * @param x Coordinate for x axis
      * @param y Coordinate for y axis
      * @param bottomY Bottom of the filled area/bar for filled lines and bars. Default to 0.
      */
-    public DataPoint( double x, double y, double bottomY )
+    public static final native DataPoint of( double x, double y, double bottomY )
+    /*-{
+        return [x, y, bottomY];
+    }-*/;
+
+    protected DataPoint()
     {
-        setX( x );
-        setY( y );
-        setBottomY( bottomY );
     }
 
-    public void setX( double x )
+    public final DataPoint setX( double x )
     {
-        set( 0, new Double( x ) );
+        set( 0, x );
+        return this;
     }
 
-    public void setY( double y )
+    public final DataPoint setY( double y )
     {
-        set( 1, new Double( y ) );
+        set( 1, y );
+        return this;
     }
 
-    public void setBottomY( double bottomY )
+    public final DataPoint setBottomY( double bottomY )
     {
-        set( 2, new Double( bottomY ) );
+        set( 2, bottomY );
+        return this;
     }
 
-    public double getX()
+    public final double getX()
     {
-        return get( 0 ).isNumber().doubleValue();
+        return getNumber( 0 );
     }
 
-    public double getY()
+    public final double getY()
     {
-        return get( 1 ).isNumber().doubleValue();
+        return getNumber( 1 );
     }
 
-    public double getBottomY()
+    public final double getBottomY()
     {
-        return get( 2 ).isNumber().doubleValue();
+        return getNumber( 2 );
     }
 
 }

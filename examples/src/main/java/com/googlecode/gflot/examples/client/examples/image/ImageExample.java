@@ -65,14 +65,14 @@ public class ImageExample
         SeriesHandler handlerImage =
             model.addSeries( new Series( "Image series" ).setImageSeriesOptions( new ImageSeriesOptions()
                 .setShow( true ).setAlpha( 0.5 ) ) );
-        handlerImage.add( new ImageDataPoint( "images/hs-2004-27-a-large_web.jpg", -2, -2, 2, 2 ) );
+        handlerImage.add( ImageDataPoint.of( "images/hs-2004-27-a-large_web.jpg", -2, -2, 2, 2 ) );
 
         // create a series
         SeriesHandler handlerLine = model.addSeries( "Line series" );
-        handlerLine.add( new DataPoint( -8, -8 ) );
-        handlerLine.add( new DataPoint( -6, -4 ) );
-        handlerLine.add( new DataPoint( -2, -8 ) );
-        handlerLine.add( new DataPoint( 4, 0 ) );
+        handlerLine.add( DataPoint.of( -8, -8 ) );
+        handlerLine.add( DataPoint.of( -6, -4 ) );
+        handlerLine.add( DataPoint.of( -2, -8 ) );
+        handlerLine.add( DataPoint.of( 4, 0 ) );
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );

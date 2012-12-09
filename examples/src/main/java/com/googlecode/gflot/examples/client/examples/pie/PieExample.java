@@ -95,19 +95,19 @@ public class PieExample
 
         // create series
         SeriesHandler series1 = model.addSeries( "Series 1" );
-        series1.add( new PieDataPoint( 148 ) );
+        series1.add( PieDataPoint.of( 148 ) );
 
         SeriesHandler series2 = model.addSeries( "Series 2" );
-        series2.add( new PieDataPoint( 221 ) );
+        series2.add( PieDataPoint.of( 221 ) );
 
         SeriesHandler series3 = model.addSeries( "Series 3" );
-        series3.add( new PieDataPoint( 25 ) );
+        series3.add( PieDataPoint.of( 25 ) );
 
         SeriesHandler series4 = model.addSeries( "Series 4" );
-        series4.add( new PieDataPoint( 35 ) );
+        series4.add( PieDataPoint.of( 35 ) );
 
         SeriesHandler series5 = model.addSeries( "Series 5" );
-        series5.add( new PieDataPoint( 102 ) );
+        series5.add( PieDataPoint.of( 102 ) );
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );

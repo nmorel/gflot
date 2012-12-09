@@ -97,7 +97,7 @@ public class LineExample
         {
             for ( SeriesHandler series : plot.getModel().getHandlers() )
             {
-                series.add( new DataPoint( i, Random.nextInt( 30 ) ) );
+                series.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
             }
         }
     }

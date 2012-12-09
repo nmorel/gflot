@@ -99,7 +99,7 @@ public class OverviewExample
         {
             for ( SeriesHandler series : plot.getModel().getHandlers() )
             {
-                series.add( new DataPoint( i, 1.5 + Random.nextDouble(), 1.5 - Random.nextDouble() ) );
+                series.add( DataPoint.of( i, 1.5 + Random.nextDouble(), 1.5 - Random.nextDouble() ) );
             }
         }
     }

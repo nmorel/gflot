@@ -91,7 +91,7 @@ public class NavigateExample
         // add data
         for ( double t = 0; t <= 2 * Math.PI; t += 0.01 )
         {
-            series1.add( new DataPoint( sumfCos( t, 10 ), sumfSin( t, 10 ) ) );
+            series1.add( DataPoint.of( sumfCos( t, 10 ), sumfSin( t, 10 ) ) );
         }
 
         // create the plot

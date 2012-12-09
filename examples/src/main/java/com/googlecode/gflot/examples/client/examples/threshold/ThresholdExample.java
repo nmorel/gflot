@@ -74,7 +74,7 @@ public class ThresholdExample
         // add data
         for ( int i = 0; i < 10; i++ )
         {
-            series1.add( new DataPoint( i, Random.nextInt( 30 ) - 10 ) );
+            series1.add( DataPoint.of( i, Random.nextInt( 30 ) - 10 ) );
         }
 
         // create the plot

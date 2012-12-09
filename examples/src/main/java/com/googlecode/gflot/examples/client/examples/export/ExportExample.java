@@ -97,8 +97,8 @@ public class ExportExample
         // add data
         for ( int i = 1; i < 13; i++ )
         {
-            series1.add( new DataPoint( i, Random.nextInt( 30 ) ) );
-            series2.add( new DataPoint( i, Random.nextInt( 30 ) ) );
+            series1.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+            series2.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
         }
 
         // create the plot

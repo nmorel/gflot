@@ -86,11 +86,11 @@ public class PlotModel
         this.strategy = strategy;
         for ( SeriesHandler handler : handlers )
         {
-            DataPoint[] currentData = handler.getData().getDatapoints();
+            SeriesData currentData = handler.getData();
             handler.setData( this.strategy.createSeriesData() );
-            for ( DataPoint datapoint : currentData )
+            for ( int i = 0; i < currentData.length(); i++ )
             {
-                handler.add( datapoint );
+                handler.add( currentData.get( i ) );
             }
         }
     }
@@ -108,7 +108,7 @@ public class PlotModel
 
     /**
      * Clear the data of the specified series
-     *
+     * 
      * @param index index of the series to remove
      */
     public void clearSeries( int index )
@@ -119,7 +119,7 @@ public class PlotModel
 
     /**
      * Remove the series from the plot
-     *
+     * 
      * @param index index of the series to remove
      */
     public void removeSeries( int index )
@@ -130,7 +130,7 @@ public class PlotModel
 
     /**
      * Remove the series from the plot
-     *
+     * 
      * @param series Series to remove
      */
     public void removeSeries( SeriesHandler series )

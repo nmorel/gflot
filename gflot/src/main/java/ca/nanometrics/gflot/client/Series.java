@@ -22,6 +22,7 @@
 package ca.nanometrics.gflot.client;
 
 import ca.nanometrics.gflot.client.options.CommonSeriesOptions;
+import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
@@ -31,7 +32,7 @@ import com.google.gwt.json.client.JSONValue;
 
 /**
  * Represent a single series
- *
+ * 
  * @author AlexanderDeleon
  */
 public class Series
@@ -48,7 +49,7 @@ public class Series
     private static final String ANGLE_KEY = "angle";
     private static final String FILL_BETWEEN_KEY = "fillBetween";
     private static final String ID_KEY = "id";
-    
+
     public Series()
     {
         super();
@@ -70,7 +71,8 @@ public class Series
 
     void setData( SeriesData data )
     {
-        put( DATA_KEY, data );
+        // FIXME overlay
+        put( DATA_KEY, new JSONArrayWrapper( new JSONArray( data ) ) );
     }
 
     /**
@@ -89,13 +91,13 @@ public class Series
         }
         else
         {
-            return new SeriesData( data );
+            return data.getJavaScriptObject().cast();
         }
     }
 
     /**
      * Binds this series to a different X axis, i.e. "xaxis: 2"
-     *
+     * 
      * @param axis the axis number such as 2, 3, etc.
      */
     public Series setXAxis( int axis )
@@ -120,7 +122,7 @@ public class Series
 
     /**
      * Binds this series to a different Y axis, i.e. "yaxis: 2"
-     *
+     * 
      * @param axis the axis number such as 2, 3, etc.
      */
     public Series setYAxis( int axis )
@@ -258,7 +260,7 @@ public class Series
 
     /**
      * Only available for pie plot!
-     *
+     * 
      * @return the percent of the series
      */
     public Integer getPercent()
@@ -268,20 +270,18 @@ public class Series
 
     /**
      * Only available for pie plot!
-     *
+     * 
      * @return the angle of the series
      */
     public Double getAngle()
     {
         return getDouble( ANGLE_KEY );
     }
-    
+
     /**
-     * Provides the identifier of another series which is used to fill the area
-     * between these two series. If this identifier was given as a number that
-     * doesn't appear as an id in the series, it is interpreted as the index in
-     * the array instead (so fillBetween: 0 can also mean the first series).
-     * Only for the fillbetween plugin!
+     * Provides the identifier of another series which is used to fill the area between these two series. If this
+     * identifier was given as a number that doesn't appear as an id in the series, it is interpreted as the index in
+     * the array instead (so fillBetween: 0 can also mean the first series). Only for the fillbetween plugin!
      * 
      * @return an identifier of another series (a string, integer or null).
      */
@@ -303,13 +303,12 @@ public class Series
             return new Integer( (int) number.doubleValue() );
         }
         return null;
-        
+
     }
-    
+
     /**
-     * Defines the ID associated with another series which is used to fill the
-     * area between these two series.
-     * Only for the fillbetween plugin!
+     * Defines the ID associated with another series which is used to fill the area between these two series. Only for
+     * the fillbetween plugin!
      * 
      * @param seriesId the ID identifying another series.
      */
@@ -318,13 +317,11 @@ public class Series
         put( FILL_BETWEEN_KEY, seriesId );
         return this;
     }
-    
+
     /**
-     * Defines another series which is used to fill the area
-     * between these two series. If this identifier was given as a number that
-     * doesn't appear as an id in the series, it is interpreted as the index in
-     * the array instead (so fillBetween: 0 can also mean the first series).
-     * Only for the fillbetween plugin!
+     * Defines another series which is used to fill the area between these two series. If this identifier was given as a
+     * number that doesn't appear as an id in the series, it is interpreted as the index in the array instead (so
+     * fillBetween: 0 can also mean the first series). Only for the fillbetween plugin!
      * 
      * @param seriesIndex an identifier of another series.
      */
@@ -335,8 +332,7 @@ public class Series
     }
 
     /**
-     * Provides the ID given to this series.
-     * Only for the fillbetween plugin!
+     * Provides the ID given to this series. Only for the fillbetween plugin!
      * 
      * @return the series ID
      */
@@ -344,10 +340,9 @@ public class Series
     {
         return getString( ID_KEY );
     }
-    
+
     /**
-     * Defines the ID for this series.
-     * Only for the fillbetween plugin!
+     * Defines the ID for this series. Only for the fillbetween plugin!
      * 
      * @param id the series ID
      */

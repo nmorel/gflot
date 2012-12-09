@@ -21,128 +21,93 @@
  */
 package ca.nanometrics.gflot.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
-
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.core.client.JsArray;
 
 /**
  * @author AlexanderDeleon
  */
 public class SeriesData
-    extends JSONArrayWrapper
+    extends JsArray<DataPoint>
 {
+    public static final SeriesData create()
+    {
+        return createArray().cast();
+    }
+
     /**
      * default constructor
      */
-    public SeriesData()
+    protected SeriesData()
     {
         // empty
     }
 
-    public SeriesData( DataPoint[] points )
+    public final boolean isEmpty()
     {
-        for ( int i = 0; i < points.length; i++ )
-        {
-            add( points[i] );
-        }
+        return length() == 0;
     }
 
-    protected SeriesData( JSONArray array )
+    public final double getX( int index )
     {
-        super( array );
+        return get( index ).getX();
     }
 
-    public void add( double x, double y )
+    public final double getY( int index )
     {
-        push( new DataPoint( x, y ) );
+        return get( index ).getY();
     }
 
-    public void add( DataPoint dataPoint )
+    public final SeriesData slice( int start )
     {
-        push( dataPoint );
+        return slice( start, length() - 1 );
     }
 
-    @Override
-    public int size()
-    {
-        return super.size();
-    }
+    public final native SeriesData slice( int start, int end )
+    /*-{
+        return this.slice(start, end);
+    }-*/;
 
-    public boolean isEmpty()
-    {
-        return size() == 0;
-    }
+    // FIXME overlay
+    // public DataPoint[] getDatapoints()
+    // {
+    // List<DataPoint> list = new ArrayList<DataPoint>( size() );
+    // for ( int i = 0; i < size(); i++ )
+    // {
+    // JSONArray array = getArray( i );
+    // if ( array != null )
+    // {
+    // DataPoint datapoint = new DataPoint( array );
+    // list.add( datapoint );
+    // }
+    // }
+    // return list.toArray( new DataPoint[list.size()] );
+    // }
+    //
+    // public DataPoint getDataPoint( int index )
+    // {
+    // JSONArray array = getArray( index );
+    // if ( array == null )
+    // {
+    // return null;
+    // }
+    // else
+    // {
+    // return new DataPoint( array );
+    // }
+    // }
 
-    public double getX( int index )
+    public final void clear()
     {
-        return ( (JSONNumber) ( (JSONArray) super.get( index ) ).get( 0 ) ).doubleValue();
+        setLength( 0 );
     }
-
-    public double getY( int index )
-    {
-        return ( (JSONNumber) ( (JSONArray) super.get( index ) ).get( 1 ) ).doubleValue();
-    }
-
-    public SeriesData slice( int start )
-    {
-        return slice( start, size() - 1 );
-    }
-
-    public SeriesData slice( int start, int end )
-    {
-        SeriesData newData = new SeriesData();
-        for ( int j = start; j <= end; j++ )
-        {
-            newData.add( new DataPoint( getArray( j ) ) );
-        }
-        return newData;
-    }
-
-    public DataPoint[] getDatapoints()
-    {
-        List<DataPoint> list = new ArrayList<DataPoint>( size() );
-        for ( int i = 0; i < size(); i++ )
-        {
-            JSONArray array = getArray( i );
-            if ( array != null )
-            {
-                DataPoint datapoint = new DataPoint( array );
-                list.add( datapoint );
-            }
-        }
-        return list.toArray( new DataPoint[list.size()] );
-    }
-
-    public DataPoint getDataPoint( int index )
-    {
-        JSONArray array = getArray( index );
-        if ( array == null )
-        {
-            return null;
-        }
-        else
-        {
-            return new DataPoint( array );
-        }
-    }
-
-    @Override
-    public void clear()
-    {
-        super.clear();
-    }
-
-    protected void setData( SeriesData data )
-    {
-        DataPoint[] points = data.getDatapoints();
-        super.clear();
-        for ( DataPoint point : points )
-        {
-            super.push( point );
-        }
-    }
+    //
+    // protected void setData( SeriesData data )
+    // {
+    // DataPoint[] points = data.getDatapoints();
+    // super.clear();
+    // for ( DataPoint point : points )
+    // {
+    // super.push( point );
+    // }
+    // }
 }

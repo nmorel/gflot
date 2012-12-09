@@ -110,7 +110,7 @@ public class PlotWithOverviewModel
             windowHandler.clear();
             if ( x1 < x2 )
             {
-                provider.getData( x1, x2, new AsyncCallback<DataPoint[]>() {
+                provider.getData( x1, x2, new AsyncCallback<SeriesData>() {
                     @Override
                     public void onFailure( Throwable caught )
                     {
@@ -122,11 +122,11 @@ public class PlotWithOverviewModel
                     }
 
                     @Override
-                    public void onSuccess( DataPoint[] result )
+                    public void onSuccess( SeriesData result )
                     {
-                        for ( DataPoint point : result )
+                        for ( int i = 0; i < result.length(); i++ )
                         {
-                            windowHandler.add( point );
+                            windowHandler.add( result.get( i ) );
                         }
                         lockSelection = x2 >= lastDataPoint.getX();
                         if ( toExcuteAfterSelection != null )
@@ -152,7 +152,7 @@ public class PlotWithOverviewModel
         {
             double x = selection[1];
             SeriesData data = overviewHandler.getData();
-            int size = data.size();
+            int size = data.length();
             if ( size > 0 && x == data.getX( size - 1 ) )
             {
                 return lastDataPoint.getX();
@@ -173,7 +173,7 @@ public class PlotWithOverviewModel
 
     public interface DataProvider
     {
-        DataPoint[] getData( double x1, double x2 );
+        SeriesData getData( double x1, double x2 );
     }
 
     private class LocalDataProvider
@@ -188,11 +188,11 @@ public class PlotWithOverviewModel
         }
 
         @Override
-        public DataPoint[] getData( double x1, double x2 )
+        public SeriesData getData( double x1, double x2 )
         {
-            if ( x2 < data.getX( 0 ) || x1 > data.getX( data.size() - 1 ) )
+            if ( x2 < data.getX( 0 ) || x1 > data.getX( data.length() - 1 ) )
             {
-                return new DataPoint[0];
+                return SeriesData.create();
             }
             int start = Algorithm.xBinarySearch( data, x1 );
             if ( start == -1 )
@@ -202,15 +202,15 @@ public class PlotWithOverviewModel
             int end = Algorithm.xBinarySearch( data, x2 );
             if ( end == -1 )
             {
-                return data.slice( start ).getDatapoints();
+                return data.slice( start );
             }
-            return data.slice( start, end ).getDatapoints();
+            return data.slice( start, end );
         }
     }
 
     public interface AsyncDataProvider
     {
-        void getData( double x1, double x2, AsyncCallback<DataPoint[]> callback );
+        void getData( double x1, double x2, AsyncCallback<SeriesData> callback );
     }
 
     private class AsyncDataProviderWrapper
@@ -224,11 +224,11 @@ public class PlotWithOverviewModel
         }
 
         @Override
-        public void getData( double x1, double x2, AsyncCallback<DataPoint[]> callback )
+        public void getData( double x1, double x2, AsyncCallback<SeriesData> callback )
         {
             try
             {
-                DataPoint[] result = provider.getData( x1, x2 );
+                SeriesData result = provider.getData( x1, x2 );
                 callback.onSuccess( result );
             }
             catch ( Throwable e )

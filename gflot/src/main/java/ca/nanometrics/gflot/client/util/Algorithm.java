@@ -31,7 +31,7 @@ public class Algorithm
 
     public static int xBinarySearch( SeriesData s, double xValue )
     {
-        return xBinarySearch( s, 0, s.size(), xValue );
+        return xBinarySearch( s, 0, s.length(), xValue );
     }
 
     public static int xBinarySearch( SeriesData s, int fromIndex, int toIndex, double xValue )
@@ -51,7 +51,7 @@ public class Algorithm
         {
             return lMid;
         }
-        if ( rMid < s.size() )
+        if ( rMid < s.length() )
         {
             if ( xValue > s.getX( rMid ) )
             {

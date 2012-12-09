@@ -45,7 +45,7 @@ public class SeriesHandler
      */
     public void add( DataPoint datapoint )
     {
-        data.add( datapoint );
+        data.push( datapoint );
     }
 
     /**

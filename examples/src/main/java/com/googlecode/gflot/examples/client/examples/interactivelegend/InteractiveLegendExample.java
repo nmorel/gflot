@@ -88,31 +88,31 @@ public class InteractiveLegendExample
                 new PointsSeriesOptions().setShow( false ) ) );
 
         // add data
-        ottawaSeries.add( new DataPoint( Date.UTC( 110, 0, 1, 0, 0, 0 ), -10.5 ) );
-        ottawaSeries.add( new DataPoint( Date.UTC( 110, 1, 1, 0, 0, 0 ), -8.6 ) );
-        ottawaSeries.add( new DataPoint( Date.UTC( 110, 2, 1, 0, 0, 0 ), -2.4 ) );
-        ottawaSeries.add( new DataPoint( Date.UTC( 110, 3, 1, 0, 0, 0 ), 6 ) );
-        ottawaSeries.add( new DataPoint( Date.UTC( 110, 4, 1, 0, 0, 0 ), 13.6 ) );
-        ottawaSeries.add( new DataPoint( Date.UTC( 110, 5, 1, 0, 0, 0 ), 18.4 ) );
-        ottawaSeries.add( new DataPoint( Date.UTC( 110, 6, 1, 0, 0, 0 ), 21 ) );
-        ottawaSeries.add( new DataPoint( Date.UTC( 110, 7, 1, 0, 0, 0 ), 19.7 ) );
-        ottawaSeries.add( new DataPoint( Date.UTC( 110, 8, 1, 0, 0, 0 ), 14.7 ) );
-        ottawaSeries.add( new DataPoint( Date.UTC( 110, 9, 1, 0, 0, 0 ), 8.2 ) );
-        ottawaSeries.add( new DataPoint( Date.UTC( 110, 10, 1, 0, 0, 0 ), 1.5 ) );
-        ottawaSeries.add( new DataPoint( Date.UTC( 110, 11, 1, 0, 0, 0 ), -6.6 ) );
+        ottawaSeries.add( DataPoint.of( Date.UTC( 110, 0, 1, 0, 0, 0 ), -10.5 ) );
+        ottawaSeries.add( DataPoint.of( Date.UTC( 110, 1, 1, 0, 0, 0 ), -8.6 ) );
+        ottawaSeries.add( DataPoint.of( Date.UTC( 110, 2, 1, 0, 0, 0 ), -2.4 ) );
+        ottawaSeries.add( DataPoint.of( Date.UTC( 110, 3, 1, 0, 0, 0 ), 6 ) );
+        ottawaSeries.add( DataPoint.of( Date.UTC( 110, 4, 1, 0, 0, 0 ), 13.6 ) );
+        ottawaSeries.add( DataPoint.of( Date.UTC( 110, 5, 1, 0, 0, 0 ), 18.4 ) );
+        ottawaSeries.add( DataPoint.of( Date.UTC( 110, 6, 1, 0, 0, 0 ), 21 ) );
+        ottawaSeries.add( DataPoint.of( Date.UTC( 110, 7, 1, 0, 0, 0 ), 19.7 ) );
+        ottawaSeries.add( DataPoint.of( Date.UTC( 110, 8, 1, 0, 0, 0 ), 14.7 ) );
+        ottawaSeries.add( DataPoint.of( Date.UTC( 110, 9, 1, 0, 0, 0 ), 8.2 ) );
+        ottawaSeries.add( DataPoint.of( Date.UTC( 110, 10, 1, 0, 0, 0 ), 1.5 ) );
+        ottawaSeries.add( DataPoint.of( Date.UTC( 110, 11, 1, 0, 0, 0 ), -6.6 ) );
 
-        vancouverSeries.add( new DataPoint( Date.UTC( 110, 0, 1, 0, 0, 0 ), 4.8 ) );
-        vancouverSeries.add( new DataPoint( Date.UTC( 110, 1, 1, 0, 0, 0 ), 5.9 ) );
-        vancouverSeries.add( new DataPoint( Date.UTC( 110, 2, 1, 0, 0, 0 ), 7.6 ) );
-        vancouverSeries.add( new DataPoint( Date.UTC( 110, 3, 1, 0, 0, 0 ), 10 ) );
-        vancouverSeries.add( new DataPoint( Date.UTC( 110, 4, 1, 0, 0, 0 ), 13.2 ) );
-        vancouverSeries.add( new DataPoint( Date.UTC( 110, 5, 1, 0, 0, 0 ), 15.9 ) );
-        vancouverSeries.add( new DataPoint( Date.UTC( 110, 6, 1, 0, 0, 0 ), 18.1 ) );
-        vancouverSeries.add( new DataPoint( Date.UTC( 110, 7, 1, 0, 0, 0 ), 18.3 ) );
-        vancouverSeries.add( new DataPoint( Date.UTC( 110, 8, 1, 0, 0, 0 ), 15.4 ) );
-        vancouverSeries.add( new DataPoint( Date.UTC( 110, 9, 1, 0, 0, 0 ), 11.1 ) );
-        vancouverSeries.add( new DataPoint( Date.UTC( 110, 10, 1, 0, 0, 0 ), 7.1 ) );
-        vancouverSeries.add( new DataPoint( Date.UTC( 110, 11, 1, 0, 0, 0 ), 4.8 ) );
+        vancouverSeries.add( DataPoint.of( Date.UTC( 110, 0, 1, 0, 0, 0 ), 4.8 ) );
+        vancouverSeries.add( DataPoint.of( Date.UTC( 110, 1, 1, 0, 0, 0 ), 5.9 ) );
+        vancouverSeries.add( DataPoint.of( Date.UTC( 110, 2, 1, 0, 0, 0 ), 7.6 ) );
+        vancouverSeries.add( DataPoint.of( Date.UTC( 110, 3, 1, 0, 0, 0 ), 10 ) );
+        vancouverSeries.add( DataPoint.of( Date.UTC( 110, 4, 1, 0, 0, 0 ), 13.2 ) );
+        vancouverSeries.add( DataPoint.of( Date.UTC( 110, 5, 1, 0, 0, 0 ), 15.9 ) );
+        vancouverSeries.add( DataPoint.of( Date.UTC( 110, 6, 1, 0, 0, 0 ), 18.1 ) );
+        vancouverSeries.add( DataPoint.of( Date.UTC( 110, 7, 1, 0, 0, 0 ), 18.3 ) );
+        vancouverSeries.add( DataPoint.of( Date.UTC( 110, 8, 1, 0, 0, 0 ), 15.4 ) );
+        vancouverSeries.add( DataPoint.of( Date.UTC( 110, 9, 1, 0, 0, 0 ), 11.1 ) );
+        vancouverSeries.add( DataPoint.of( Date.UTC( 110, 10, 1, 0, 0, 0 ), 7.1 ) );
+        vancouverSeries.add( DataPoint.of( Date.UTC( 110, 11, 1, 0, 0, 0 ), 4.8 ) );
 
         // create the plot
         plot = new PlotWithInteractiveLegend( new SimplePlot( model, plotOptions ) );

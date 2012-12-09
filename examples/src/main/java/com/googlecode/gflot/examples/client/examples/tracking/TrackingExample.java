@@ -147,8 +147,8 @@ public class TrackingExample
         // add data
         for ( double i = 0; i < 14; i += 0.1 )
         {
-            sin.add( new DataPoint( i, Math.sin( i ) ) );
-            cos.add( new DataPoint( i, Math.cos( i ) ) );
+            sin.add( DataPoint.of( i, Math.sin( i ) ) );
+            cos.add( DataPoint.of( i, Math.cos( i ) ) );
         }
 
         // create the plot
@@ -200,7 +200,7 @@ public class TrackingExample
             Series series = dataset[i];
             SeriesData data = series.getData();
             // find the nearest points, x-wise
-            for ( j = 0; j < data.size(); j++ )
+            for ( j = 0; j < data.length(); j++ )
             {
                 if ( data.getX( j ) > xPos )
                 {
@@ -210,8 +210,8 @@ public class TrackingExample
 
             // now interpolate
             double y;
-            DataPoint p1 = data.getDataPoint( j - 1 );
-            DataPoint p2 = data.getDataPoint( j );
+            DataPoint p1 = data.get( j - 1 );
+            DataPoint p2 = data.get( j );
             if ( p1 == null )
             {
                 y = p2.getY();
@@ -262,8 +262,8 @@ public class TrackingExample
         // add data
         for ( int i = 1; i < 13; i++ )
         {
-            series1.add( new DataPoint( i, Random.nextInt( 30 ) ) );
-            series2.add( new DataPoint( i, Random.nextInt( 30 ) ) );
+            series1.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+            series2.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
         }
 
         // create the plot

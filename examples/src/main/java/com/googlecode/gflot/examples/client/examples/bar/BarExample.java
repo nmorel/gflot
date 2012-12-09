@@ -112,18 +112,18 @@ public class BarExample
         SeriesHandler handler = model.addSeries( "Ottawa's Month Temperatures (Daily Average in &deg;C)", "blue" );
 
         // add data
-        handler.add( new DataPoint( 1, -10.5 ) );
-        handler.add( new DataPoint( 2, -8.6 ) );
-        handler.add( new DataPoint( 3, -2.4 ) );
-        handler.add( new DataPoint( 4, 6 ) );
-        handler.add( new DataPoint( 5, 13.6 ) );
-        handler.add( new DataPoint( 6, 18.4 ) );
-        handler.add( new DataPoint( 7, 21 ) );
-        handler.add( new DataPoint( 8, 19.7 ) );
-        handler.add( new DataPoint( 9, 14.7 ) );
-        handler.add( new DataPoint( 10, 8.2 ) );
-        handler.add( new DataPoint( 11, 1.5 ) );
-        handler.add( new DataPoint( 12, -6.6 ) );
+        handler.add( DataPoint.of( 1, -10.5 ) );
+        handler.add( DataPoint.of( 2, -8.6 ) );
+        handler.add( DataPoint.of( 3, -2.4 ) );
+        handler.add( DataPoint.of( 4, 6 ) );
+        handler.add( DataPoint.of( 5, 13.6 ) );
+        handler.add( DataPoint.of( 6, 18.4 ) );
+        handler.add( DataPoint.of( 7, 21 ) );
+        handler.add( DataPoint.of( 8, 19.7 ) );
+        handler.add( DataPoint.of( 9, 14.7 ) );
+        handler.add( DataPoint.of( 10, 8.2 ) );
+        handler.add( DataPoint.of( 11, 1.5 ) );
+        handler.add( DataPoint.of( 12, -6.6 ) );
 
         // create the plot
         plot1 = new SimplePlot( model, plotOptions );
@@ -167,7 +167,7 @@ public class BarExample
         {
             for ( SeriesHandler serie : series )
             {
-                serie.add( new DataPoint( i, Random.nextInt( 50 ) ) );
+                serie.add( DataPoint.of( i, Random.nextInt( 50 ) ) );
             }
             if ( i % 2 != 0 )
             {
