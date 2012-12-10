@@ -113,15 +113,15 @@ public class Plot
         setData( new Series[] { series } );
     }
 
-    public final void draw()
-    {
-        PlotImpl.draw( this );
-    }
+    public final native void draw()
+    /*-{
+        this.draw();
+    }-*/;
 
-    public final void setupGrid()
-    {
-        PlotImpl.setupGrid( this );
-    }
+    public final native void setupGrid()
+    /*-{
+        this.setupGrid();
+    }-*/;
 
     public final void addPlotSelectedListener( Element container, PlotSelectedListener listener )
     {
@@ -148,10 +148,10 @@ public class Plot
         PlotImpl.setSelection( this, JSONHelper.getJSONObject( area ).getJavaScriptObject(), preventEvent );
     }
 
-    public final void clearSelection( boolean preventEvent )
-    {
-        PlotImpl.clearSelection( this, preventEvent );
-    }
+    public final native void clearSelection( boolean preventEvent )
+    /*-{
+        this.clearSelection(preventEvent);
+    }-*/;
 
     public final void addPlotHoverListener( Element container, PlotHoverListener listener, boolean onlyOnDatapoint )
     {
@@ -248,28 +248,28 @@ public class Plot
         PlotImpl.pan( this, JSONHelper.getJSONObject( pan ).getJavaScriptObject() );
     }
 
-    public final void setCrosshair( PlotPosition pos )
-    {
-        PlotImpl.setCrosshair( this, JSONHelper.getJSONObject( pos ).getJavaScriptObject() );
-    }
+    public final native void setCrosshair( PlotPosition pos )
+    /*-{
+        this.setCrosshair(pos);
+    }-*/;
 
-    public final void clearCrosshair()
-    {
-        PlotImpl.clearCrosshair( this );
-    }
+    public final native void clearCrosshair()
+    /*-{
+        this.clearCrosshair();
+    }-*/;
 
-    public final void lockCrosshair()
-    {
-        PlotImpl.lockCrosshair( this );
-    }
+    public final native void lockCrosshair()
+    /*-{
+        this.lockCrosshair();
+    }-*/;
 
-    public final void lockCrosshair( PlotPosition pos )
-    {
-        PlotImpl.lockCrosshair( this, JSONHelper.getJSONObject( pos ).getJavaScriptObject() );
-    }
+    public final native void lockCrosshair( PlotPosition pos )
+    /*-{
+        this.lockCrosshair(pos);
+    }-*/;
 
-    public final void unlockCrosshair()
-    {
-        PlotImpl.unlockCrosshair( this );
-    }
+    public final native void unlockCrosshair()
+    /*-{
+        this.unlockCrosshair();
+    }-*/;
 }

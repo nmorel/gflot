@@ -23,17 +23,21 @@ package ca.nanometrics.gflot.client.event;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.Series;
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
-import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONObject;
 
 /**
  * @author Alexander De Leon
  */
 public class PlotItem
-    extends JSONObjectWrapper
+    extends JsonObject
 {
+    public static final PlotItem create()
+    {
+        return JavaScriptObject.createObject().cast();
+    }
 
     private static final String DATAPOINT = "datapoint";
     private static final String DATA_INDEX = "dataIndex";
@@ -42,28 +46,22 @@ public class PlotItem
     private static final String PAGE_X = "pageX";
     private static final String PAGE_Y = "pageY";
 
-    protected PlotItem( JSONObject obj )
+    protected PlotItem()
     {
-        super( obj );
     }
 
     /**
      * @return the datapoint hovered
      */
-    public DataPoint getDataPoint()
+    public final DataPoint getDataPoint()
     {
-        JSONArray array = getArray( DATAPOINT );
-        if ( array == null )
-        {
-            return null;
-        }
-        return array.getJavaScriptObject().cast();
+        return getJsObject( DATAPOINT ).cast();
     }
 
     /**
      * @return the index of the data point inside the data array
      */
-    public Integer getDataIndex()
+    public final Integer getDataIndex()
     {
         return getInteger( DATA_INDEX );
     }
@@ -71,20 +69,16 @@ public class PlotItem
     /**
      * @return the series hovered
      */
-    public Series getSeries()
+    public final Series getSeries()
     {
-        JSONObject obj = getObject( SERIES );
-        if ( obj == null )
-        {
-            return null;
-        }
+        JSONObject obj = new JSONObject( getJsObject( SERIES ) );
         return new Series( obj );
     }
 
     /**
      * @return the index of the series, starting at 0
      */
-    public Integer getSeriesIndex()
+    public final Integer getSeriesIndex()
     {
         return getInteger( SERIES_INDEX );
     }
@@ -92,7 +86,7 @@ public class PlotItem
     /**
      * @return the global screen x coordinates
      */
-    public Integer getPageX()
+    public final Integer getPageX()
     {
         return getInteger( PAGE_X );
     }
@@ -100,7 +94,7 @@ public class PlotItem
     /**
      * @return the global screen y coordinates
      */
-    public Integer getPageY()
+    public final Integer getPageY()
     {
         return getInteger( PAGE_Y );
     }

@@ -7,5 +7,6 @@ import com.google.gwt.core.client.JavaScriptObject;
  */
 public interface LoadImagesCallback
 {
+    // FIXME overlay : put the real object once they are converted to JSO
     void onImagesLoaded( JavaScriptObject data, JavaScriptObject options );
 }

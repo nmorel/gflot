@@ -12,7 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
-    <gwt.version>2.5.0-rc1</gwt.version>
+    <gwt.version>2.5.0</gwt.version>
     <gae.version>1.7.0</gae.version>
     <gae.home>${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
     <gflot.version>3.0.0-SNAPSHOT</gflot.version>
@@ -86,7 +86,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
-        <version>2.4.0</version>
+        <version>2.5.0</version>
         <dependencies>
           <dependency>
             <groupId>com.google.gwt</groupId>
@@ -101,6 +101,11 @@
           <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-servlet</artifactId>
+            <version>${gwt.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-codeserver</artifactId>
             <version>${gwt.version}</version>
           </dependency>
         </dependencies>

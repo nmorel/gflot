@@ -69,16 +69,6 @@ public class PlotImpl
 		plot.setData(series);
     }-*/;
 
-    static native void draw( Plot plot )
-    /*-{
-		plot.draw();
-    }-*/;
-
-    static native void setupGrid( Plot plot )
-    /*-{
-		plot.setupGrid();
-    }-*/;
-
     static native void addPlotSelectedListener( Element container, PlotSelectedListener listener )
     /*-{
     	$wnd
@@ -129,19 +119,12 @@ public class PlotImpl
 		plot.setSelection(area, preventEvent);
     }-*/;
 
-    static native void clearSelection( Plot plot, boolean preventEvent )
-    /*-{
-		plot.clearSelection(preventEvent);
-    }-*/;
-
     static native void addPlotHoverListener( Element container, PlotHoverListener listener, boolean onlyOnDatapoint,
                                              Plot plot )
     /*-{
         $wnd.jQuery("#"+container.id).bind("plothover", function(event, pos, item) {
             if(item != null || !onlyOnDatapoint){
-                var javaPos = pos==null?null:@ca.nanometrics.gflot.client.event.PlotPosition::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(pos));
-                var javaItem = item==null?null:@ca.nanometrics.gflot.client.event.PlotItem::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(item));
-                listener.@ca.nanometrics.gflot.client.event.PlotHoverListener::onPlotHover(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/event/PlotPosition;Lca/nanometrics/gflot/client/event/PlotItem;)(plot, javaPos, javaItem);
+                listener.@ca.nanometrics.gflot.client.event.PlotHoverListener::onPlotHover(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/event/PlotPosition;Lca/nanometrics/gflot/client/event/PlotItem;)(plot, pos, item);
             }
         });
     }-*/;
@@ -151,9 +134,7 @@ public class PlotImpl
     /*-{
         $wnd.jQuery("#"+container.id).bind("plotclick", function(event, pos, item) {
             if(item != null || !onlyOnDatapoint){
-                var javaPos = pos==null?null:@ca.nanometrics.gflot.client.event.PlotPosition::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(pos));
-                var javaItem = item==null?null:@ca.nanometrics.gflot.client.event.PlotItem::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(item));
-                listener.@ca.nanometrics.gflot.client.event.PlotClickListener::onPlotClick(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/event/PlotPosition;Lca/nanometrics/gflot/client/event/PlotItem;)(plot, javaPos, javaItem);
+                listener.@ca.nanometrics.gflot.client.event.PlotClickListener::onPlotClick(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/event/PlotPosition;Lca/nanometrics/gflot/client/event/PlotItem;)(plot, pos, item);
             }
         });
     }-*/;
@@ -252,30 +233,5 @@ public class PlotImpl
     static native void pan( Plot plot, JavaScriptObject option )
     /*-{
 		plot.pan(option);
-    }-*/;
-
-    static native void setCrosshair( Plot plot, JavaScriptObject pos )
-    /*-{
-		plot.setCrosshair(pos);
-    }-*/;
-
-    static native void clearCrosshair( Plot plot )
-    /*-{
-		plot.clearCrosshair();
-    }-*/;
-
-    static native void lockCrosshair( Plot plot )
-    /*-{
-        plot.lockCrosshair();
-    }-*/;
-
-    static native void lockCrosshair( Plot plot, JavaScriptObject pos )
-    /*-{
-		plot.lockCrosshair(pos);
-    }-*/;
-
-    static native void unlockCrosshair( Plot plot )
-    /*-{
-		plot.unlockCrosshair();
     }-*/;
 }

@@ -280,7 +280,7 @@ public class TrackingExample
                 else
                 {
                     DataPoint dataPoint = item.getDataPoint();
-                    plot.lockCrosshair( new PlotPosition( dataPoint.getX(), dataPoint.getY() ) );
+                    plot.lockCrosshair( PlotPosition.of( dataPoint.getX(), dataPoint.getY() ) );
                 }
             }
         }, false );
