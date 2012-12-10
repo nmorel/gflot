@@ -161,7 +161,7 @@ public class NavigateExample
     @UiHandler( "left" )
     void onClickLeft( ClickEvent event )
     {
-        plot.pan( new Pan().setLeft( -100 ) );
+        plot.pan( Pan.create().setLeft( -100 ) );
     }
 
     /**
@@ -171,7 +171,7 @@ public class NavigateExample
     @UiHandler( "right" )
     void onClickRight( ClickEvent event )
     {
-        plot.pan( new Pan().setLeft( 100 ) );
+        plot.pan( Pan.create().setLeft( 100 ) );
     }
 
     /**
@@ -181,7 +181,7 @@ public class NavigateExample
     @UiHandler( "up" )
     void onClickUp( ClickEvent event )
     {
-        plot.pan( new Pan().setTop( -100 ) );
+        plot.pan( Pan.create().setTop( -100 ) );
     }
 
     /**
@@ -191,7 +191,7 @@ public class NavigateExample
     @UiHandler( "down" )
     void onClickDown( ClickEvent event )
     {
-        plot.pan( new Pan().setTop( 100 ) );
+        plot.pan( Pan.create().setTop( 100 ) );
     }
 
     /**

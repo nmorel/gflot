@@ -44,29 +44,29 @@ public class PlotImpl
 
     static native Plot create( Element container, JavaScriptObject series )
     /*-{
-		return new $wnd.jQuery.plot($wnd.jQuery("#" + container.id), series);
+        return new $wnd.jQuery.plot($wnd.jQuery("#" + container.id), series);
     }-*/;
 
     static native Plot create( Element container, JavaScriptObject series, JavaScriptObject options )
     /*-{
-		return new $wnd.jQuery.plot($wnd.jQuery("#" + container.id), series,
-				options);
+        return new $wnd.jQuery.plot($wnd.jQuery("#" + container.id), series,
+                options);
     }-*/;
 
     static native void loadDataImages( JavaScriptObject data, JavaScriptObject options, LoadImagesCallback callback )
     /*-{
-		$wnd.jQuery.plot.image
-				.loadDataImages(
-						data,
-						options,
-						function() {
-							callback.@ca.nanometrics.gflot.client.event.LoadImagesCallback::onImagesLoaded(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;)(data, options);
-						});
+        $wnd.jQuery.plot.image
+                .loadDataImages(
+                        data,
+                        options,
+                        function() {
+                            callback.@ca.nanometrics.gflot.client.event.LoadImagesCallback::onImagesLoaded(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;)(data, options);
+                        });
     }-*/;
 
     static native void setData( Plot plot, JavaScriptObject series )
     /*-{
-		plot.setData(series);
+        plot.setData(series);
     }-*/;
 
     static native void addPlotSelectedListener( Element container, PlotSelectedListener listener )
@@ -95,13 +95,13 @@ public class PlotImpl
 
     static native void addPlotUnselectedListener( Element container, PlotUnselectedListener listener )
     /*-{
-		$wnd
-				.jQuery("#" + container.id)
-				.bind(
-						"plotunselected",
-						function(event) {
-							listener.@ca.nanometrics.gflot.client.event.PlotUnselectedListener::onPlotUnselected()();
-						});
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plotunselected",
+                        function(event) {
+                            listener.@ca.nanometrics.gflot.client.event.PlotUnselectedListener::onPlotUnselected()();
+                        });
     }-*/;
 
     static native PlotSelectionArea getSelection( Plot plot )
@@ -116,51 +116,59 @@ public class PlotImpl
 
     static native void setSelection( Plot plot, JavaScriptObject area, boolean preventEvent )
     /*-{
-		plot.setSelection(area, preventEvent);
+        plot.setSelection(area, preventEvent);
     }-*/;
 
     static native void addPlotHoverListener( Element container, PlotHoverListener listener, boolean onlyOnDatapoint,
                                              Plot plot )
     /*-{
-        $wnd.jQuery("#"+container.id).bind("plothover", function(event, pos, item) {
-            if(item != null || !onlyOnDatapoint){
-                listener.@ca.nanometrics.gflot.client.event.PlotHoverListener::onPlotHover(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/event/PlotPosition;Lca/nanometrics/gflot/client/event/PlotItem;)(plot, pos, item);
-            }
-        });
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plothover",
+                        function(event, pos, item) {
+                            if (item != null || !onlyOnDatapoint) {
+                                listener.@ca.nanometrics.gflot.client.event.PlotHoverListener::onPlotHover(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/event/PlotPosition;Lca/nanometrics/gflot/client/event/PlotItem;)(plot, pos, item);
+                            }
+                        });
     }-*/;
 
     static native void addPlotClickListener( Element container, PlotClickListener listener, boolean onlyOnDatapoint,
                                              Plot plot )
     /*-{
-        $wnd.jQuery("#"+container.id).bind("plotclick", function(event, pos, item) {
-            if(item != null || !onlyOnDatapoint){
-                listener.@ca.nanometrics.gflot.client.event.PlotClickListener::onPlotClick(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/event/PlotPosition;Lca/nanometrics/gflot/client/event/PlotItem;)(plot, pos, item);
-            }
-        });
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plotclick",
+                        function(event, pos, item) {
+                            if (item != null || !onlyOnDatapoint) {
+                                listener.@ca.nanometrics.gflot.client.event.PlotClickListener::onPlotClick(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/event/PlotPosition;Lca/nanometrics/gflot/client/event/PlotItem;)(plot, pos, item);
+                            }
+                        });
     }-*/;
 
     static native int getPlotOffsetLeft( Plot plot )
     /*-{
-		var offset = plot.getPlotOffset().left;
-		return (offset === undefined) ? -1 : offset;
+        var offset = plot.getPlotOffset().left;
+        return (offset === undefined) ? -1 : offset;
     }-*/;
 
     static native int getPlotOffsetRight( Plot plot )
     /*-{
-		var offset = plot.getPlotOffset().right;
-		return (offset === undefined) ? -1 : offset;
+        var offset = plot.getPlotOffset().right;
+        return (offset === undefined) ? -1 : offset;
     }-*/;
 
     static native int getPlotOffsetTop( Plot plot )
     /*-{
-		var offset = plot.getPlotOffset().top;
-		return (offset === undefined) ? -1 : offset;
+        var offset = plot.getPlotOffset().top;
+        return (offset === undefined) ? -1 : offset;
     }-*/;
 
     static native int getPlotOffsetBottom( Plot plot )
     /*-{
-		var offset = plot.getPlotOffset().bottom;
-		return (offset === undefined) ? -1 : offset;
+        var offset = plot.getPlotOffset().bottom;
+        return (offset === undefined) ? -1 : offset;
     }-*/;
 
     static native PlotOptions getPlotOptions( Plot plot )
@@ -172,23 +180,23 @@ public class PlotImpl
 
     native static void saveAsImage( Plot plot )
     /*-{
-		$wnd.Canvas2Image.saveAsPNG(plot.getCanvas());
+        $wnd.Canvas2Image.saveAsPNG(plot.getCanvas());
     }-*/;
 
     native static void saveAsImage( Plot plot, int width, int height )
     /*-{
-		$wnd.Canvas2Image.saveAsPNG(plot.getCanvas(), false, width, height);
+        $wnd.Canvas2Image.saveAsPNG(plot.getCanvas(), false, width, height);
     }-*/;
 
     native static Element getImage( Plot plot )
     /*-{
-		return $wnd.Canvas2Image.saveAsPNG(plot.getCanvas(), true);
+        return $wnd.Canvas2Image.saveAsPNG(plot.getCanvas(), true);
     }-*/;
 
     native static Element getImage( Plot plot, int width, int height )
     /*-{
-		return $wnd.Canvas2Image.saveAsPNG(plot.getCanvas(), true, width,
-				height);
+        return $wnd.Canvas2Image.saveAsPNG(plot.getCanvas(), true, width,
+                height);
     }-*/;
 
     static native Axes getAxes( Plot plot )
@@ -218,20 +226,5 @@ public class PlotImpl
                         function(event, plot) {
                             listener.@ca.nanometrics.gflot.client.event.PlotZoomListener::onPlotZoom(Lca/nanometrics/gflot/client/Axes;)(@ca.nanometrics.gflot.client.jsni.PlotImpl::getAxes(Lca/nanometrics/gflot/client/jsni/Plot;)(plot));
                         });
-    }-*/;
-
-    static native void zoom( Plot plot, JavaScriptObject option )
-    /*-{
-		plot.zoom(option);
-    }-*/;
-
-    static native void zoomOut( Plot plot, JavaScriptObject option )
-    /*-{
-		plot.zoomOut(option);
-    }-*/;
-
-    static native void pan( Plot plot, JavaScriptObject option )
-    /*-{
-		plot.pan(option);
     }-*/;
 }

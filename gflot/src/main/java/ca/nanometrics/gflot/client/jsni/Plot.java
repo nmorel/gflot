@@ -233,20 +233,20 @@ public class Plot
         PlotImpl.addPlotZoomListener( container, listener );
     }
 
-    public final void zoom( Zoom zoom )
-    {
-        PlotImpl.zoom( this, JSONHelper.getJSONObject( zoom ).getJavaScriptObject() );
-    }
+    public final native void zoom( Zoom zoom )
+    /*-{
+        this.zoom(zoom);
+    }-*/;
 
-    public final void zoomOut( Zoom zoom )
-    {
-        PlotImpl.zoomOut( this, JSONHelper.getJSONObject( zoom ).getJavaScriptObject() );
-    }
+    public final native void zoomOut( Zoom zoom )
+    /*-{
+        this.zoomOut(zoom);
+    }-*/;
 
-    public final void pan( Pan pan )
-    {
-        PlotImpl.pan( this, JSONHelper.getJSONObject( pan ).getJavaScriptObject() );
-    }
+    public final native void pan( Pan pan )
+    /*-{
+        this.pan(pan);
+    }-*/;
 
     public final native void setCrosshair( PlotPosition pos )
     /*-{

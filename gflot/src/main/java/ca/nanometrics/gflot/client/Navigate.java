@@ -1,21 +1,21 @@
 package ca.nanometrics.gflot.client;
 
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
 @SuppressWarnings( "unchecked" )
 public class Navigate<T extends Navigate<?>>
-    extends JSONObjectWrapper
+    extends JsonObject
 {
     private static final String PREVENT_EVENT_KEY = "preventEvent";
 
-    public Navigate()
+    protected Navigate()
     {
     }
 
     /**
      * Prevent the corresponding event to fire
      */
-    public T setPreventEvent( boolean preventEvent )
+    public final T setPreventEvent( boolean preventEvent )
     {
         put( PREVENT_EVENT_KEY, preventEvent );
         return (T) this;

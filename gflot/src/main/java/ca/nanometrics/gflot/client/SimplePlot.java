@@ -388,7 +388,7 @@ public class SimplePlot
 
     public void zoom()
     {
-        zoom( new Zoom() );
+        zoom( Zoom.create() );
     }
 
     public void zoom( Zoom zoom )
@@ -399,7 +399,7 @@ public class SimplePlot
 
     public void zoomOut()
     {
-        zoomOut( new Zoom() );
+        zoomOut( Zoom.create() );
     }
 
     public void zoomOut( Zoom zoom )
@@ -410,7 +410,7 @@ public class SimplePlot
 
     public void pan()
     {
-        pan( new Pan() );
+        pan( Pan.create() );
     }
 
     public void pan( Pan pan )
@@ -492,7 +492,7 @@ public class SimplePlot
 
     /**
      * Prompt the user to save the plot as an image. The image is scaled at the given dimensions.
-     *
+     * 
      * @param width
      * @param height
      */
@@ -538,7 +538,7 @@ public class SimplePlot
 
     /**
      * Set the position of the crosshair. Note that this is cleared if the user moves the mouse.
-     *
+     * 
      * @param pos Position of the crosshair
      */
     public void setCrosshair( PlotPosition pos )
@@ -564,7 +564,7 @@ public class SimplePlot
 
     /**
      * Cause the crosshair to lock to the current location, no longer updating if the user moves the mouse.
-     *
+     * 
      * @param pos position to lock the crosshair to
      */
     public void lockCrosshair( PlotPosition pos )
