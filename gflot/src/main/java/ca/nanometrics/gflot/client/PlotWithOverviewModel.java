@@ -24,6 +24,7 @@ package ca.nanometrics.gflot.client;
 import ca.nanometrics.gflot.client.util.Algorithm;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -302,12 +303,12 @@ public class PlotWithOverviewModel
         return overviewModel;
     }
 
-    public Series[] getWindowsSeries()
+    public JsArray<Series> getWindowsSeries()
     {
         return windowModel.getSeries();
     }
 
-    public Series[] getOverviewSeries()
+    public JsArray<Series> getOverviewSeries()
     {
         return overviewModel.getSeries();
     }

@@ -21,53 +21,52 @@
  */
 package ca.nanometrics.gflot.client;
 
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * Model of a plot axis.
- *
+ * 
  * @author David Easton
  */
 public class Axis
-    extends JSONObjectWrapper
+    extends JsonObject
 {
+    /**
+     * Creates a {@link Axis}
+     */
+    public static final Axis create()
+    {
+        return JavaScriptObject.createObject().cast();
+    }
+
     private static final String MIN = "min";
-
     private static final String MAX = "max";
-
     private static final String TICK_DECIMALS = "tickDecimals";
-
     private static final String TICK_SIZE = "tickSize";
 
     protected Axis()
     {
-        super();
     }
 
-    protected Axis( JSONObject object )
+    public final Double getMinimumValue()
     {
-        super( object );
+        return getDouble( MIN );
     }
 
-    public Double getMinimumValue()
+    public final Double getMaximumValue()
     {
-        return super.getDouble( MIN );
+        return getDouble( MAX );
     }
 
-    public Double getMaximumValue()
+    public final Integer getTickDecimals()
     {
-        return super.getDouble( MAX );
+        return getInteger( TICK_DECIMALS );
     }
 
-    public Integer getTickDecimals()
+    public final Integer getTickSize()
     {
-        return super.getInteger( TICK_DECIMALS );
-    }
-
-    public Integer getTickSize()
-    {
-        return super.getInteger( TICK_SIZE );
+        return getInteger( TICK_SIZE );
     }
 }

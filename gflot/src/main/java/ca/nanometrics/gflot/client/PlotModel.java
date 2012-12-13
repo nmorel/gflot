@@ -26,6 +26,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
+
 /**
  * @author Alexander De Leon
  */
@@ -62,7 +65,7 @@ public class PlotModel
 
     public SeriesHandler addSeries( String label, String color )
     {
-        Series series = new Series( label );
+        Series series = Series.create().setLabel( label );
         if ( color != null )
         {
             series.setColor( color );
@@ -168,13 +171,12 @@ public class PlotModel
         listeners.remove( listener );
     }
 
-    public Series[] getSeries()
+    public JsArray<Series> getSeries()
     {
-        Series[] seriesArray = new Series[handlers.size()];
-        int i = 0;
+        JsArray<Series> seriesArray = JavaScriptObject.createArray().cast();
         for ( SeriesHandler handler : handlers )
         {
-            seriesArray[i++] = handler.getSeries();
+            seriesArray.push( handler.getSeries() );
         }
         return seriesArray;
     }

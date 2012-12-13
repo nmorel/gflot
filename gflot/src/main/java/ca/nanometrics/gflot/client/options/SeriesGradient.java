@@ -1,77 +1,77 @@
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONHelper;
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
-import ca.nanometrics.gflot.client.util.JSONWrapper;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 
 public class SeriesGradient
-    extends JSONObjectWrapper
+    extends JsonObject
 {
-    public class Gradient
-        extends JSONObjectWrapper
+    public static class Gradient
+        extends JsonObject
     {
-        public Gradient( Double opacity, Double brightness )
+        /**
+         * Creates a {@link Gradient} with specified gradient
+         */
+        public static final Gradient of( Double opacity, Double brightness )
         {
-            super();
+            Gradient gradient = JavaScriptObject.createObject().cast();
             if ( null != opacity )
             {
-                put( OPACITY_KEY, opacity );
+                gradient.put( OPACITY_KEY, opacity );
             }
             if ( null != brightness )
             {
-                put( BRIGHTNESS_KEY, brightness );
+                gradient.put( BRIGHTNESS_KEY, brightness );
             }
+            return gradient;
         }
 
-        Gradient( JSONObject jsonObj )
+        protected Gradient( Double opacity, Double brightness )
         {
-            super( jsonObj );
         }
 
-        public Double getOpacity()
+        public final Double getOpacity()
         {
             return getDouble( OPACITY_KEY );
         }
 
-        public Double getBrightness()
+        public final Double getBrightness()
         {
             return getDouble( BRIGHTNESS_KEY );
         }
     }
 
-    protected static final String FILL_COLOR_COLORS_KEY = "colors";
-
-    protected static final String OPACITY_KEY = "opacity";
-
-    protected static final String BRIGHTNESS_KEY = "brightness";
-
-    private Gradient from;
-
-    private Gradient to;
-
-    public SeriesGradient( Double fromOpacity, Double fromBrightness, Double toOpacity, Double toBrightness )
+    
+    /**
+     * Creates a {@link SeriesGradient} with specified gradient
+     */
+    public static SeriesGradient of( Double fromOpacity, Double fromBrightness, Double toOpacity, Double toBrightness )
     {
-        from = new Gradient( fromOpacity, fromBrightness );
-        to = new Gradient( toOpacity, toBrightness );
-        put( FILL_COLOR_COLORS_KEY, JSONHelper.wrapArray( new JSONWrapper[] { from, to } ) );
+        SeriesGradient gradient = JavaScriptObject.createObject().cast();
+        JsArray<Gradient> array = JavaScriptObject.createArray().cast();
+        array.push( Gradient.of( fromOpacity, fromBrightness ) );
+        array.push( Gradient.of( toOpacity, toBrightness ) );
+        gradient.put( FILL_COLOR_COLORS_KEY, array );
+        return gradient;
     }
 
-    SeriesGradient( JSONObject jsonObj )
+    private static final String FILL_COLOR_COLORS_KEY = "colors";
+    private static final String OPACITY_KEY = "opacity";
+    private static final String BRIGHTNESS_KEY = "brightness";
+
+    protected SeriesGradient()
     {
-        super( jsonObj );
-        from = new Gradient( getArray( FILL_COLOR_COLORS_KEY ).get( 0 ).isObject() );
-        to = new Gradient( getArray( FILL_COLOR_COLORS_KEY ).get( 1 ).isObject() );
     }
 
-    public Gradient getFrom()
+    public final Gradient getFrom()
     {
-        return from;
+        return getArray( FILL_COLOR_COLORS_KEY ).getObject( 0 );
     }
 
-    public Gradient getTo()
+    public final Gradient getTo()
     {
-        return to;
+        return getArray( FILL_COLOR_COLORS_KEY ).getObject( 1 );
     }
 }

@@ -76,8 +76,7 @@ public class PlotImpl
     			.bind(
     					"plotselected",
     					function(event, area) {
-    						var range = @ca.nanometrics.gflot.client.PlotSelectionArea::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(area));
-    						listener.@ca.nanometrics.gflot.client.event.PlotSelectedListener::onPlotSelected(Lca/nanometrics/gflot/client/PlotSelectionArea;)(range);
+    						listener.@ca.nanometrics.gflot.client.event.PlotSelectedListener::onPlotSelected(Lca/nanometrics/gflot/client/PlotSelectionArea;)(area);
     					});
     }-*/;
 
@@ -88,8 +87,7 @@ public class PlotImpl
                 .bind(
                         "plotselecting",
                         function(event, area) {
-                            var range = @ca.nanometrics.gflot.client.PlotSelectionArea::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(area));
-                            listener.@ca.nanometrics.gflot.client.event.PlotSelectingListener::onPlotSelecting(Lca/nanometrics/gflot/client/PlotSelectionArea;)(range);
+                            listener.@ca.nanometrics.gflot.client.event.PlotSelectingListener::onPlotSelecting(Lca/nanometrics/gflot/client/PlotSelectionArea;)(area);
                         });
     }-*/;
 
@@ -106,12 +104,7 @@ public class PlotImpl
 
     static native PlotSelectionArea getSelection( Plot plot )
     /*-{
-        var jsSelection = plot.getSelection();
-        if(jsSelection==null){
-            return null;
-        }
-        var selection = @ca.nanometrics.gflot.client.PlotSelectionArea::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(jsSelection));
-        return selection;
+        return plot.getSelection();
     }-*/;
 
     static native void setSelection( Plot plot, JavaScriptObject area, boolean preventEvent )
@@ -173,9 +166,7 @@ public class PlotImpl
 
     static native PlotOptions getPlotOptions( Plot plot )
     /*-{
-        var jsOptions = plot.getOptions();
-        var options = @ca.nanometrics.gflot.client.options.PlotOptions::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(jsOptions));
-    	return options;
+    	return plot.getOptions();
     }-*/;
 
     native static void saveAsImage( Plot plot )
@@ -201,9 +192,7 @@ public class PlotImpl
 
     static native Axes getAxes( Plot plot )
     /*-{
-        var jsAxes = plot.getAxes();
-        var axes = @ca.nanometrics.gflot.client.Axes::new(Lcom/google/gwt/json/client/JSONObject;)(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(jsAxes));
-        return axes;
+        return plot.getAxes();
     }-*/;
 
     static native void addPlotPanListener( Element container, PlotPanListener listener )

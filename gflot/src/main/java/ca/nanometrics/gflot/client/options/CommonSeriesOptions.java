@@ -1,38 +1,41 @@
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * Options common to global series options and specific series options
- *
+ * 
  * @author Nicolas Morel
  */
 @SuppressWarnings( "unchecked" )
 public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
-    extends JSONObjectWrapper
+    extends JsonObject
 {
 
     public static class Threshold
-        extends JSONObjectWrapper
+        extends JsonObject
     {
+        /**
+         * Creates a {@link Threshold}
+         */
+        public static final Threshold create()
+        {
+            return JavaScriptObject.createObject().cast();
+        }
+
         private static final String BELOW_KEY = "below";
         private static final String COLOR_KEY = "color";
 
-        public Threshold()
+        protected Threshold()
         {
-        }
-
-        Threshold( JSONObject obj )
-        {
-            super( obj );
         }
 
         /**
          * The data points below "below" are drawn with the specified color.
          */
-        public Threshold setBelow( double below )
+        public final Threshold setBelow( double below )
         {
             put( BELOW_KEY, below );
             return this;
@@ -41,7 +44,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
         /**
          * @return the below number
          */
-        public Double getBelow()
+        public final Double getBelow()
         {
             return getDouble( BELOW_KEY );
         }
@@ -49,7 +52,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
         /**
          * Clear the below number
          */
-        public Threshold clearBelowNumber()
+        public final Threshold clearBelowNumber()
         {
             clear( BELOW_KEY );
             return this;
@@ -58,7 +61,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
         /**
          * Set the color.
          */
-        public Threshold setColor( String color )
+        public final Threshold setColor( String color )
         {
             put( COLOR_KEY, color );
             return this;
@@ -67,7 +70,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
         /**
          * @return the color
          */
-        public String getColor()
+        public final String getColor()
         {
             return getString( COLOR_KEY );
         }
@@ -75,7 +78,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
         /**
          * Clear the color
          */
-        public Threshold clearColor()
+        public final Threshold clearColor()
         {
             clear( COLOR_KEY );
             return this;
@@ -83,51 +86,23 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     }
 
     private static final String LINE_SERIES_KEY = "lines";
-
     private static final String BAR_SERIES_KEY = "bars";
-
     private static final String POINTS_SERIES_KEY = "points";
-
     private static final String IMAGES_SERIES_KEY = "images";
-
     private static final String PIE_SERIES_KEY = "pie";
-
     private static final String SHADOW_SIZE_KEY = "shadowSize";
-
     private static final String STACK_KEY = "stack";
-
     private static final String THRESHOLD_KEY = "threshold";
 
-    private LineSeriesOptions lineSeriesOptions;
-
-    private BarSeriesOptions barSeriesOptions;
-
-    private PointsSeriesOptions pointsSeriesOptions;
-
-    private ImageSeriesOptions imageSeriesOptions;
-
-    private PieSeriesOptions pieSeriesOptions;
-
-    public CommonSeriesOptions()
+    protected CommonSeriesOptions()
     {
-    }
-
-    public CommonSeriesOptions( JSONObject jsonObj )
-    {
-        super( jsonObj );
-        lineSeriesOptions = new LineSeriesOptions( getObject( LINE_SERIES_KEY ) );
-        barSeriesOptions = new BarSeriesOptions( getObject( BAR_SERIES_KEY ) );
-        pointsSeriesOptions = new PointsSeriesOptions( getObject( POINTS_SERIES_KEY ) );
-        imageSeriesOptions = new ImageSeriesOptions( getObject( IMAGES_SERIES_KEY ) );
-        pieSeriesOptions = new PieSeriesOptions( getObject( PIE_SERIES_KEY ) );
     }
 
     /**
      * Set global Line series options that will be used unless options are set directly to the series
      */
-    public T setLineSeriesOptions( LineSeriesOptions lineSeriesOptions )
+    public final T setLineSeriesOptions( LineSeriesOptions lineSeriesOptions )
     {
-        this.lineSeriesOptions = lineSeriesOptions;
         put( LINE_SERIES_KEY, lineSeriesOptions );
         return (T) this;
     }
@@ -135,17 +110,16 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * @return global Line series options
      */
-    public LineSeriesOptions getLineSeriesOptions()
+    public final LineSeriesOptions getLineSeriesOptions()
     {
-        return lineSeriesOptions;
+        return getJsObject( LINE_SERIES_KEY );
     }
 
     /**
      * Set global Bar series options that will be used unless options are set directly to the series
      */
-    public T setBarsSeriesOptions( BarSeriesOptions barSeriesOptions )
+    public final T setBarsSeriesOptions( BarSeriesOptions barSeriesOptions )
     {
-        this.barSeriesOptions = barSeriesOptions;
         put( BAR_SERIES_KEY, barSeriesOptions );
         return (T) this;
     }
@@ -153,17 +127,16 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * @return global Bar series options
      */
-    public BarSeriesOptions getBarSeriesOptions()
+    public final BarSeriesOptions getBarSeriesOptions()
     {
-        return barSeriesOptions;
+        return getJsObject( BAR_SERIES_KEY );
     }
 
     /**
      * Set global Points series options that will be used unless options are set directly to the series
      */
-    public T setPointsOptions( PointsSeriesOptions pointsSeriesOptions )
+    public final T setPointsOptions( PointsSeriesOptions pointsSeriesOptions )
     {
-        this.pointsSeriesOptions = pointsSeriesOptions;
         put( POINTS_SERIES_KEY, pointsSeriesOptions );
         return (T) this;
     }
@@ -171,17 +144,16 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * @return global Points series options
      */
-    public PointsSeriesOptions getPointsSeriesOptions()
+    public final PointsSeriesOptions getPointsSeriesOptions()
     {
-        return pointsSeriesOptions;
+        return getJsObject( POINTS_SERIES_KEY );
     }
 
     /**
      * Set global Image series options that will be used unless options are set directly to the series
      */
-    public T setImageSeriesOptions( ImageSeriesOptions imageSeriesOptions )
+    public final T setImageSeriesOptions( ImageSeriesOptions imageSeriesOptions )
     {
-        this.imageSeriesOptions = imageSeriesOptions;
         put( IMAGES_SERIES_KEY, imageSeriesOptions );
         return (T) this;
     }
@@ -189,17 +161,16 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * @return global Image series options
      */
-    public ImageSeriesOptions getImageSeriesOptions()
+    public final ImageSeriesOptions getImageSeriesOptions()
     {
-        return imageSeriesOptions;
+        return getJsObject( IMAGES_SERIES_KEY );
     }
 
     /**
      * Set global Pie series options that will be used unless options are set directly to the series
      */
-    public T setPieSeriesOptions( PieSeriesOptions pieSeriesOptions )
+    public final T setPieSeriesOptions( PieSeriesOptions pieSeriesOptions )
     {
-        this.pieSeriesOptions = pieSeriesOptions;
         put( PIE_SERIES_KEY, pieSeriesOptions );
         return (T) this;
     }
@@ -207,15 +178,15 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * @return global Pie series options
      */
-    public PieSeriesOptions getPieSeriesOptions()
+    public final PieSeriesOptions getPieSeriesOptions()
     {
-        return pieSeriesOptions;
+        return getJsObject( PIE_SERIES_KEY );
     }
 
     /**
      * Set the size of shadows in pixels for all series. Set it to 0 to remove shadows.
      */
-    public T setShadowSize( double shadow )
+    public final T setShadowSize( double shadow )
     {
         assert shadow >= 0 : "shadowSize must be >= 0";
 
@@ -226,7 +197,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * @return the size of shadows in pixels
      */
-    public Double getShadowSize()
+    public final Double getShadowSize()
     {
         return getDouble( SHADOW_SIZE_KEY );
     }
@@ -234,7 +205,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * Clear the size of the shadows
      */
-    public T clearShadowSize()
+    public final T clearShadowSize()
     {
         clear( SHADOW_SIZE_KEY );
         return (T) this;
@@ -245,7 +216,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
      * (which can be any number or string or just "true"). The stacking order is determined by the order of the data
      * series in the array (later series end up on top of the previous).
      */
-    public T setStack( String key )
+    public final T setStack( String key )
     {
         put( STACK_KEY, key );
         return (T) this;
@@ -256,7 +227,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
      * (which can be any number or string or just "true"). The stacking order is determined by the order of the data
      * series in the array (later series end up on top of the previous).
      */
-    public T setStack( int key )
+    public final T setStack( int key )
     {
         put( STACK_KEY, key );
         return (T) this;
@@ -267,7 +238,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
      * (which can be any number or string or just "true"). The stacking order is determined by the order of the data
      * series in the array (later series end up on top of the previous).
      */
-    public T setStack( boolean stack )
+    public final T setStack( boolean stack )
     {
         put( STACK_KEY, stack );
         return (T) this;
@@ -276,7 +247,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * @return the stack option
      */
-    public String getStackAsKeyString()
+    public final String getStackAsKeyString()
     {
         return getString( STACK_KEY );
     }
@@ -284,7 +255,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * @return the stack option
      */
-    public Integer getStackAsKeyNumber()
+    public final Integer getStackAsKeyNumber()
     {
         return getInteger( STACK_KEY );
     }
@@ -292,7 +263,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * @return the stack option
      */
-    public Boolean getStackAsBoolean()
+    public final Boolean getStackAsBoolean()
     {
         return getBoolean( STACK_KEY );
     }
@@ -300,7 +271,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * Clear the stack option
      */
-    public T clearStack()
+    public final T clearStack()
     {
         clear( STACK_KEY );
         return (T) this;
@@ -309,7 +280,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * Set the threshold options.
      */
-    public T setThreshold( Threshold threshold )
+    public final T setThreshold( Threshold threshold )
     {
         put( THRESHOLD_KEY, threshold );
         return (T) this;
@@ -318,16 +289,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * @return the threshold options
      */
-    public Threshold getThreshold()
+    public final Threshold getThreshold()
     {
-        JSONObject obj = getObject( THRESHOLD_KEY );
-        if ( null == obj )
-        {
-            return null;
-        }
-        else
-        {
-            return new Threshold( obj );
-        }
+        return getJsObject( THRESHOLD_KEY );
     }
 }

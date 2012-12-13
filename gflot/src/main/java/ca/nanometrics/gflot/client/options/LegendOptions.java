@@ -22,24 +22,20 @@
 package ca.nanometrics.gflot.client.options;
 
 import ca.nanometrics.gflot.client.Series;
-import ca.nanometrics.gflot.client.util.JSONHelper;
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayNumber;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONNumber;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONValue;
 
 /**
  * The legend is generated as a table with the data series labels and small label boxes with the color of the series.
- *
+ * 
  * @author AlexanderDeleon
  */
 public class LegendOptions
-    extends JSONObjectWrapper
+    extends JsonObject
 {
     public interface LabelFormatter
     {
@@ -78,36 +74,31 @@ public class LegendOptions
         }
     }
 
-    private static final String SHOW_KEY = "show";
-
-    private static final String LABEL_BOX_BORDER_COLOR_KEY = "labelBoxBorderColor";
-
-    private static final String NUM_COLUMNS_KEY = "noColumns";
-
-    private static final String POSITION_KEY = "position";
-
-    private static final String MARGIN_KEY = "margin";
-
-    private static final String BACKGROUND_COLOR_KEY = "backgroundColor";
-
-    private static final String BACKGROUND_OPACITY_KEY = "backgroundOpacity";
-
-    private static final String CONTAINER_KEY = "container";
-
-    public LegendOptions()
+    /**
+     * Creates a {@link LegendOptions}
+     */
+    public static final LegendOptions create()
     {
-        super();
+        return JavaScriptObject.createObject().cast();
     }
 
-    LegendOptions( JSONObject jsonObj )
+    private static final String SHOW_KEY = "show";
+    private static final String LABEL_BOX_BORDER_COLOR_KEY = "labelBoxBorderColor";
+    private static final String NUM_COLUMNS_KEY = "noColumns";
+    private static final String POSITION_KEY = "position";
+    private static final String MARGIN_KEY = "margin";
+    private static final String BACKGROUND_COLOR_KEY = "backgroundColor";
+    private static final String BACKGROUND_OPACITY_KEY = "backgroundOpacity";
+    private static final String CONTAINER_KEY = "container";
+
+    protected LegendOptions()
     {
-        super( jsonObj );
     }
 
     /**
      * Set if the legend is shown or not
      */
-    public LegendOptions setShow( boolean show )
+    public final LegendOptions setShow( boolean show )
     {
         put( SHOW_KEY, show );
         return this;
@@ -116,7 +107,7 @@ public class LegendOptions
     /**
      * @return true if the legend is shown
      */
-    public Boolean getShow()
+    public final Boolean getShow()
     {
         return getBoolean( SHOW_KEY );
     }
@@ -124,7 +115,7 @@ public class LegendOptions
     /**
      * Clear if the legend is shown or not
      */
-    public LegendOptions clearShow()
+    public final LegendOptions clearShow()
     {
         clear( SHOW_KEY );
         return this;
@@ -133,7 +124,7 @@ public class LegendOptions
     /**
      * Set the border color of the label box.
      */
-    public LegendOptions setLabelBoxBorderColor( String cssColor )
+    public final LegendOptions setLabelBoxBorderColor( String cssColor )
     {
         put( LABEL_BOX_BORDER_COLOR_KEY, cssColor );
         return this;
@@ -142,7 +133,7 @@ public class LegendOptions
     /**
      * @return the border color of the label box
      */
-    public String getLabelBoxBorderColor()
+    public final String getLabelBoxBorderColor()
     {
         return getString( LABEL_BOX_BORDER_COLOR_KEY );
     }
@@ -150,7 +141,7 @@ public class LegendOptions
     /**
      * Clear the border color of the label box
      */
-    public LegendOptions clearLabelBoxBorderColor()
+    public final LegendOptions clearLabelBoxBorderColor()
     {
         clear( LABEL_BOX_BORDER_COLOR_KEY );
         return this;
@@ -159,7 +150,7 @@ public class LegendOptions
     /**
      * Set the number of columns to divide the legend table into.
      */
-    public LegendOptions setNumOfColumns( int cols )
+    public final LegendOptions setNumOfColumns( int cols )
     {
         put( NUM_COLUMNS_KEY, new Integer( cols ) );
         return this;
@@ -168,7 +159,7 @@ public class LegendOptions
     /**
      * @return the number of columns to divide the legend table into
      */
-    public Integer getNumOfColumns()
+    public final Integer getNumOfColumns()
     {
         return getInteger( NUM_COLUMNS_KEY );
     }
@@ -176,7 +167,7 @@ public class LegendOptions
     /**
      * Clear the number of columns to divide the legend table into
      */
-    public LegendOptions clearNumOfColumns()
+    public final LegendOptions clearNumOfColumns()
     {
         clear( NUM_COLUMNS_KEY );
         return this;
@@ -186,7 +177,7 @@ public class LegendOptions
      * Set the overall placement of the legend within the plot (LegendPosition.NORTH_EAST, LegendPosition.NORTH_WEST,
      * LegendPosition.SOUTH_EAST or LegendPosition.SOUTH_WEST). By default, the placement is LegendPosition.NORTH_EAST.
      */
-    public LegendOptions setPosition( LegendPosition position )
+    public final LegendOptions setPosition( LegendPosition position )
     {
         assert null != position : "position can't be null";
 
@@ -197,7 +188,7 @@ public class LegendOptions
     /**
      * @return the overall placement of the legend within the plot
      */
-    public LegendPosition getPosition()
+    public final LegendPosition getPosition()
     {
         return LegendPosition.findByFlotValue( getString( POSITION_KEY ) );
     }
@@ -205,7 +196,7 @@ public class LegendOptions
     /**
      * Clear the position
      */
-    public LegendOptions clearPosition()
+    public final LegendOptions clearPosition()
     {
         clear( POSITION_KEY );
         return this;
@@ -214,18 +205,25 @@ public class LegendOptions
     /**
      * Set the distance to the plot edge
      */
-    public LegendOptions setMargin( double margin )
+    public final LegendOptions setMargin( double margin )
     {
-        put( MARGIN_KEY, new Double( margin ) );
+        put( MARGIN_KEY, margin );
         return this;
     }
 
     /**
      * Set the distance to the plot edge
      */
-    public LegendOptions setMargin( double marginX, double marginY )
+    public final LegendOptions setMargin( double marginX, double marginY )
     {
-        put( MARGIN_KEY, JSONHelper.wrapArray( new Double[] { marginX, marginY } ) );
+        JsArrayNumber array = getMarginAsArray();
+        if ( null == array )
+        {
+            array = JavaScriptObject.createArray().cast();
+            put( MARGIN_KEY, array );
+        }
+        array.set( 0, marginX );
+        array.set( 1, marginY );
         return this;
     }
 
@@ -233,30 +231,35 @@ public class LegendOptions
      * @return the distance to the plot edge. The array can contains one value if the margin is applied to both x and y
      * axis or 2 values if the first one is applied to x axis and the second one to y axis.
      */
-    public Double[] getMargin()
+    public final Object getMargin()
     {
-        JSONValue value = get( MARGIN_KEY );
-        if ( value == null )
-        {
-            return null;
-        }
-        JSONNumber number = value.isNumber();
-        if ( null != number )
-        {
-            return new Double[] { number.doubleValue() };
-        }
-        JSONArray array = value.isArray();
-        if ( null != array )
-        {
-            return new Double[] { array.get( 0 ).isNumber().doubleValue(), array.get( 1 ).isNumber().doubleValue() };
-        }
-        return null;
+        return getObject( MARGIN_KEY );
+    }
+
+    /**
+     * @return the distance to the plot edge. The array can contains one value if the margin is applied to both x and y
+     * axis or 2 values if the first one is applied to x axis and the second one to y axis.
+     */
+    public final Double getMarginAsDouble()
+    {
+        Object margin = getMargin();
+        return (Double) ( margin instanceof Double ? margin : null );
+    }
+
+    /**
+     * @return the distance to the plot edge. The array can contains one value if the margin is applied to both x and y
+     * axis or 2 values if the first one is applied to x axis and the second one to y axis.
+     */
+    public final JsArrayNumber getMarginAsArray()
+    {
+        Object margin = getMargin();
+        return (JsArrayNumber) ( margin instanceof JavaScriptObject ? margin : null );
     }
 
     /**
      * Clear the margin
      */
-    public LegendOptions clearMargin()
+    public final LegendOptions clearMargin()
     {
         clear( MARGIN_KEY );
         return this;
@@ -265,7 +268,7 @@ public class LegendOptions
     /**
      * Set the background color
      */
-    public LegendOptions setBackgroundColor( String cssColor )
+    public final LegendOptions setBackgroundColor( String cssColor )
     {
         put( BACKGROUND_COLOR_KEY, cssColor );
         return this;
@@ -274,7 +277,7 @@ public class LegendOptions
     /**
      * @return the background color
      */
-    public String getBackgroundColor()
+    public final String getBackgroundColor()
     {
         return getString( BACKGROUND_COLOR_KEY );
     }
@@ -282,7 +285,7 @@ public class LegendOptions
     /**
      * Clear the background color
      */
-    public LegendOptions clearBackgroundColor()
+    public final LegendOptions clearBackgroundColor()
     {
         clear( BACKGROUND_COLOR_KEY );
         return this;
@@ -291,7 +294,7 @@ public class LegendOptions
     /**
      * Set the background opacity. Opacity range from 0.0 to 1.0.
      */
-    public LegendOptions setBackgroundOpacity( double opacity )
+    public final LegendOptions setBackgroundOpacity( double opacity )
     {
         assert opacity >= 0 && opacity <= 1 : "opacity range from 0.0 to 1.0";
 
@@ -302,7 +305,7 @@ public class LegendOptions
     /**
      * @return the background opacity
      */
-    public Double getBackgroundOpacity()
+    public final Double getBackgroundOpacity()
     {
         return getDouble( BACKGROUND_OPACITY_KEY );
     }
@@ -310,7 +313,7 @@ public class LegendOptions
     /**
      * Clear the background opacity
      */
-    public LegendOptions clearBackgroundOpacity()
+    public final LegendOptions clearBackgroundOpacity()
     {
         clear( BACKGROUND_OPACITY_KEY );
         return this;
@@ -320,7 +323,7 @@ public class LegendOptions
      * Set a custom container to put the legend table into. The "position" and "margin" etc. options will then be
      * ignored. Note that Flot will overwrite the contents of the container.
      */
-    public LegendOptions setContainer( Element container )
+    public final LegendOptions setContainer( Element container )
     {
         assert null != container : "container can't be null";
 
@@ -335,9 +338,22 @@ public class LegendOptions
     }
 
     /**
+     * @return the custom container if it exists
+     */
+    public Element getContainer()
+    {
+        String containerId = getString( CONTAINER_KEY );
+        if ( null == containerId || containerId.length() <= 1 || !containerId.startsWith( "#" ) )
+        {
+            return null;
+        }
+        return Document.get().getElementById( containerId.substring( 1 ) );
+    }
+
+    /**
      * Clear the container
      */
-    public LegendOptions clearContainer()
+    public final LegendOptions clearContainer()
     {
         clear( CONTAINER_KEY );
         return this;
@@ -346,27 +362,25 @@ public class LegendOptions
     /**
      * Set the labelFormatter if you want to format the labels in some way, e.g. make them to links.
      */
-    public LegendOptions setLabelFormatter( LabelFormatter labelFormatter )
+    public final LegendOptions setLabelFormatter( LabelFormatter labelFormatter )
     {
         assert null != labelFormatter : "labelFormatter can't be null";
 
-        setLabelFormatterNative( getWrappedObj().getJavaScriptObject(), labelFormatter );
+        setLabelFormatterNative( labelFormatter );
         return this;
     }
 
-    private static native void setLabelFormatterNative( JavaScriptObject legendOptions, LabelFormatter labelFormatter )
+    private native void setLabelFormatterNative( LabelFormatter labelFormatter )
     /*-{
-		legendOptions.labelFormatter = function(label, series) {
-			var jsonSeriesObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(series);
-			var javaSeriesObject = @ca.nanometrics.gflot.client.Series::new(Lcom/google/gwt/json/client/JSONObject;)(jsonSeriesObject);
-			return labelFormatter.@ca.nanometrics.gflot.client.options.LegendOptions.LabelFormatter::formatLabel(Ljava/lang/String;Lca/nanometrics/gflot/client/Series;)(label, javaSeriesObject);
-		};
+        this.labelFormatter = function(label, series) {
+            return labelFormatter.@ca.nanometrics.gflot.client.options.LegendOptions.LabelFormatter::formatLabel(Ljava/lang/String;Lca/nanometrics/gflot/client/Series;)(label, series);
+        };
     }-*/;
 
     /**
      * Clear the legend formatter
      */
-    public LegendOptions clearLabelFormatter()
+    public final LegendOptions clearLabelFormatter()
     {
         clear( "labelFormatter" );
         return this;

@@ -21,7 +21,7 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * @author Alexander De Leon
@@ -29,23 +29,25 @@ import com.google.gwt.json.client.JSONObject;
 public class AxisOptions
     extends AbstractAxisOptions<AxisOptions>
 {
+    /**
+     * Creates a {@link AxisOptions}
+     */
+    public static final AxisOptions create()
+    {
+        return JavaScriptObject.createObject().cast();
+    }
 
     private static final String TICK_DECIMALS_KEY = "tickDecimals";
 
-    public AxisOptions()
+    protected AxisOptions()
     {
         super();
-    }
-
-    AxisOptions( JSONObject jsonObj )
-    {
-        super( jsonObj );
     }
 
     /**
      * Set the tick interval size. If you set it to 2, you'll get ticks at 2, 4, 6, etc.
      */
-    public AxisOptions setTickSize( double tickSize )
+    public final AxisOptions setTickSize( double tickSize )
     {
         put( TICK_SIZE_KEY, new Double( tickSize ) );
         return this;
@@ -54,7 +56,7 @@ public class AxisOptions
     /**
      * @return the tick interval size
      */
-    public Double getTickSize()
+    public final Double getTickSize()
     {
         return getDouble( TICK_SIZE_KEY );
     }
@@ -62,7 +64,7 @@ public class AxisOptions
     /**
      * Set that you don't want ticks at a size less than the specified one
      */
-    public AxisOptions setMinTickSize( double minTickSize )
+    public final AxisOptions setMinTickSize( double minTickSize )
     {
         put( MIN_TICK_SIZE_KEY, new Double( minTickSize ) );
         return this;
@@ -71,7 +73,7 @@ public class AxisOptions
     /**
      * @return the minimal tick size
      */
-    public Double getMinTickSize()
+    public final Double getMinTickSize()
     {
         return getDouble( MIN_TICK_SIZE_KEY );
     }
@@ -79,7 +81,7 @@ public class AxisOptions
     /**
      * Set the number of decimals to display (default is auto-detected).
      */
-    public AxisOptions setTickDecimals( double tickDecimals )
+    public final AxisOptions setTickDecimals( double tickDecimals )
     {
         put( TICK_DECIMALS_KEY, new Double( tickDecimals ) );
         return this;
@@ -88,7 +90,7 @@ public class AxisOptions
     /**
      * @return the number of decimals to display
      */
-    public Double getTickDecimals()
+    public final Double getTickDecimals()
     {
         return getDouble( TICK_DECIMALS_KEY );
     }
@@ -96,7 +98,7 @@ public class AxisOptions
     /**
      * Clear the number of decimals to display
      */
-    public AxisOptions clearTickDecimals()
+    public final AxisOptions clearTickDecimals()
     {
         clear( TICK_DECIMALS_KEY );
         return this;

@@ -36,9 +36,9 @@ import ca.nanometrics.gflot.client.event.PlotSelectingListener;
 import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
 import ca.nanometrics.gflot.client.event.PlotZoomListener;
 import ca.nanometrics.gflot.client.options.PlotOptions;
-import ca.nanometrics.gflot.client.util.JSONHelper;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.Image;
 
@@ -62,25 +62,14 @@ public class Plot
         // empty
     }
 
-    public static Plot create( Element container, Series[] series )
+    public static Plot create( Element container, JsArray<Series> series )
     {
-        return PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) )
-            .getJavaScriptObject() );
+        return PlotImpl.create( container, series );
     }
 
-    public static Plot create( Element container, Series[] series, PlotOptions options )
+    public static Plot create( Element container, JsArray<Series> series, PlotOptions options )
     {
-        JavaScriptObject optionsJs = null;
-        if ( null == options )
-        {
-            optionsJs = null;
-        }
-        else
-        {
-            optionsJs = JSONHelper.getJSONObject( options ).getJavaScriptObject();
-        }
-        return PlotImpl.create( container, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) )
-            .getJavaScriptObject(), optionsJs );
+        return PlotImpl.create( container, series, options );
     }
 
     public static Plot create( Element container, JavaScriptObject data, JavaScriptObject options )
@@ -88,29 +77,14 @@ public class Plot
         return PlotImpl.create( container, data, options );
     }
 
-    public static void loadDataImages( Series[] series, PlotOptions options, LoadImagesCallback callback )
+    public static void loadDataImages( JsArray<Series> series, PlotOptions options, LoadImagesCallback callback )
     {
-        JavaScriptObject optionsJs = null;
-        if ( null == options )
-        {
-            optionsJs = null;
-        }
-        else
-        {
-            optionsJs = JSONHelper.getJSONObject( options ).getJavaScriptObject();
-        }
-        PlotImpl.loadDataImages( JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject(),
-            optionsJs, callback );
+        PlotImpl.loadDataImages( series, options, callback );
     }
 
-    public final void setData( Series[] series )
+    public final void setData( JsArray<Series> series )
     {
-        PlotImpl.setData( this, JSONHelper.getJSONArray( JSONHelper.wrapArray( series ) ).getJavaScriptObject() );
-    }
-
-    public final void setData( Series series )
-    {
-        setData( new Series[] { series } );
+        PlotImpl.setData( this, series );
     }
 
     public final native void draw()
@@ -145,7 +119,7 @@ public class Plot
 
     public final void setSelection( PlotSelectionArea area, boolean preventEvent )
     {
-        PlotImpl.setSelection( this, JSONHelper.getJSONObject( area ).getJavaScriptObject(), preventEvent );
+        PlotImpl.setSelection( this, area, preventEvent );
     }
 
     public final native void clearSelection( boolean preventEvent )

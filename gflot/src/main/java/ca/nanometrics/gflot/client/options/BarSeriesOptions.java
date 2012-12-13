@@ -21,7 +21,7 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * @author AlexanderDeleon
@@ -60,21 +60,21 @@ public class BarSeriesOptions
             return null;
         }
     }
-
-    private static final String BAR_WIDTH_KEY = "barWidth";
-
-    private static final String ALIGN_KEY = "align";
-
-    private static final String HORIZONTAL_KEY = "horizontal";
-
-    public BarSeriesOptions()
+    
+    /**
+     * Creates a {@link BarSeriesOptions}
+     */
+    public static final BarSeriesOptions create()
     {
-        super();
+        return JavaScriptObject.createObject().cast();
     }
 
-    BarSeriesOptions( JSONObject jsonObj )
+    private static final String BAR_WIDTH_KEY = "barWidth";
+    private static final String ALIGN_KEY = "align";
+    private static final String HORIZONTAL_KEY = "horizontal";
+
+    protected BarSeriesOptions()
     {
-        super( jsonObj );
     }
 
     /**
@@ -82,7 +82,7 @@ public class BarSeriesOptions
      * measures that are specified in pixels. For instance, for time series the unit is milliseconds so 24 * 60 * 60 *
      * 1000 produces bars with the width of a day.
      */
-    public BarSeriesOptions setBarWidth( double width )
+    public final BarSeriesOptions setBarWidth( double width )
     {
         put( BAR_WIDTH_KEY, new Double( width ) );
         return this;
@@ -91,7 +91,7 @@ public class BarSeriesOptions
     /**
      * @return the width of the bars in units of the x axis (or the y axis if "horizontal" is true)
      */
-    public Double getBarWidth()
+    public final Double getBarWidth()
     {
         return getDouble( BAR_WIDTH_KEY );
     }
@@ -99,7 +99,7 @@ public class BarSeriesOptions
     /**
      * Clear the bar width
      */
-    public BarSeriesOptions clearBarWidth()
+    public final BarSeriesOptions clearBarWidth()
     {
         clear( BAR_WIDTH_KEY );
         return this;
@@ -108,7 +108,7 @@ public class BarSeriesOptions
     /**
      * Set whether a bar should be left-aligned (default) or centered on top of the value it represents.
      */
-    public BarSeriesOptions setAlignment( BarAlignment alignment )
+    public final BarSeriesOptions setAlignment( BarAlignment alignment )
     {
         assert null != alignment : "alignment can't be null";
 
@@ -119,7 +119,7 @@ public class BarSeriesOptions
     /**
      * @return the bar alignment
      */
-    public BarAlignment getAlignment()
+    public final BarAlignment getAlignment()
     {
         return BarAlignment.findByFlotValue( getString( ALIGN_KEY ) );
     }
@@ -127,7 +127,7 @@ public class BarSeriesOptions
     /**
      * Clear the bar alignment
      */
-    public BarSeriesOptions clearAlignment()
+    public final BarSeriesOptions clearAlignment()
     {
         clear( ALIGN_KEY );
         return this;
@@ -138,7 +138,7 @@ public class BarSeriesOptions
      * are still defined in the same way so you'll probably want to swap the coordinates if you've been plotting
      * vertical bars first.
      */
-    public BarSeriesOptions setHorizontal( boolean horizontal )
+    public final BarSeriesOptions setHorizontal( boolean horizontal )
     {
         put( HORIZONTAL_KEY, horizontal );
         return this;
@@ -147,7 +147,7 @@ public class BarSeriesOptions
     /**
      * @return true if the bars are drawn horizontally
      */
-    public Boolean getHorizontal()
+    public final Boolean getHorizontal()
     {
         return getBoolean( HORIZONTAL_KEY );
     }
@@ -155,7 +155,7 @@ public class BarSeriesOptions
     /**
      * Clear if the bars are drawn horizontally
      */
-    public BarSeriesOptions clearHorizontal()
+    public final BarSeriesOptions clearHorizontal()
     {
         clear( HORIZONTAL_KEY );
         return this;

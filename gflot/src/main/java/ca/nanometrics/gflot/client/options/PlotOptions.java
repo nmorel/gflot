@@ -21,76 +21,39 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONHelper;
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayString;
 
 /**
  * @author AlexanderDeleon
  */
 public class PlotOptions
-    extends JSONObjectWrapper
+    extends JsonObject
 {
-    private static final String COLORS_KEY = "colors";
-
-    private static final String LEGEND_KEY = "legend";
-
-    private static final String X_AXES_KEY = "xaxes";
-
-    private static final String Y_AXES_KEY = "yaxes";
-
-    private static final String SERIES_KEY = "series";
-
-    private static final String GRID_KEY = "grid";
-
-    private static final String SELECTION_KEY = "selection";
-
-    private static final String ZOOM_KEY = "zoom";
-
-    private static final String PAN_KEY = "pan";
-
-    private static final String CROSSHAIR_KEY = "crosshair";
-
-    private static final String MULTIPLE_BARS_KEY = "multiplebars";
-
-    private LegendOptions legendOptions;
-
-    private AxesOptions xAxesOptions;
-
-    private AxesOptions yAxesOptions;
-
-    private SelectionOptions selectionOptions;
-
-    private GridOptions gridOptions;
-
-    private GlobalSeriesOptions globalSeriesOptions;
-
-    private ZoomOptions zoom;
-
-    private PanOptions pan;
-
-    private CrosshairOptions crosshair;
-
-    public PlotOptions()
+    /**
+     * Creates a {@link PlotOptions}
+     */
+    public static final PlotOptions create()
     {
-        super();
+        return JavaScriptObject.createObject().cast();
     }
 
-    public PlotOptions( JSONObject jsonObj )
+    private static final String COLORS_KEY = "colors";
+    private static final String LEGEND_KEY = "legend";
+    private static final String X_AXES_KEY = "xaxes";
+    private static final String Y_AXES_KEY = "yaxes";
+    private static final String SERIES_KEY = "series";
+    private static final String GRID_KEY = "grid";
+    private static final String SELECTION_KEY = "selection";
+    private static final String ZOOM_KEY = "zoom";
+    private static final String PAN_KEY = "pan";
+    private static final String CROSSHAIR_KEY = "crosshair";
+    private static final String MULTIPLE_BARS_KEY = "multiplebars";
+
+    protected PlotOptions()
     {
-        super( jsonObj );
-        globalSeriesOptions = new GlobalSeriesOptions( getObject( SERIES_KEY ) );
-        selectionOptions = new SelectionOptions( getObject( SELECTION_KEY ) );
-        gridOptions = new GridOptions( getObject( GRID_KEY ) );
-        legendOptions = new LegendOptions( getObject( LEGEND_KEY ) );
-
-        zoom = new ZoomOptions( getObject( ZOOM_KEY ) );
-        pan = new PanOptions( getObject( PAN_KEY ) );
-        crosshair = new CrosshairOptions( getObject( CROSSHAIR_KEY ) );
-
-        xAxesOptions = new AxesOptions( getArray( X_AXES_KEY ) );
-        yAxesOptions = new AxesOptions( getArray( Y_AXES_KEY ) );
     }
 
     /**
@@ -102,18 +65,18 @@ public class PlotOptions
      * If there are more data series than colors, Flot will try to generate extra colors by lightening and darkening
      * colors in the theme.
      */
-    public PlotOptions setDefaultColorTheme( String[] colors )
+    public final PlotOptions setDefaultColorTheme( JsArrayString colors )
     {
-        assert null != colors && colors.length > 0 : "colors can't be null or empty";
+        assert null != colors && colors.length() > 0 : "colors can't be null or empty";
 
-        put( COLORS_KEY, JSONHelper.wrapArray( colors ) );
+        put( COLORS_KEY, colors );
         return this;
     }
 
     /**
      * @return the default color theme to get colors for the data series from
      */
-    public String[] getDefaultColorTheme()
+    public final JsArrayString getDefaultColorTheme()
     {
         return getStringArray( COLORS_KEY );
     }
@@ -121,7 +84,7 @@ public class PlotOptions
     /**
      * Clear the default color theme
      */
-    public PlotOptions clearDefaultColorTheme()
+    public final PlotOptions clearDefaultColorTheme()
     {
         clear( COLORS_KEY );
         return this;
@@ -130,9 +93,8 @@ public class PlotOptions
     /**
      * Set the legend options
      */
-    public PlotOptions setLegendOptions( LegendOptions legendOptions )
+    public final PlotOptions setLegendOptions( LegendOptions legendOptions )
     {
-        this.legendOptions = legendOptions;
         put( LEGEND_KEY, legendOptions );
         return this;
     }
@@ -140,29 +102,30 @@ public class PlotOptions
     /**
      * @return the legend options
      */
-    public LegendOptions getLegendOptions()
+    public final LegendOptions getLegendOptions()
     {
-        return legendOptions;
+        return getJsObject( LEGEND_KEY );
     }
 
     /**
      * Add options for a x axis
      */
-    public PlotOptions addXAxisOptions( AbstractAxisOptions<?> xAxisOptions )
+    public final PlotOptions addXAxisOptions( AbstractAxisOptions<?> xAxisOptions )
     {
+        AxesOptions xAxesOptions = getXAxesOptions();
         if ( null == xAxesOptions )
         {
-            setXAxesOptions( new AxesOptions() );
+            xAxesOptions = AxesOptions.create();
+            setXAxesOptions( xAxesOptions );
         }
         xAxesOptions.addAxisOptions( xAxisOptions );
-
         return this;
     }
 
     /**
      * Return first x axis options
      */
-    public AbstractAxisOptions<?> getXAxisOptions()
+    public final AbstractAxisOptions<?> getXAxisOptions()
     {
         return getXAxisOptions( 1 );
     }
@@ -170,9 +133,10 @@ public class PlotOptions
     /**
      * Return x axis options at given index, starting at 1
      */
-    public AbstractAxisOptions<?> getXAxisOptions( int xAxisNumber )
+    public final AbstractAxisOptions<?> getXAxisOptions( int xAxisNumber )
     {
         assert xAxisNumber > 0 : "xAxisNumber starts at 1";
+        AxesOptions xAxesOptions = getXAxesOptions();
         if ( null == xAxesOptions )
         {
             return null;
@@ -183,10 +147,8 @@ public class PlotOptions
     /**
      * Set the options for x axes
      */
-    public PlotOptions setXAxesOptions( AxesOptions xAxesOptions )
+    public final PlotOptions setXAxesOptions( AxesOptions xAxesOptions )
     {
-        this.xAxesOptions = xAxesOptions;
-
         put( X_AXES_KEY, xAxesOptions );
         return this;
     }
@@ -194,29 +156,30 @@ public class PlotOptions
     /**
      * @return the options for x axes
      */
-    public AxesOptions getXAxesOptions()
+    public final AxesOptions getXAxesOptions()
     {
-        return xAxesOptions;
+        return getJsObject( X_AXES_KEY );
     }
 
     /**
      * Add y axis options
      */
-    public PlotOptions addYAxisOptions( AbstractAxisOptions<?> yAxisOptions )
+    public final PlotOptions addYAxisOptions( AbstractAxisOptions<?> yAxisOptions )
     {
+        AxesOptions yAxesOptions = getYAxesOptions();
         if ( null == yAxesOptions )
         {
-            setYAxesOptions( new AxesOptions() );
+            yAxesOptions = AxesOptions.create();
+            setXAxesOptions( yAxesOptions );
         }
         yAxesOptions.addAxisOptions( yAxisOptions );
-
         return this;
     }
 
     /**
      * Return first y axis options
      */
-    public AbstractAxisOptions<?> getYAxisOptions()
+    public final AbstractAxisOptions<?> getYAxisOptions()
     {
         return getYAxisOptions( 1 );
     }
@@ -224,9 +187,10 @@ public class PlotOptions
     /**
      * Return y axis options at given index, starting at 1
      */
-    public AbstractAxisOptions<?> getYAxisOptions( int yAxisNumber )
+    public final AbstractAxisOptions<?> getYAxisOptions( int yAxisNumber )
     {
         assert yAxisNumber > 0 : "yAxisNumber starts at 1";
+        AxesOptions yAxesOptions = getYAxesOptions();
         if ( null == yAxesOptions )
         {
             return null;
@@ -237,10 +201,8 @@ public class PlotOptions
     /**
      * Set the options for y axes
      */
-    public PlotOptions setYAxesOptions( AxesOptions yAxesOptions )
+    public final PlotOptions setYAxesOptions( AxesOptions yAxesOptions )
     {
-        this.yAxesOptions = yAxesOptions;
-
         put( Y_AXES_KEY, yAxesOptions );
         return this;
     }
@@ -248,17 +210,16 @@ public class PlotOptions
     /**
      * @return the options for y axes
      */
-    public AxesOptions getYAxesOptions()
+    public final AxesOptions getYAxesOptions()
     {
-        return yAxesOptions;
+        return getJsObject( Y_AXES_KEY );
     }
 
     /**
      * Set the selection options
      */
-    public PlotOptions setSelectionOptions( SelectionOptions selectionOptions )
+    public final PlotOptions setSelectionOptions( SelectionOptions selectionOptions )
     {
-        this.selectionOptions = selectionOptions;
         put( SELECTION_KEY, selectionOptions );
         return this;
     }
@@ -266,17 +227,16 @@ public class PlotOptions
     /**
      * @return the selection options
      */
-    public SelectionOptions getSelectionOptions()
+    public final SelectionOptions getSelectionOptions()
     {
-        return selectionOptions;
+        return getJsObject( SELECTION_KEY );
     }
 
     /**
      * Set the grid options
      */
-    public PlotOptions setGridOptions( GridOptions gridOptions )
+    public final PlotOptions setGridOptions( GridOptions gridOptions )
     {
-        this.gridOptions = gridOptions;
         put( GRID_KEY, gridOptions );
         return this;
     }
@@ -284,17 +244,16 @@ public class PlotOptions
     /**
      * @return the grid options
      */
-    public GridOptions getGridOptions()
+    public final GridOptions getGridOptions()
     {
-        return gridOptions;
+        return getJsObject( GRID_KEY );
     }
 
     /**
      * Set the global series options
      */
-    public PlotOptions setGlobalSeriesOptions( GlobalSeriesOptions globalSeriesOptions )
+    public final PlotOptions setGlobalSeriesOptions( GlobalSeriesOptions globalSeriesOptions )
     {
-        this.globalSeriesOptions = globalSeriesOptions;
         put( SERIES_KEY, globalSeriesOptions );
         return this;
     }
@@ -302,17 +261,16 @@ public class PlotOptions
     /**
      * @return the global series options
      */
-    public GlobalSeriesOptions getGlobalSeriesOptions()
+    public final GlobalSeriesOptions getGlobalSeriesOptions()
     {
-        return globalSeriesOptions;
+        return getJsObject( SERIES_KEY );
     }
 
     /**
      * Set the zoom options
      */
-    public PlotOptions setZoomOptions( ZoomOptions zoom )
+    public final PlotOptions setZoomOptions( ZoomOptions zoom )
     {
-        this.zoom = zoom;
         put( ZOOM_KEY, zoom );
         return this;
     }
@@ -320,17 +278,16 @@ public class PlotOptions
     /**
      * @return the zoom options
      */
-    public ZoomOptions getZoomOptions()
+    public final ZoomOptions getZoomOptions()
     {
-        return zoom;
+        return getJsObject( ZOOM_KEY );
     }
 
     /**
      * Set the pan options
      */
-    public PlotOptions setPanOptions( PanOptions pan )
+    public final PlotOptions setPanOptions( PanOptions pan )
     {
-        this.pan = pan;
         put( PAN_KEY, pan );
         return this;
     }
@@ -338,17 +295,16 @@ public class PlotOptions
     /**
      * @return the pan options
      */
-    public PanOptions getPanOptions()
+    public final PanOptions getPanOptions()
     {
-        return pan;
+        return getJsObject( PAN_KEY );
     }
 
     /**
      * Set the crosshair options
      */
-    public PlotOptions setCrosshairOptions( CrosshairOptions crosshair )
+    public final PlotOptions setCrosshairOptions( CrosshairOptions crosshair )
     {
-        this.crosshair = crosshair;
         put( CROSSHAIR_KEY, crosshair );
         return this;
     }
@@ -356,15 +312,15 @@ public class PlotOptions
     /**
      * @return the crosshair options
      */
-    public CrosshairOptions getCrosshairOptions()
+    public final CrosshairOptions getCrosshairOptions()
     {
-        return crosshair;
+        return getJsObject( CROSSHAIR_KEY );
     }
 
     /**
      * Enable the multiple bars plugin
      */
-    public PlotOptions setMultipleBars( boolean multiplebars )
+    public final PlotOptions setMultipleBars( boolean multiplebars )
     {
         put( MULTIPLE_BARS_KEY, multiplebars );
         return this;
@@ -373,7 +329,7 @@ public class PlotOptions
     /**
      * @return true if the multiple bars plugin is enabled
      */
-    public Boolean getMultipleBars()
+    public final Boolean getMultipleBars()
     {
         return getBoolean( MULTIPLE_BARS_KEY );
     }

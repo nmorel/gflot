@@ -21,17 +21,17 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import com.google.gwt.core.client.JavaScriptObject;
 
-import com.google.gwt.json.client.JSONObject;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
 /**
  * This class gives the properties of zoom
- *
+ * 
  * @author Ana Rita Loureiro
  */
-public class ZoomOptions
-    extends JSONObjectWrapper
+public final class ZoomOptions
+    extends JsonObject
 {
     public enum ZoomTrigger
     {
@@ -64,25 +64,28 @@ public class ZoomOptions
             return null;
         }
     }
+    
+    /**
+     * Creates a {@link ZoomOptions}
+     */
+    public static final ZoomOptions create()
+    {
+        return JavaScriptObject.createObject().cast();
+    }
 
     private static final String INTERACTIVE_KEY = "interactive";
     private static final String TRIGGER_KEY = "trigger";
     private static final String AMOUNT_KEY = "amount";
 
-    public ZoomOptions()
+    protected ZoomOptions()
     {
-    }
-
-    ZoomOptions( JSONObject jsonObj )
-    {
-        super( jsonObj );
     }
 
     /**
      * Defines the built-in drag/click behaviour. If you enable interactive then you'll have a basic plot that supports
      * zooming.
      */
-    public ZoomOptions setInteractive( boolean value )
+    public final ZoomOptions setInteractive( boolean value )
     {
         put( INTERACTIVE_KEY, value );
         return this;
@@ -91,7 +94,7 @@ public class ZoomOptions
     /**
      * @return whether or not there is a built-in drag/click behaviour.
      */
-    public boolean isInteractive()
+    public final boolean isInteractive()
     {
         Boolean interactive = getBoolean( INTERACTIVE_KEY );
         if ( interactive == null )
@@ -105,7 +108,7 @@ public class ZoomOptions
     /**
      * Clear the interactive option
      */
-    public ZoomOptions clearInteractive()
+    public final ZoomOptions clearInteractive()
     {
         clear( INTERACTIVE_KEY );
         return this;
@@ -115,7 +118,7 @@ public class ZoomOptions
      * Sets the number of mouse button clicks used to zoom the current viewport. Use TRIGGER_DOUBLE_CLICK for double
      * click or TRIGGER_SINGLE_CLICK for single click.
      */
-    public ZoomOptions setTrigger( ZoomTrigger trigger )
+    public final ZoomOptions setTrigger( ZoomTrigger trigger )
     {
         assert null != trigger : "trigger can't be null";
 
@@ -127,7 +130,7 @@ public class ZoomOptions
      * @return a string identifying the number of mouse button clicks used to zoom the current viewport. "dblclick" for
      * double click or "click" for single click.
      */
-    public ZoomTrigger getTrigger()
+    public final ZoomTrigger getTrigger()
     {
         return ZoomTrigger.findByFlotValue( getString( TRIGGER_KEY ) );
     }
@@ -135,7 +138,7 @@ public class ZoomOptions
     /**
      * Clear the trigger option
      */
-    public ZoomOptions clearTrigger()
+    public final ZoomOptions clearTrigger()
     {
         clear( TRIGGER_KEY );
         return this;
@@ -145,7 +148,7 @@ public class ZoomOptions
      * Sets the default amount to zoom the viewport relative to the current viewport. 1 is 100% (i.e. no change), 1.5 is
      * 150% (zoom in), 0.7 is 70% (zoom out).
      */
-    public ZoomOptions setAmount( Double value )
+    public final ZoomOptions setAmount( Double value )
     {
         put( AMOUNT_KEY, value );
         return this;
@@ -155,7 +158,7 @@ public class ZoomOptions
      * @return the default amount to zoom the viewport relative to the current viewport. 1 is 100% (i.e. no change), 1.5
      * is 150% (zoom in), 0.7 is 70% (zoom out).
      */
-    public Double getAmount()
+    public final Double getAmount()
     {
         return getDouble( AMOUNT_KEY );
     }
@@ -163,7 +166,7 @@ public class ZoomOptions
     /**
      * Clear the amount
      */
-    public ZoomOptions clearAmount()
+    public final ZoomOptions clearAmount()
     {
         clear( AMOUNT_KEY );
         return this;

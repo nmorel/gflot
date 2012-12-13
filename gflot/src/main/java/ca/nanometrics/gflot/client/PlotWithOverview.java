@@ -49,11 +49,13 @@ public class PlotWithOverview
 {
     public static final int DEFAULT_OVERVIEW_HEIGHT = 100; // px
 
-    public static final PlotOptions DEFAULT_OVERVIEW_OPTIONS = new PlotOptions()
-        .setLegendOptions( new LegendOptions().setShow( false ) )
+    public static final PlotOptions DEFAULT_OVERVIEW_OPTIONS = PlotOptions
+        .create()
+        .setLegendOptions( LegendOptions.create().setShow( false ) )
         .setGlobalSeriesOptions(
-            new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) )
-                .setShadowSize( 0d ) ).setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) );
+            GlobalSeriesOptions.create()
+                .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setFill( true ) )
+                .setShadowSize( 0d ) ).setSelectionOptions( SelectionOptions.create().setMode( SelectionMode.X ) );
 
     private final SimplePlot windowPlot;
 
@@ -63,7 +65,7 @@ public class PlotWithOverview
 
     public PlotWithOverview( PlotWithOverviewModel model )
     {
-        this( model, new PlotOptions() );
+        this( model, PlotOptions.create() );
     }
 
     public PlotWithOverview( PlotWithOverviewModel model, PlotOptions plotOptions )
@@ -198,7 +200,7 @@ public class PlotWithOverview
         double[] selection = model.getSelection();
         if ( selection[0] < selection[1] )
         {
-            overviewPlot.setSelection( new PlotSelectionArea().setX( new Range( selection[0], selection[1] ) ), false );
+            overviewPlot.setSelection( new PlotSelectionArea().setX( Range.of( selection[0], selection[1] ) ), false );
         }
         windowPlot.redraw();
         overviewPlot.redraw();
@@ -221,13 +223,13 @@ public class PlotWithOverview
 
     public void setLinearSelection( double x1, double x2 )
     {
-        overviewPlot.setSelection( new PlotSelectionArea().setX( new Range( x1, x2 ) ), false );
+        overviewPlot.setSelection( new PlotSelectionArea().setX( Range.of( x1, x2 ) ), false );
     }
 
     public void setRectangularSelection( double x1, double y1, double x2, double y2 )
     {
-        overviewPlot.setSelection( new PlotSelectionArea().setX( new Range( x1, x2 ) ).setY( new Range( y1, y2 ) ),
-            false );
+        overviewPlot
+            .setSelection( new PlotSelectionArea().setX( Range.of( x1, x2 ) ).setY( Range.of( y1, y2 ) ), false );
     }
 
     public void setWidth( int width )

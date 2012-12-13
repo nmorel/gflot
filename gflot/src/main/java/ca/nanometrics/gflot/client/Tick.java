@@ -21,31 +21,34 @@
  */
 package ca.nanometrics.gflot.client;
 
-import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
-
-import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayMixed;
 
 public class Tick
-    extends JSONArrayWrapper
+    extends JsArrayMixed
 {
-    public Tick( double value, String label )
+    /**
+     * Creates a {@link Tick}
+     */
+    public static Tick of( double value, String label )
     {
-        super.set( 0, value );
-        super.set( 1, label );
+        Tick tick = JavaScriptObject.createArray().cast();
+        tick.push( value );
+        tick.push( label );
+        return tick;
     }
 
-    public Tick( JSONArray jsonArray )
+    protected Tick()
     {
-        super( jsonArray );
     }
 
     public double getValue()
     {
-        return get( 0 ).isNumber().doubleValue();
+        return getNumber( 0 );
     }
 
     public String getLabel()
     {
-        return get( 1 ).isString().stringValue();
+        return getString( 1 );
     }
 }

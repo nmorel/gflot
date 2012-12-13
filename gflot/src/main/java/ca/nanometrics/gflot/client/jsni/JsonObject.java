@@ -6,52 +6,52 @@ import com.google.gwt.core.client.JsArrayMixed;
 import com.google.gwt.core.client.JsArrayNumber;
 import com.google.gwt.core.client.JsArrayString;
 
-public abstract class JsonObject
+public class JsonObject
     extends JavaScriptObject
-{
+{    
     protected JsonObject()
     {
     }
 
-    protected final native boolean hasKey( String key )
+    public final native boolean hasKey( String key )
     /*-{
         return key in this;
     }-*/;
 
-    protected final native void remove( String key )
+    public final native void clear( String key )
     /*-{
         delete this[key];
     }-*/;
 
-    protected final native void put( String key, String value )
+    public final native void put( String key, String value )
     /*-{
         this[key] = value;
     }-*/;
 
-    protected final native void put( String key, int value )
+    public final native void put( String key, int value )
     /*-{
         this[key] = Object(value);
     }-*/;
 
-    protected final native void put( String key, double value )
+    public final native void put( String key, double value )
     /*-{
         this[key] = Object(value);
     }-*/;
 
-    protected final native void put( String key, boolean value )
+    public final native void put( String key, boolean value )
     /*-{
         this[key] = Object(value);
     }-*/;
 
-    protected final native void put( String key, JavaScriptObject value )
+    public final native void put( String key, JavaScriptObject value )
     /*-{
         this[key] = value;
     }-*/;
 
-    protected final native Object getObject( String key )
+    public final native Object getObject( String key )
     /*-{
         var value = this[key];
-        
+
         if (null == value) {
             return null;
         }
@@ -70,73 +70,52 @@ public abstract class JsonObject
         return value;
     }-*/;
 
-    protected final native Double getDouble( String key )
+    public final native Double getDouble( String key )
     /*-{
-        return this[key] == null ? null : @java.lang.Double::valueOf(D)(this[key]);
+        return this[key] == null ? null
+                : @java.lang.Double::valueOf(D)(this[key]);
     }-*/;
 
-    protected final native Integer getInteger( String key )
+    public final native Integer getInteger( String key )
     /*-{
-        return this[key] == null ? null : @java.lang.Integer::valueOf(I)(this[key]);
+        return this[key] == null ? null
+                : @java.lang.Integer::valueOf(I)(this[key]);
     }-*/;
 
-    protected final native String getString( String key )
-    /*-{
-        return this[key];
-    }-*/;
-
-    protected final native Boolean getBoolean( String key )
-    /*-{
-        return this[key] == null ? null : @java.lang.Boolean::valueOf(Z)(this[key]);
-    }-*/;
-
-    protected final native JavaScriptObject getJsObject( String key )
+    public final native String getString( String key )
     /*-{
         return this[key];
     }-*/;
 
-    protected final JsArrayMixed getArray( String key )
+    public final native Boolean getBoolean( String key )
+    /*-{
+        return this[key] == null ? null
+                : @java.lang.Boolean::valueOf(Z)(this[key]);
+    }-*/;
+
+    public final native <T extends JavaScriptObject> T getJsObject( String key )
+    /*-{
+        return this[key];
+    }-*/;
+
+    public final JsArrayMixed getArray( String key )
     {
-        JavaScriptObject obj = getJsObject( key );
-        JsArrayMixed result = null;
-        if ( null != obj )
-        {
-            result = obj.cast();
-        }
-        return result;
+        return getJsObject( key );
     }
 
-    protected final JsArrayString getStringArray( String key )
+    public final JsArrayString getStringArray( String key )
     {
-        JavaScriptObject obj = getJsObject( key );
-        JsArrayString result = null;
-        if ( null != obj )
-        {
-            result = obj.cast();
-        }
-        return result;
+        return getJsObject( key );
     }
 
-    protected final JsArrayInteger getIntegerArray( String key )
+    public final JsArrayInteger getIntegerArray( String key )
     {
-        JavaScriptObject obj = getJsObject( key );
-        JsArrayInteger result = null;
-        if ( null != obj )
-        {
-            result = obj.cast();
-        }
-        return result;
+        return getJsObject( key );
     }
 
-    protected final JsArrayNumber getDoubleArray( String key )
+    public final JsArrayNumber getDoubleArray( String key )
     {
-        JavaScriptObject obj = getJsObject( key );
-        JsArrayNumber result = null;
-        if ( null != obj )
-        {
-            result = obj.cast();
-        }
-        return result;
+        return getJsObject( key );
     }
 
 }

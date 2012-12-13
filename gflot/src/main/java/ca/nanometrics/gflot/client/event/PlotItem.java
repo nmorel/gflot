@@ -26,7 +26,6 @@ import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.jsni.JsonObject;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.json.client.JSONObject;
 
 /**
  * @author Alexander De Leon
@@ -55,7 +54,7 @@ public class PlotItem
      */
     public final DataPoint getDataPoint()
     {
-        return getJsObject( DATAPOINT ).cast();
+        return getJsObject( DATAPOINT );
     }
 
     /**
@@ -71,8 +70,7 @@ public class PlotItem
      */
     public final Series getSeries()
     {
-        JSONObject obj = new JSONObject( getJsObject( SERIES ) );
-        return new Series( obj );
+        return getJsObject( SERIES );
     }
 
     /**

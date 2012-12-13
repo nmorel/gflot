@@ -21,66 +21,53 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
-
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 
 /**
  * @author Alexander De Leon
  * @author Mohamed M. El-Kalioby
  */
 public class Markings
-    extends JSONArrayWrapper
+    extends JsArray<Marking>
 {
-
-    public Markings()
+    /**
+     * Creates a {@link Markings}
+     */
+    public static final Markings create()
     {
-        super();
+        return JavaScriptObject.createObject().cast();
     }
 
-    Markings( JSONArray jsonArray )
+    protected Markings()
     {
-        super( jsonArray );
     }
 
-    public Markings addMarking( Marking marking )
+    public final Markings addMarking( Marking marking )
     {
         push( marking );
         return this;
     }
 
-    public Markings addMarkings( Marking[] markings )
+    public final Markings addMarkings( Marking... markings )
     {
-        pushAll( markings );
+        if ( null != markings )
+        {
+            for ( Marking marking : markings )
+            {
+                push( marking );
+            }
+        }
         return this;
     }
 
-    public Marking getMarking( int index )
+    public final Marking getMarking( int index )
     {
-        if ( index >= size() )
+        if ( index >= length() )
         {
             return null;
         }
-        JSONObject obj = getObject( index );
-        if ( null == obj )
-        {
-            return null;
-        }
-        else
-        {
-            return new Marking( obj );
-        }
-    }
-
-    public Marking[] getMarkings()
-    {
-        Marking[] markings = new Marking[size()];
-        for ( int i = 0; i < size(); i++ )
-        {
-            markings[i] = new Marking( getObject( i ) );
-        }
-        return markings;
+        return get( index );
     }
 
 }
