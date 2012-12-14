@@ -18,7 +18,7 @@ public class ImageDataPoint
      */
     public static final native ImageDataPoint of( String url, double x1, double y1, double x2, double y2 )
     /*-{
-        return [ url, x1, y1, x2, y2 ];
+        return [url, x1, y1, x2, y2];
     }-*/;
 
     protected ImageDataPoint()

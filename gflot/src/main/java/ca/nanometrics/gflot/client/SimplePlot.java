@@ -39,7 +39,7 @@ import ca.nanometrics.gflot.client.options.Range;
 import ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader;
 import ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.FlotJavaScriptCallback;
 
-import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
@@ -216,7 +216,7 @@ public class SimplePlot
     {
         if ( loaded )
         {
-            return plot.getSelection( getElement() );
+            return plot.getSelection();
         }
         return null;
     }
@@ -434,7 +434,7 @@ public class SimplePlot
                     {
                         Plot.loadDataImages( model.getSeries(), options, new LoadImagesCallback() {
                             @Override
-                            public void onImagesLoaded( JavaScriptObject data, JavaScriptObject options )
+                            public void onImagesLoaded( JsArray<Series> data, PlotOptions options )
                             {
                                 plot = Plot.create( getElement(), data, options );
                                 onPlotCreated();

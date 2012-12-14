@@ -22,6 +22,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
@@ -38,6 +39,7 @@ import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExampl
 public class PieExample
     extends DefaultActivity
 {
+    private static NumberFormat formatter = NumberFormat.getFormat( "0.#" );
 
     private static Binder binder = GWT.create( Binder.class );
 
@@ -90,8 +92,8 @@ public class PieExample
                             public String format( String label, Series series )
                             {
                                 return "<div style=\"font-size:8pt;text-align:center;padding:2px;color:white;\">"
-                                    + label + "<br/>" + series.getData().getY( 0 ) + " / " + series.getPercent()
-                                    + "%</div>";
+                                    + label + "<br/>" + formatter.format( series.getData().getY( 0 ) ) + " / "
+                                    + formatter.format( series.getPercent() ) + "%</div>";
                             }
                         } ) ) ) );
         plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
@@ -121,7 +123,8 @@ public class PieExample
             public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
             {
                 hovering.setInnerText( "Hovering series n\u00b0" + ( item.getSeriesIndex() + 1 ) + " : "
-                    + item.getSeries().getData().getY( 0 ) + " / " + item.getSeries().getPercent() + "%" );
+                    + formatter.format( item.getSeries().getData().getY( 0 ) ) + " / "
+                    + formatter.format( item.getSeries().getPercent() ) + "%" );
             }
         }, true );
 

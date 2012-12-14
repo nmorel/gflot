@@ -62,30 +62,33 @@ public class Plot
         // empty
     }
 
-    public static Plot create( Element container, JsArray<Series> series )
-    {
-        return PlotImpl.create( container, series );
-    }
+    public static final native Plot create( Element container, JsArray<Series> series )
+    /*-{
+        return new $wnd.jQuery.plot($wnd.jQuery("#" + container.id), series);
+    }-*/;
 
-    public static Plot create( Element container, JsArray<Series> series, PlotOptions options )
-    {
-        return PlotImpl.create( container, series, options );
-    }
+    public static final native Plot create( Element container, JsArray<Series> series, PlotOptions options )
+    /*-{
+        return new $wnd.jQuery.plot($wnd.jQuery("#" + container.id), series,
+                options);
+    }-*/;
 
-    public static Plot create( Element container, JavaScriptObject data, JavaScriptObject options )
-    {
-        return PlotImpl.create( container, data, options );
-    }
+    public static final native void loadDataImages( JsArray<Series> series, PlotOptions options,
+                                                    LoadImagesCallback callback )
+    /*-{
+        $wnd.jQuery.plot.image
+                .loadDataImages(
+                        series,
+                        options,
+                        function() {
+                            callback.@ca.nanometrics.gflot.client.event.LoadImagesCallback::onImagesLoaded(Lcom/google/gwt/core/client/JsArray;Lca/nanometrics/gflot/client/options/PlotOptions;)(series, options);
+                        });
+    }-*/;
 
-    public static void loadDataImages( JsArray<Series> series, PlotOptions options, LoadImagesCallback callback )
-    {
-        PlotImpl.loadDataImages( series, options, callback );
-    }
-
-    public final void setData( JsArray<Series> series )
-    {
-        PlotImpl.setData( this, series );
-    }
+    public final native void setData( JsArray<Series> series )
+    /*-{
+        this.setData(series);
+    }-*/;
 
     public final native void draw()
     /*-{
@@ -97,94 +100,141 @@ public class Plot
         this.setupGrid();
     }-*/;
 
-    public final void addPlotSelectedListener( Element container, PlotSelectedListener listener )
-    {
-        PlotImpl.addPlotSelectedListener( container, listener );
-    }
+    public final native void addPlotSelectedListener( Element container, PlotSelectedListener listener )
+    /*-{
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plotselected",
+                        function(event, area) {
+                            listener.@ca.nanometrics.gflot.client.event.PlotSelectedListener::onPlotSelected(Lca/nanometrics/gflot/client/PlotSelectionArea;)(area);
+                        });
+    }-*/;
 
-    public final void addPlotSelectingListener( Element container, PlotSelectingListener listener )
-    {
-        PlotImpl.addPlotSelectingListener( container, listener );
-    }
+    public final native void addPlotSelectingListener( Element container, PlotSelectingListener listener )
+    /*-{
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plotselecting",
+                        function(event, area) {
+                            listener.@ca.nanometrics.gflot.client.event.PlotSelectingListener::onPlotSelecting(Lca/nanometrics/gflot/client/PlotSelectionArea;)(area);
+                        });
+    }-*/;
 
-    public final void addPlotUnselectedListener( Element container, PlotUnselectedListener listener )
-    {
-        PlotImpl.addPlotUnselectedListener( container, listener );
-    }
+    public final native void addPlotUnselectedListener( Element container, PlotUnselectedListener listener )
+    /*-{
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plotunselected",
+                        function(event) {
+                            listener.@ca.nanometrics.gflot.client.event.PlotUnselectedListener::onPlotUnselected()();
+                        });
+    }-*/;
 
-    public final PlotSelectionArea getSelection( Element container )
-    {
-        return PlotImpl.getSelection( this );
-    }
+    public final native PlotSelectionArea getSelection()
+    /*-{
+        return this.getSelection();
+    }-*/;
 
-    public final void setSelection( PlotSelectionArea area, boolean preventEvent )
-    {
-        PlotImpl.setSelection( this, area, preventEvent );
-    }
+    public final native void setSelection( PlotSelectionArea area, boolean preventEvent )
+    /*-{
+        this.setSelection(area, preventEvent);
+    }-*/;
 
     public final native void clearSelection( boolean preventEvent )
     /*-{
         this.clearSelection(preventEvent);
     }-*/;
 
-    public final void addPlotHoverListener( Element container, PlotHoverListener listener, boolean onlyOnDatapoint )
-    {
-        PlotImpl.addPlotHoverListener( container, listener, onlyOnDatapoint, this );
-    }
+    public final native void addPlotHoverListener( Element container, PlotHoverListener listener,
+                                                   boolean onlyOnDatapoint )
+    /*-{
+        var plot = this;
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plothover",
+                        function(event, pos, item) {
+                            if (item != null || !onlyOnDatapoint) {
+                                listener.@ca.nanometrics.gflot.client.event.PlotHoverListener::onPlotHover(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/event/PlotPosition;Lca/nanometrics/gflot/client/event/PlotItem;)(plot, pos, item);
+                            }
+                        });
+    }-*/;
 
-    public final void addPlotClickListener( Element container, PlotClickListener listener, boolean onlyOnDatapoint )
-    {
-        PlotImpl.addPlotClickListener( container, listener, onlyOnDatapoint, this );
-    }
+    public final native void addPlotClickListener( Element container, PlotClickListener listener,
+                                                   boolean onlyOnDatapoint )
+    /*-{
+        var plot = this;
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plotclick",
+                        function(event, pos, item) {
+                            if (item != null || !onlyOnDatapoint) {
+                                listener.@ca.nanometrics.gflot.client.event.PlotClickListener::onPlotClick(Lca/nanometrics/gflot/client/jsni/Plot;Lca/nanometrics/gflot/client/event/PlotPosition;Lca/nanometrics/gflot/client/event/PlotItem;)(plot, pos, item);
+                            }
+                        });
+    }-*/;
 
-    public final int getPlotOffsetLeft()
-    {
-        return PlotImpl.getPlotOffsetLeft( this );
-    }
+    public final native int getPlotOffsetLeft()
+    /*-{
+        var offset = this.getPlotOffset().left;
+        return (offset === undefined) ? -1 : offset;
+    }-*/;
 
-    public final int getPlotOffsetRight()
-    {
-        return PlotImpl.getPlotOffsetRight( this );
-    }
+    public final native int getPlotOffsetRight()
+    /*-{
+        var offset = this.getPlotOffset().right;
+        return (offset === undefined) ? -1 : offset;
+    }-*/;
 
-    public final int getPlotOffsetTop()
-    {
-        return PlotImpl.getPlotOffsetTop( this );
-    }
+    public final native int getPlotOffsetTop()
+    /*-{
+        var offset = this.getPlotOffset().top;
+        return (offset === undefined) ? -1 : offset;
+    }-*/;
 
-    public final int getPlotOffsetBottom()
-    {
-        return PlotImpl.getPlotOffsetBottom( this );
-    }
+    public final native int getPlotOffsetBottom()
+    /*-{
+        var offset = this.getPlotOffset().bottom;
+        return (offset === undefined) ? -1 : offset;
+    }-*/;
 
-    public final PlotOptions getPlotOptions()
-    {
-        return PlotImpl.getPlotOptions( this );
-    }
+    public final native PlotOptions getPlotOptions()
+    /*-{
+        return this.getOptions();
+    }-*/;
 
-    public final void saveAsImage()
-    {
-        PlotImpl.saveAsImage( this );
-    }
+    public final native void saveAsImage()
+    /*-{
+        $wnd.Canvas2Image.saveAsPNG(this.getCanvas());
+    }-*/;
 
-    public final void saveAsImage( int width, int height )
-    {
-        PlotImpl.saveAsImage( this, width, height );
-    }
+    public final native void saveAsImage( int width, int height )
+    /*-{
+        $wnd.Canvas2Image.saveAsPNG(this.getCanvas(), false, width, height);
+    }-*/;
 
     public final Image getImage()
     {
-        Element img = PlotImpl.getImage( this );
+        Element img = getImage0();
         if ( null == img )
         {
             return null;
         }
         return new PlotImage( img );
     }
+
+    private final native Element getImage0()
+    /*-{
+        return $wnd.Canvas2Image.saveAsPNG(this.getCanvas(), true);
+    }-*/;
 
     public final Image getImage( int width, int height )
     {
-        Element img = PlotImpl.getImage( this, width, height );
+        Element img = getImage0( width, height );
         if ( null == img )
         {
             return null;
@@ -192,20 +242,38 @@ public class Plot
         return new PlotImage( img );
     }
 
-    public final Axes getAxes()
-    {
-        return PlotImpl.getAxes( this );
-    }
+    private final native Element getImage0( int width, int height )
+    /*-{
+        return $wnd.Canvas2Image.saveAsPNG(this.getCanvas(), true, width,
+                height);
+    }-*/;
 
-    public final void addPlotPanListener( Element container, PlotPanListener listener )
-    {
-        PlotImpl.addPlotPanListener( container, listener );
-    }
+    public final native Axes getAxes()
+    /*-{
+        return this.getAxes();
+    }-*/;
 
-    public final void addPlotZoomListener( Element container, PlotZoomListener listener )
-    {
-        PlotImpl.addPlotZoomListener( container, listener );
-    }
+    public final native void addPlotPanListener( Element container, PlotPanListener listener )
+    /*-{
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plotpan",
+                        function(event, plot) {
+                            listener.@ca.nanometrics.gflot.client.event.PlotPanListener::onPlotPan(Lca/nanometrics/gflot/client/jsni/Plot;)(plot);
+                        });
+    }-*/;
+
+    public final native void addPlotZoomListener( Element container, PlotZoomListener listener )
+    /*-{
+        $wnd
+                .jQuery("#" + container.id)
+                .bind(
+                        "plotzoom",
+                        function(event, plot) {
+                            listener.@ca.nanometrics.gflot.client.event.PlotZoomListener::onPlotZoom(Lca/nanometrics/gflot/client/jsni/Plot;)(plot);
+                        });
+    }-*/;
 
     public final native void zoom( Zoom zoom )
     /*-{

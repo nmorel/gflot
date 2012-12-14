@@ -8,6 +8,7 @@ import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.event.PlotPanListener;
 import ca.nanometrics.gflot.client.event.PlotZoomListener;
+import ca.nanometrics.gflot.client.jsni.Plot;
 import ca.nanometrics.gflot.client.options.AxisOptions;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
@@ -100,8 +101,9 @@ public class NavigateExample
 
         plot.addZoomListener( new PlotZoomListener() {
             @Override
-            public void onPlotZoom( Axes axes )
+            public void onPlotZoom( Plot plot )
             {
+                Axes axes = plot.getAxes();
                 message.setText( "Zooming to x=[min:\"" + format.format( axes.getX().getMinimumValue() ) + "\", max:\""
                     + format.format( axes.getX().getMaximumValue() ) + "\"], y=[min:\""
                     + format.format( axes.getY().getMinimumValue() ) + "\", max:\""
@@ -110,9 +112,11 @@ public class NavigateExample
         } );
 
         plot.addPanListener( new PlotPanListener() {
+
             @Override
-            public void onPlotPan( Axes axes )
+            public void onPlotPan( Plot plot )
             {
+                Axes axes = plot.getAxes();
                 message.setText( "Panning to x=[min:\"" + format.format( axes.getX().getMinimumValue() ) + "\", max:\""
                     + format.format( axes.getX().getMaximumValue() ) + "\"], y=[min:\""
                     + format.format( axes.getY().getMinimumValue() ) + "\", max:\""

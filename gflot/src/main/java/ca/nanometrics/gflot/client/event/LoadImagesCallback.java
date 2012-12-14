@@ -1,12 +1,14 @@
 package ca.nanometrics.gflot.client.event;
 
-import com.google.gwt.core.client.JavaScriptObject;
+import ca.nanometrics.gflot.client.Series;
+import ca.nanometrics.gflot.client.options.PlotOptions;
+
+import com.google.gwt.core.client.JsArray;
 
 /**
  * @author Nicolas Morel
  */
 public interface LoadImagesCallback
 {
-    // FIXME overlay : put the real object once they are converted to JSO
-    void onImagesLoaded( JavaScriptObject data, JavaScriptObject options );
+    void onImagesLoaded( JsArray<Series> data, PlotOptions options );
 }

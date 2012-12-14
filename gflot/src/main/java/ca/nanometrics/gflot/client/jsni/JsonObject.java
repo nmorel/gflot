@@ -8,7 +8,7 @@ import com.google.gwt.core.client.JsArrayString;
 
 public class JsonObject
     extends JavaScriptObject
-{    
+{
     protected JsonObject()
     {
     }
@@ -30,17 +30,17 @@ public class JsonObject
 
     public final native void put( String key, int value )
     /*-{
-        this[key] = Object(value);
+        this[key] = value;
     }-*/;
 
     public final native void put( String key, double value )
     /*-{
-        this[key] = Object(value);
+        this[key] = value;
     }-*/;
 
     public final native void put( String key, boolean value )
     /*-{
-        this[key] = Object(value);
+        this[key] = value;
     }-*/;
 
     public final native void put( String key, JavaScriptObject value )
@@ -76,11 +76,11 @@ public class JsonObject
                 : @java.lang.Double::valueOf(D)(this[key]);
     }-*/;
 
-    public final native Integer getInteger( String key )
-    /*-{
-        return this[key] == null ? null
-                : @java.lang.Integer::valueOf(I)(this[key]);
-    }-*/;
+    public final Integer getInteger( String key )
+    {
+        Double value = getDouble( key );
+        return value == null ? null : value.intValue();
+    }
 
     public final native String getString( String key )
     /*-{
@@ -117,5 +117,10 @@ public class JsonObject
     {
         return getJsObject( key );
     }
+
+    public final native String stringify()
+    /*-{
+        return JSON.stringify(this);
+    }-*/;
 
 }

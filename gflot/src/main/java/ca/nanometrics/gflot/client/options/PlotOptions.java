@@ -170,7 +170,7 @@ public class PlotOptions
         if ( null == yAxesOptions )
         {
             yAxesOptions = AxesOptions.create();
-            setXAxesOptions( yAxesOptions );
+            setYAxesOptions( yAxesOptions );
         }
         yAxesOptions.addAxisOptions( yAxisOptions );
         return this;

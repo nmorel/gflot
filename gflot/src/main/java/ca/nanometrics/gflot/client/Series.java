@@ -218,9 +218,9 @@ public class Series
      * 
      * @return the percent of the series
      */
-    public final Integer getPercent()
+    public final Double getPercent()
     {
-        return getInteger( PERCENT_KEY );
+        return getDouble( PERCENT_KEY );
     }
 
     /**

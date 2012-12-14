@@ -124,7 +124,7 @@ public class SelectionExample
 
         plot.addHoverListener( new PlotHoverListener() {
             @Override
-            public void onPlotHover( Plot plott, PlotPosition position, PlotItem item )
+            public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
             {
                 PlotSelectionArea area = plot.getSelection();
                 if ( null == area )

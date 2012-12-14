@@ -30,7 +30,7 @@ public class JQueryHelper
 
     public static final native JavaScriptObject getJQueryObj( String id )
     /*-{
-    	return $wnd.jQuery("#"+id);
+        return $wnd.jQuery("#" + id);
     }-*/;
 
 }

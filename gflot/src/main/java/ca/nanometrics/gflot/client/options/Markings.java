@@ -36,7 +36,7 @@ public class Markings
      */
     public static final Markings create()
     {
-        return JavaScriptObject.createObject().cast();
+        return JavaScriptObject.createArray().cast();
     }
 
     protected Markings()

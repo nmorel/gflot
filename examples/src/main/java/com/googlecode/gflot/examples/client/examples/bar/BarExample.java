@@ -90,13 +90,14 @@ public class BarExample
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = PlotOptions.create();
 
-        plotOptions.setGlobalSeriesOptions(  GlobalSeriesOptions.create().setBarsSeriesOptions(  BarSeriesOptions.create()
-            .setShow( true ).setLineWidth( 1 ).setBarWidth( 1 ).setAlignment( BarAlignment.CENTER ) ) );
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setBarsSeriesOptions(
+            BarSeriesOptions.create().setShow( true ).setLineWidth( 1 ).setBarWidth( 1 )
+                .setAlignment( BarAlignment.CENTER ) ) );
 
-        plotOptions.setLegendOptions(  LegendOptions.create().setShow( false ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
         // add tick formatter to the options
-        plotOptions.addXAxisOptions(  AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
             @Override
             public String formatTickValue( double tickValue, Axis axis )
             {
@@ -138,11 +139,11 @@ public class BarExample
         int nbSeries = 4;
 
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions =  PlotOptions.create();
+        PlotOptions plotOptions = PlotOptions.create();
 
-        GlobalSeriesOptions globalSeriesOptions =  GlobalSeriesOptions.create();
-        globalSeriesOptions.setBarsSeriesOptions(  BarSeriesOptions.create().setShow( true ).setBarWidth( 0.9 / nbSeries ) );
-
+        GlobalSeriesOptions globalSeriesOptions = GlobalSeriesOptions.create();
+        globalSeriesOptions.setBarsSeriesOptions( BarSeriesOptions.create().setShow( true )
+            .setBarWidth( 0.9 / nbSeries ) );
 
         // Activate the plugin for multiple bars support
         plotOptions.setMultipleBars( true );
@@ -160,7 +161,7 @@ public class BarExample
             series.add( model.addSeries( "Random series " + ( i + 1 ) ) );
         }
 
-        Markings markings =  Markings.create();
+        Markings markings = Markings.create();
 
         // add data
         for ( int i = 0; i < 10; i++ )
@@ -171,8 +172,8 @@ public class BarExample
             }
             if ( i % 2 != 0 )
             {
-                markings.addMarking(  Marking.create().setX(  Range.of( i - 0.5, i + 0.5 ) ).setColor(
-                    "rgba(153, 153, 153, 0.3)" ) );
+                markings.addMarking( Marking.create().setX( Range.of( i - 0.5, i + 0.5 ) )
+                    .setColor( "rgba(153, 153, 153, 0.3)" ) );
             }
         }
         plotOptions.setGridOptions( GridOptions.create().setMarkings( markings ) );
