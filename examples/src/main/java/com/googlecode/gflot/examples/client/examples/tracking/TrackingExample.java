@@ -22,6 +22,7 @@ import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions.PointSymbol;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -133,12 +134,12 @@ public class TrackingExample
     {
         model1 = new PlotModel();
 
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions()
-            .setShow( true ) ) );
-        plotOptions.setCrosshairOptions( new CrosshairOptions().setMode( Mode.X ) );
-        plotOptions.setGridOptions( new GridOptions().setHoverable( true ).setAutoHighlight( false ) );
-        plotOptions.addYAxisOptions( new AxisOptions().setMinimum( -1.2 ).setMaximum( 1.2 ) );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setLineSeriesOptions(
+            LineSeriesOptions.create().setShow( true ) ) );
+        plotOptions.setCrosshairOptions( CrosshairOptions.create().setMode( Mode.X ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ).setAutoHighlight( false ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setMinimum( -1.2 ).setMaximum( 1.2 ) );
 
         // create a series
         final SeriesHandler sin = model1.addSeries( "sin(x)" );
@@ -193,11 +194,11 @@ public class TrackingExample
 
         int i = 0;
         int j = 0;
-        Series[] dataset = model1.getSeries();
+        JsArray<Series> dataset = model1.getSeries();
         StringBuilder builder = new StringBuilder();
-        for ( i = 0; i < dataset.length; i++ )
+        for ( i = 0; i < dataset.length(); i++ )
         {
-            Series series = dataset[i];
+            Series series = dataset.get( i );
             SeriesData data = series.getData();
             // find the nearest points, x-wise
             for ( j = 0; j < data.length(); j++ )
@@ -244,15 +245,16 @@ public class TrackingExample
     {
         PlotModel model = new PlotModel();
 
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions
-            .setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions(
-                new LineSeriesOptions().setShow( true ) ).setPointsOptions(
-                new PointsSeriesOptions().setShow( true ).setRadius( 5 ).setSymbol( PointSymbol.DIAMOND )
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions
+            .create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setShow( true ) )
+            .setPointsOptions(
+                PointsSeriesOptions.create().setShow( true ).setRadius( 5 ).setSymbol( PointSymbol.DIAMOND )
                     .setFill( true ) ) );
-        plotOptions
-            .setCrosshairOptions( new CrosshairOptions().setMode( Mode.XY ).setLineWidth( 2 ).setColor( "green" ) );
-        plotOptions.setGridOptions( new GridOptions().setHoverable( true ).setAutoHighlight( false )
+        plotOptions.setCrosshairOptions( CrosshairOptions.create().setMode( Mode.XY ).setLineWidth( 2 )
+            .setColor( "green" ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ).setAutoHighlight( false )
             .setMouseActiveRadius( 15 ) );
 
         // create a series

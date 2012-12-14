@@ -73,25 +73,29 @@ public class PieExample
     public Widget createPlot()
     {
         final PlotModel model = new PlotModel();
-        final PlotOptions plotOptions = new PlotOptions();
+        final PlotOptions plotOptions = PlotOptions.create();
 
         // activate the pie
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setPieSeriesOptions( new PieSeriesOptions()
-            .setShow( true )
-            .setRadius( 1 )
-            .setInnerRadius( 0.2 )
-            .setLabel(
-                new Label().setShow( true ).setRadius( 3d / 4d ).setBackground( new Background().setOpacity( 0.8 ) )
-                    .setThreshold( 0.05 ).setFormatter( new Formatter() {
-                        @Override
-                        public String format( String label, Series series )
-                        {
-                            return "<div style=\"font-size:8pt;text-align:center;padding:2px;color:white;\">" + label
-                                + "<br/>" + series.getData().getY( 0 ) + " / " + series.getPercent() + "%</div>";
-                        }
-                    } ) ) ) );
-        plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
-        plotOptions.setGridOptions( new GridOptions().setHoverable( true ) );
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setPieSeriesOptions(
+            PieSeriesOptions
+                .create()
+                .setShow( true )
+                .setRadius( 1 )
+                .setInnerRadius( 0.2 )
+                .setLabel(
+                    Label.create().setShow( true ).setRadius( 3d / 4d )
+                        .setBackground( Background.create().setOpacity( 0.8 ) ).setThreshold( 0.05 )
+                        .setFormatter( new Formatter() {
+                            @Override
+                            public String format( String label, Series series )
+                            {
+                                return "<div style=\"font-size:8pt;text-align:center;padding:2px;color:white;\">"
+                                    + label + "<br/>" + series.getData().getY( 0 ) + " / " + series.getPercent()
+                                    + "%</div>";
+                            }
+                        } ) ) ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
 
         // create series
         SeriesHandler series1 = model.addSeries( "Series 1" );

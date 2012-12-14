@@ -200,7 +200,8 @@ public class PlotWithOverview
         double[] selection = model.getSelection();
         if ( selection[0] < selection[1] )
         {
-            overviewPlot.setSelection( new PlotSelectionArea().setX( Range.of( selection[0], selection[1] ) ), false );
+            overviewPlot
+                .setSelection( PlotSelectionArea.create().setX( Range.of( selection[0], selection[1] ) ), false );
         }
         windowPlot.redraw();
         overviewPlot.redraw();
@@ -223,13 +224,13 @@ public class PlotWithOverview
 
     public void setLinearSelection( double x1, double x2 )
     {
-        overviewPlot.setSelection( new PlotSelectionArea().setX( Range.of( x1, x2 ) ), false );
+        overviewPlot.setSelection( PlotSelectionArea.create().setX( Range.of( x1, x2 ) ), false );
     }
 
     public void setRectangularSelection( double x1, double y1, double x2, double y2 )
     {
-        overviewPlot
-            .setSelection( new PlotSelectionArea().setX( Range.of( x1, x2 ) ).setY( Range.of( y1, y2 ) ), false );
+        overviewPlot.setSelection( PlotSelectionArea.create().setX( Range.of( x1, x2 ) ).setY( Range.of( y1, y2 ) ),
+            false );
     }
 
     public void setWidth( int width )

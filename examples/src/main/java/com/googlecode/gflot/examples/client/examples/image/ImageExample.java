@@ -55,16 +55,16 @@ public class ImageExample
     public Widget createPlot()
     {
         final PlotModel model = new PlotModel();
-        final PlotOptions plotOptions = new PlotOptions();
+        final PlotOptions plotOptions = PlotOptions.create();
 
         // add tick formatter to the options
-        plotOptions.addXAxisOptions( new AxisOptions().setMinimum( -8 ).setMaximum( 4 ) );
-        plotOptions.addYAxisOptions( new AxisOptions().setMinimum( -8 ).setMaximum( 4 ) );
+        plotOptions.addXAxisOptions( AxisOptions.create().setMinimum( -8 ).setMaximum( 4 ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setMinimum( -8 ).setMaximum( 4 ) );
 
         // create a series
         SeriesHandler handlerImage =
-            model.addSeries( new Series( "Image series" ).setImageSeriesOptions( new ImageSeriesOptions()
-                .setShow( true ).setAlpha( 0.5 ) ) );
+            model.addSeries( Series.create().setLabel( "Image series" )
+                .setImageSeriesOptions( ImageSeriesOptions.create().setShow( true ).setAlpha( 0.5 ) ) );
         handlerImage.add( ImageDataPoint.of( "images/hs-2004-27-a-large_web.jpg", -2, -2, 2, 2 ) );
 
         // create a series

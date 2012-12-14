@@ -85,19 +85,18 @@ public class SelectionExample
     public Widget createPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
+        PlotOptions plotOptions = PlotOptions.create();
 
         // add tick formatter to the options
-        plotOptions.addXAxisOptions( new AxisOptions().setTicks( 12 ).setTickFormatter( new TickFormatter()
-        {
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
             public String formatTickValue( double tickValue, Axis axis )
             {
                 return MONTH_NAMES[(int) ( tickValue - 1 )];
             }
         } ) );
 
-        plotOptions.setSelectionOptions( new SelectionOptions().setMode( SelectionMode.XY ).setColor( "red" ) );
-        plotOptions.setGridOptions( new GridOptions().setHoverable( true ) );
+        plotOptions.setSelectionOptions( SelectionOptions.create().setMode( SelectionMode.XY ).setColor( "red" ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
 
         // create a series
         SeriesHandler handler = model.addSeries( "Ottawa's Month Temperatures (Daily Average in &deg;C)", "blue" );
@@ -123,8 +122,7 @@ public class SelectionExample
         final Label hoverLabel = new Label( "You are hovering the selected zone" );
         popup.setWidget( hoverLabel );
 
-        plot.addHoverListener( new PlotHoverListener()
-        {
+        plot.addHoverListener( new PlotHoverListener() {
             @Override
             public void onPlotHover( Plot plott, PlotPosition position, PlotItem item )
             {
@@ -151,8 +149,7 @@ public class SelectionExample
             }
         }, false );
 
-        plot.addSelectedListener( new PlotSelectedListener()
-        {
+        plot.addSelectedListener( new PlotSelectedListener() {
             @Override
             public void onPlotSelected( PlotSelectionArea area )
             {
@@ -160,16 +157,14 @@ public class SelectionExample
                 clear.setEnabled( true );
             }
         } );
-        plot.addSelectingListener( new PlotSelectingListener()
-        {
+        plot.addSelectingListener( new PlotSelectingListener() {
             @Override
             public void onPlotSelecting( PlotSelectionArea area )
             {
                 selectionLabel.setText( buildSelectString( SELECTING, area ) );
             }
         } );
-        plot.addUnselectedListener( new PlotUnselectedListener()
-        {
+        plot.addUnselectedListener( new PlotUnselectedListener() {
             @Override
             public void onPlotUnselected()
             {
@@ -178,7 +173,7 @@ public class SelectionExample
             }
         } );
 
-        plot.setSelection( new PlotSelectionArea().setX( new Range( 2, 4 ) ).setY( new Range( 0, 20 ) ), false );
+        plot.setSelection( PlotSelectionArea.create().setX( Range.of( 2, 4 ) ).setY( Range.of( 0, 20 ) ), false );
 
         return binder.createAndBindUi( this );
     }

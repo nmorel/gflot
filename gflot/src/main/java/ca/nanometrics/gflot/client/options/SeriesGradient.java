@@ -28,7 +28,7 @@ public class SeriesGradient
             return gradient;
         }
 
-        protected Gradient( Double opacity, Double brightness )
+        protected Gradient()
         {
         }
 
@@ -43,7 +43,6 @@ public class SeriesGradient
         }
     }
 
-    
     /**
      * Creates a {@link SeriesGradient} with specified gradient
      */

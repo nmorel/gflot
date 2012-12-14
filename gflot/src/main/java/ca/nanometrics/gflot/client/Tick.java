@@ -42,12 +42,12 @@ public class Tick
     {
     }
 
-    public double getValue()
+    public final double getValue()
     {
         return getNumber( 0 );
     }
 
-    public String getLabel()
+    public final String getLabel()
     {
         return getString( 1 );
     }

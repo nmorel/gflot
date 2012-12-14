@@ -340,7 +340,7 @@ public class LegendOptions
     /**
      * @return the custom container if it exists
      */
-    public Element getContainer()
+    public final Element getContainer()
     {
         String containerId = getString( CONTAINER_KEY );
         if ( null == containerId || containerId.length() <= 1 || !containerId.startsWith( "#" ) )
@@ -370,7 +370,7 @@ public class LegendOptions
         return this;
     }
 
-    private native void setLabelFormatterNative( LabelFormatter labelFormatter )
+    private final native void setLabelFormatterNative( LabelFormatter labelFormatter )
     /*-{
         this.labelFormatter = function(label, series) {
             return labelFormatter.@ca.nanometrics.gflot.client.options.LegendOptions.LabelFormatter::formatLabel(Ljava/lang/String;Lca/nanometrics/gflot/client/Series;)(label, series);

@@ -55,9 +55,9 @@ public class LineExample
     public Widget createPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setLegendOptions( new LegendOptions().setBackgroundOpacity( 0 ).setPosition(
-            LegendPosition.NORTH_WEST ) );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setLegendOptions( LegendOptions.create().setBackgroundOpacity( 0 )
+            .setPosition( LegendPosition.NORTH_WEST ) );
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );
@@ -70,7 +70,7 @@ public class LineExample
 
     /**
      * On click on the generate button, we clear the current data and generate new ones
-     *
+     * 
      * @param e click event
      */
     @GFlotExamplesSource

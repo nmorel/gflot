@@ -76,19 +76,18 @@ public class ExportExample
     public Widget createPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
+        PlotOptions plotOptions = PlotOptions.create();
 
         // Add tick formatter to the options
-        plotOptions.addXAxisOptions( new AxisOptions().setTicks( 12 ).setTickFormatter( new TickFormatter()
-        {
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
             public String formatTickValue( double tickValue, Axis axis )
             {
                 return MONTH_NAMES[(int) ( tickValue - 1 )];
             }
         } ) );
-        plotOptions.setLegendOptions( new LegendOptions().setBackgroundOpacity( 0 ).setPosition(
-            LegendPosition.NORTH_WEST ) );
-        plotOptions.setGridOptions( new GridOptions().setCanvasText( new CanvasTextOptions().setShow( true ) ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setBackgroundOpacity( 0 )
+            .setPosition( LegendPosition.NORTH_WEST ) );
+        plotOptions.setGridOptions( GridOptions.create().setCanvasText( CanvasTextOptions.create().setShow( true ) ) );
 
         // create a series
         SeriesHandler series1 = model.addSeries( "Random Series 1" );

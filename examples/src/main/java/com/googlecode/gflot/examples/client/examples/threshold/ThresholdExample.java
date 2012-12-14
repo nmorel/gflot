@@ -62,11 +62,11 @@ public class ThresholdExample
     protected Widget createPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions(
-            new LineSeriesOptions().setShow( true ).setSteps( true ) ).setThreshold(
-            new Threshold().setBelow( 0 ).setColor( "red" ) ) );
-        plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setShow( true ).setSteps( true ) )
+            .setThreshold( Threshold.create().setBelow( 0 ).setColor( "red" ) ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
         // create series
         SeriesHandler series1 = model.addSeries( "Random series 1", "green" );

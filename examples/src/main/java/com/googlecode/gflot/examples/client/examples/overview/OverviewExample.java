@@ -56,9 +56,9 @@ public class OverviewExample
     public Widget createPlot()
     {
         PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.defaultStrategy() );
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions()
-            .setLineWidth( 0 ).setShow( true ).setFill( true ) ) );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setLineSeriesOptions(
+            LineSeriesOptions.create().setLineWidth( 0 ).setShow( true ).setFill( true ) ) );
 
         // create the plot
         plot = new PlotWithOverview( model, plotOptions );
@@ -72,7 +72,7 @@ public class OverviewExample
 
     /**
      * On click on generate button
-     *
+     * 
      * @param e event
      */
     @GFlotExamplesSource

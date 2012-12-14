@@ -145,13 +145,13 @@ public class SimplePlot
     @Override
     public void setLinearSelection( double x1, double x2 )
     {
-        setSelection( new PlotSelectionArea().setX( Range.of( x1, x2 ) ) );
+        setSelection( PlotSelectionArea.create().setX( Range.of( x1, x2 ) ) );
     }
 
     @Override
     public void setRectangularSelection( double x1, double y1, double x2, double y2 )
     {
-        setSelection( new PlotSelectionArea().setX( Range.of( x1, x2 ) ).setY( Range.of( y1, y2 ) ) );
+        setSelection( PlotSelectionArea.create().setX( Range.of( x1, x2 ) ).setY( Range.of( y1, y2 ) ) );
     }
 
     @Override

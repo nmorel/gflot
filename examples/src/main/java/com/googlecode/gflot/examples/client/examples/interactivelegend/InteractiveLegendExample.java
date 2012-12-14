@@ -67,25 +67,27 @@ public class InteractiveLegendExample
     public Widget createPlot()
     {
         PlotModel model = new PlotModel( PlotModelStrategy.defaultStrategy() );
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions(
-            new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) ).setPointsOptions(
-            new PointsSeriesOptions().setRadius( 3 ).setShow( true ).setSymbol( PointSymbol.DIAMOND ) ) );
-        plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions
+            .create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ) )
+            .setPointsOptions(
+                PointsSeriesOptions.create().setRadius( 3 ).setShow( true ).setSymbol( PointSymbol.DIAMOND ) ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
         // add tick formatter to the options
-        plotOptions.addXAxisOptions( new TimeSeriesAxisOptions().setTickSize( 2, TickTimeUnit.MONTH ).setMonthNames(
-            MONTH_NAMES ) );
+        plotOptions.addXAxisOptions( TimeSeriesAxisOptions.create().setTickSize( 2, TickTimeUnit.MONTH )
+            .setMonthNames( MONTH_NAMES ) );
 
-        plotOptions.addYAxisOptions( new AxisOptions().setLabel( "Temperature (C\u00b0)" ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setLabel( "Temperature (C\u00b0)" ) );
 
         // create a series
         // Note: you need to specified the colors in other for the legend to
         // work properly
         SeriesHandler ottawaSeries = model.addSeries( "Ottawa", "#edc240" );
         SeriesHandler vancouverSeries =
-            model.addSeries( new Series( "Vancouver" ).setColor( "#afd8f8" ).setPointsOptions(
-                new PointsSeriesOptions().setShow( false ) ) );
+            model.addSeries( Series.create().setLabel( "Vancouver" ).setColor( "#afd8f8" )
+                .setPointsOptions( PointsSeriesOptions.create().setShow( false ) ) );
 
         // add data
         ottawaSeries.add( DataPoint.of( Date.UTC( 110, 0, 1, 0, 0, 0 ), -10.5 ) );

@@ -84,17 +84,16 @@ public class SlidingExample
     public Widget createPlot()
     {
         PlotModel model = new PlotModel( PlotModelStrategy.slidingWindowStrategy( 20 ) );
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
-            .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
-            .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
-        plotOptions.addXAxisOptions( new TimeSeriesAxisOptions() );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ) )
+            .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
+        plotOptions.addXAxisOptions( TimeSeriesAxisOptions.create() );
 
         final SeriesHandler series = model.addSeries( "Random Series", "#FF9900" );
 
         // pull the "fake" RPC service for new data
-        updater = new Timer()
-        {
+        updater = new Timer() {
             @Override
             public void run()
             {
@@ -174,8 +173,7 @@ public class SlidingExample
     private void update( final SeriesHandler series, final PlotWidget plot )
     {
         FakeRpcServiceAsync service = getRpcService();
-        service.getNewData( new AsyncCallback<DataPoint[]>()
-        {
+        service.getNewData( new AsyncCallback<DataPoint[]>() {
             public void onFailure( Throwable caught )
             {
                 GWT.log( "Something went wrong", caught );
@@ -198,15 +196,15 @@ public class SlidingExample
     @GFlotExamplesSource
     private FakeRpcServiceAsync getRpcService()
     {
-        return new FakeRpcServiceAsync()
-        {
+        return new FakeRpcServiceAsync() {
             @SuppressWarnings( "deprecation" )
             public void getNewData( final AsyncCallback<DataPoint[]> callback )
             {
                 Date currentDate = new Date();
-                callback.onSuccess( new DataPoint[] { DataPoint.of( Date.UTC( currentDate.getYear(),
-                    currentDate.getMonth(), currentDate.getDate(), currentDate.getHours(), currentDate.getMinutes(),
-                    currentDate.getSeconds() ), Random.nextDouble() ) } );
+                callback.onSuccess( new DataPoint[] { DataPoint.of(
+                    Date.UTC( currentDate.getYear(), currentDate.getMonth(), currentDate.getDate(),
+                        currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds() ),
+                    Random.nextDouble() ) } );
             }
         };
     }

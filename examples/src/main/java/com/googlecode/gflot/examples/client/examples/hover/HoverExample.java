@@ -74,13 +74,12 @@ public class HoverExample
     public Widget createPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
-            .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
-            .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ) )
+            .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
         // add tick formatter to the options
-        plotOptions.addXAxisOptions( new AxisOptions().setTicks( 12 ).setTickFormatter( new TickFormatter()
-        {
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
             public String formatTickValue( double tickValue, Axis axis )
             {
                 return MONTH_NAMES[(int) ( tickValue - 1 )];
@@ -88,7 +87,7 @@ public class HoverExample
         } ) );
 
         // >>>>>>> You need make the grid hoverable <<<<<<<<<
-        plotOptions.setGridOptions( new GridOptions().setHoverable( true ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
         // >>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
         // create a series
@@ -116,8 +115,7 @@ public class HoverExample
         popup.add( label );
 
         // add hover listener
-        plot.addHoverListener( new PlotHoverListener()
-        {
+        plot.addHoverListener( new PlotHoverListener() {
             public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
             {
                 if ( position != null )

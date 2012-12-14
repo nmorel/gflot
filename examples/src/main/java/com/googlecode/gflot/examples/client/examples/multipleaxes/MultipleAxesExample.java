@@ -73,17 +73,16 @@ public class MultipleAxesExample
     public Widget createPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
+        PlotOptions plotOptions = PlotOptions.create();
 
-        plotOptions.setGridOptions( new GridOptions().setHoverable( true ) );
-        plotOptions.setLegendOptions( new LegendOptions().setPosition( LegendPosition.SOUTH_WEST ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setPosition( LegendPosition.SOUTH_WEST ) );
 
         // add tick formatter to the options
-        plotOptions.addXAxisOptions( new TimeSeriesAxisOptions() );
-        plotOptions.addYAxisOptions( new AxisOptions().setMinimum( 0 ) );
-        plotOptions.addYAxisOptions( new AxisOptions().setAlignTicksWithAxis( 1 ).setPosition( AxisPosition.RIGHT )
-            .setTickDecimals( 3 ).setTickFormatter( new TickFormatter()
-            {
+        plotOptions.addXAxisOptions( TimeSeriesAxisOptions.create() );
+        plotOptions.addYAxisOptions( AxisOptions.create().setMinimum( 0 ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setAlignTicksWithAxis( 1 ).setPosition( AxisPosition.RIGHT )
+            .setTickDecimals( 3 ).setTickFormatter( new TickFormatter() {
                 @Override
                 public String formatTickValue( double tickValue, Axis axis )
                 {
@@ -96,15 +95,15 @@ public class MultipleAxesExample
         SeriesHandler oilPrices = model.addSeries( "Oil price ($)" );
         addOilPricesData( oilPrices );
 
-        SeriesHandler exchangeRates = model.addSeries( new Series( "USD/EUR exchange rate" ).setYAxis( 2 ) );
+        SeriesHandler exchangeRates =
+            model.addSeries( Series.create().setLabel( "USD/EUR exchange rate" ).setYAxis( 2 ) );
         addExchangeRatesDate( exchangeRates );
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );
 
         // add hover listener
-        plot.addHoverListener( new PlotHoverListener()
-        {
+        plot.addHoverListener( new PlotHoverListener() {
             public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
             {
                 if ( position != null )

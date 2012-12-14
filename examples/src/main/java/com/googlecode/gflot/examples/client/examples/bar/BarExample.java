@@ -88,15 +88,15 @@ public class BarExample
     private void createFirstPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
+        PlotOptions plotOptions = PlotOptions.create();
 
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setBarsSeriesOptions( new BarSeriesOptions()
+        plotOptions.setGlobalSeriesOptions(  GlobalSeriesOptions.create().setBarsSeriesOptions(  BarSeriesOptions.create()
             .setShow( true ).setLineWidth( 1 ).setBarWidth( 1 ).setAlignment( BarAlignment.CENTER ) ) );
 
-        plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
+        plotOptions.setLegendOptions(  LegendOptions.create().setShow( false ) );
 
         // add tick formatter to the options
-        plotOptions.addXAxisOptions( new AxisOptions().setTicks( 12 ).setTickFormatter( new TickFormatter() {
+        plotOptions.addXAxisOptions(  AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
             @Override
             public String formatTickValue( double tickValue, Axis axis )
             {
@@ -138,10 +138,10 @@ public class BarExample
         int nbSeries = 4;
 
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
+        PlotOptions plotOptions =  PlotOptions.create();
 
-        GlobalSeriesOptions globalSeriesOptions = new GlobalSeriesOptions();
-        globalSeriesOptions.setBarsSeriesOptions( new BarSeriesOptions().setShow( true ).setBarWidth( 0.9 / nbSeries ) );
+        GlobalSeriesOptions globalSeriesOptions =  GlobalSeriesOptions.create();
+        globalSeriesOptions.setBarsSeriesOptions(  BarSeriesOptions.create().setShow( true ).setBarWidth( 0.9 / nbSeries ) );
 
 
         // Activate the plugin for multiple bars support
@@ -151,7 +151,7 @@ public class BarExample
 
         plotOptions.setGlobalSeriesOptions( globalSeriesOptions );
 
-        plotOptions.setLegendOptions( new LegendOptions().setMargin( -120, 0 ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setMargin( -120, 0 ) );
 
         // create a series
         List<SeriesHandler> series = new ArrayList<SeriesHandler>();
@@ -160,7 +160,7 @@ public class BarExample
             series.add( model.addSeries( "Random series " + ( i + 1 ) ) );
         }
 
-        Markings markings = new Markings();
+        Markings markings =  Markings.create();
 
         // add data
         for ( int i = 0; i < 10; i++ )
@@ -171,11 +171,11 @@ public class BarExample
             }
             if ( i % 2 != 0 )
             {
-                markings.addMarking( new Marking().setX( new Range( i - 0.5, i + 0.5 ) ).setColor(
+                markings.addMarking(  Marking.create().setX(  Range.of( i - 0.5, i + 0.5 ) ).setColor(
                     "rgba(153, 153, 153, 0.3)" ) );
             }
         }
-        plotOptions.setGridOptions( new GridOptions().setMarkings( markings ) );
+        plotOptions.setGridOptions( GridOptions.create().setMarkings( markings ) );
 
         // create the plot
         plot2 = new SimplePlot( model, plotOptions );

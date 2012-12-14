@@ -73,17 +73,16 @@ public class NavigateExample
     protected Widget createPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions(
-            new LineSeriesOptions().setShow( true ).setFill( true ) ).setShadowSize( 0 ) );
-        plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setShow( true ).setFill( true ) ).setShadowSize( 0 ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
-        plotOptions.addXAxisOptions( new AxisOptions().setZoomRange( 0.1d, 10d ).setPanRange(
-            new Double[] { -10d, 10d } ) );
-        plotOptions.addYAxisOptions( new AxisOptions().setZoomRange( 0.1d, 10d )
-            .setPanRange( new Double[] { -10d, 10d } ).setLabelWidth( 20 ) );
-        plotOptions.setZoomOptions( new ZoomOptions().setInteractive( true ) ).setPanOptions(
-            new PanOptions().setInteractive( true ) );
+        plotOptions.addXAxisOptions( AxisOptions.create().setZoomRange( 0.1d, 10d ).setPanRange( -10d, 10d ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setZoomRange( 0.1d, 10d ).setPanRange( -10d, 10d )
+            .setLabelWidth( 20 ) );
+        plotOptions.setZoomOptions( ZoomOptions.create().setInteractive( true ) ).setPanOptions(
+            PanOptions.create().setInteractive( true ) );
 
         // create series
         SeriesHandler series1 = model.addSeries( "Series1" );

@@ -21,6 +21,8 @@
  */
 package ca.nanometrics.gflot.client.options;
 
+import java.util.Collection;
+
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayMixed;
 import com.google.gwt.core.client.JsArrayString;
@@ -162,9 +164,41 @@ public class TimeSeriesAxisOptions
     /**
      * Set the label used for month.
      */
+    public final TimeSeriesAxisOptions setMonthNames( String... monthNames )
+    {
+        assert null != monthNames : "monthNames can't be null";
+        assert monthNames.length == 12 : "monthNames must have all 12 month names";
+
+        JsArrayString array = JavaScriptObject.createArray().cast();
+        for ( String monthName : monthNames )
+        {
+            array.push( monthName );
+        }
+        return setMonthNames( array );
+    }
+
+    /**
+     * Set the label used for month.
+     */
+    public final TimeSeriesAxisOptions setMonthNames( Collection<String> monthNames )
+    {
+        assert null != monthNames : "monthNames can't be null";
+        assert monthNames.size() == 12 : "monthNames must have all 12 month names";
+
+        JsArrayString array = JavaScriptObject.createArray().cast();
+        for ( String monthName : monthNames )
+        {
+            array.push( monthName );
+        }
+        return setMonthNames( array );
+    }
+
+    /**
+     * Set the label used for month.
+     */
     public final TimeSeriesAxisOptions setMonthNames( JsArrayString monthNames )
     {
-        assert null != monthNames : "monthNames can't bu null";
+        assert null != monthNames : "monthNames can't be null";
         assert monthNames.length() == 12 : "monthNames must have all 12 month names";
 
         put( MONTH_NAMES_KEY, monthNames );

@@ -90,17 +90,16 @@ public class DecimationExample
     public Widget createPlot()
     {
         PlotModel model = new PlotModel( PlotModelStrategy.downSamplingStrategy( 20 ) );
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
-            .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ).setFill( true ) )
-            .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
-        plotOptions.addXAxisOptions( new AxisOptions().setShow( false ) );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ).setFill( true ) )
+            .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
+        plotOptions.addXAxisOptions( AxisOptions.create().setShow( false ) );
 
         final SeriesHandler series = model.addSeries( "Random Series", "#003366" );
 
         // pull the "fake" RPC service for new data
-        updater = new Timer()
-        {
+        updater = new Timer() {
             @Override
             public void run()
             {
@@ -180,8 +179,7 @@ public class DecimationExample
     private void update( final SeriesHandler series, final PlotWidget plot )
     {
         FakeRpcServiceAsync service = getRpcService();
-        service.getNewData( new AsyncCallback<DataPoint[]>()
-        {
+        service.getNewData( new AsyncCallback<DataPoint[]>() {
             public void onFailure( Throwable caught )
             {
                 GWT.log( "Something went wrong", caught );
@@ -204,8 +202,7 @@ public class DecimationExample
     @GFlotExamplesSource
     private FakeRpcServiceAsync getRpcService()
     {
-        return new FakeRpcServiceAsync()
-        {
+        return new FakeRpcServiceAsync() {
             public void getNewData( final AsyncCallback<DataPoint[]> callback )
             {
                 double up = Random.nextDouble();

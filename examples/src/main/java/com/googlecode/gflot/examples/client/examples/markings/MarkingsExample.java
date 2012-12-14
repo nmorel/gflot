@@ -60,11 +60,11 @@ public class MarkingsExample
     public Widget createPlot()
     {
         PlotModel model = new PlotModel( PlotModelStrategy.defaultStrategy() );
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
-            .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
-            .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 1 ) );
-        plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ) )
+            .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 1 ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
         SeriesHandler s = model.addSeries( "Series 1" );
         s.add( DataPoint.of( 1, 2 ) );
@@ -79,14 +79,14 @@ public class MarkingsExample
         s.add( DataPoint.of( 10, 3 ) );
 
         // Start of Marking Code
-        Marking m = new Marking().setX( new Range( 2, 2 ) ).setLineWidth( 2 ).setColor( "#3BEFc3" );
-        Marking m2 = new Marking().setX( new Range( 5, 7 ) ).setY( new Range( 2, 6 ) ).setColor( "#cccccc" );
-        Marking m3 = new Marking().setX( new Range().setFrom( 8 ) ).setColor( "#000000" );
+        Marking m = Marking.create().setX( Range.of( 2, 2 ) ).setLineWidth( 2 ).setColor( "#3BEFc3" );
+        Marking m2 = Marking.create().setX( Range.of( 5, 7 ) ).setY( Range.of( 2, 6 ) ).setColor( "#cccccc" );
+        Marking m3 = Marking.create().setX( Range.create().setFrom( 8 ) ).setColor( "#000000" );
         // End of Marking Code
 
         // Add Markings Objects to Grid Options
-        plotOptions.setGridOptions( new GridOptions().setMarkings( new Markings().addMarking( m ).addMarking( m2 )
-            .addMarking( m3 ) ) );
+        plotOptions.setGridOptions( GridOptions.create().setMarkings(
+            Markings.create().addMarking( m ).addMarking( m2 ).addMarking( m3 ) ) );
 
         // create plot
         plot = new SimplePlot( model, plotOptions );

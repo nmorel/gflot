@@ -57,7 +57,7 @@ public class Series
     {
     }
 
-    Series setData( SeriesData data )
+    final Series setData( SeriesData data )
     {
         put( DATA_KEY, data );
         return this;

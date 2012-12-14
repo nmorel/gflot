@@ -23,7 +23,7 @@ public class Axes
     private static final String Y_AXIS_KEY_PREFIX = "y";
     private static final String Y_AXIS_KEY_SUFFIX = "axis";
 
-    public Axes()
+    protected Axes()
     {
     }
 
