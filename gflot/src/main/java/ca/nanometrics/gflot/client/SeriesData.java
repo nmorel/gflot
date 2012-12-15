@@ -21,14 +21,15 @@
  */
 package ca.nanometrics.gflot.client;
 
-import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * @author AlexanderDeleon
  */
 public class SeriesData
-    extends JsArray<DataPoint>
+    extends JavaScriptObject
 {
+
     public static final SeriesData create()
     {
         return createArray().cast();
@@ -41,6 +42,76 @@ public class SeriesData
     {
         // empty
     }
+
+    /**
+     * Gets the number of datapoint.
+     * 
+     * @return the number of datapoint
+     */
+    public final native int length()
+    /*-{
+        return this.length;
+    }-*/;
+
+    /**
+     * Reset the length of the array.
+     * 
+     * @param newLength the new length of the array
+     */
+    final native void setLength( int newLength ) /*-{
+        this.length = newLength;
+    }-*/;
+
+    /**
+     * Gets the datapoint at a given index.
+     * 
+     * @param index the index to be retrieved
+     * @return the datapoint at the given index, or <code>null</code> if none exists
+     */
+    public final native DataPoint get( int index )
+    /*-{
+        return this[index];
+    }-*/;
+
+    /**
+     * Sets the object value at a given index. If the index is out of bounds, the value will still be set. The array's
+     * length will be updated to encompass the bounds implied by the added object.
+     * 
+     * @param index the index to be set
+     * @param value the object to be stored
+     */
+    final native void set( int index, DataPoint value )
+    /*-{
+        this[index] = value;
+    }-*/;
+
+    /**
+     * Pushes the given value onto the end of the array.
+     */
+    final native void push( DataPoint value )
+    /*-{
+        this[this.length] = value;
+    }-*/;
+
+    /**
+     * Shifts the first value off the array.
+     * 
+     * @return the shifted value
+     */
+    final native DataPoint shift()
+    /*-{
+        return this.shift();
+    }-*/;
+
+    /**
+     * Shifts a value onto the beginning of the array.
+     * 
+     * @param value the value to the stored
+     */
+    final native void unshift( DataPoint value )
+    /*-{
+        this.unshift(value);
+    }-*/;
 
     public final boolean isEmpty()
     {
@@ -67,47 +138,18 @@ public class SeriesData
         return this.slice(start, end);
     }-*/;
 
-    // FIXME overlay
-    // public DataPoint[] getDatapoints()
-    // {
-    // List<DataPoint> list = new ArrayList<DataPoint>( size() );
-    // for ( int i = 0; i < size(); i++ )
-    // {
-    // JSONArray array = getArray( i );
-    // if ( array != null )
-    // {
-    // DataPoint datapoint = new DataPoint( array );
-    // list.add( datapoint );
-    // }
-    // }
-    // return list.toArray( new DataPoint[list.size()] );
-    // }
-    //
-    // public DataPoint getDataPoint( int index )
-    // {
-    // JSONArray array = getArray( index );
-    // if ( array == null )
-    // {
-    // return null;
-    // }
-    // else
-    // {
-    // return new DataPoint( array );
-    // }
-    // }
-
     public final void clear()
     {
         setLength( 0 );
     }
-    //
-    // protected void setData( SeriesData data )
-    // {
-    // DataPoint[] points = data.getDatapoints();
-    // super.clear();
-    // for ( DataPoint point : points )
-    // {
-    // super.push( point );
-    // }
-    // }
+
+    final void setData( SeriesData data )
+    {
+        clear();
+        for ( int i = 0; i < data.length(); i++ )
+        {
+            push( data.get( i ) );
+        }
+    }
+
 }

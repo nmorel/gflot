@@ -3,6 +3,7 @@ package com.googlecode.gflot.examples.client.examples.hover;
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
@@ -91,7 +92,9 @@ public class HoverExample
         // >>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
         // create a series
-        SeriesHandler handler = model.addSeries( "Ottawa's Month Temperatures (Daily Average in &deg;C)", "#007f00" );
+        SeriesHandler handler =
+            model.addSeries( Series.create().setLabel( "Ottawa's Month Temperatures (Daily Average in &deg;C)" )
+                .setColor( "#007f00" ) );
 
         // add data
         handler.add( DataPoint.of( 1, -10.5 ) );

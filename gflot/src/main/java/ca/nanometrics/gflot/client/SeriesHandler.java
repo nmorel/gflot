@@ -23,29 +23,30 @@ package ca.nanometrics.gflot.client;
 
 /**
  * Handler used to manipulate a series and its data.
- *
+ * 
  * @author Alexander De Leon
  */
 public class SeriesHandler
 {
     private final Series series;
 
-    private SeriesData data;
+    private final SeriesDataStrategy strategy;
 
-    public SeriesHandler( Series series, SeriesData data )
+    public SeriesHandler( Series series, SeriesDataStrategy strategy )
     {
         this.series = series;
-        this.data = data;
+        this.strategy = strategy;
+        this.series.setData( strategy.getData() );
     }
 
     /**
      * Add a datapoint
-     *
+     * 
      * @param datapoint datapoint to add
      */
     public void add( DataPoint datapoint )
     {
-        data.push( datapoint );
+        strategy.add( datapoint );
     }
 
     /**
@@ -53,19 +54,19 @@ public class SeriesHandler
      */
     public void clear()
     {
-        data.clear();
+        strategy.clear();
     }
 
     /**
      * Set if the series is visible or not
-     *
+     * 
      * @param visible true if the series is visible, false otherwise
      */
     public void setVisible( boolean visible )
     {
         if ( visible )
         {
-            series.setData( data );
+            series.setData( getData() );
         }
         else
         {
@@ -94,7 +95,7 @@ public class SeriesHandler
      */
     public SeriesData getData()
     {
-        return data;
+        return strategy.getData();
     }
 
     @Override
@@ -120,11 +121,11 @@ public class SeriesHandler
     /* ------------- for internal use */
     void setData( SeriesData newData )
     {
-        data = newData;
+        strategy.setData( newData );
         // set the data if the series is visible
         if ( isVisible() )
         {
-            series.setData( data );
+            series.setData( getData() );
         }
     }
 

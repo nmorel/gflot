@@ -1,9 +1,9 @@
 package com.googlecode.gflot.examples.client.examples.overview;
 
 import ca.nanometrics.gflot.client.DataPoint;
-import ca.nanometrics.gflot.client.PlotModelStrategy;
 import ca.nanometrics.gflot.client.PlotWithOverview;
 import ca.nanometrics.gflot.client.PlotWithOverviewModel;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
@@ -55,7 +55,7 @@ public class OverviewExample
     @GFlotExamplesSource
     public Widget createPlot()
     {
-        PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.defaultStrategy() );
+        PlotWithOverviewModel model = new PlotWithOverviewModel();
         PlotOptions plotOptions = PlotOptions.create();
         plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setLineSeriesOptions(
             LineSeriesOptions.create().setLineWidth( 0 ).setShow( true ).setFill( true ) ) );
@@ -93,7 +93,7 @@ public class OverviewExample
         int nbSeries = Random.nextInt( 3 ) + 1;
         for ( int i = 0; i < nbSeries; i++ )
         {
-            plot.getModel().addSeries( "Random Series " + i );
+            plot.getModel().addSeries( Series.create().setLabel( "Random Series " + i ) );
         }
         for ( int i = 1; i < 200; i++ )
         {

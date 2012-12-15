@@ -32,10 +32,10 @@ public class DataPoint
     /**
      * Creates an empty {@link DataPoint}
      */
-    public static final native DataPoint of()
-    /*-{
-        return [x, y];
-    }-*/;
+    public static final DataPoint create()
+    {
+        return createArray().cast();
+    }
 
     /**
      * Creates a {@link DataPoint} with the specified coordinates.
@@ -45,7 +45,7 @@ public class DataPoint
      */
     public static final native DataPoint of( double x, double y )
     /*-{
-        return [x, y];
+        return [ x, y ];
     }-*/;
 
     /**
@@ -57,7 +57,7 @@ public class DataPoint
      */
     public static final native DataPoint of( double x, double y, double bottomY )
     /*-{
-        return [x, y, bottomY];
+        return [ x, y, bottomY ];
     }-*/;
 
     protected DataPoint()

@@ -3,6 +3,7 @@ package com.googlecode.gflot.examples.client.examples.export;
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.AxisOptions;
@@ -90,8 +91,8 @@ public class ExportExample
         plotOptions.setGridOptions( GridOptions.create().setCanvasText( CanvasTextOptions.create().setShow( true ) ) );
 
         // create a series
-        SeriesHandler series1 = model.addSeries( "Random Series 1" );
-        SeriesHandler series2 = model.addSeries( "Random Series 2" );
+        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Random Series 1" ) );
+        SeriesHandler series2 = model.addSeries( Series.create().setLabel( "Random Series 2" ) );
 
         // add data
         for ( int i = 1; i < 13; i++ )

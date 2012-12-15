@@ -4,7 +4,6 @@ import java.util.Date;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
-import ca.nanometrics.gflot.client.PlotModelStrategy;
 import ca.nanometrics.gflot.client.PlotWithInteractiveLegend;
 import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
@@ -66,7 +65,7 @@ public class InteractiveLegendExample
     @SuppressWarnings( "deprecation" )
     public Widget createPlot()
     {
-        PlotModel model = new PlotModel( PlotModelStrategy.defaultStrategy() );
+        PlotModel model = new PlotModel();
         PlotOptions plotOptions = PlotOptions.create();
         plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions
             .create()
@@ -84,7 +83,7 @@ public class InteractiveLegendExample
         // create a series
         // Note: you need to specified the colors in other for the legend to
         // work properly
-        SeriesHandler ottawaSeries = model.addSeries( "Ottawa", "#edc240" );
+        SeriesHandler ottawaSeries = model.addSeries( Series.create().setLabel( "Ottawa" ).setColor( "#edc240" ) );
         SeriesHandler vancouverSeries =
             model.addSeries( Series.create().setLabel( "Vancouver" ).setColor( "#afd8f8" )
                 .setPointsOptions( PointsSeriesOptions.create().setShow( false ) ) );

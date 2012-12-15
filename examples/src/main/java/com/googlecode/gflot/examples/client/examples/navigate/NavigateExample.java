@@ -4,6 +4,7 @@ import ca.nanometrics.gflot.client.Axes;
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.Pan;
 import ca.nanometrics.gflot.client.PlotModel;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.event.PlotPanListener;
@@ -86,7 +87,7 @@ public class NavigateExample
             PanOptions.create().setInteractive( true ) );
 
         // create series
-        SeriesHandler series1 = model.addSeries( "Series1" );
+        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Series1" ) );
 
         // add data
         for ( double t = 0; t <= 2 * Math.PI; t += 0.01 )

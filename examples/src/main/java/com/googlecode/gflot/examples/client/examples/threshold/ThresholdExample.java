@@ -2,6 +2,7 @@ package com.googlecode.gflot.examples.client.examples.threshold;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.CommonSeriesOptions.Threshold;
@@ -69,7 +70,7 @@ public class ThresholdExample
         plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
         // create series
-        SeriesHandler series1 = model.addSeries( "Random series 1", "green" );
+        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Random series 1" ).setColor( "green" ) );
 
         // add data
         for ( int i = 0; i < 10; i++ )

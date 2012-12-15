@@ -68,7 +68,7 @@ public class ImageExample
         handlerImage.add( ImageDataPoint.of( "images/hs-2004-27-a-large_web.jpg", -2, -2, 2, 2 ) );
 
         // create a series
-        SeriesHandler handlerLine = model.addSeries( "Line series" );
+        SeriesHandler handlerLine = model.addSeries( Series.create().setLabel( "Line series" ) );
         handlerLine.add( DataPoint.of( -8, -8 ) );
         handlerLine.add( DataPoint.of( -6, -4 ) );
         handlerLine.add( DataPoint.of( -2, -8 ) );

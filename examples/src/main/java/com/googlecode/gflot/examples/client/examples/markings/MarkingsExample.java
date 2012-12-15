@@ -2,7 +2,7 @@ package com.googlecode.gflot.examples.client.examples.markings;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
-import ca.nanometrics.gflot.client.PlotModelStrategy;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
@@ -59,14 +59,14 @@ public class MarkingsExample
     @GFlotExamplesSource
     public Widget createPlot()
     {
-        PlotModel model = new PlotModel( PlotModelStrategy.defaultStrategy() );
+        PlotModel model = new PlotModel();
         PlotOptions plotOptions = PlotOptions.create();
         plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
             .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ) )
             .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 1 ) );
         plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
-        SeriesHandler s = model.addSeries( "Series 1" );
+        SeriesHandler s = model.addSeries( Series.create().setLabel( "Series 1" ) );
         s.add( DataPoint.of( 1, 2 ) );
         s.add( DataPoint.of( 2, 5 ) );
         s.add( DataPoint.of( 3, 7 ) );

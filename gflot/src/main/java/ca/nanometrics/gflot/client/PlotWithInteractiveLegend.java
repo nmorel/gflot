@@ -70,7 +70,7 @@ public class PlotWithInteractiveLegend
     {
         for ( SeriesHandler seriesHandler : model.getHandlers() )
         {
-            addSeriesToLegend( seriesHandler.getSeries().getLabel(), seriesHandler.getSeries().getColor(), seriesHandler );
+            addSeriesToLegend( seriesHandler );
         }
         model.addListener( this );
     }
@@ -182,9 +182,9 @@ public class PlotWithInteractiveLegend
         legend.get( handler ).addWidget( widget );
     }
 
-    public void onAddSeries( PlotModel model, String label, String color, SeriesHandler handler )
+    public void onAddSeries( PlotModel model, SeriesHandler handler )
     {
-        addSeriesToLegend( label, color, handler );
+        addSeriesToLegend( handler );
 
     }
 
@@ -194,11 +194,10 @@ public class PlotWithInteractiveLegend
     }
 
     /* --------------------- helper methods -- */
-    private void addSeriesToLegend( String label, String color, final SeriesHandler handler )
+    private void addSeriesToLegend( final SeriesHandler handler )
     {
-        LegendItem item = createLegendItem( color, label );
-        item.addValueChangeHandler( new ValueChangeHandler<Boolean>()
-        {
+        LegendItem item = createLegendItem( handler.getSeries().getColor(), handler.getSeries().getLabel() );
+        item.addValueChangeHandler( new ValueChangeHandler<Boolean>() {
             @Override
             public void onValueChange( ValueChangeEvent<Boolean> event )
             {
@@ -284,7 +283,9 @@ public class PlotWithInteractiveLegend
         {
             FlexTable table = new FlexTable();
 
-            HTML colorBand = new HTML( "<div style=\"width: 100%; height: " + COLOR_BAND_HEIGHT + "; background-color: " + color + ";\"></div>" );
+            HTML colorBand =
+                new HTML( "<div style=\"width: 100%; height: " + COLOR_BAND_HEIGHT + "; background-color: " + color
+                    + ";\"></div>" );
             table.setWidget( 0, 0, colorBand );
             table.getFlexCellFormatter().setColSpan( 0, 0, 2 );
 

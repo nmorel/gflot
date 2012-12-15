@@ -24,66 +24,46 @@ package ca.nanometrics.gflot.client;
 /**
  * @author Alexander De Leon
  */
-public abstract class PlotModelStrategy
+public final class PlotModelStrategy
 {
 
     /**
      * A plot model strategy that allows unlimited amount of datapoints.
      */
-    public static PlotModelStrategy defaultStrategy()
+    public static SeriesDataStrategy defaultStrategy()
     {
-        return new PlotModelStrategy() {
-            SeriesData createSeriesData()
-            {
-                return SeriesData.create();
-            }
-        };
+        return new DefaultSeriesDataStrategy();
     }
 
-    public static PlotModelStrategy downSamplingStrategy( final int capacity )
+    public static SeriesDataStrategy downSamplingStrategy( final int capacity )
     {
         return downSamplingStrategy( capacity, 0 );
     }
 
-    public static PlotModelStrategy downSamplingStrategy( final int capacity, final long maximumXValueSpan )
+    public static SeriesDataStrategy downSamplingStrategy( final int capacity, final long maximumXValueSpan )
     {
-        // FIXME overlay
-        // return new PlotModelStrategy()
-        // {
-        // SeriesData createSeriesData()
-        // {
-        // if ( maximumXValueSpan <= 0 )
-        // {
-        // return new DownsamplingSeriesData( capacity );
-        // }
-        // return new FixedSpanDownsamplingSeriesData( capacity, maximumXValueSpan );
-        // }
-        // };
-        return defaultStrategy();
+        if ( maximumXValueSpan <= 0 )
+        {
+            return new DownsamplingSeriesDataStrategy( capacity );
+        }
+        return new FixedSpanDownsamplingSeriesDataStrategy( capacity, maximumXValueSpan );
     }
 
-    public static PlotModelStrategy slidingWindowStrategy( final int capacity, final long maximumXValueSpan )
+    public static SeriesDataStrategy slidingWindowStrategy( final int capacity, final long maximumXValueSpan )
     {
-        // FIXME overlay
-        // return new PlotModelStrategy()
-        // {
-        // SeriesData createSeriesData()
-        // {
-        // if ( maximumXValueSpan <= 0 )
-        // {
-        // return new FixedSizeSeriesData( capacity );
-        // }
-        // return new FixedSpanFixedSizeSeriesData( capacity, maximumXValueSpan );
-        // }
-        // };
-        return defaultStrategy();
+        if ( maximumXValueSpan <= 0 )
+        {
+            return new FixedSizeSeriesDataStrategy( capacity );
+        }
+        else
+        {
+            return new FixedSpanFixedSizeSeriesDataStrategy( capacity, maximumXValueSpan );
+        }
     }
 
-    public static PlotModelStrategy slidingWindowStrategy( final int capacity )
+    public static SeriesDataStrategy slidingWindowStrategy( final int capacity )
     {
         return slidingWindowStrategy( capacity, 0 );
     }
-
-    abstract SeriesData createSeriesData();
 
 }

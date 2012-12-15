@@ -6,6 +6,7 @@ import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.PlotModelStrategy;
 import ca.nanometrics.gflot.client.PlotWidget;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
@@ -83,14 +84,16 @@ public class SlidingExample
     @GFlotExamplesSource
     public Widget createPlot()
     {
-        PlotModel model = new PlotModel( PlotModelStrategy.slidingWindowStrategy( 20 ) );
+        PlotModel model = new PlotModel();
         PlotOptions plotOptions = PlotOptions.create();
         plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
             .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ) )
             .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
         plotOptions.addXAxisOptions( TimeSeriesAxisOptions.create() );
 
-        final SeriesHandler series = model.addSeries( "Random Series", "#FF9900" );
+        final SeriesHandler series =
+            model.addSeries( Series.create().setLabel( "Random Series" ).setColor( "#FF9900" ),
+                PlotModelStrategy.slidingWindowStrategy( 20 ) );
 
         // pull the "fake" RPC service for new data
         updater = new Timer() {

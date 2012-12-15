@@ -6,6 +6,7 @@ import java.util.List;
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.AxisOptions;
@@ -110,7 +111,9 @@ public class BarExample
         } ) );
 
         // create a series
-        SeriesHandler handler = model.addSeries( "Ottawa's Month Temperatures (Daily Average in &deg;C)", "blue" );
+        SeriesHandler handler =
+            model.addSeries( Series.create().setLabel( "Ottawa's Month Temperatures (Daily Average in &deg;C)" )
+                .setColor( "blue" ) );
 
         // add data
         handler.add( DataPoint.of( 1, -10.5 ) );
@@ -158,7 +161,7 @@ public class BarExample
         List<SeriesHandler> series = new ArrayList<SeriesHandler>();
         for ( int i = 0; i < nbSeries; i++ )
         {
-            series.add( model.addSeries( "Random series " + ( i + 1 ) ) );
+            series.add( model.addSeries( Series.create().setLabel( "Random series " + ( i + 1 ) ) ) );
         }
 
         Markings markings = Markings.create();

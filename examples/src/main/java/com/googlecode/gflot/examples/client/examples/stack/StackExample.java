@@ -2,6 +2,7 @@ package com.googlecode.gflot.examples.client.examples.stack;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.BarSeriesOptions;
@@ -69,9 +70,9 @@ public class StackExample
         plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
         // create series
-        SeriesHandler series1 = model.addSeries( "Series1" );
-        SeriesHandler series2 = model.addSeries( "Series2" );
-        SeriesHandler series3 = model.addSeries( "Series3" );
+        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Series1" ) );
+        SeriesHandler series2 = model.addSeries( Series.create().setLabel( "Series2" ) );
+        SeriesHandler series3 = model.addSeries( Series.create().setLabel( "Series3" ) );
 
         // add data
         for ( int i = 0; i < 10; i++ )

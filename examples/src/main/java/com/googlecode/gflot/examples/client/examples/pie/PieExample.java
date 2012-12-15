@@ -100,19 +100,19 @@ public class PieExample
         plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
 
         // create series
-        SeriesHandler series1 = model.addSeries( "Series 1" );
+        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Series 1" ) );
         series1.add( PieDataPoint.of( 148 ) );
 
-        SeriesHandler series2 = model.addSeries( "Series 2" );
+        SeriesHandler series2 = model.addSeries( Series.create().setLabel( "Series 2" ) );
         series2.add( PieDataPoint.of( 221 ) );
 
-        SeriesHandler series3 = model.addSeries( "Series 3" );
+        SeriesHandler series3 = model.addSeries( Series.create().setLabel( "Series 3" ) );
         series3.add( PieDataPoint.of( 25 ) );
 
-        SeriesHandler series4 = model.addSeries( "Series 4" );
+        SeriesHandler series4 = model.addSeries( Series.create().setLabel( "Series 4" ) );
         series4.add( PieDataPoint.of( 35 ) );
 
-        SeriesHandler series5 = model.addSeries( "Series 5" );
+        SeriesHandler series5 = model.addSeries( Series.create().setLabel( "Series 5" ) );
         series5.add( PieDataPoint.of( 102 ) );
 
         // create the plot

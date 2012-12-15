@@ -45,12 +45,12 @@ public class PlotWithOverviewModel
         private DataPoint firstDataPoint;
         private boolean lockSelection;
 
-        public PlotWithOverviewSeriesHandler( Series series, SeriesData data )
+        public PlotWithOverviewSeriesHandler( Series series, SeriesDataStrategy strategy )
         {
-            super( series, data );
-            provider = new AsyncDataProviderWrapper( new LocalDataProvider( data ) );
-            windowHandler = windowModel.addSeries( series.getLabel(), series.getColor() );
-            overviewHandler = overviewModel.addSeries( series.getLabel(), series.getColor() );
+            super( series, strategy );
+            provider = new AsyncDataProviderWrapper( new LocalDataProvider( strategy.getData() ) );
+            windowHandler = windowModel.addSeries( series, PlotModelStrategy.defaultStrategy() );
+            overviewHandler = overviewModel.addSeries( series, strategy );
         }
 
         @Override
@@ -270,10 +270,9 @@ public class PlotWithOverviewModel
     private final PlotModel overviewModel;
     private final double[] selection = new double[2];
 
-    public PlotWithOverviewModel( PlotModelStrategy strategy )
+    public PlotWithOverviewModel()
     {
-        super( strategy );
-        overviewModel = new PlotModel( strategy );
+        overviewModel = new PlotModel();
         windowModel = new PlotModel();
     }
 
@@ -288,9 +287,9 @@ public class PlotWithOverviewModel
     }
 
     @Override
-    protected SeriesHandler createSeriesHandler( Series series, SeriesData data )
+    protected SeriesHandler createSeriesHandler( Series series, SeriesDataStrategy strategy )
     {
-        return new PlotWithOverviewSeriesHandler( series, data );
+        return new PlotWithOverviewSeriesHandler( series, strategy );
     }
 
     PlotModel getWindowPlotModel()

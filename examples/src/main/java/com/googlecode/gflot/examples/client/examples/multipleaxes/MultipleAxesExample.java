@@ -92,7 +92,7 @@ public class MultipleAxesExample
             } ) );
 
         // create a series
-        SeriesHandler oilPrices = model.addSeries( "Oil price ($)" );
+        SeriesHandler oilPrices = model.addSeries( Series.create().setLabel( "Oil price ($)" ) );
         addOilPricesData( oilPrices );
 
         SeriesHandler exchangeRates =

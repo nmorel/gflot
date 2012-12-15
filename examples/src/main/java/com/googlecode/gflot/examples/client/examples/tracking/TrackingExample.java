@@ -142,8 +142,8 @@ public class TrackingExample
         plotOptions.addYAxisOptions( AxisOptions.create().setMinimum( -1.2 ).setMaximum( 1.2 ) );
 
         // create a series
-        final SeriesHandler sin = model1.addSeries( "sin(x)" );
-        final SeriesHandler cos = model1.addSeries( "cos(x)" );
+        final SeriesHandler sin = model1.addSeries( Series.create().setLabel( "sin(x)" ) );
+        final SeriesHandler cos = model1.addSeries( Series.create().setLabel( "cos(x)" ) );
 
         // add data
         for ( double i = 0; i < 14; i += 0.1 )
@@ -258,8 +258,8 @@ public class TrackingExample
             .setMouseActiveRadius( 15 ) );
 
         // create a series
-        SeriesHandler series1 = model.addSeries( "Random Series 1" );
-        SeriesHandler series2 = model.addSeries( "Random Series 2" );
+        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Random Series 1" ) );
+        SeriesHandler series2 = model.addSeries( Series.create().setLabel( "Random Series 2" ) );
 
         // add data
         for ( int i = 1; i < 13; i++ )

@@ -2,6 +2,7 @@ package com.googlecode.gflot.examples.client.examples.line;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.LegendOptions;
@@ -91,7 +92,7 @@ public class LineExample
         int nbSeries = Random.nextInt( 5 ) + 1;
         for ( int i = 0; i < nbSeries; i++ )
         {
-            plot.getModel().addSeries( "Random Series " + i );
+            plot.getModel().addSeries( Series.create().setLabel( "Random Series " + i ) );
         }
         for ( int i = 1; i < 13; i++ )
         {

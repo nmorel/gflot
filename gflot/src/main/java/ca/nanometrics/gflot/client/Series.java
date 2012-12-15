@@ -66,8 +66,9 @@ public class Series
     /**
      * Returns the data associated to this series.
      * <p>
-     * Be careful, the data can be null if the method setVisible(false) has been called on its associated SeriesHandler.
-     * In this case, use the method getDate() of the SeriesHandler
+     * Be careful, the data can be null if the method {@link SeriesHandler#setVisible()} has been called on its
+     * associated SeriesHandler. In this case, use the method {@link SeriesHandler#getData()} of the
+     * {@link SeriesHandler}
      * <p>
      */
     public final SeriesData getData()

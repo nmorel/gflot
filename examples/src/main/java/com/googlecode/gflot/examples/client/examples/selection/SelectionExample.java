@@ -4,6 +4,7 @@ import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.PlotSelectionArea;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
@@ -99,7 +100,9 @@ public class SelectionExample
         plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
 
         // create a series
-        SeriesHandler handler = model.addSeries( "Ottawa's Month Temperatures (Daily Average in &deg;C)", "blue" );
+        SeriesHandler handler =
+            model.addSeries( Series.create().setLabel( "Ottawa's Month Temperatures (Daily Average in &deg;C)" )
+                .setColor( "blue" ) );
 
         // add data
         handler.add( DataPoint.of( 1, -10.5 ) );
