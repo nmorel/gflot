@@ -161,7 +161,7 @@ public class PlotModel
     /**
      * @return a read-only list of the series handler
      */
-    public List<SeriesHandler> getHandlers()
+    public List<? extends SeriesHandler> getHandlers()
     {
         return Collections.unmodifiableList( handlers );
     }
@@ -184,6 +184,6 @@ public class PlotModel
 
     protected SeriesHandler createSeriesHandler( Series series, SeriesDataStrategy strategy )
     {
-        return new SeriesHandler( series, strategy );
+        return new DefaultSeriesHandler( series, strategy );
     }
 }

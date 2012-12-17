@@ -21,6 +21,8 @@
  */
 package ca.nanometrics.gflot.client;
 
+import java.util.List;
+
 import ca.nanometrics.gflot.client.util.Algorithm;
 
 import com.google.gwt.core.client.GWT;
@@ -36,7 +38,7 @@ public class PlotWithOverviewModel
 {
 
     public class PlotWithOverviewSeriesHandler
-        extends SeriesHandler
+        implements SeriesHandler
     {
         private AsyncDataProvider provider;
         private final SeriesHandler overviewHandler;
@@ -47,16 +49,14 @@ public class PlotWithOverviewModel
 
         public PlotWithOverviewSeriesHandler( Series series, SeriesDataStrategy strategy )
         {
-            super( series, strategy );
             provider = new AsyncDataProviderWrapper( new LocalDataProvider( strategy.getData() ) );
             windowHandler = windowModel.addSeries( series, PlotModelStrategy.defaultStrategy() );
-            overviewHandler = overviewModel.addSeries( series, strategy );
+            overviewHandler = overviewModel.addSeries( Series.create(), strategy );
         }
 
         @Override
         public void add( DataPoint datapoint )
         {
-            super.add( datapoint );
             overviewHandler.add( datapoint );
             if ( lockSelection && selection[1] < datapoint.getX() )
             {
@@ -75,7 +75,6 @@ public class PlotWithOverviewModel
         @Override
         public void clear()
         {
-            super.clear();
             windowHandler.clear();
             overviewHandler.clear();
             lastDataPoint = null;
@@ -84,9 +83,20 @@ public class PlotWithOverviewModel
         }
 
         @Override
-        void setData( SeriesData newData )
+        public SeriesData getData()
         {
-            super.setData( newData );
+            return overviewHandler.getData();
+        }
+
+        @Override
+        public boolean isVisible()
+        {
+            return overviewHandler.isVisible();
+        }
+
+        @Override
+        public void setData( SeriesData newData )
+        {
             overviewHandler.setData( newData );
             windowHandler.clear();
         }
@@ -94,7 +104,6 @@ public class PlotWithOverviewModel
         @Override
         public void setVisible( boolean visisble )
         {
-            super.setVisible( visisble );
             overviewHandler.setVisible( visisble );
             windowHandler.setVisible( visisble );
         }
@@ -161,6 +170,12 @@ public class PlotWithOverviewModel
             return x;
         }
 
+        @Override
+        public Series getSeries()
+        {
+            return getOverviewSeries();
+        }
+
         public Series getOverviewSeries()
         {
             return overviewHandler.getSeries();
@@ -169,6 +184,26 @@ public class PlotWithOverviewModel
         public Series getWindowSeries()
         {
             return windowHandler.getSeries();
+        }
+
+        @Override
+        public boolean equals( Object obj )
+        {
+            if ( obj == this )
+            {
+                return true;
+            }
+            if ( obj instanceof PlotWithOverviewSeriesHandler )
+            {
+                return getSeries().equals( ( (PlotWithOverviewSeriesHandler) obj ).getSeries() );
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return getSeries().hashCode();
         }
     }
 
@@ -276,18 +311,18 @@ public class PlotWithOverviewModel
         windowModel = new PlotModel();
     }
 
-    public void setDataProvider( SeriesHandler handler, DataProvider provider )
+    public void setDataProvider( PlotWithOverviewSeriesHandler handler, DataProvider provider )
     {
         setDataProvider( handler, new AsyncDataProviderWrapper( provider ) );
     }
 
-    public void setDataProvider( SeriesHandler handler, AsyncDataProvider provider )
+    public void setDataProvider( PlotWithOverviewSeriesHandler handler, AsyncDataProvider provider )
     {
-        ( (PlotWithOverviewSeriesHandler) handler ).setDataProvider( provider );
+        handler.setDataProvider( provider );
     }
 
     @Override
-    protected SeriesHandler createSeriesHandler( Series series, SeriesDataStrategy strategy )
+    protected PlotWithOverviewSeriesHandler createSeriesHandler( Series series, SeriesDataStrategy strategy )
     {
         return new PlotWithOverviewSeriesHandler( series, strategy );
     }
@@ -328,9 +363,9 @@ public class PlotWithOverviewModel
             command = new PopulateCommand( toExcuteAfterSelection, getHandlers().size() );
         }
 
-        for ( SeriesHandler handler : getHandlers() )
+        for ( PlotWithOverviewSeriesHandler handler : getHandlers() )
         {
-            ( (PlotWithOverviewSeriesHandler) handler ).populateWindowSeries( command );
+            handler.populateWindowSeries( command );
         }
     }
 
@@ -361,6 +396,13 @@ public class PlotWithOverviewModel
         super.removeAllSeries();
         windowModel.removeAllSeries();
         overviewModel.removeAllSeries();
+    }
+
+    @SuppressWarnings( "unchecked" )
+    @Override
+    public List<PlotWithOverviewSeriesHandler> getHandlers()
+    {
+        return (List<PlotWithOverviewSeriesHandler>) super.getHandlers();
     }
 
 }
