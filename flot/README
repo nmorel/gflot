@@ -4,7 +4,7 @@ jquery.flot.images :
 - Added checks in the function $.plot.image.loadDataImages to avoid null pointer when the images option are not set.
 
 jquery.flot.pie :
-- Modified so a pie chart can be rezised and redrawn (see http://code.google.com/p/flot/issues/detail?id=577)
+- Modified so a pie chart can be resized and redrawn (see http://code.google.com/p/flot/issues/detail?id=577)
 
 jquery.flot.text (v0.1):
 - Plugin to render the label directly to the canvas (see http://www.lessaworld.com/projects/flotCanvasText/)
