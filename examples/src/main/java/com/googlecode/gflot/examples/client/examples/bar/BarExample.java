@@ -6,6 +6,7 @@ import java.util.List;
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.AxisOptions;
@@ -88,15 +89,16 @@ public class BarExample
     private void createFirstPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
+        PlotOptions plotOptions = PlotOptions.create();
 
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setBarsSeriesOptions( new BarSeriesOptions()
-            .setShow( true ).setLineWidth( 1 ).setBarWidth( 1 ).setAlignment( BarAlignment.CENTER ) ) );
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setBarsSeriesOptions(
+            BarSeriesOptions.create().setShow( true ).setLineWidth( 1 ).setBarWidth( 1 )
+                .setAlignment( BarAlignment.CENTER ) ) );
 
-        plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
         // add tick formatter to the options
-        plotOptions.addXAxisOptions( new AxisOptions().setTicks( 12 ).setTickFormatter( new TickFormatter() {
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
             @Override
             public String formatTickValue( double tickValue, Axis axis )
             {
@@ -109,21 +111,23 @@ public class BarExample
         } ) );
 
         // create a series
-        SeriesHandler handler = model.addSeries( "Ottawa's Month Temperatures (Daily Average in &deg;C)", "blue" );
+        SeriesHandler handler =
+            model.addSeries( Series.create().setLabel( "Ottawa's Month Temperatures (Daily Average in &deg;C)" )
+                .setColor( "blue" ) );
 
         // add data
-        handler.add( new DataPoint( 1, -10.5 ) );
-        handler.add( new DataPoint( 2, -8.6 ) );
-        handler.add( new DataPoint( 3, -2.4 ) );
-        handler.add( new DataPoint( 4, 6 ) );
-        handler.add( new DataPoint( 5, 13.6 ) );
-        handler.add( new DataPoint( 6, 18.4 ) );
-        handler.add( new DataPoint( 7, 21 ) );
-        handler.add( new DataPoint( 8, 19.7 ) );
-        handler.add( new DataPoint( 9, 14.7 ) );
-        handler.add( new DataPoint( 10, 8.2 ) );
-        handler.add( new DataPoint( 11, 1.5 ) );
-        handler.add( new DataPoint( 12, -6.6 ) );
+        handler.add( DataPoint.of( 1, -10.5 ) );
+        handler.add( DataPoint.of( 2, -8.6 ) );
+        handler.add( DataPoint.of( 3, -2.4 ) );
+        handler.add( DataPoint.of( 4, 6 ) );
+        handler.add( DataPoint.of( 5, 13.6 ) );
+        handler.add( DataPoint.of( 6, 18.4 ) );
+        handler.add( DataPoint.of( 7, 21 ) );
+        handler.add( DataPoint.of( 8, 19.7 ) );
+        handler.add( DataPoint.of( 9, 14.7 ) );
+        handler.add( DataPoint.of( 10, 8.2 ) );
+        handler.add( DataPoint.of( 11, 1.5 ) );
+        handler.add( DataPoint.of( 12, -6.6 ) );
 
         // create the plot
         plot1 = new SimplePlot( model, plotOptions );
@@ -138,11 +142,11 @@ public class BarExample
         int nbSeries = 4;
 
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
+        PlotOptions plotOptions = PlotOptions.create();
 
-        GlobalSeriesOptions globalSeriesOptions = new GlobalSeriesOptions();
-        globalSeriesOptions.setBarsSeriesOptions( new BarSeriesOptions().setShow( true ).setBarWidth( 0.9 / nbSeries ) );
-
+        GlobalSeriesOptions globalSeriesOptions = GlobalSeriesOptions.create();
+        globalSeriesOptions.setBarsSeriesOptions( BarSeriesOptions.create().setShow( true )
+            .setBarWidth( 0.9 / nbSeries ) );
 
         // Activate the plugin for multiple bars support
         plotOptions.setMultipleBars( true );
@@ -151,31 +155,31 @@ public class BarExample
 
         plotOptions.setGlobalSeriesOptions( globalSeriesOptions );
 
-        plotOptions.setLegendOptions( new LegendOptions().setMargin( -120, 0 ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setMargin( -120, 0 ) );
 
         // create a series
         List<SeriesHandler> series = new ArrayList<SeriesHandler>();
         for ( int i = 0; i < nbSeries; i++ )
         {
-            series.add( model.addSeries( "Random series " + ( i + 1 ) ) );
+            series.add( model.addSeries( Series.create().setLabel( "Random series " + ( i + 1 ) ) ) );
         }
 
-        Markings markings = new Markings();
+        Markings markings = Markings.create();
 
         // add data
         for ( int i = 0; i < 10; i++ )
         {
             for ( SeriesHandler serie : series )
             {
-                serie.add( new DataPoint( i, Random.nextInt( 50 ) ) );
+                serie.add( DataPoint.of( i, Random.nextInt( 50 ) ) );
             }
             if ( i % 2 != 0 )
             {
-                markings.addMarking( new Marking().setX( new Range( i - 0.5, i + 0.5 ) ).setColor(
-                    "rgba(153, 153, 153, 0.3)" ) );
+                markings.addMarking( Marking.create().setX( Range.of( i - 0.5, i + 0.5 ) )
+                    .setColor( "rgba(153, 153, 153, 0.3)" ) );
             }
         }
-        plotOptions.setGridOptions( new GridOptions().setMarkings( markings ) );
+        plotOptions.setGridOptions( GridOptions.create().setMarkings( markings ) );
 
         // create the plot
         plot2 = new SimplePlot( model, plotOptions );

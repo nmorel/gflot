@@ -21,15 +21,15 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import com.google.gwt.core.client.JavaScriptObject;
 
-import com.google.gwt.json.client.JSONObject;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
 /**
  * @author AlexanderDeleon
  */
 public class SelectionOptions
-    extends JSONObjectWrapper
+    extends JsonObject
 {
     public enum SelectionMode
     {
@@ -62,25 +62,26 @@ public class SelectionOptions
             return null;
         }
     }
-
-    private static final String MODE_KEY = "mode";
-
-    private static final String COLOR_KEY = "color";
-
-    public SelectionOptions()
+    
+    /**
+     * Creates a {@link SelectionOptions}
+     */
+    public static final SelectionOptions create()
     {
-        super();
+        return JavaScriptObject.createObject().cast();
     }
 
-    SelectionOptions( JSONObject jsonObj )
+    private static final String MODE_KEY = "mode";
+    private static final String COLOR_KEY = "color";
+
+    protected SelectionOptions()
     {
-        super( jsonObj );
     }
 
     /**
      * Set the selection mode.
      */
-    public SelectionOptions setMode( SelectionMode mode )
+    public final SelectionOptions setMode( SelectionMode mode )
     {
         assert null != mode : "mode can't be null";
 
@@ -91,7 +92,7 @@ public class SelectionOptions
     /**
      * @return the selection mode
      */
-    public SelectionMode getMode()
+    public final SelectionMode getMode()
     {
         return SelectionMode.findByFlotValue( getString( MODE_KEY ) );
     }
@@ -99,7 +100,7 @@ public class SelectionOptions
     /**
      * Clear the selection mode
      */
-    public SelectionOptions clearMode()
+    public final SelectionOptions clearMode()
     {
         clear( MODE_KEY );
         return this;
@@ -108,7 +109,7 @@ public class SelectionOptions
     /**
      * Set the selection color
      */
-    public SelectionOptions setColor( String color )
+    public final SelectionOptions setColor( String color )
     {
         put( COLOR_KEY, color );
         return this;
@@ -117,7 +118,7 @@ public class SelectionOptions
     /**
      * @return the selection color
      */
-    public String getColor()
+    public final String getColor()
     {
         return getString( COLOR_KEY );
     }
@@ -125,7 +126,7 @@ public class SelectionOptions
     /**
      * Clear the selection color
      */
-    public SelectionOptions clearColor()
+    public final SelectionOptions clearColor()
     {
         clear( COLOR_KEY );
         return this;

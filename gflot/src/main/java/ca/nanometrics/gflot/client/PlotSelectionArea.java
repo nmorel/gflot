@@ -1,37 +1,39 @@
 package ca.nanometrics.gflot.client;
 
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 import ca.nanometrics.gflot.client.options.Range;
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * @author Nicolas Morel
  */
 public class PlotSelectionArea
-    extends JSONObjectWrapper
+    extends JsonObject
 {
+    /**
+     * Creates a {@link PlotSelectionArea}
+     */
+    public static final PlotSelectionArea create()
+    {
+        return JavaScriptObject.createObject().cast();
+    }
+
     private static final String X_AXIS_KEY_PREFIX = "x";
     private static final String X_AXIS_KEY_SUFFIX = "axis";
     private static final String Y_AXIS_KEY_PREFIX = "y";
     private static final String Y_AXIS_KEY_SUFFIX = "axis";
 
-    public PlotSelectionArea()
+    protected PlotSelectionArea()
     {
-        super();
     }
 
-    protected PlotSelectionArea( JSONObject jsonObj )
-    {
-        super( jsonObj );
-    }
-
-    public PlotSelectionArea setX( Range xRange )
+    public final PlotSelectionArea setX( Range xRange )
     {
         return setX( xRange, 1 );
     }
 
-    public PlotSelectionArea setX( Range xRange, int xAxisNumber )
+    public final PlotSelectionArea setX( Range xRange, int xAxisNumber )
     {
         if ( xAxisNumber == 1 )
         {
@@ -47,7 +49,7 @@ public class PlotSelectionArea
     /**
      * @return the range for x axis
      */
-    public Range getX()
+    public final Range getX()
     {
         return getX( 1 );
     }
@@ -55,34 +57,25 @@ public class PlotSelectionArea
     /**
      * @return the range for x axis
      */
-    public Range getX( int xAxisNumber )
+    public final Range getX( int xAxisNumber )
     {
         assert xAxisNumber > 0 : "xAxisNumber starts at 1";
-        JSONObject obj = null;
         if ( xAxisNumber == 1 )
         {
-            obj = getObject( X_AXIS_KEY_PREFIX + X_AXIS_KEY_SUFFIX );
+            return getJsObject( X_AXIS_KEY_PREFIX + X_AXIS_KEY_SUFFIX );
         }
         else
         {
-            obj = getObject( X_AXIS_KEY_PREFIX + xAxisNumber + X_AXIS_KEY_SUFFIX );
-        }
-        if ( null == obj )
-        {
-            return null;
-        }
-        else
-        {
-            return new Range( obj );
+            return getJsObject( X_AXIS_KEY_PREFIX + xAxisNumber + X_AXIS_KEY_SUFFIX );
         }
     }
 
-    public PlotSelectionArea setY( Range yRange )
+    public final PlotSelectionArea setY( Range yRange )
     {
         return setY( yRange, 1 );
     }
 
-    public PlotSelectionArea setY( Range yRange, int yAxisNumber )
+    public final PlotSelectionArea setY( Range yRange, int yAxisNumber )
     {
         if ( yAxisNumber == 1 )
         {
@@ -98,7 +91,7 @@ public class PlotSelectionArea
     /**
      * @return the range for y axis
      */
-    public Range getY()
+    public final Range getY()
     {
         return getY( 1 );
     }
@@ -106,25 +99,16 @@ public class PlotSelectionArea
     /**
      * @return the range for y axis
      */
-    public Range getY( int yAxisNumber )
+    public final Range getY( int yAxisNumber )
     {
         assert yAxisNumber > 0 : "yAxisNumber starts at 1";
-        JSONObject obj = null;
         if ( yAxisNumber == 1 )
         {
-            obj = getObject( Y_AXIS_KEY_PREFIX + Y_AXIS_KEY_SUFFIX );
+            return getJsObject( Y_AXIS_KEY_PREFIX + Y_AXIS_KEY_SUFFIX );
         }
         else
         {
-            obj = getObject( Y_AXIS_KEY_PREFIX + yAxisNumber + Y_AXIS_KEY_SUFFIX );
-        }
-        if ( null == obj )
-        {
-            return null;
-        }
-        else
-        {
-            return new Range( obj );
+            return getJsObject( Y_AXIS_KEY_PREFIX + yAxisNumber + Y_AXIS_KEY_SUFFIX );
         }
     }
 

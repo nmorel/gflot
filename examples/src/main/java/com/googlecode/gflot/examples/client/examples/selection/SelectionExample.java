@@ -4,6 +4,7 @@ import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.PlotSelectionArea;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
@@ -85,36 +86,37 @@ public class SelectionExample
     public Widget createPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
+        PlotOptions plotOptions = PlotOptions.create();
 
         // add tick formatter to the options
-        plotOptions.addXAxisOptions( new AxisOptions().setTicks( 12 ).setTickFormatter( new TickFormatter()
-        {
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
             public String formatTickValue( double tickValue, Axis axis )
             {
                 return MONTH_NAMES[(int) ( tickValue - 1 )];
             }
         } ) );
 
-        plotOptions.setSelectionOptions( new SelectionOptions().setMode( SelectionMode.XY ).setColor( "red" ) );
-        plotOptions.setGridOptions( new GridOptions().setHoverable( true ) );
+        plotOptions.setSelectionOptions( SelectionOptions.create().setMode( SelectionMode.XY ).setColor( "red" ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
 
         // create a series
-        SeriesHandler handler = model.addSeries( "Ottawa's Month Temperatures (Daily Average in &deg;C)", "blue" );
+        SeriesHandler handler =
+            model.addSeries( Series.create().setLabel( "Ottawa's Month Temperatures (Daily Average in &deg;C)" )
+                .setColor( "blue" ) );
 
         // add data
-        handler.add( new DataPoint( 1, -10.5 ) );
-        handler.add( new DataPoint( 2, -8.6 ) );
-        handler.add( new DataPoint( 3, -2.4 ) );
-        handler.add( new DataPoint( 4, 6 ) );
-        handler.add( new DataPoint( 5, 13.6 ) );
-        handler.add( new DataPoint( 6, 18.4 ) );
-        handler.add( new DataPoint( 7, 21 ) );
-        handler.add( new DataPoint( 8, 19.7 ) );
-        handler.add( new DataPoint( 9, 14.7 ) );
-        handler.add( new DataPoint( 10, 8.2 ) );
-        handler.add( new DataPoint( 11, 1.5 ) );
-        handler.add( new DataPoint( 12, -6.6 ) );
+        handler.add( DataPoint.of( 1, -10.5 ) );
+        handler.add( DataPoint.of( 2, -8.6 ) );
+        handler.add( DataPoint.of( 3, -2.4 ) );
+        handler.add( DataPoint.of( 4, 6 ) );
+        handler.add( DataPoint.of( 5, 13.6 ) );
+        handler.add( DataPoint.of( 6, 18.4 ) );
+        handler.add( DataPoint.of( 7, 21 ) );
+        handler.add( DataPoint.of( 8, 19.7 ) );
+        handler.add( DataPoint.of( 9, 14.7 ) );
+        handler.add( DataPoint.of( 10, 8.2 ) );
+        handler.add( DataPoint.of( 11, 1.5 ) );
+        handler.add( DataPoint.of( 12, -6.6 ) );
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );
@@ -123,10 +125,9 @@ public class SelectionExample
         final Label hoverLabel = new Label( "You are hovering the selected zone" );
         popup.setWidget( hoverLabel );
 
-        plot.addHoverListener( new PlotHoverListener()
-        {
+        plot.addHoverListener( new PlotHoverListener() {
             @Override
-            public void onPlotHover( Plot plott, PlotPosition position, PlotItem item )
+            public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
             {
                 PlotSelectionArea area = plot.getSelection();
                 if ( null == area )
@@ -151,8 +152,7 @@ public class SelectionExample
             }
         }, false );
 
-        plot.addSelectedListener( new PlotSelectedListener()
-        {
+        plot.addSelectedListener( new PlotSelectedListener() {
             @Override
             public void onPlotSelected( PlotSelectionArea area )
             {
@@ -160,16 +160,14 @@ public class SelectionExample
                 clear.setEnabled( true );
             }
         } );
-        plot.addSelectingListener( new PlotSelectingListener()
-        {
+        plot.addSelectingListener( new PlotSelectingListener() {
             @Override
             public void onPlotSelecting( PlotSelectionArea area )
             {
                 selectionLabel.setText( buildSelectString( SELECTING, area ) );
             }
         } );
-        plot.addUnselectedListener( new PlotUnselectedListener()
-        {
+        plot.addUnselectedListener( new PlotUnselectedListener() {
             @Override
             public void onPlotUnselected()
             {
@@ -178,7 +176,7 @@ public class SelectionExample
             }
         } );
 
-        plot.setSelection( new PlotSelectionArea().setX( new Range( 2, 4 ) ).setY( new Range( 0, 20 ) ), false );
+        plot.setSelection( PlotSelectionArea.create().setX( Range.of( 2, 4 ) ).setY( Range.of( 0, 20 ) ), false );
 
         return binder.createAndBindUi( this );
     }

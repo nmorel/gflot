@@ -21,15 +21,15 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import com.google.gwt.core.client.JavaScriptObject;
 
-import com.google.gwt.json.client.JSONObject;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
 /**
  * @author Nicolas Morel
  */
 public class CrosshairOptions
-    extends JSONObjectWrapper
+    extends JsonObject
 {
     public enum Mode
     {
@@ -62,28 +62,28 @@ public class CrosshairOptions
             return null;
         }
     }
-
-    private static final String MODE_KEY = "mode";
-
-    private static final String COLOR_KEY = "color";
-
-    private static final String LINE_WIDTH_KEY = "lineWidth";
-
-    public CrosshairOptions()
+    
+    /**
+     * Creates a {@link CrosshairOptions}
+     */
+    public static final CrosshairOptions create()
     {
-        super();
+        return JavaScriptObject.createObject().cast();
     }
 
-    CrosshairOptions( JSONObject jsonObj )
+    private static final String MODE_KEY = "mode";
+    private static final String COLOR_KEY = "color";
+    private static final String LINE_WIDTH_KEY = "lineWidth";
+
+    protected CrosshairOptions()
     {
-        super( jsonObj );
     }
 
     /**
      * Set the mode to one of "x", "y" or "xy". The "x" mode enables a vertical crosshair that lets you trace the values
      * on the x axis, "y" enables a horizontal crosshair and "xy" enables them both.
      */
-    public CrosshairOptions setMode( Mode mode )
+    public final CrosshairOptions setMode( Mode mode )
     {
         assert null != mode : "mode can't be null";
 
@@ -94,7 +94,7 @@ public class CrosshairOptions
     /**
      * @return the mode
      */
-    public Mode getMode()
+    public final Mode getMode()
     {
         return Mode.findByFlotValue( getString( MODE_KEY ) );
     }
@@ -102,7 +102,7 @@ public class CrosshairOptions
     /**
      * Clear the mode
      */
-    public CrosshairOptions clearMode()
+    public final CrosshairOptions clearMode()
     {
         clear( MODE_KEY );
         return this;
@@ -111,7 +111,7 @@ public class CrosshairOptions
     /**
      * Set the color of the crosshair. Default is "rgba(170, 0, 0, 0.80)"
      */
-    public CrosshairOptions setColor( String color )
+    public final CrosshairOptions setColor( String color )
     {
         put( COLOR_KEY, color );
         return this;
@@ -120,7 +120,7 @@ public class CrosshairOptions
     /**
      * @return the color of the crosshair
      */
-    public String getColor()
+    public final String getColor()
     {
         return getString( COLOR_KEY );
     }
@@ -128,7 +128,7 @@ public class CrosshairOptions
     /**
      * Clear the color
      */
-    public CrosshairOptions clearColor()
+    public final CrosshairOptions clearColor()
     {
         clear( COLOR_KEY );
         return this;
@@ -137,7 +137,7 @@ public class CrosshairOptions
     /**
      * Set the width of the drawn lines. Default is 1.
      */
-    public CrosshairOptions setLineWidth( double width )
+    public final CrosshairOptions setLineWidth( double width )
     {
         put( LINE_WIDTH_KEY, width );
         return this;
@@ -146,7 +146,7 @@ public class CrosshairOptions
     /**
      * @return the width of the drawn lines
      */
-    public Double getLineWidth()
+    public final Double getLineWidth()
     {
         return getDouble( LINE_WIDTH_KEY );
     }
@@ -154,7 +154,7 @@ public class CrosshairOptions
     /**
      * Clear the width of the drawn lines
      */
-    public CrosshairOptions clearLineWidth()
+    public final CrosshairOptions clearLineWidth()
     {
         clear( LINE_WIDTH_KEY );
         return this;

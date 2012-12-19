@@ -3,8 +3,15 @@ package ca.nanometrics.gflot.client;
 public class PieDataPoint
     extends DataPoint
 {
-    public PieDataPoint( double value )
+    /**
+     * Creates a {@link PieDataPoint} with the specified percent
+     */
+    public static final native PieDataPoint of( double value )
+    /*-{
+        return [ 1, value ];
+    }-*/;
+
+    protected PieDataPoint()
     {
-        super( 1, value );
     }
 }

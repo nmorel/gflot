@@ -21,30 +21,43 @@
  */
 package ca.nanometrics.gflot.client;
 
-public class FixedSpanFixedSizeSeriesData extends FixedSizeSeriesData {
-	private final long m_maximumSpan;
+public class FixedSpanFixedSizeSeriesDataStrategy
+    extends FixedSizeSeriesDataStrategy
+{
+    private final long maximumSpan;
 
-	public FixedSpanFixedSizeSeriesData(int capacity, long maximumSpan) {
-		super(capacity);
-		m_maximumSpan = maximumSpan;
-	}
+    public FixedSpanFixedSizeSeriesDataStrategy( int capacity, long maximumSpan )
+    {
+        this( capacity, maximumSpan, SeriesData.create() );
+    }
 
-	@Override
-	public void add(DataPoint dataPoint) {
-		// The super class will observe the fixed capacity requirement
-		super.add(dataPoint);
+    public FixedSpanFixedSizeSeriesDataStrategy( int capacity, long maximumSpan, SeriesData seriesData )
+    {
+        super( capacity, seriesData );
+        this.maximumSpan = maximumSpan;
+    }
 
-		// Now that the new point has been added, drop any point(s) from the
-		// beginning that are outside the span requirement
-		double lowerXbound = dataPoint.getX() - m_maximumSpan;
-		boolean done = false;
-		while (!done) {
-			double xValue = getX(0);
-			if (xValue < lowerXbound) {
-				super.shift();
-			} else {
-				done = true;
-			}
-		}
-	}
+    @Override
+    public void add( DataPoint dataPoint )
+    {
+        // The super class will observe the fixed capacity requirement
+        super.add( dataPoint );
+
+        // Now that the new point has been added, drop any point(s) from the
+        // beginning that are outside the span requirement
+        double lowerXbound = dataPoint.getX() - maximumSpan;
+        boolean done = false;
+        while ( !done )
+        {
+            double xValue = data.getX( 0 );
+            if ( xValue < lowerXbound )
+            {
+                data.shift();
+            }
+            else
+            {
+                done = true;
+            }
+        }
+    }
 }

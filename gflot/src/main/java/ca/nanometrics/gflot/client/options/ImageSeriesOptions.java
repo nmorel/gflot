@@ -1,6 +1,6 @@
 package ca.nanometrics.gflot.client.options;
 
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * @author Nicolas Morel
@@ -40,25 +40,26 @@ public class ImageSeriesOptions
         }
     }
 
-    private static final String ANCHOR_KEY = "anchor";
-
-    private static final String ALPHA_KEY = "alpha";
-
-    public ImageSeriesOptions()
+    /**
+     * Creates a {@link ImageSeriesOptions}
+     */
+    public static final ImageSeriesOptions create()
     {
-        super();
+        return JavaScriptObject.createObject().cast();
     }
 
-    ImageSeriesOptions( JSONObject jsonObj )
+    private static final String ANCHOR_KEY = "anchor";
+    private static final String ALPHA_KEY = "alpha";
+
+    protected ImageSeriesOptions()
     {
-        super( jsonObj );
     }
 
     /**
      * Setting "anchor" to "center" causes the pixels in the image to be anchored at the corner pixel centers inside of
      * at the pixel corners, effectively letting half a pixel stick out to each side in the plot.
      */
-    public ImageSeriesOptions setAnchor( ImageAnchor anchor )
+    public final ImageSeriesOptions setAnchor( ImageAnchor anchor )
     {
         assert null != anchor : "anchor can't be null";
 
@@ -69,7 +70,7 @@ public class ImageSeriesOptions
     /**
      * @return the anchor
      */
-    public ImageAnchor getAnchor()
+    public final ImageAnchor getAnchor()
     {
         return ImageAnchor.findByFlotValue( getString( ANCHOR_KEY ) );
     }
@@ -77,7 +78,7 @@ public class ImageSeriesOptions
     /**
      * Clear the anchor
      */
-    public ImageSeriesOptions clearAnchor()
+    public final ImageSeriesOptions clearAnchor()
     {
         clear( ANCHOR_KEY );
         return this;
@@ -86,7 +87,7 @@ public class ImageSeriesOptions
     /**
      * Set the image alpha
      */
-    public ImageSeriesOptions setAlpha( double alpha )
+    public final ImageSeriesOptions setAlpha( double alpha )
     {
         assert alpha >= 0 && alpha <= 1 : "alpha range from 0.0 to 1.0";
 
@@ -97,7 +98,7 @@ public class ImageSeriesOptions
     /**
      * @return the image alpha
      */
-    public Double getAlpha()
+    public final Double getAlpha()
     {
         return getDouble( ALPHA_KEY );
     }
@@ -105,7 +106,7 @@ public class ImageSeriesOptions
     /**
      * Clear the image alpha
      */
-    public ImageSeriesOptions clearAlpha()
+    public final ImageSeriesOptions clearAlpha()
     {
         clear( ALPHA_KEY );
         return this;

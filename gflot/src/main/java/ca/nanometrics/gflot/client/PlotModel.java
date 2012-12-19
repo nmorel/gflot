@@ -26,6 +26,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
+
 /**
  * @author Alexander De Leon
  */
@@ -34,65 +37,42 @@ public class PlotModel
 
     public interface PlotModelListener
     {
-        void onAddSeries( PlotModel model, String label, String color, SeriesHandler handler );
+        void onAddSeries( PlotModel model, SeriesHandler handler );
 
         void onRemoveSeries( PlotModel model, SeriesHandler handler );
     }
 
-    private PlotModelStrategy strategy;
+    private final List<SeriesHandler> handlers;
 
-    private final List<SeriesHandler> handlers = new ArrayList<SeriesHandler>();
-
-    private final List<PlotModelListener> listeners = new ArrayList<PlotModelListener>();
+    private final List<PlotModelListener> listeners;
 
     public PlotModel()
     {
-        this( PlotModelStrategy.defaultStrategy() );
+        handlers = new ArrayList<SeriesHandler>();
+        listeners = new ArrayList<PlotModelListener>();
     }
 
-    public PlotModel( PlotModelStrategy strategy )
+    public SeriesHandler addSeries()
     {
-        this.strategy = strategy;
-    }
-
-    public SeriesHandler addSeries( String label )
-    {
-        return addSeries( label, null );
-    }
-
-    public SeriesHandler addSeries( String label, String color )
-    {
-        Series series = new Series( label );
-        if ( color != null )
-        {
-            series.setColor( color );
-        }
-        return addSeries( series );
+        return addSeries( Series.create(), PlotModelStrategy.defaultStrategy() );
     }
 
     public SeriesHandler addSeries( Series series )
     {
-        SeriesData data = strategy.createSeriesData();
-        series.setData( data );
+        return addSeries( series, PlotModelStrategy.defaultStrategy() );
+    }
 
-        SeriesHandler handler = createSeriesHandler( series, data );
+    public SeriesHandler addSeries( SeriesDataStrategy strategy )
+    {
+        return addSeries( Series.create(), strategy );
+    }
+
+    public SeriesHandler addSeries( Series series, SeriesDataStrategy strategy )
+    {
+        SeriesHandler handler = createSeriesHandler( series, strategy );
         handlers.add( handler );
         fireOnAddSeries( series.getLabel(), series.getColor(), handler );
         return handler;
-    }
-
-    public void setStrategy( PlotModelStrategy strategy )
-    {
-        this.strategy = strategy;
-        for ( SeriesHandler handler : handlers )
-        {
-            DataPoint[] currentData = handler.getData().getDatapoints();
-            handler.setData( this.strategy.createSeriesData() );
-            for ( DataPoint datapoint : currentData )
-            {
-                handler.add( datapoint );
-            }
-        }
     }
 
     /**
@@ -108,7 +88,7 @@ public class PlotModel
 
     /**
      * Clear the data of the specified series
-     *
+     * 
      * @param index index of the series to remove
      */
     public void clearSeries( int index )
@@ -119,7 +99,7 @@ public class PlotModel
 
     /**
      * Remove the series from the plot
-     *
+     * 
      * @param index index of the series to remove
      */
     public void removeSeries( int index )
@@ -130,7 +110,7 @@ public class PlotModel
 
     /**
      * Remove the series from the plot
-     *
+     * 
      * @param series Series to remove
      */
     public void removeSeries( SeriesHandler series )
@@ -168,13 +148,12 @@ public class PlotModel
         listeners.remove( listener );
     }
 
-    public Series[] getSeries()
+    public JsArray<Series> getSeries()
     {
-        Series[] seriesArray = new Series[handlers.size()];
-        int i = 0;
+        JsArray<Series> seriesArray = JavaScriptObject.createArray().cast();
         for ( SeriesHandler handler : handlers )
         {
-            seriesArray[i++] = handler.getSeries();
+            seriesArray.push( handler.getSeries() );
         }
         return seriesArray;
     }
@@ -182,14 +161,9 @@ public class PlotModel
     /**
      * @return a read-only list of the series handler
      */
-    public List<SeriesHandler> getHandlers()
+    public List<? extends SeriesHandler> getHandlers()
     {
         return Collections.unmodifiableList( handlers );
-    }
-
-    protected SeriesHandler createSeriesHandler( Series series, SeriesData data )
-    {
-        return new SeriesHandler( series, data );
     }
 
     private void fireOnRemoveSeries( SeriesHandler handler )
@@ -204,7 +178,12 @@ public class PlotModel
     {
         for ( PlotModelListener listener : listeners )
         {
-            listener.onAddSeries( this, label, color, handler );
+            listener.onAddSeries( this, handler );
         }
+    }
+
+    protected SeriesHandler createSeriesHandler( Series series, SeriesDataStrategy strategy )
+    {
+        return new DefaultSeriesHandler( series, strategy );
     }
 }

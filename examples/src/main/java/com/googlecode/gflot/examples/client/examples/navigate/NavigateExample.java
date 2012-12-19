@@ -4,10 +4,12 @@ import ca.nanometrics.gflot.client.Axes;
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.Pan;
 import ca.nanometrics.gflot.client.PlotModel;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.event.PlotPanListener;
 import ca.nanometrics.gflot.client.event.PlotZoomListener;
+import ca.nanometrics.gflot.client.jsni.Plot;
 import ca.nanometrics.gflot.client.options.AxisOptions;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
@@ -73,25 +75,24 @@ public class NavigateExample
     protected Widget createPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions(
-            new LineSeriesOptions().setShow( true ).setFill( true ) ).setShadowSize( 0 ) );
-        plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setShow( true ).setFill( true ) ).setShadowSize( 0 ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
-        plotOptions.addXAxisOptions( new AxisOptions().setZoomRange( 0.1d, 10d ).setPanRange(
-            new Double[] { -10d, 10d } ) );
-        plotOptions.addYAxisOptions( new AxisOptions().setZoomRange( 0.1d, 10d )
-            .setPanRange( new Double[] { -10d, 10d } ).setLabelWidth( 20 ) );
-        plotOptions.setZoomOptions( new ZoomOptions().setInteractive( true ) ).setPanOptions(
-            new PanOptions().setInteractive( true ) );
+        plotOptions.addXAxisOptions( AxisOptions.create().setZoomRange( 0.1d, 10d ).setPanRange( -10d, 10d ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setZoomRange( 0.1d, 10d ).setPanRange( -10d, 10d )
+            .setLabelWidth( 20 ) );
+        plotOptions.setZoomOptions( ZoomOptions.create().setInteractive( true ) ).setPanOptions(
+            PanOptions.create().setInteractive( true ) );
 
         // create series
-        SeriesHandler series1 = model.addSeries( "Series1" );
+        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Series1" ) );
 
         // add data
         for ( double t = 0; t <= 2 * Math.PI; t += 0.01 )
         {
-            series1.add( new DataPoint( sumfCos( t, 10 ), sumfSin( t, 10 ) ) );
+            series1.add( DataPoint.of( sumfCos( t, 10 ), sumfSin( t, 10 ) ) );
         }
 
         // create the plot
@@ -101,8 +102,9 @@ public class NavigateExample
 
         plot.addZoomListener( new PlotZoomListener() {
             @Override
-            public void onPlotZoom( Axes axes )
+            public void onPlotZoom( Plot plot )
             {
+                Axes axes = plot.getAxes();
                 message.setText( "Zooming to x=[min:\"" + format.format( axes.getX().getMinimumValue() ) + "\", max:\""
                     + format.format( axes.getX().getMaximumValue() ) + "\"], y=[min:\""
                     + format.format( axes.getY().getMinimumValue() ) + "\", max:\""
@@ -111,9 +113,11 @@ public class NavigateExample
         } );
 
         plot.addPanListener( new PlotPanListener() {
+
             @Override
-            public void onPlotPan( Axes axes )
+            public void onPlotPan( Plot plot )
             {
+                Axes axes = plot.getAxes();
                 message.setText( "Panning to x=[min:\"" + format.format( axes.getX().getMinimumValue() ) + "\", max:\""
                     + format.format( axes.getX().getMaximumValue() ) + "\"], y=[min:\""
                     + format.format( axes.getY().getMinimumValue() ) + "\", max:\""
@@ -161,7 +165,7 @@ public class NavigateExample
     @UiHandler( "left" )
     void onClickLeft( ClickEvent event )
     {
-        plot.pan( new Pan().setLeft( -100 ) );
+        plot.pan( Pan.create().setLeft( -100 ) );
     }
 
     /**
@@ -171,7 +175,7 @@ public class NavigateExample
     @UiHandler( "right" )
     void onClickRight( ClickEvent event )
     {
-        plot.pan( new Pan().setLeft( 100 ) );
+        plot.pan( Pan.create().setLeft( 100 ) );
     }
 
     /**
@@ -181,7 +185,7 @@ public class NavigateExample
     @UiHandler( "up" )
     void onClickUp( ClickEvent event )
     {
-        plot.pan( new Pan().setTop( -100 ) );
+        plot.pan( Pan.create().setTop( -100 ) );
     }
 
     /**
@@ -191,7 +195,7 @@ public class NavigateExample
     @UiHandler( "down" )
     void onClickDown( ClickEvent event )
     {
-        plot.pan( new Pan().setTop( 100 ) );
+        plot.pan( Pan.create().setTop( 100 ) );
     }
 
     /**

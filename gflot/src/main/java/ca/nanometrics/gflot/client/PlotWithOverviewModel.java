@@ -21,9 +21,12 @@
  */
 package ca.nanometrics.gflot.client;
 
+import java.util.List;
+
 import ca.nanometrics.gflot.client.util.Algorithm;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -35,7 +38,7 @@ public class PlotWithOverviewModel
 {
 
     public class PlotWithOverviewSeriesHandler
-        extends SeriesHandler
+        implements SeriesHandler
     {
         private AsyncDataProvider provider;
         private final SeriesHandler overviewHandler;
@@ -44,18 +47,16 @@ public class PlotWithOverviewModel
         private DataPoint firstDataPoint;
         private boolean lockSelection;
 
-        public PlotWithOverviewSeriesHandler( Series series, SeriesData data )
+        public PlotWithOverviewSeriesHandler( Series series, SeriesDataStrategy strategy )
         {
-            super( series, data );
-            provider = new AsyncDataProviderWrapper( new LocalDataProvider( data ) );
-            windowHandler = windowModel.addSeries( series.getLabel(), series.getColor() );
-            overviewHandler = overviewModel.addSeries( series.getLabel(), series.getColor() );
+            provider = new AsyncDataProviderWrapper( new LocalDataProvider( strategy.getData() ) );
+            windowHandler = windowModel.addSeries( series, PlotModelStrategy.defaultStrategy() );
+            overviewHandler = overviewModel.addSeries( Series.create(), strategy );
         }
 
         @Override
         public void add( DataPoint datapoint )
         {
-            super.add( datapoint );
             overviewHandler.add( datapoint );
             if ( lockSelection && selection[1] < datapoint.getX() )
             {
@@ -74,7 +75,6 @@ public class PlotWithOverviewModel
         @Override
         public void clear()
         {
-            super.clear();
             windowHandler.clear();
             overviewHandler.clear();
             lastDataPoint = null;
@@ -83,9 +83,20 @@ public class PlotWithOverviewModel
         }
 
         @Override
-        void setData( SeriesData newData )
+        public SeriesData getData()
         {
-            super.setData( newData );
+            return overviewHandler.getData();
+        }
+
+        @Override
+        public boolean isVisible()
+        {
+            return overviewHandler.isVisible();
+        }
+
+        @Override
+        public void setData( SeriesData newData )
+        {
             overviewHandler.setData( newData );
             windowHandler.clear();
         }
@@ -93,7 +104,6 @@ public class PlotWithOverviewModel
         @Override
         public void setVisible( boolean visisble )
         {
-            super.setVisible( visisble );
             overviewHandler.setVisible( visisble );
             windowHandler.setVisible( visisble );
         }
@@ -110,7 +120,7 @@ public class PlotWithOverviewModel
             windowHandler.clear();
             if ( x1 < x2 )
             {
-                provider.getData( x1, x2, new AsyncCallback<DataPoint[]>() {
+                provider.getData( x1, x2, new AsyncCallback<SeriesData>() {
                     @Override
                     public void onFailure( Throwable caught )
                     {
@@ -122,11 +132,11 @@ public class PlotWithOverviewModel
                     }
 
                     @Override
-                    public void onSuccess( DataPoint[] result )
+                    public void onSuccess( SeriesData result )
                     {
-                        for ( DataPoint point : result )
+                        for ( int i = 0; i < result.length(); i++ )
                         {
-                            windowHandler.add( point );
+                            windowHandler.add( result.get( i ) );
                         }
                         lockSelection = x2 >= lastDataPoint.getX();
                         if ( toExcuteAfterSelection != null )
@@ -152,12 +162,18 @@ public class PlotWithOverviewModel
         {
             double x = selection[1];
             SeriesData data = overviewHandler.getData();
-            int size = data.size();
+            int size = data.length();
             if ( size > 0 && x == data.getX( size - 1 ) )
             {
                 return lastDataPoint.getX();
             }
             return x;
+        }
+
+        @Override
+        public Series getSeries()
+        {
+            return getOverviewSeries();
         }
 
         public Series getOverviewSeries()
@@ -169,11 +185,31 @@ public class PlotWithOverviewModel
         {
             return windowHandler.getSeries();
         }
+
+        @Override
+        public boolean equals( Object obj )
+        {
+            if ( obj == this )
+            {
+                return true;
+            }
+            if ( obj instanceof PlotWithOverviewSeriesHandler )
+            {
+                return getSeries().equals( ( (PlotWithOverviewSeriesHandler) obj ).getSeries() );
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return getSeries().hashCode();
+        }
     }
 
     public interface DataProvider
     {
-        DataPoint[] getData( double x1, double x2 );
+        SeriesData getData( double x1, double x2 );
     }
 
     private class LocalDataProvider
@@ -188,11 +224,11 @@ public class PlotWithOverviewModel
         }
 
         @Override
-        public DataPoint[] getData( double x1, double x2 )
+        public SeriesData getData( double x1, double x2 )
         {
-            if ( x2 < data.getX( 0 ) || x1 > data.getX( data.size() - 1 ) )
+            if ( x2 < data.getX( 0 ) || x1 > data.getX( data.length() - 1 ) )
             {
-                return new DataPoint[0];
+                return SeriesData.create();
             }
             int start = Algorithm.xBinarySearch( data, x1 );
             if ( start == -1 )
@@ -202,15 +238,15 @@ public class PlotWithOverviewModel
             int end = Algorithm.xBinarySearch( data, x2 );
             if ( end == -1 )
             {
-                return data.slice( start ).getDatapoints();
+                return data.slice( start );
             }
-            return data.slice( start, end ).getDatapoints();
+            return data.slice( start, end );
         }
     }
 
     public interface AsyncDataProvider
     {
-        void getData( double x1, double x2, AsyncCallback<DataPoint[]> callback );
+        void getData( double x1, double x2, AsyncCallback<SeriesData> callback );
     }
 
     private class AsyncDataProviderWrapper
@@ -224,11 +260,11 @@ public class PlotWithOverviewModel
         }
 
         @Override
-        public void getData( double x1, double x2, AsyncCallback<DataPoint[]> callback )
+        public void getData( double x1, double x2, AsyncCallback<SeriesData> callback )
         {
             try
             {
-                DataPoint[] result = provider.getData( x1, x2 );
+                SeriesData result = provider.getData( x1, x2 );
                 callback.onSuccess( result );
             }
             catch ( Throwable e )
@@ -269,27 +305,26 @@ public class PlotWithOverviewModel
     private final PlotModel overviewModel;
     private final double[] selection = new double[2];
 
-    public PlotWithOverviewModel( PlotModelStrategy strategy )
+    public PlotWithOverviewModel()
     {
-        super( strategy );
-        overviewModel = new PlotModel( strategy );
+        overviewModel = new PlotModel();
         windowModel = new PlotModel();
     }
 
-    public void setDataProvider( SeriesHandler handler, DataProvider provider )
+    public void setDataProvider( PlotWithOverviewSeriesHandler handler, DataProvider provider )
     {
         setDataProvider( handler, new AsyncDataProviderWrapper( provider ) );
     }
 
-    public void setDataProvider( SeriesHandler handler, AsyncDataProvider provider )
+    public void setDataProvider( PlotWithOverviewSeriesHandler handler, AsyncDataProvider provider )
     {
-        ( (PlotWithOverviewSeriesHandler) handler ).setDataProvider( provider );
+        handler.setDataProvider( provider );
     }
 
     @Override
-    protected SeriesHandler createSeriesHandler( Series series, SeriesData data )
+    protected PlotWithOverviewSeriesHandler createSeriesHandler( Series series, SeriesDataStrategy strategy )
     {
-        return new PlotWithOverviewSeriesHandler( series, data );
+        return new PlotWithOverviewSeriesHandler( series, strategy );
     }
 
     PlotModel getWindowPlotModel()
@@ -302,12 +337,12 @@ public class PlotWithOverviewModel
         return overviewModel;
     }
 
-    public Series[] getWindowsSeries()
+    public JsArray<Series> getWindowsSeries()
     {
         return windowModel.getSeries();
     }
 
-    public Series[] getOverviewSeries()
+    public JsArray<Series> getOverviewSeries()
     {
         return overviewModel.getSeries();
     }
@@ -328,9 +363,9 @@ public class PlotWithOverviewModel
             command = new PopulateCommand( toExcuteAfterSelection, getHandlers().size() );
         }
 
-        for ( SeriesHandler handler : getHandlers() )
+        for ( PlotWithOverviewSeriesHandler handler : getHandlers() )
         {
-            ( (PlotWithOverviewSeriesHandler) handler ).populateWindowSeries( command );
+            handler.populateWindowSeries( command );
         }
     }
 
@@ -361,6 +396,13 @@ public class PlotWithOverviewModel
         super.removeAllSeries();
         windowModel.removeAllSeries();
         overviewModel.removeAllSeries();
+    }
+
+    @SuppressWarnings( "unchecked" )
+    @Override
+    public List<PlotWithOverviewSeriesHandler> getHandlers()
+    {
+        return (List<PlotWithOverviewSeriesHandler>) super.getHandlers();
     }
 
 }

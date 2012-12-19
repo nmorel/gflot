@@ -55,24 +55,24 @@ public class ImageExample
     public Widget createPlot()
     {
         final PlotModel model = new PlotModel();
-        final PlotOptions plotOptions = new PlotOptions();
+        final PlotOptions plotOptions = PlotOptions.create();
 
         // add tick formatter to the options
-        plotOptions.addXAxisOptions( new AxisOptions().setMinimum( -8 ).setMaximum( 4 ) );
-        plotOptions.addYAxisOptions( new AxisOptions().setMinimum( -8 ).setMaximum( 4 ) );
+        plotOptions.addXAxisOptions( AxisOptions.create().setMinimum( -8 ).setMaximum( 4 ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setMinimum( -8 ).setMaximum( 4 ) );
 
         // create a series
         SeriesHandler handlerImage =
-            model.addSeries( new Series( "Image series" ).setImageSeriesOptions( new ImageSeriesOptions()
-                .setShow( true ).setAlpha( 0.5 ) ) );
-        handlerImage.add( new ImageDataPoint( "images/hs-2004-27-a-large_web.jpg", -2, -2, 2, 2 ) );
+            model.addSeries( Series.create().setLabel( "Image series" )
+                .setImageSeriesOptions( ImageSeriesOptions.create().setShow( true ).setAlpha( 0.5 ) ) );
+        handlerImage.add( ImageDataPoint.of( "images/hs-2004-27-a-large_web.jpg", -2, -2, 2, 2 ) );
 
         // create a series
-        SeriesHandler handlerLine = model.addSeries( "Line series" );
-        handlerLine.add( new DataPoint( -8, -8 ) );
-        handlerLine.add( new DataPoint( -6, -4 ) );
-        handlerLine.add( new DataPoint( -2, -8 ) );
-        handlerLine.add( new DataPoint( 4, 0 ) );
+        SeriesHandler handlerLine = model.addSeries( Series.create().setLabel( "Line series" ) );
+        handlerLine.add( DataPoint.of( -8, -8 ) );
+        handlerLine.add( DataPoint.of( -6, -4 ) );
+        handlerLine.add( DataPoint.of( -2, -8 ) );
+        handlerLine.add( DataPoint.of( 4, 0 ) );
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );

@@ -2,6 +2,7 @@ package com.googlecode.gflot.examples.client.examples.threshold;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.CommonSeriesOptions.Threshold;
@@ -62,19 +63,19 @@ public class ThresholdExample
     protected Widget createPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions(
-            new LineSeriesOptions().setShow( true ).setSteps( true ) ).setThreshold(
-            new Threshold().setBelow( 0 ).setColor( "red" ) ) );
-        plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setShow( true ).setSteps( true ) )
+            .setThreshold( Threshold.create().setBelow( 0 ).setColor( "red" ) ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
         // create series
-        SeriesHandler series1 = model.addSeries( "Random series 1", "green" );
+        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Random series 1" ).setColor( "green" ) );
 
         // add data
         for ( int i = 0; i < 10; i++ )
         {
-            series1.add( new DataPoint( i, Random.nextInt( 30 ) - 10 ) );
+            series1.add( DataPoint.of( i, Random.nextInt( 30 ) - 10 ) );
         }
 
         // create the plot

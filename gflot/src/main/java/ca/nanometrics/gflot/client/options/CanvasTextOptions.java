@@ -1,38 +1,40 @@
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONHelper;
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayInteger;
 
 /**
  * @author Nicolas Morel
  */
 public class CanvasTextOptions
-    extends JSONObjectWrapper
+    extends JsonObject
 {
     public static class LineBreaksOptions
-        extends JSONObjectWrapper
+        extends JsonObject
     {
+        /**
+         * Creates a {@link LineBreaksOptions}
+         */
+        public static final LineBreaksOptions create()
+        {
+            return JavaScriptObject.createObject().cast();
+        }
+
         private static final String SHOW_KEY = "show";
         private static final String MARGIN_TOP_KEY = "marginTop";
         private static final String MARGIN_BOTTOM_KEY = "marginBottom";
         private static final String LINE_SPACING_KEY = "lineSpacing";
 
-        public LineBreaksOptions()
+        protected LineBreaksOptions()
         {
-            super();
-        }
-
-        LineBreaksOptions( JSONObject jsonObj )
-        {
-            super( jsonObj );
         }
 
         /**
          * Enable/Disable the line breaks options
          */
-        public LineBreaksOptions setShow( boolean show )
+        public final LineBreaksOptions setShow( boolean show )
         {
             put( SHOW_KEY, show );
             return this;
@@ -41,7 +43,7 @@ public class CanvasTextOptions
         /**
          * @return true if the line breaks options are activated
          */
-        public Boolean getShow()
+        public final Boolean getShow()
         {
             return getBoolean( SHOW_KEY );
         }
@@ -49,7 +51,7 @@ public class CanvasTextOptions
         /**
          * Clear if the line breaks option is activated
          */
-        public LineBreaksOptions clearShow()
+        public final LineBreaksOptions clearShow()
         {
             clear( SHOW_KEY );
             return this;
@@ -58,7 +60,7 @@ public class CanvasTextOptions
         /**
          * Set the margin top
          */
-        public LineBreaksOptions setMarginTop( int marginTop )
+        public final LineBreaksOptions setMarginTop( int marginTop )
         {
             put( MARGIN_TOP_KEY, marginTop );
             return this;
@@ -67,7 +69,7 @@ public class CanvasTextOptions
         /**
          * @return the margin top
          */
-        public Integer getMarginTop()
+        public final Integer getMarginTop()
         {
             return getInteger( MARGIN_TOP_KEY );
         }
@@ -75,7 +77,7 @@ public class CanvasTextOptions
         /**
          * Clear the margin top
          */
-        public LineBreaksOptions clearMarginTop()
+        public final LineBreaksOptions clearMarginTop()
         {
             clear( MARGIN_TOP_KEY );
             return this;
@@ -84,7 +86,7 @@ public class CanvasTextOptions
         /**
          * Set the margin bottom
          */
-        public LineBreaksOptions setMarginBottom( int marginBottom )
+        public final LineBreaksOptions setMarginBottom( int marginBottom )
         {
             put( MARGIN_BOTTOM_KEY, marginBottom );
             return this;
@@ -93,7 +95,7 @@ public class CanvasTextOptions
         /**
          * @return the margin bottom
          */
-        public Integer getMarginBottom()
+        public final Integer getMarginBottom()
         {
             return getInteger( MARGIN_BOTTOM_KEY );
         }
@@ -101,7 +103,7 @@ public class CanvasTextOptions
         /**
          * Clear the margin bottom
          */
-        public LineBreaksOptions clearMarginBottom()
+        public final LineBreaksOptions clearMarginBottom()
         {
             clear( MARGIN_BOTTOM_KEY );
             return this;
@@ -110,7 +112,7 @@ public class CanvasTextOptions
         /**
          * Set the line spacing
          */
-        public LineBreaksOptions setLineSpacing( int lineSpacing )
+        public final LineBreaksOptions setLineSpacing( int lineSpacing )
         {
             put( LINE_SPACING_KEY, lineSpacing );
             return this;
@@ -119,7 +121,7 @@ public class CanvasTextOptions
         /**
          * @return the line spacing
          */
-        public Integer getLineSpacing()
+        public final Integer getLineSpacing()
         {
             return getInteger( LINE_SPACING_KEY );
         }
@@ -127,11 +129,19 @@ public class CanvasTextOptions
         /**
          * Clear the line spacing
          */
-        public LineBreaksOptions clearLineSpacing()
+        public final LineBreaksOptions clearLineSpacing()
         {
             clear( LINE_SPACING_KEY );
             return this;
         }
+    }
+
+    /**
+     * Creates a {@link CanvasTextOptions}
+     */
+    public static final CanvasTextOptions create()
+    {
+        return JavaScriptObject.createObject().cast();
     }
 
     private static final String SHOW_KEY = "show";
@@ -141,20 +151,14 @@ public class CanvasTextOptions
     private static final String SERIES_FONT_KEY = "seriesFont";
     private static final String LINE_BREAKS_KEY = "lineBreaks";
 
-    public CanvasTextOptions()
+    protected CanvasTextOptions()
     {
-        super();
-    }
-
-    CanvasTextOptions( JSONObject jsonObj )
-    {
-        super( jsonObj );
     }
 
     /**
      * Enable/Disable the canvas text plugin
      */
-    public CanvasTextOptions setShow( boolean show )
+    public final CanvasTextOptions setShow( boolean show )
     {
         put( SHOW_KEY, show );
         return this;
@@ -163,7 +167,7 @@ public class CanvasTextOptions
     /**
      * @return true if the canvas text plugin is activated
      */
-    public Boolean getShow()
+    public final Boolean getShow()
     {
         return getBoolean( SHOW_KEY );
     }
@@ -171,7 +175,7 @@ public class CanvasTextOptions
     /**
      * Clear if the canvas text plugin is activated
      */
-    public CanvasTextOptions clearShow()
+    public final CanvasTextOptions clearShow()
     {
         clear( SHOW_KEY );
         return this;
@@ -180,7 +184,7 @@ public class CanvasTextOptions
     /**
      * Set the font size. Default is "8px"
      */
-    public CanvasTextOptions setFontSize( String fontSize )
+    public final CanvasTextOptions setFontSize( String fontSize )
     {
         put( FONT_KEY, FONT + fontSize );
         return this;
@@ -189,7 +193,7 @@ public class CanvasTextOptions
     /**
      * @return the font size
      */
-    public String getFontSize()
+    public final String getFontSize()
     {
         String font = getString( FONT_KEY );
         if ( null == font || !font.startsWith( FONT ) )
@@ -202,7 +206,7 @@ public class CanvasTextOptions
     /**
      * Clear the font size
      */
-    public CanvasTextOptions clearFontSize()
+    public final CanvasTextOptions clearFontSize()
     {
         clear( FONT_KEY );
         return this;
@@ -211,7 +215,7 @@ public class CanvasTextOptions
     /**
      * Set the series font size. Default is "8px"
      */
-    public CanvasTextOptions setSeriesFontSize( String fontSize )
+    public final CanvasTextOptions setSeriesFontSize( String fontSize )
     {
         put( SERIES_FONT_KEY, FONT + fontSize );
         return this;
@@ -220,7 +224,7 @@ public class CanvasTextOptions
     /**
      * @return the series font size
      */
-    public String getSeriesFontSize()
+    public final String getSeriesFontSize()
     {
         String font = getString( SERIES_FONT_KEY );
         if ( null == font || !font.startsWith( FONT ) )
@@ -233,7 +237,7 @@ public class CanvasTextOptions
     /**
      * Clear the series font size
      */
-    public CanvasTextOptions clearSeriesFontSize()
+    public final CanvasTextOptions clearSeriesFontSize()
     {
         clear( SERIES_FONT_KEY );
         return this;
@@ -242,16 +246,16 @@ public class CanvasTextOptions
     /**
      * Set the series to plot Y-AXIS values on the graph
      */
-    public CanvasTextOptions setSeries( Integer[] series )
+    public final CanvasTextOptions setSeries( JsArrayInteger series )
     {
-        put( SERIES_KEY, JSONHelper.wrapArray( series ) );
+        put( SERIES_KEY, series );
         return this;
     }
 
     /**
      * @return the series to plot Y-AXIS values on the graph
      */
-    public Integer[] getSeries()
+    public final JsArrayInteger getSeries()
     {
         return getIntegerArray( SERIES_KEY );
     }
@@ -259,7 +263,7 @@ public class CanvasTextOptions
     /**
      * Clear the series to plot Y-AXIS values on the graph
      */
-    public CanvasTextOptions clearSeries()
+    public final CanvasTextOptions clearSeries()
     {
         clear( SERIES_KEY );
         return this;
@@ -268,7 +272,7 @@ public class CanvasTextOptions
     /**
      * Set the line breaks options
      */
-    public CanvasTextOptions setLineBreaks( LineBreaksOptions lineBreaks )
+    public final CanvasTextOptions setLineBreaks( LineBreaksOptions lineBreaks )
     {
         put( LINE_BREAKS_KEY, lineBreaks );
         return this;
@@ -277,14 +281,9 @@ public class CanvasTextOptions
     /**
      * @return the line breaks options
      */
-    public LineBreaksOptions getLineBreaks()
+    public final LineBreaksOptions getLineBreaks()
     {
-        JSONObject obj = getObject( LINE_BREAKS_KEY );
-        if ( null == obj )
-        {
-            return null;
-        }
-        return new LineBreaksOptions( obj );
+        return getJsObject( LINE_BREAKS_KEY );
     }
 
 }

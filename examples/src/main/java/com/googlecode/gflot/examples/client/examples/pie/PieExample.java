@@ -22,6 +22,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
@@ -38,6 +39,7 @@ import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExampl
 public class PieExample
     extends DefaultActivity
 {
+    private static NumberFormat formatter = NumberFormat.getFormat( "0.#" );
 
     private static Binder binder = GWT.create( Binder.class );
 
@@ -73,41 +75,45 @@ public class PieExample
     public Widget createPlot()
     {
         final PlotModel model = new PlotModel();
-        final PlotOptions plotOptions = new PlotOptions();
+        final PlotOptions plotOptions = PlotOptions.create();
 
         // activate the pie
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setPieSeriesOptions( new PieSeriesOptions()
-            .setShow( true )
-            .setRadius( 1 )
-            .setInnerRadius( 0.2 )
-            .setLabel(
-                new Label().setShow( true ).setRadius( 3d / 4d ).setBackground( new Background().setOpacity( 0.8 ) )
-                    .setThreshold( 0.05 ).setFormatter( new Formatter() {
-                        @Override
-                        public String format( String label, Series series )
-                        {
-                            return "<div style=\"font-size:8pt;text-align:center;padding:2px;color:white;\">" + label
-                                + "<br/>" + series.getData().getY( 0 ) + " / " + series.getPercent() + "%</div>";
-                        }
-                    } ) ) ) );
-        plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
-        plotOptions.setGridOptions( new GridOptions().setHoverable( true ) );
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setPieSeriesOptions(
+            PieSeriesOptions
+                .create()
+                .setShow( true )
+                .setRadius( 1 )
+                .setInnerRadius( 0.2 )
+                .setLabel(
+                    Label.create().setShow( true ).setRadius( 3d / 4d )
+                        .setBackground( Background.create().setOpacity( 0.8 ) ).setThreshold( 0.05 )
+                        .setFormatter( new Formatter() {
+                            @Override
+                            public String format( String label, Series series )
+                            {
+                                return "<div style=\"font-size:8pt;text-align:center;padding:2px;color:white;\">"
+                                    + label + "<br/>" + formatter.format( series.getData().getY( 0 ) ) + " / "
+                                    + formatter.format( series.getPercent() ) + "%</div>";
+                            }
+                        } ) ) ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
 
         // create series
-        SeriesHandler series1 = model.addSeries( "Series 1" );
-        series1.add( new PieDataPoint( 148 ) );
+        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Series 1" ) );
+        series1.add( PieDataPoint.of( 148 ) );
 
-        SeriesHandler series2 = model.addSeries( "Series 2" );
-        series2.add( new PieDataPoint( 221 ) );
+        SeriesHandler series2 = model.addSeries( Series.create().setLabel( "Series 2" ) );
+        series2.add( PieDataPoint.of( 221 ) );
 
-        SeriesHandler series3 = model.addSeries( "Series 3" );
-        series3.add( new PieDataPoint( 25 ) );
+        SeriesHandler series3 = model.addSeries( Series.create().setLabel( "Series 3" ) );
+        series3.add( PieDataPoint.of( 25 ) );
 
-        SeriesHandler series4 = model.addSeries( "Series 4" );
-        series4.add( new PieDataPoint( 35 ) );
+        SeriesHandler series4 = model.addSeries( Series.create().setLabel( "Series 4" ) );
+        series4.add( PieDataPoint.of( 35 ) );
 
-        SeriesHandler series5 = model.addSeries( "Series 5" );
-        series5.add( new PieDataPoint( 102 ) );
+        SeriesHandler series5 = model.addSeries( Series.create().setLabel( "Series 5" ) );
+        series5.add( PieDataPoint.of( 102 ) );
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );
@@ -117,7 +123,8 @@ public class PieExample
             public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
             {
                 hovering.setInnerText( "Hovering series n\u00b0" + ( item.getSeriesIndex() + 1 ) + " : "
-                    + item.getSeries().getData().getY( 0 ) + " / " + item.getSeries().getPercent() + "%" );
+                    + formatter.format( item.getSeries().getData().getY( 0 ) ) + " / "
+                    + formatter.format( item.getSeries().getPercent() ) + "%" );
             }
         }, true );
 

@@ -4,6 +4,7 @@ import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
 import ca.nanometrics.gflot.client.PlotModelStrategy;
 import ca.nanometrics.gflot.client.PlotWidget;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.AxisOptions;
@@ -89,18 +90,19 @@ public class DecimationExample
     @GFlotExamplesSource
     public Widget createPlot()
     {
-        PlotModel model = new PlotModel( PlotModelStrategy.downSamplingStrategy( 20 ) );
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
-            .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ).setFill( true ) )
-            .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
-        plotOptions.addXAxisOptions( new AxisOptions().setShow( false ) );
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ).setFill( true ) )
+            .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
+        plotOptions.addXAxisOptions( AxisOptions.create().setShow( false ) );
 
-        final SeriesHandler series = model.addSeries( "Random Series", "#003366" );
+        final SeriesHandler series =
+            model.addSeries( Series.create().setLabel( "Random Series" ).setColor( "#003366" ),
+                PlotModelStrategy.downSamplingStrategy( 20 ) );
 
         // pull the "fake" RPC service for new data
-        updater = new Timer()
-        {
+        updater = new Timer() {
             @Override
             public void run()
             {
@@ -180,8 +182,7 @@ public class DecimationExample
     private void update( final SeriesHandler series, final PlotWidget plot )
     {
         FakeRpcServiceAsync service = getRpcService();
-        service.getNewData( new AsyncCallback<DataPoint[]>()
-        {
+        service.getNewData( new AsyncCallback<DataPoint[]>() {
             public void onFailure( Throwable caught )
             {
                 GWT.log( "Something went wrong", caught );
@@ -204,14 +205,13 @@ public class DecimationExample
     @GFlotExamplesSource
     private FakeRpcServiceAsync getRpcService()
     {
-        return new FakeRpcServiceAsync()
-        {
+        return new FakeRpcServiceAsync() {
             public void getNewData( final AsyncCallback<DataPoint[]> callback )
             {
                 double up = Random.nextDouble();
                 double down = Random.nextDouble();
-                callback.onSuccess( new DataPoint[] { new DataPoint( timeCounter++, previous - down ),
-                    new DataPoint( timeCounter++, previous + up ) } );
+                callback.onSuccess( new DataPoint[] { DataPoint.of( timeCounter++, previous - down ),
+                    DataPoint.of( timeCounter++, previous + up ) } );
                 previous = previous + up;
             }
         };

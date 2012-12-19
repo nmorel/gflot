@@ -2,7 +2,7 @@ package com.googlecode.gflot.examples.client.examples.markings;
 
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
-import ca.nanometrics.gflot.client.PlotModelStrategy;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
@@ -59,34 +59,34 @@ public class MarkingsExample
     @GFlotExamplesSource
     public Widget createPlot()
     {
-        PlotModel model = new PlotModel( PlotModelStrategy.defaultStrategy() );
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
-            .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
-            .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 1 ) );
-        plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ) )
+            .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 1 ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
-        SeriesHandler s = model.addSeries( "Series 1" );
-        s.add( new DataPoint( 1, 2 ) );
-        s.add( new DataPoint( 2, 5 ) );
-        s.add( new DataPoint( 3, 7 ) );
-        s.add( new DataPoint( 4, 5 ) );
-        s.add( new DataPoint( 5, 3 ) );
-        s.add( new DataPoint( 6, 2 ) );
-        s.add( new DataPoint( 7, 5 ) );
-        s.add( new DataPoint( 8, 7 ) );
-        s.add( new DataPoint( 9, 5 ) );
-        s.add( new DataPoint( 10, 3 ) );
+        SeriesHandler s = model.addSeries( Series.create().setLabel( "Series 1" ) );
+        s.add( DataPoint.of( 1, 2 ) );
+        s.add( DataPoint.of( 2, 5 ) );
+        s.add( DataPoint.of( 3, 7 ) );
+        s.add( DataPoint.of( 4, 5 ) );
+        s.add( DataPoint.of( 5, 3 ) );
+        s.add( DataPoint.of( 6, 2 ) );
+        s.add( DataPoint.of( 7, 5 ) );
+        s.add( DataPoint.of( 8, 7 ) );
+        s.add( DataPoint.of( 9, 5 ) );
+        s.add( DataPoint.of( 10, 3 ) );
 
         // Start of Marking Code
-        Marking m = new Marking().setX( new Range( 2, 2 ) ).setLineWidth( 2 ).setColor( "#3BEFc3" );
-        Marking m2 = new Marking().setX( new Range( 5, 7 ) ).setY( new Range( 2, 6 ) ).setColor( "#cccccc" );
-        Marking m3 = new Marking().setX( new Range().setFrom( 8 ) ).setColor( "#000000" );
+        Marking m = Marking.create().setX( Range.of( 2, 2 ) ).setLineWidth( 2 ).setColor( "#3BEFc3" );
+        Marking m2 = Marking.create().setX( Range.of( 5, 7 ) ).setY( Range.of( 2, 6 ) ).setColor( "#cccccc" );
+        Marking m3 = Marking.create().setX( Range.create().setFrom( 8 ) ).setColor( "#000000" );
         // End of Marking Code
 
         // Add Markings Objects to Grid Options
-        plotOptions.setGridOptions( new GridOptions().setMarkings( new Markings().addMarking( m ).addMarking( m2 )
-            .addMarking( m3 ) ) );
+        plotOptions.setGridOptions( GridOptions.create().setMarkings(
+            Markings.create().addMarking( m ).addMarking( m2 ).addMarking( m3 ) ) );
 
         // create plot
         plot = new SimplePlot( model, plotOptions );

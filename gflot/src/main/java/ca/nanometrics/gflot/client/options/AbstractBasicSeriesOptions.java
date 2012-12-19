@@ -1,6 +1,5 @@
 package ca.nanometrics.gflot.client.options;
 
-import com.google.gwt.json.client.JSONObject;
 
 /**
  * @author Nicolas Morel
@@ -11,26 +10,18 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
 {
 
     protected static final String LINE_WIDTH_KEY = "lineWidth";
-
     protected static final String FILL_KEY = "fill";
-
     protected static final String FILL_COLOR_KEY = "fillColor";
 
-    public AbstractBasicSeriesOptions()
+    protected AbstractBasicSeriesOptions()
     {
-        super();
-    }
-
-    AbstractBasicSeriesOptions( JSONObject jsonObj )
-    {
-        super( jsonObj );
     }
 
     /**
      * Set the thickness of the line or outline in pixels. You can set it to 0 to prevent a line or outline from being
      * drawn; this will also hide the shadow.
      */
-    public T setLineWidth( double lineWidth )
+    public final T setLineWidth( double lineWidth )
     {
         put( LINE_WIDTH_KEY, new Double( lineWidth ) );
         return (T) this;
@@ -39,7 +30,7 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
     /**
      * @return the thickness of the line or outline in pixels
      */
-    public Double getLineWidth()
+    public final Double getLineWidth()
     {
         return getDouble( LINE_WIDTH_KEY );
     }
@@ -47,7 +38,7 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
     /**
      * Clear the thickness of the line or outline
      */
-    public T clearLineWidth()
+    public final T clearLineWidth()
     {
         clear( LINE_WIDTH_KEY );
         return (T) this;
@@ -57,7 +48,7 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
      * Set if the shape should be filled. For lines, this produces area graphs. You can use setFillColor "fillColor" to
      * specify the color of the fill.
      */
-    public T setFill( boolean fill )
+    public final T setFill( boolean fill )
     {
         put( FILL_KEY, fill );
         return (T) this;
@@ -66,7 +57,7 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
     /**
      * @return true if the shape is filled
      */
-    public Boolean getFillBoolean()
+    public final Boolean getFillBoolean()
     {
         return getBoolean( FILL_KEY );
     }
@@ -74,7 +65,7 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
     /**
      * Set the opacity of the fill by setting fill to a number between 0 (fully transparent) and 1 (fully opaque).
      */
-    public T setFill( double opacity )
+    public final T setFill( double opacity )
     {
         assert opacity >= 0 && opacity <= 1 : "opacity range from 0.0 to 1.0";
 
@@ -85,7 +76,7 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
     /**
      * @return the opacity of the fill
      */
-    public Double getFillOpacity()
+    public final Double getFillOpacity()
     {
         return getDouble( FILL_KEY );
     }
@@ -93,7 +84,7 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
     /**
      * Clear the fill property and/or opacity
      */
-    public T clearFill()
+    public final T clearFill()
     {
         clear( FILL_KEY );
         return (T) this;
@@ -103,7 +94,7 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
      * Set the color to fill. If "fillColor" evaluates to false (default for everything except points which are filled
      * with white), the fill color is auto-set to the color of the data series.
      */
-    public T setFillColor( String cssColor )
+    public final T setFillColor( String cssColor )
     {
         put( FILL_COLOR_KEY, cssColor );
         return (T) this;
@@ -112,7 +103,7 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
     /**
      * @return the color to fill
      */
-    public String getFillColor()
+    public final String getFillColor()
     {
         return getString( FILL_COLOR_KEY );
     }
@@ -120,7 +111,7 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
     /**
      * Set the scaling of the brightness and the opacity of the series fill color
      */
-    public T setFillColor( Double fromOpacity, Double fromBrightness, Double toOpacity, Double toBrightness )
+    public final T setFillColor( Double fromOpacity, Double fromBrightness, Double toOpacity, Double toBrightness )
     {
         assert ( null != fromOpacity || null != fromBrightness ) && ( null != toOpacity || null != toBrightness ) : "at least of the parameters must not be null";
         assert null == fromOpacity || fromOpacity >= 0 && fromOpacity <= 1 : "fromOpacity range from 0.0 to 1.0";
@@ -128,7 +119,7 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
         assert null == toOpacity || toOpacity >= 0 && toOpacity <= 1 : "toOpacity range from 0.0 to 1.0";
         assert null == toBrightness || toBrightness >= 0 && toBrightness <= 1 : "toBrightness range from 0.0 to 1.0";
 
-        put( FILL_COLOR_KEY, new SeriesGradient( fromOpacity, fromBrightness, toOpacity, toBrightness ) );
+        put( FILL_COLOR_KEY, SeriesGradient.of( fromOpacity, fromBrightness, toOpacity, toBrightness ) );
 
         return (T) this;
     }
@@ -136,23 +127,15 @@ public abstract class AbstractBasicSeriesOptions<T extends AbstractBasicSeriesOp
     /**
      * @return the scaling of the brightness and the opacity of the series fill color
      */
-    public SeriesGradient getFillColorGradient()
+    public final SeriesGradient getFillColorGradient()
     {
-        JSONObject obj = getObject( FILL_COLOR_KEY );
-        if ( null == obj )
-        {
-            return null;
-        }
-        else
-        {
-            return new SeriesGradient( obj );
-        }
+        return getJsObject( FILL_COLOR_KEY );
     }
 
     /**
      * Clear the fill color
      */
-    public T clearFillColor()
+    public final T clearFillColor()
     {
         clear( FILL_COLOR_KEY );
         return (T) this;

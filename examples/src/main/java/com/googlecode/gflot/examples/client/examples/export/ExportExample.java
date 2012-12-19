@@ -3,6 +3,7 @@ package com.googlecode.gflot.examples.client.examples.export;
 import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.DataPoint;
 import ca.nanometrics.gflot.client.PlotModel;
+import ca.nanometrics.gflot.client.Series;
 import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.SimplePlot;
 import ca.nanometrics.gflot.client.options.AxisOptions;
@@ -76,29 +77,28 @@ public class ExportExample
     public Widget createPlot()
     {
         PlotModel model = new PlotModel();
-        PlotOptions plotOptions = new PlotOptions();
+        PlotOptions plotOptions = PlotOptions.create();
 
         // Add tick formatter to the options
-        plotOptions.addXAxisOptions( new AxisOptions().setTicks( 12 ).setTickFormatter( new TickFormatter()
-        {
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
             public String formatTickValue( double tickValue, Axis axis )
             {
                 return MONTH_NAMES[(int) ( tickValue - 1 )];
             }
         } ) );
-        plotOptions.setLegendOptions( new LegendOptions().setBackgroundOpacity( 0 ).setPosition(
-            LegendPosition.NORTH_WEST ) );
-        plotOptions.setGridOptions( new GridOptions().setCanvasText( new CanvasTextOptions().setShow( true ) ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setBackgroundOpacity( 0 )
+            .setPosition( LegendPosition.NORTH_WEST ) );
+        plotOptions.setGridOptions( GridOptions.create().setCanvasText( CanvasTextOptions.create().setShow( true ) ) );
 
         // create a series
-        SeriesHandler series1 = model.addSeries( "Random Series 1" );
-        SeriesHandler series2 = model.addSeries( "Random Series 2" );
+        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Random Series 1" ) );
+        SeriesHandler series2 = model.addSeries( Series.create().setLabel( "Random Series 2" ) );
 
         // add data
         for ( int i = 1; i < 13; i++ )
         {
-            series1.add( new DataPoint( i, Random.nextInt( 30 ) ) );
-            series2.add( new DataPoint( i, Random.nextInt( 30 ) ) );
+            series1.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+            series2.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
         }
 
         // create the plot

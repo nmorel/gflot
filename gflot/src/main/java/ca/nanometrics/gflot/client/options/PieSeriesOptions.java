@@ -1,38 +1,40 @@
 package ca.nanometrics.gflot.client.options;
 
 import ca.nanometrics.gflot.client.Series;
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.json.client.JSONObject;
 
 /**
  * Options for pie series
- *
+ * 
  * @author Nicolas Morel
  */
 public class PieSeriesOptions
     extends AbstractSeriesOptions<PieSeriesOptions>
 {
     public static class Offset
-        extends JSONObjectWrapper
+        extends JsonObject
     {
+        /**
+         * Creates a {@link Offset}
+         */
+        public static final Offset create()
+        {
+            return JavaScriptObject.createObject().cast();
+        }
+
         private static final String TOP_KEY = "top";
         private static final String LEFT_KEY = "left";
 
-        public Offset()
+        protected Offset()
         {
-        }
-
-        Offset( JSONObject obj )
-        {
-            super( obj );
         }
 
         /**
          * Set the top. integer value to move the pie up or down
          */
-        public Offset setTop( int top )
+        public final Offset setTop( int top )
         {
             put( TOP_KEY, top );
             return this;
@@ -41,7 +43,7 @@ public class PieSeriesOptions
         /**
          * @return the top
          */
-        public Integer getTop()
+        public final Integer getTop()
         {
             return getInteger( TOP_KEY );
         }
@@ -49,7 +51,7 @@ public class PieSeriesOptions
         /**
          * Clear the top option
          */
-        public Offset clearTop()
+        public final Offset clearTop()
         {
             clear( TOP_KEY );
             return this;
@@ -58,7 +60,7 @@ public class PieSeriesOptions
         /**
          * Set the left. integer value to move the pie left or right
          */
-        public Offset setLeft( int left )
+        public final Offset setLeft( int left )
         {
             put( LEFT_KEY, left );
             return this;
@@ -67,7 +69,7 @@ public class PieSeriesOptions
         /**
          * @return the left
          */
-        public Integer getLeft()
+        public final Integer getLeft()
         {
             return getInteger( LEFT_KEY );
         }
@@ -75,7 +77,7 @@ public class PieSeriesOptions
         /**
          * Clear the left option
          */
-        public Offset clearLeft()
+        public final Offset clearLeft()
         {
             clear( LEFT_KEY );
             return this;
@@ -83,25 +85,28 @@ public class PieSeriesOptions
     }
 
     public static class Stroke
-        extends JSONObjectWrapper
+        extends JsonObject
     {
+        /**
+         * Creates a {@link Stroke}
+         */
+        public static final Stroke create()
+        {
+            return JavaScriptObject.createObject().cast();
+        }
+
         private static final String COLOR_KEY = "color";
         private static final String WIDTH_KEY = "width";
 
-        public Stroke()
+        protected Stroke()
         {
-        }
-
-        Stroke( JSONObject obj )
-        {
-            super( obj );
         }
 
         /**
          * Set the color. any hexidecimal color value (other formats may or may not work, so best to stick with
          * something like '#FFF')
          */
-        public Stroke setColor( String color )
+        public final Stroke setColor( String color )
         {
             put( COLOR_KEY, color );
             return this;
@@ -110,7 +115,7 @@ public class PieSeriesOptions
         /**
          * @return the color
          */
-        public String getColor()
+        public final String getColor()
         {
             return getString( COLOR_KEY );
         }
@@ -118,7 +123,7 @@ public class PieSeriesOptions
         /**
          * Clear the color
          */
-        public Stroke clearColor()
+        public final Stroke clearColor()
         {
             clear( COLOR_KEY );
             return this;
@@ -127,7 +132,7 @@ public class PieSeriesOptions
         /**
          * Set the integer pixel width of the stroke
          */
-        public Stroke setWidth( int width )
+        public final Stroke setWidth( int width )
         {
             put( WIDTH_KEY, width );
             return this;
@@ -136,7 +141,7 @@ public class PieSeriesOptions
         /**
          * @return the width
          */
-        public Integer getWidth()
+        public final Integer getWidth()
         {
             return getInteger( WIDTH_KEY );
         }
@@ -144,7 +149,7 @@ public class PieSeriesOptions
         /**
          * Clear the width
          */
-        public Stroke clearWidth()
+        public final Stroke clearWidth()
         {
             clear( WIDTH_KEY );
             return this;
@@ -152,28 +157,31 @@ public class PieSeriesOptions
     }
 
     public static class Label
-        extends JSONObjectWrapper
+        extends JsonObject
     {
         public static class Background
-            extends JSONObjectWrapper
+            extends JsonObject
         {
+            /**
+             * Creates a {@link Background}
+             */
+            public static final Background create()
+            {
+                return JavaScriptObject.createObject().cast();
+            }
+
             private static final String COLOR_KEY = "color";
             private static final String OPACITY_KEY = "opacity";
 
-            public Background()
+            protected Background()
             {
-            }
-
-            Background( JSONObject obj )
-            {
-                super( obj );
             }
 
             /**
              * Set the color. any hexidecimal color value (other formats may or may not work, so best to stick with
              * something like '#000')
              */
-            public Background setColor( String color )
+            public final Background setColor( String color )
             {
                 put( COLOR_KEY, color );
                 return this;
@@ -182,7 +190,7 @@ public class PieSeriesOptions
             /**
              * @return the color
              */
-            public String getColor()
+            public final String getColor()
             {
                 return getString( COLOR_KEY );
             }
@@ -190,7 +198,7 @@ public class PieSeriesOptions
             /**
              * Clear the color
              */
-            public Background clearColor()
+            public final Background clearColor()
             {
                 clear( COLOR_KEY );
                 return this;
@@ -199,7 +207,7 @@ public class PieSeriesOptions
             /**
              * Set the background opacity. Opacity range from 0.0 to 1.0.
              */
-            public Background setOpacity( double opacity )
+            public final Background setOpacity( double opacity )
             {
                 assert opacity >= 0 && opacity <= 1 : "opacity range from 0.0 to 1.0";
 
@@ -210,7 +218,7 @@ public class PieSeriesOptions
             /**
              * @return the opacity
              */
-            public Double getOpacity()
+            public final Double getOpacity()
             {
                 return getDouble( OPACITY_KEY );
             }
@@ -218,7 +226,7 @@ public class PieSeriesOptions
             /**
              * Clear the opacity
              */
-            public Background clearOpacity()
+            public final Background clearOpacity()
             {
                 clear( OPACITY_KEY );
                 return this;
@@ -230,25 +238,28 @@ public class PieSeriesOptions
             String format( String label, Series series );
         }
 
+        /**
+         * Creates a {@link Label}
+         */
+        public static final Label create()
+        {
+            return JavaScriptObject.createObject().cast();
+        }
+
         private static final String SHOW_KEY = "show";
         private static final String FORMATTER_KEY = "formatter";
         private static final String RADIUS_KEY = "radius";
         private static final String BACKGROUND_KEY = "background";
         private static final String THRESHOLD_KEY = "threshold";
 
-        public Label()
+        protected Label()
         {
-        }
-
-        Label( JSONObject obj )
-        {
-            super( obj );
         }
 
         /**
          * Set the visibility of the label.
          */
-        public Label setShow( boolean show )
+        public final Label setShow( boolean show )
         {
             put( SHOW_KEY, show );
             return this;
@@ -257,7 +268,7 @@ public class PieSeriesOptions
         /**
          * @return the visibility of the label
          */
-        public Boolean getShow()
+        public final Boolean getShow()
         {
             return getBoolean( SHOW_KEY );
         }
@@ -265,7 +276,7 @@ public class PieSeriesOptions
         /**
          * Clear the visibility of the label
          */
-        public Label clearShow()
+        public final Label clearShow()
         {
             clear( SHOW_KEY );
             return this;
@@ -274,27 +285,25 @@ public class PieSeriesOptions
         /**
          * Set the labelFormatter if you want to format the labels in some way, e.g. make them to links.
          */
-        public Label setFormatter( Formatter formatter )
+        public final Label setFormatter( Formatter formatter )
         {
             assert null != formatter : "formatter can't be null";
 
-            setFormatterNative( getWrappedObj().getJavaScriptObject(), formatter );
+            setFormatterNative( formatter );
             return this;
         }
 
-        private static native void setFormatterNative( JavaScriptObject labelOptions, Formatter formatter )
+        private native void setFormatterNative( Formatter formatter )
         /*-{
-			labelOptions.formatter = function(label, series) {
-				var jsonSeriesObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(series);
-				var javaSeriesObject = @ca.nanometrics.gflot.client.Series::new(Lcom/google/gwt/json/client/JSONObject;)(jsonSeriesObject);
-				return formatter.@ca.nanometrics.gflot.client.options.PieSeriesOptions.Label.Formatter::format(Ljava/lang/String;Lca/nanometrics/gflot/client/Series;)(label, javaSeriesObject);
-			};
+            this.formatter = function(label, series) {
+                return formatter.@ca.nanometrics.gflot.client.options.PieSeriesOptions.Label.Formatter::format(Ljava/lang/String;Lca/nanometrics/gflot/client/Series;)(label, series);
+            };
         }-*/;
 
         /**
          * Clear the label formatter
          */
-        public Label clearLabelFormatter()
+        public final Label clearLabelFormatter()
         {
             clear( "formatter" );
             return this;
@@ -303,7 +312,7 @@ public class PieSeriesOptions
         /**
          * Set the radius. 0-1 for percentage of fullsize, or a specified pixel length
          */
-        public Label setRadius( double radius )
+        public final Label setRadius( double radius )
         {
             put( RADIUS_KEY, radius );
             return this;
@@ -312,7 +321,7 @@ public class PieSeriesOptions
         /**
          * @return the radius
          */
-        public Double getRadius()
+        public final Double getRadius()
         {
             return getDouble( RADIUS_KEY );
         }
@@ -320,7 +329,7 @@ public class PieSeriesOptions
         /**
          * Clear the radius
          */
-        public Label clearRadius()
+        public final Label clearRadius()
         {
             clear( RADIUS_KEY );
             return this;
@@ -329,7 +338,7 @@ public class PieSeriesOptions
         /**
          * Set the background
          */
-        public Label setBackground( Background background )
+        public final Label setBackground( Background background )
         {
             put( BACKGROUND_KEY, background );
             return this;
@@ -338,23 +347,15 @@ public class PieSeriesOptions
         /**
          * @return the background
          */
-        public Background getBackground()
+        public final Background getBackground()
         {
-            JSONObject obj = getObject( BACKGROUND_KEY );
-            if ( null == obj )
-            {
-                return null;
-            }
-            else
-            {
-                return new Background( obj );
-            }
+            return getJsObject( BACKGROUND_KEY );
         }
 
         /**
          * Clear the background
          */
-        public Label clearBackground()
+        public final Label clearBackground()
         {
             clear( BACKGROUND_KEY );
             return this;
@@ -363,7 +364,7 @@ public class PieSeriesOptions
         /**
          * Set the threshold. 0-1 for the percentage value at which to hide labels (if they're too small)
          */
-        public Label setThreshold( double threshold )
+        public final Label setThreshold( double threshold )
         {
             assert threshold >= 0 && threshold <= 1 : "threshold range from 0.0 to 1.0";
 
@@ -374,7 +375,7 @@ public class PieSeriesOptions
         /**
          * @return the threshold
          */
-        public Double getThreshold()
+        public final Double getThreshold()
         {
             return getDouble( THRESHOLD_KEY );
         }
@@ -382,7 +383,7 @@ public class PieSeriesOptions
         /**
          * Clear the threshold
          */
-        public Label clearThreshold()
+        public final Label clearThreshold()
         {
             clear( THRESHOLD_KEY );
             return this;
@@ -390,26 +391,28 @@ public class PieSeriesOptions
     }
 
     public static class Combine
-        extends JSONObjectWrapper
+        extends JsonObject
     {
+        /**
+         * Creates a {@link Combine}
+         */
+        public static final Combine create()
+        {
+            return JavaScriptObject.createObject().cast();
+        }
 
         private static final String THRESHOLD_KEY = "threshold";
         private static final String COLOR_KEY = "color";
         private static final String LABEL_KEY = "label";
 
-        public Combine()
+        protected Combine()
         {
-        }
-
-        Combine( JSONObject obj )
-        {
-            super( obj );
         }
 
         /**
          * Set the threshold. 0-1 for the percentage value at which to combine slices (if they're too small)
          */
-        public Combine setThreshold( double threshold )
+        public final Combine setThreshold( double threshold )
         {
             assert threshold >= 0 && threshold <= 1 : "threshold range from 0.0 to 1.0";
 
@@ -420,7 +423,7 @@ public class PieSeriesOptions
         /**
          * @return the threshold
          */
-        public Double getThreshold()
+        public final Double getThreshold()
         {
             return getDouble( THRESHOLD_KEY );
         }
@@ -428,7 +431,7 @@ public class PieSeriesOptions
         /**
          * Clear the threshold
          */
-        public Combine clearThreshold()
+        public final Combine clearThreshold()
         {
             clear( THRESHOLD_KEY );
             return this;
@@ -439,7 +442,7 @@ public class PieSeriesOptions
          * something like '#CCC'), if null, the plugin will automatically use the color of the first slice to be
          * combined
          */
-        public Combine setColor( String color )
+        public final Combine setColor( String color )
         {
             put( COLOR_KEY, color );
             return this;
@@ -448,7 +451,7 @@ public class PieSeriesOptions
         /**
          * @return the color
          */
-        public String getColor()
+        public final String getColor()
         {
             return getString( COLOR_KEY );
         }
@@ -456,7 +459,7 @@ public class PieSeriesOptions
         /**
          * Clear the color
          */
-        public Combine clearColor()
+        public final Combine clearColor()
         {
             clear( COLOR_KEY );
             return this;
@@ -465,7 +468,7 @@ public class PieSeriesOptions
         /**
          * Set the label. Any text value of what the combined slice should be labeled
          */
-        public Combine setLabel( String label )
+        public final Combine setLabel( String label )
         {
             put( LABEL_KEY, label );
             return this;
@@ -474,7 +477,7 @@ public class PieSeriesOptions
         /**
          * @return the label
          */
-        public String getLabel()
+        public final String getLabel()
         {
             return getString( LABEL_KEY );
         }
@@ -482,7 +485,7 @@ public class PieSeriesOptions
         /**
          * Clear the label
          */
-        public Combine clearLabel()
+        public final Combine clearLabel()
         {
             clear( LABEL_KEY );
             return this;
@@ -490,23 +493,26 @@ public class PieSeriesOptions
     }
 
     public static class Highlight
-        extends JSONObjectWrapper
+        extends JsonObject
     {
-        private static final String OPACITY_KEY = "opacity";
-
-        public Highlight()
+        /**
+         * Creates a {@link Highlight}
+         */
+        public static final Highlight create()
         {
+            return JavaScriptObject.createObject().cast();
         }
 
-        Highlight( JSONObject obj )
+        private static final String OPACITY_KEY = "opacity";
+
+        protected Highlight()
         {
-            super( obj );
         }
 
         /**
          * Set the opacity. Opacity range from 0.0 to 1.0.
          */
-        public Highlight setOpacity( double opacity )
+        public final Highlight setOpacity( double opacity )
         {
             assert opacity >= 0 && opacity <= 1 : "opacity range from 0.0 to 1.0";
 
@@ -517,7 +523,7 @@ public class PieSeriesOptions
         /**
          * @return the opacity
          */
-        public Double getOpacity()
+        public final Double getOpacity()
         {
             return getDouble( OPACITY_KEY );
         }
@@ -525,11 +531,19 @@ public class PieSeriesOptions
         /**
          * Clear the opacity
          */
-        public Highlight clearOpacity()
+        public final Highlight clearOpacity()
         {
             clear( OPACITY_KEY );
             return this;
         }
+    }
+
+    /**
+     * Creates a {@link PieSeriesOptions}
+     */
+    public static final PieSeriesOptions create()
+    {
+        return JavaScriptObject.createObject().cast();
     }
 
     private static final String RADIUS_KEY = "radius";
@@ -542,20 +556,14 @@ public class PieSeriesOptions
     private static final String COMBINE_KEY = "combine";
     private static final String HIGHLIGHT_KEY = "highlight";
 
-    public PieSeriesOptions()
+    protected PieSeriesOptions()
     {
-        super();
-    }
-
-    PieSeriesOptions( JSONObject jsonObj )
-    {
-        super( jsonObj );
     }
 
     /**
      * Set the radius. 0-1 for percentage of fullsize, or a specified pixel length
      */
-    public PieSeriesOptions setRadius( double radius )
+    public final PieSeriesOptions setRadius( double radius )
     {
         put( RADIUS_KEY, radius );
         return this;
@@ -564,7 +572,7 @@ public class PieSeriesOptions
     /**
      * @return the radius
      */
-    public Double getRadius()
+    public final Double getRadius()
     {
         return getDouble( RADIUS_KEY );
     }
@@ -572,7 +580,7 @@ public class PieSeriesOptions
     /**
      * Clear the radius
      */
-    public PieSeriesOptions clearRadius()
+    public final PieSeriesOptions clearRadius()
     {
         clear( RADIUS_KEY );
         return this;
@@ -581,7 +589,7 @@ public class PieSeriesOptions
     /**
      * Set the inner radius to create a donut effect. 0-1 for percentage of fullsize or a specified pixel length
      */
-    public PieSeriesOptions setInnerRadius( double innerRadius )
+    public final PieSeriesOptions setInnerRadius( double innerRadius )
     {
         put( INNER_RADIUS_KEY, innerRadius );
         return this;
@@ -590,7 +598,7 @@ public class PieSeriesOptions
     /**
      * @return the inner radius
      */
-    public Double getInnerRadius()
+    public final Double getInnerRadius()
     {
         return getDouble( INNER_RADIUS_KEY );
     }
@@ -598,7 +606,7 @@ public class PieSeriesOptions
     /**
      * Clear the inner radius
      */
-    public PieSeriesOptions clearInnerRadius()
+    public final PieSeriesOptions clearInnerRadius()
     {
         clear( INNER_RADIUS_KEY );
         return this;
@@ -608,7 +616,7 @@ public class PieSeriesOptions
      * Set the start angle. 0-2 factor of PI used for starting angle (in radians) i.e 3/2 starts at the top, 0 and 2
      * have the same result
      */
-    public PieSeriesOptions setStartAngle( double startAngle )
+    public final PieSeriesOptions setStartAngle( double startAngle )
     {
         put( START_ANGLE_KEY, startAngle );
         return this;
@@ -617,7 +625,7 @@ public class PieSeriesOptions
     /**
      * @return the start angle
      */
-    public Double getStartAngle()
+    public final Double getStartAngle()
     {
         return getDouble( START_ANGLE_KEY );
     }
@@ -625,7 +633,7 @@ public class PieSeriesOptions
     /**
      * Clear the start angle
      */
-    public PieSeriesOptions clearStartAngle()
+    public final PieSeriesOptions clearStartAngle()
     {
         clear( START_ANGLE_KEY );
         return this;
@@ -635,7 +643,7 @@ public class PieSeriesOptions
      * Set the tilt. 0-1 for percentage to tilt the pie, where 1 is no tilt, and 0 is completely flat (nothing will
      * show)
      */
-    public PieSeriesOptions setTilt( double tilt )
+    public final PieSeriesOptions setTilt( double tilt )
     {
         put( TILT_KEY, tilt );
         return this;
@@ -644,7 +652,7 @@ public class PieSeriesOptions
     /**
      * @return the tilt
      */
-    public Double getTilt()
+    public final Double getTilt()
     {
         return getDouble( TILT_KEY );
     }
@@ -652,7 +660,7 @@ public class PieSeriesOptions
     /**
      * Clear the tilt
      */
-    public PieSeriesOptions clearTilt()
+    public final PieSeriesOptions clearTilt()
     {
         clear( TILT_KEY );
         return this;
@@ -661,7 +669,7 @@ public class PieSeriesOptions
     /**
      * Set the offset.
      */
-    public PieSeriesOptions setOffset( Offset offset )
+    public final PieSeriesOptions setOffset( Offset offset )
     {
         put( OFFSET_KEY, offset );
         return this;
@@ -670,23 +678,15 @@ public class PieSeriesOptions
     /**
      * @return the offset
      */
-    public Offset getOffset()
+    public final Offset getOffset()
     {
-        JSONObject obj = getObject( OFFSET_KEY );
-        if ( null == obj )
-        {
-            return null;
-        }
-        else
-        {
-            return new Offset( obj );
-        }
+        return getJsObject( OFFSET_KEY );
     }
 
     /**
      * Clear the offset
      */
-    public PieSeriesOptions clearOffset()
+    public final PieSeriesOptions clearOffset()
     {
         clear( OFFSET_KEY );
         return this;
@@ -695,7 +695,7 @@ public class PieSeriesOptions
     /**
      * Set the stroke.
      */
-    public PieSeriesOptions setStroke( Stroke stroke )
+    public final PieSeriesOptions setStroke( Stroke stroke )
     {
         put( STROKE_KEY, stroke );
         return this;
@@ -704,23 +704,15 @@ public class PieSeriesOptions
     /**
      * @return the stroke
      */
-    public Stroke getStroke()
+    public final Stroke getStroke()
     {
-        JSONObject obj = getObject( STROKE_KEY );
-        if ( null == obj )
-        {
-            return null;
-        }
-        else
-        {
-            return new Stroke( obj );
-        }
+        return getJsObject( STROKE_KEY );
     }
 
     /**
      * Set the label.
      */
-    public PieSeriesOptions setLabel( Label label )
+    public final PieSeriesOptions setLabel( Label label )
     {
         put( LABEL_KEY, label );
         return this;
@@ -729,23 +721,15 @@ public class PieSeriesOptions
     /**
      * @return the label
      */
-    public Label getLabel()
+    public final Label getLabel()
     {
-        JSONObject obj = getObject( LABEL_KEY );
-        if ( null == obj )
-        {
-            return null;
-        }
-        else
-        {
-            return new Label( obj );
-        }
+        return getJsObject( LABEL_KEY );
     }
 
     /**
      * Set the combine.
      */
-    public PieSeriesOptions setCombine( Combine combine )
+    public final PieSeriesOptions setCombine( Combine combine )
     {
         put( COMBINE_KEY, combine );
         return this;
@@ -754,23 +738,15 @@ public class PieSeriesOptions
     /**
      * @return the combine
      */
-    public Combine getCombine()
+    public final Combine getCombine()
     {
-        JSONObject obj = getObject( COMBINE_KEY );
-        if ( null == obj )
-        {
-            return null;
-        }
-        else
-        {
-            return new Combine( obj );
-        }
+        return getJsObject( COMBINE_KEY );
     }
 
     /**
      * Set the Highlight.
      */
-    public PieSeriesOptions setHighlight( Highlight highlight )
+    public final PieSeriesOptions setHighlight( Highlight highlight )
     {
         put( HIGHLIGHT_KEY, highlight );
         return this;
@@ -779,16 +755,8 @@ public class PieSeriesOptions
     /**
      * @return the highlight
      */
-    public Highlight getHighlight()
+    public final Highlight getHighlight()
     {
-        JSONObject obj = getObject( HIGHLIGHT_KEY );
-        if ( null == obj )
-        {
-            return null;
-        }
-        else
-        {
-            return new Highlight( obj );
-        }
+        return getJsObject( HIGHLIGHT_KEY );
     }
 }

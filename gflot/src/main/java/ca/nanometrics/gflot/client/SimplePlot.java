@@ -39,7 +39,7 @@ import ca.nanometrics.gflot.client.options.Range;
 import ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader;
 import ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.FlotJavaScriptCallback;
 
-import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
@@ -145,13 +145,13 @@ public class SimplePlot
     @Override
     public void setLinearSelection( double x1, double x2 )
     {
-        setSelection( new PlotSelectionArea().setX( new Range( x1, x2 ) ) );
+        setSelection( PlotSelectionArea.create().setX( Range.of( x1, x2 ) ) );
     }
 
     @Override
     public void setRectangularSelection( double x1, double y1, double x2, double y2 )
     {
-        setSelection( new PlotSelectionArea().setX( new Range( x1, x2 ) ).setY( new Range( y1, y2 ) ) );
+        setSelection( PlotSelectionArea.create().setX( Range.of( x1, x2 ) ).setY( Range.of( y1, y2 ) ) );
     }
 
     @Override
@@ -216,7 +216,7 @@ public class SimplePlot
     {
         if ( loaded )
         {
-            return plot.getSelection( getElement() );
+            return plot.getSelection();
         }
         return null;
     }
@@ -388,7 +388,7 @@ public class SimplePlot
 
     public void zoom()
     {
-        zoom( new Zoom() );
+        zoom( Zoom.create() );
     }
 
     public void zoom( Zoom zoom )
@@ -399,7 +399,7 @@ public class SimplePlot
 
     public void zoomOut()
     {
-        zoomOut( new Zoom() );
+        zoomOut( Zoom.create() );
     }
 
     public void zoomOut( Zoom zoom )
@@ -410,7 +410,7 @@ public class SimplePlot
 
     public void pan()
     {
-        pan( new Pan() );
+        pan( Pan.create() );
     }
 
     public void pan( Pan pan )
@@ -434,7 +434,7 @@ public class SimplePlot
                     {
                         Plot.loadDataImages( model.getSeries(), options, new LoadImagesCallback() {
                             @Override
-                            public void onImagesLoaded( JavaScriptObject data, JavaScriptObject options )
+                            public void onImagesLoaded( JsArray<Series> data, PlotOptions options )
                             {
                                 plot = Plot.create( getElement(), data, options );
                                 onPlotCreated();
@@ -492,7 +492,7 @@ public class SimplePlot
 
     /**
      * Prompt the user to save the plot as an image. The image is scaled at the given dimensions.
-     *
+     * 
      * @param width
      * @param height
      */
@@ -538,7 +538,7 @@ public class SimplePlot
 
     /**
      * Set the position of the crosshair. Note that this is cleared if the user moves the mouse.
-     *
+     * 
      * @param pos Position of the crosshair
      */
     public void setCrosshair( PlotPosition pos )
@@ -564,7 +564,7 @@ public class SimplePlot
 
     /**
      * Cause the crosshair to lock to the current location, no longer updating if the user moves the mouse.
-     *
+     * 
      * @param pos position to lock the crosshair to
      */
     public void lockCrosshair( PlotPosition pos )

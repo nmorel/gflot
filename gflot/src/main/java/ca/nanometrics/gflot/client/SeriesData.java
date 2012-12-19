@@ -21,128 +21,135 @@
  */
 package ca.nanometrics.gflot.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
-
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * @author AlexanderDeleon
  */
 public class SeriesData
-    extends JSONArrayWrapper
+    extends JavaScriptObject
 {
+
+    public static final SeriesData create()
+    {
+        return createArray().cast();
+    }
+
     /**
      * default constructor
      */
-    public SeriesData()
+    protected SeriesData()
     {
         // empty
     }
 
-    public SeriesData( DataPoint[] points )
+    /**
+     * Gets the number of datapoint.
+     * 
+     * @return the number of datapoint
+     */
+    public final native int length()
+    /*-{
+        return this.length;
+    }-*/;
+
+    /**
+     * Reset the length of the array.
+     * 
+     * @param newLength the new length of the array
+     */
+    final native void setLength( int newLength ) /*-{
+        this.length = newLength;
+    }-*/;
+
+    /**
+     * Gets the datapoint at a given index.
+     * 
+     * @param index the index to be retrieved
+     * @return the datapoint at the given index, or <code>null</code> if none exists
+     */
+    public final native DataPoint get( int index )
+    /*-{
+        return this[index];
+    }-*/;
+
+    /**
+     * Sets the object value at a given index. If the index is out of bounds, the value will still be set. The array's
+     * length will be updated to encompass the bounds implied by the added object.
+     * 
+     * @param index the index to be set
+     * @param value the object to be stored
+     */
+    final native void set( int index, DataPoint value )
+    /*-{
+        this[index] = value;
+    }-*/;
+
+    /**
+     * Pushes the given value onto the end of the array.
+     */
+    final native void push( DataPoint value )
+    /*-{
+        this[this.length] = value;
+    }-*/;
+
+    /**
+     * Shifts the first value off the array.
+     * 
+     * @return the shifted value
+     */
+    final native DataPoint shift()
+    /*-{
+        return this.shift();
+    }-*/;
+
+    /**
+     * Shifts a value onto the beginning of the array.
+     * 
+     * @param value the value to the stored
+     */
+    final native void unshift( DataPoint value )
+    /*-{
+        this.unshift(value);
+    }-*/;
+
+    public final boolean isEmpty()
     {
-        for ( int i = 0; i < points.length; i++ )
+        return length() == 0;
+    }
+
+    public final double getX( int index )
+    {
+        return get( index ).getX();
+    }
+
+    public final double getY( int index )
+    {
+        return get( index ).getY();
+    }
+
+    public final SeriesData slice( int start )
+    {
+        return slice( start, length() - 1 );
+    }
+
+    public final native SeriesData slice( int start, int end )
+    /*-{
+        return this.slice(start, end);
+    }-*/;
+
+    public final void clear()
+    {
+        setLength( 0 );
+    }
+
+    final void setData( SeriesData data )
+    {
+        clear();
+        for ( int i = 0; i < data.length(); i++ )
         {
-            add( points[i] );
+            push( data.get( i ) );
         }
     }
 
-    protected SeriesData( JSONArray array )
-    {
-        super( array );
-    }
-
-    public void add( double x, double y )
-    {
-        push( new DataPoint( x, y ) );
-    }
-
-    public void add( DataPoint dataPoint )
-    {
-        push( dataPoint );
-    }
-
-    @Override
-    public int size()
-    {
-        return super.size();
-    }
-
-    public boolean isEmpty()
-    {
-        return size() == 0;
-    }
-
-    public double getX( int index )
-    {
-        return ( (JSONNumber) ( (JSONArray) super.get( index ) ).get( 0 ) ).doubleValue();
-    }
-
-    public double getY( int index )
-    {
-        return ( (JSONNumber) ( (JSONArray) super.get( index ) ).get( 1 ) ).doubleValue();
-    }
-
-    public SeriesData slice( int start )
-    {
-        return slice( start, size() - 1 );
-    }
-
-    public SeriesData slice( int start, int end )
-    {
-        SeriesData newData = new SeriesData();
-        for ( int j = start; j <= end; j++ )
-        {
-            newData.add( new DataPoint( getArray( j ) ) );
-        }
-        return newData;
-    }
-
-    public DataPoint[] getDatapoints()
-    {
-        List<DataPoint> list = new ArrayList<DataPoint>( size() );
-        for ( int i = 0; i < size(); i++ )
-        {
-            JSONArray array = getArray( i );
-            if ( array != null )
-            {
-                DataPoint datapoint = new DataPoint( array );
-                list.add( datapoint );
-            }
-        }
-        return list.toArray( new DataPoint[list.size()] );
-    }
-
-    public DataPoint getDataPoint( int index )
-    {
-        JSONArray array = getArray( index );
-        if ( array == null )
-        {
-            return null;
-        }
-        else
-        {
-            return new DataPoint( array );
-        }
-    }
-
-    @Override
-    public void clear()
-    {
-        super.clear();
-    }
-
-    protected void setData( SeriesData data )
-    {
-        DataPoint[] points = data.getDatapoints();
-        super.clear();
-        for ( DataPoint point : points )
-        {
-            super.push( point );
-        }
-    }
 }

@@ -21,7 +21,7 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * @author AlexanderDeleon
@@ -60,25 +60,26 @@ public class PointsSeriesOptions
             return null;
         }
     }
-
-    private static final String RADIUS_KEY = "radius";
-
-    private static final String SYMBOL_KEY = "symbol";
-
-    public PointsSeriesOptions()
+    
+    /**
+     * Creates a {@link PointsSeriesOptions}
+     */
+    public static final PointsSeriesOptions create()
     {
-        super();
+        return JavaScriptObject.createObject().cast();
     }
 
-    PointsSeriesOptions( JSONObject jsonObj )
+    private static final String RADIUS_KEY = "radius";
+    private static final String SYMBOL_KEY = "symbol";
+
+    protected PointsSeriesOptions()
     {
-        super( jsonObj );
     }
 
     /**
      * Set the radius of the symbol
      */
-    public PointsSeriesOptions setRadius( double radius )
+    public final PointsSeriesOptions setRadius( double radius )
     {
         put( RADIUS_KEY, new Double( radius ) );
         return this;
@@ -87,7 +88,7 @@ public class PointsSeriesOptions
     /**
      * @return the radius of the symbol
      */
-    public Double getRadius()
+    public final Double getRadius()
     {
         return getDouble( RADIUS_KEY );
     }
@@ -95,7 +96,7 @@ public class PointsSeriesOptions
     /**
      * Clear the radius of the symbol
      */
-    public PointsSeriesOptions clearRadius()
+    public final PointsSeriesOptions clearRadius()
     {
         clear( RADIUS_KEY );
         return this;
@@ -104,7 +105,7 @@ public class PointsSeriesOptions
     /**
      * Set the symbol to represents the points
      */
-    public PointsSeriesOptions setSymbol( PointSymbol symbol )
+    public final PointsSeriesOptions setSymbol( PointSymbol symbol )
     {
         assert null != symbol : "symbol can't be null";
 
@@ -115,7 +116,7 @@ public class PointsSeriesOptions
     /**
      * @return the symbol to represents the points
      */
-    public PointSymbol getSymbol()
+    public final PointSymbol getSymbol()
     {
         return PointSymbol.findByFlotValue( getString( SYMBOL_KEY ) );
     }
@@ -123,7 +124,7 @@ public class PointsSeriesOptions
     /**
      * Clear the symbol
      */
-    public PointsSeriesOptions clearSymbol()
+    public final PointsSeriesOptions clearSymbol()
     {
         clear( SYMBOL_KEY );
         return this;

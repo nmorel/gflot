@@ -21,34 +21,26 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
-
-import com.google.gwt.json.client.JSONObject;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
 /**
  * @author AlexanderDeleon
  */
 @SuppressWarnings( "unchecked" )
 public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
-    extends JSONObjectWrapper
+    extends JsonObject
 {
 
     protected static final String SHOW_KEY = "show";
 
-    public AbstractSeriesOptions()
+    protected AbstractSeriesOptions()
     {
-        super();
-    }
-
-    AbstractSeriesOptions( JSONObject jsonObj )
-    {
-        super( jsonObj );
     }
 
     /**
      * Set the visibility of the series. By default, the series is shown.
      */
-    public T setShow( boolean show )
+    public final T setShow( boolean show )
     {
         put( SHOW_KEY, show );
         return (T) this;
@@ -57,7 +49,7 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
     /**
      * @return the visibility of the series
      */
-    public Boolean getShow()
+    public final Boolean getShow()
     {
         return getBoolean( SHOW_KEY );
     }
@@ -65,7 +57,7 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
     /**
      * Clear the visibility of the series
      */
-    public T clearShow()
+    public final T clearShow()
     {
         clear( SHOW_KEY );
         return (T) this;

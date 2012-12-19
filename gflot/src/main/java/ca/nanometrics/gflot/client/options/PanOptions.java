@@ -21,37 +21,39 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * This class gives the properties of pan
- *
+ * 
  * @author Ana Rita Loureiro
  */
 public class PanOptions
-    extends JSONObjectWrapper
+    extends JsonObject
 {
+    /**
+     * Creates a {@link PanOptions}
+     */
+    public static final PanOptions create()
+    {
+        return JavaScriptObject.createObject().cast();
+    }
 
     private static final String INTERACTIVE_KEY = "interactive";
     private static final String CURSOR_KEY = "cursor";
     private static final String FRAME_RATE_KEY = "frameRate";
 
-    public PanOptions()
+    protected PanOptions()
     {
-    }
-
-    PanOptions( JSONObject jsonObj )
-    {
-        super( jsonObj );
     }
 
     /**
      * Defines the built-in drag/click behaviour. If you enable interactive then you'll have a basic plot that supports
      * moving around.
      */
-    public PanOptions setInteractive( boolean value )
+    public final PanOptions setInteractive( boolean value )
     {
         put( INTERACTIVE_KEY, value );
         return this;
@@ -60,7 +62,7 @@ public class PanOptions
     /**
      * @return whether or not there is a built-in drag/click behaviour.
      */
-    public boolean isInteractive()
+    public final boolean isInteractive()
     {
         Boolean interactive = getBoolean( INTERACTIVE_KEY );
         if ( interactive == null )
@@ -74,7 +76,7 @@ public class PanOptions
     /**
      * Clear the interactive option
      */
-    public PanOptions clearInteractive()
+    public final PanOptions clearInteractive()
     {
         clear( INTERACTIVE_KEY );
         return this;
@@ -83,7 +85,7 @@ public class PanOptions
     /**
      * Sets a standard CSS mouse cursor string used for visual feedback to the user when dragging.
      */
-    public PanOptions setCursor( String value )
+    public final PanOptions setCursor( String value )
     {
         put( CURSOR_KEY, value );
         return this;
@@ -92,7 +94,7 @@ public class PanOptions
     /**
      * @return a standard CSS mouse cursor string used for visual feedback to the user when dragging.
      */
-    public String getCursor()
+    public final String getCursor()
     {
         return getString( CURSOR_KEY );
     }
@@ -100,7 +102,7 @@ public class PanOptions
     /**
      * Clear the cursor option
      */
-    public PanOptions clearCursor()
+    public final PanOptions clearCursor()
     {
         clear( CURSOR_KEY );
         return this;
@@ -111,7 +113,7 @@ public class PanOptions
      * panning around on it (set to null to disable intermediate pans, the plot will then not update until the mouse
      * button is released).
      */
-    public PanOptions setFrameRate( int value )
+    public final PanOptions setFrameRate( int value )
     {
         put( FRAME_RATE_KEY, value );
         return this;
@@ -122,7 +124,7 @@ public class PanOptions
      * is panning around on it (set to null to disable intermediate pans, the plot will then not update until the mouse
      * button is released).
      */
-    public Integer getFrameRate()
+    public final Integer getFrameRate()
     {
         return getInteger( FRAME_RATE_KEY );
     }
@@ -130,7 +132,7 @@ public class PanOptions
     /**
      * Clear the framerate option
      */
-    public PanOptions clearFrameRate()
+    public final PanOptions clearFrameRate()
     {
         clear( FRAME_RATE_KEY );
         return this;

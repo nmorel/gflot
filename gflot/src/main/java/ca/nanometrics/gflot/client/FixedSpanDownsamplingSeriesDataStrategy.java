@@ -24,29 +24,45 @@ package ca.nanometrics.gflot.client;
 /**
  * @author Alexander De Leon
  */
-public class FixedSizeSeriesData extends SeriesData {
-	private final int m_capacity;
+public class FixedSpanDownsamplingSeriesDataStrategy
+    extends DownsamplingSeriesDataStrategy
+{
 
-	public FixedSizeSeriesData(int capacity) {
-		m_capacity = capacity;
-	}
+    private final long maximumSpan;
 
-	@Override
-	public void add(DataPoint dataPoint) {
-		int currentSize = size();
-		if (currentSize + 1 > m_capacity) {
-			// Shift all of the values down one position
-			shiftDown();
-			super.set(currentSize - 1, dataPoint);
-		} else {
-			super.add(dataPoint);
-		}
-	}
+    public FixedSpanDownsamplingSeriesDataStrategy( int capacity, long maximumSpan )
+    {
+        this( capacity, maximumSpan, SeriesData.create() );
+    }
 
-	private void shiftDown() {
-		int currentSize = size();
-		for (int i = 0; i < currentSize - 1; i++) {
-			set(i, get(i + 1));
-		}
-	}
+    public FixedSpanDownsamplingSeriesDataStrategy( int capacity, long maximumSpan, SeriesData seriesData )
+    {
+        super( capacity, seriesData );
+        this.maximumSpan = maximumSpan;
+    }
+
+    @Override
+    public void add( DataPoint dataPoint )
+    {
+        // The super class will observe the downsampling requirement
+        super.add( dataPoint );
+
+        // Now that the new point has been added, drop any point(s) from the
+        // beginning that are outside the span requirement
+        double lowerXbound = dataPoint.getX() - maximumSpan;
+        boolean done = false;
+        while ( !done )
+        {
+            double xValue = data.getX( 0 );
+            if ( xValue < lowerXbound )
+            {
+                data.shift();
+            }
+            else
+            {
+                done = true;
+            }
+        }
+    }
+
 }

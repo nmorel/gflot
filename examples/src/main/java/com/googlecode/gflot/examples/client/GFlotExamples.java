@@ -4,6 +4,7 @@ import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
@@ -16,7 +17,7 @@ import com.googlecode.gflot.examples.client.mvp.AppPlaceHistoryMapper;
 import com.googlecode.gflot.examples.client.resources.Resources;
 
 public class GFlotExamples
-    implements EntryPoint
+    implements EntryPoint, UncaughtExceptionHandler
 {
     /**
      * The type passed into the
@@ -27,6 +28,8 @@ public class GFlotExamples
 
     public void onModuleLoad()
     {
+        GWT.setUncaughtExceptionHandler( this );
+        
         // Generate the source code for the examples
         GWT.create(GeneratorInfo.class);
 
@@ -51,6 +54,12 @@ public class GFlotExamples
         activityManager.setDisplay( mainView.getContainer() );
 
         placeHistoryHandler.handleCurrentHistory();
+    }
+
+    @Override
+    public void onUncaughtException( Throwable e )
+    {
+        GWT.log( "Uncaught exception", e );
     }
 
 }

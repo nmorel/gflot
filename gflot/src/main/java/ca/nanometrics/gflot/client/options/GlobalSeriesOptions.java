@@ -1,30 +1,33 @@
 package ca.nanometrics.gflot.client.options;
 
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * Options for all series. If you need to define specific option for your series, use the options on Series
- *
+ * 
  * @author Nicolas Morel
  */
 public class GlobalSeriesOptions
     extends CommonSeriesOptions<GlobalSeriesOptions>
 {
-    private static final String MULTIPLE_BARS_KEY = "multipleBars";
-
-    public GlobalSeriesOptions()
+    /**
+     * Creates a {@link GlobalSeriesOptions}
+     */
+    public static final GlobalSeriesOptions create()
     {
+        return JavaScriptObject.createObject().cast();
     }
 
-    public GlobalSeriesOptions( JSONObject jsonObj )
+    private static final String MULTIPLE_BARS_KEY = "multipleBars";
+
+    protected GlobalSeriesOptions()
     {
-        super( jsonObj );
     }
 
     /**
      * Enable the multiple bars patch to flot.
      */
-    public GlobalSeriesOptions setMultipleBars( boolean multiplebars )
+    public final GlobalSeriesOptions setMultipleBars( boolean multiplebars )
     {
         put( MULTIPLE_BARS_KEY, multiplebars );
         return this;
@@ -33,7 +36,7 @@ public class GlobalSeriesOptions
     /**
      * @return true if the multiple bars patch to flot is enabled
      */
-    public Boolean getMultipleBars()
+    public final Boolean getMultipleBars()
     {
         return getBoolean( MULTIPLE_BARS_KEY );
     }
@@ -41,7 +44,7 @@ public class GlobalSeriesOptions
     /**
      * Clear if the multiple bars patch to flot is enabled
      */
-    public GlobalSeriesOptions clearMultipleBars()
+    public final GlobalSeriesOptions clearMultipleBars()
     {
         clear( MULTIPLE_BARS_KEY );
         return this;

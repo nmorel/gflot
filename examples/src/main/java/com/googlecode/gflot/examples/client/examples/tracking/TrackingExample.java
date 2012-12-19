@@ -22,6 +22,7 @@ import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions.PointSymbol;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -133,22 +134,22 @@ public class TrackingExample
     {
         model1 = new PlotModel();
 
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions()
-            .setShow( true ) ) );
-        plotOptions.setCrosshairOptions( new CrosshairOptions().setMode( Mode.X ) );
-        plotOptions.setGridOptions( new GridOptions().setHoverable( true ).setAutoHighlight( false ) );
-        plotOptions.addYAxisOptions( new AxisOptions().setMinimum( -1.2 ).setMaximum( 1.2 ) );
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setLineSeriesOptions(
+            LineSeriesOptions.create().setShow( true ) ) );
+        plotOptions.setCrosshairOptions( CrosshairOptions.create().setMode( Mode.X ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ).setAutoHighlight( false ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setMinimum( -1.2 ).setMaximum( 1.2 ) );
 
         // create a series
-        final SeriesHandler sin = model1.addSeries( "sin(x)" );
-        final SeriesHandler cos = model1.addSeries( "cos(x)" );
+        final SeriesHandler sin = model1.addSeries( Series.create().setLabel( "sin(x)" ) );
+        final SeriesHandler cos = model1.addSeries( Series.create().setLabel( "cos(x)" ) );
 
         // add data
         for ( double i = 0; i < 14; i += 0.1 )
         {
-            sin.add( new DataPoint( i, Math.sin( i ) ) );
-            cos.add( new DataPoint( i, Math.cos( i ) ) );
+            sin.add( DataPoint.of( i, Math.sin( i ) ) );
+            cos.add( DataPoint.of( i, Math.cos( i ) ) );
         }
 
         // create the plot
@@ -193,14 +194,14 @@ public class TrackingExample
 
         int i = 0;
         int j = 0;
-        Series[] dataset = model1.getSeries();
+        JsArray<Series> dataset = model1.getSeries();
         StringBuilder builder = new StringBuilder();
-        for ( i = 0; i < dataset.length; i++ )
+        for ( i = 0; i < dataset.length(); i++ )
         {
-            Series series = dataset[i];
+            Series series = dataset.get( i );
             SeriesData data = series.getData();
             // find the nearest points, x-wise
-            for ( j = 0; j < data.size(); j++ )
+            for ( j = 0; j < data.length(); j++ )
             {
                 if ( data.getX( j ) > xPos )
                 {
@@ -210,8 +211,8 @@ public class TrackingExample
 
             // now interpolate
             double y;
-            DataPoint p1 = data.getDataPoint( j - 1 );
-            DataPoint p2 = data.getDataPoint( j );
+            DataPoint p1 = data.get( j - 1 );
+            DataPoint p2 = data.get( j );
             if ( p1 == null )
             {
                 y = p2.getY();
@@ -244,26 +245,27 @@ public class TrackingExample
     {
         PlotModel model = new PlotModel();
 
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions
-            .setGlobalSeriesOptions( new GlobalSeriesOptions().setLineSeriesOptions(
-                new LineSeriesOptions().setShow( true ) ).setPointsOptions(
-                new PointsSeriesOptions().setShow( true ).setRadius( 5 ).setSymbol( PointSymbol.DIAMOND )
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions
+            .create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setShow( true ) )
+            .setPointsOptions(
+                PointsSeriesOptions.create().setShow( true ).setRadius( 5 ).setSymbol( PointSymbol.DIAMOND )
                     .setFill( true ) ) );
-        plotOptions
-            .setCrosshairOptions( new CrosshairOptions().setMode( Mode.XY ).setLineWidth( 2 ).setColor( "green" ) );
-        plotOptions.setGridOptions( new GridOptions().setHoverable( true ).setAutoHighlight( false )
+        plotOptions.setCrosshairOptions( CrosshairOptions.create().setMode( Mode.XY ).setLineWidth( 2 )
+            .setColor( "green" ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ).setAutoHighlight( false )
             .setMouseActiveRadius( 15 ) );
 
         // create a series
-        SeriesHandler series1 = model.addSeries( "Random Series 1" );
-        SeriesHandler series2 = model.addSeries( "Random Series 2" );
+        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Random Series 1" ) );
+        SeriesHandler series2 = model.addSeries( Series.create().setLabel( "Random Series 2" ) );
 
         // add data
         for ( int i = 1; i < 13; i++ )
         {
-            series1.add( new DataPoint( i, Random.nextInt( 30 ) ) );
-            series2.add( new DataPoint( i, Random.nextInt( 30 ) ) );
+            series1.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+            series2.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
         }
 
         // create the plot
@@ -280,7 +282,7 @@ public class TrackingExample
                 else
                 {
                     DataPoint dataPoint = item.getDataPoint();
-                    plot.lockCrosshair( new PlotPosition( dataPoint.getX(), dataPoint.getY() ) );
+                    plot.lockCrosshair( PlotPosition.of( dataPoint.getX(), dataPoint.getY() ) );
                 }
             }
         }, false );

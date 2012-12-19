@@ -21,72 +21,54 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONHelper;
-import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
-import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayString;
 
 /**
  * The grid is the thing with the axes and a number of ticks.
- *
+ * 
  * @author Alexander De Leon
  */
 public class GridOptions
-    extends JSONObjectWrapper
+    extends JsonObject
 {
-    private static final String COLOR_KEY = "color";
-
-    private static final String BACKGROUND_COLOR_KEY = "backgroundColor";
-
-    private static final String BACKGROUND_COLORS_KEY = "colors";
-
-    private static final String SHOW_KEY = "show";
-
-    private static final String ABOVE_DATA_KEY = "aboveData";
-
-    private static final String LABEL_MARGIN_KEY = "labelMargin";
-
-    private static final String AXIS_MARGIN_KEY = "axisMargin";
-
-    private static final String MARKINGS_KEY = "markings";
-
-    private static final String MARKINGS_COLOR_KEY = "markingsColor";
-
-    private static final String MARKINGS_LINE_WIDTH_KEY = "markingsLineWidth";
-
-    private static final String BORDER_WIDTH_KEY = "borderWidth";
-
-    private static final String BORDER_COLOR_KEY = "borderColor";
-
-    private static final String MIN_BORDER_MARGIN_KEY = "minBorderMargin";
-
-    private static final String CLICKABLE_KEY = "clickable";
-
-    private static final String HOVERABLE_KEY = "hoverable";
-
-    private static final String AUTO_HIGHLIGHT_KEY = "autoHighlight";
-
-    private static final String MOUSE_ACTIVE_RADIUS_KEY = "mouseActiveRadius";
-
-    private static final String CANVAS_TEXT_KEY = "canvasText";
-
-    public GridOptions()
+    /**
+     * Creates a {@link GridOptions}
+     */
+    public static final GridOptions create()
     {
-        super();
+        return JavaScriptObject.createObject().cast();
     }
 
-    GridOptions( JSONObject jsonObj )
+    private static final String COLOR_KEY = "color";
+    private static final String BACKGROUND_COLOR_KEY = "backgroundColor";
+    private static final String BACKGROUND_COLORS_KEY = "colors";
+    private static final String SHOW_KEY = "show";
+    private static final String ABOVE_DATA_KEY = "aboveData";
+    private static final String LABEL_MARGIN_KEY = "labelMargin";
+    private static final String AXIS_MARGIN_KEY = "axisMargin";
+    private static final String MARKINGS_KEY = "markings";
+    private static final String MARKINGS_COLOR_KEY = "markingsColor";
+    private static final String MARKINGS_LINE_WIDTH_KEY = "markingsLineWidth";
+    private static final String BORDER_WIDTH_KEY = "borderWidth";
+    private static final String BORDER_COLOR_KEY = "borderColor";
+    private static final String MIN_BORDER_MARGIN_KEY = "minBorderMargin";
+    private static final String CLICKABLE_KEY = "clickable";
+    private static final String HOVERABLE_KEY = "hoverable";
+    private static final String AUTO_HIGHLIGHT_KEY = "autoHighlight";
+    private static final String MOUSE_ACTIVE_RADIUS_KEY = "mouseActiveRadius";
+    private static final String CANVAS_TEXT_KEY = "canvasText";
+
+    protected GridOptions()
     {
-        super( jsonObj );
     }
 
     /**
      * Set the color of the grid itself
      */
-    public GridOptions setColor( String color )
+    public final GridOptions setColor( String color )
     {
         put( COLOR_KEY, color );
         return this;
@@ -95,7 +77,7 @@ public class GridOptions
     /**
      * @return the color of the grid itself
      */
-    public String getColor()
+    public final String getColor()
     {
         return getString( COLOR_KEY );
     }
@@ -103,7 +85,7 @@ public class GridOptions
     /**
      * Clear the color of the grid
      */
-    public GridOptions clearColor()
+    public final GridOptions clearColor()
     {
         clear( COLOR_KEY );
         return this;
@@ -112,7 +94,7 @@ public class GridOptions
     /**
      * Set the background color inside the grid area. null (default) means that the background is transparent.
      */
-    public GridOptions setBackgroundColor( String color )
+    public final GridOptions setBackgroundColor( String color )
     {
         put( BACKGROUND_COLOR_KEY, color );
         return this;
@@ -121,46 +103,55 @@ public class GridOptions
     /**
      * Set the background color inside the grid area as a gradient.
      */
-    public GridOptions setBackgroundColor( String fromColor, String toColor )
+    public final GridOptions setBackgroundColor( String fromColor, String toColor )
     {
-        put( BACKGROUND_COLOR_KEY,
-            JSONHelper.wrapArrayIntoObject( BACKGROUND_COLORS_KEY, new String[] { fromColor, toColor } ) );
+        JsArrayString array = getBackgroundColorAsArray();
+        if ( null == array )
+        {
+            JsonObject jsonObject = JavaScriptObject.createObject().cast();
+            array = JavaScriptObject.createArray().cast();
+            jsonObject.put( BACKGROUND_COLORS_KEY, array );
+            put( BACKGROUND_COLOR_KEY, jsonObject );
+        }
+        array.set( 0, fromColor );
+        array.set( 1, toColor );
         return this;
     }
 
     /**
-     * @return the background color inside the grid area. The array can contains one color or two colors if it's a
-     * gradient
+     * @return the background color inside the grid area. The result can be a {@link String} or a
+     * {@link JavaScriptObject}.
      */
-    public String[] getBackgroundColor()
+    public final Object getBackgroundColor()
     {
-        JSONValue value = get( BACKGROUND_COLOR_KEY );
-        if ( value == null )
-        {
-            return null;
-        }
-        JSONString str = value.isString();
-        if ( null != str )
-        {
-            return new String[] { str.stringValue() };
-        }
-        JSONObject obj = value.isObject();
-        if ( null != obj )
-        {
-            JSONValue colors = obj.get( BACKGROUND_COLORS_KEY );
-            JSONArray array = colors.isArray();
-            if ( null != array )
-            {
-                return new String[] { array.get( 0 ).isString().stringValue(), array.get( 1 ).isString().stringValue() };
-            }
-        }
-        return null;
+        return getObject( BACKGROUND_COLOR_KEY );
+    }
+
+    /**
+     * @return the background color inside the grid area. The result can be a {@link String} or a
+     * {@link JavaScriptObject}.
+     */
+    public final String getBackgroundColorAsString()
+    {
+        Object color = getObject( BACKGROUND_COLOR_KEY );
+        return (String) ( color instanceof String ? color : null );
+    }
+
+    /**
+     * @return the background color inside the grid area. The result can be a {@link String} or a
+     * {@link JavaScriptObject}.
+     */
+    public final JsArrayString getBackgroundColorAsArray()
+    {
+        Object color = getObject( BACKGROUND_COLOR_KEY );
+        return ( color instanceof JavaScriptObject ? ( (JsonObject) color ).getStringArray( BACKGROUND_COLORS_KEY )
+            : null );
     }
 
     /**
      * Clear the background color inside the grid area
      */
-    public GridOptions clearBackgroundColor()
+    public final GridOptions clearBackgroundColor()
     {
         clear( BACKGROUND_COLOR_KEY );
         return this;
@@ -169,7 +160,7 @@ public class GridOptions
     /**
      * Set if the whole grid including tick labels should be shown.
      */
-    public GridOptions setShow( boolean show )
+    public final GridOptions setShow( boolean show )
     {
         put( SHOW_KEY, show );
         return this;
@@ -178,7 +169,7 @@ public class GridOptions
     /**
      * @return true if the grid is visible
      */
-    public Boolean getShow()
+    public final Boolean getShow()
     {
         return getBoolean( SHOW_KEY );
     }
@@ -186,7 +177,7 @@ public class GridOptions
     /**
      * Clear if the grid is visible or not
      */
-    public GridOptions clearShow()
+    public final GridOptions clearShow()
     {
         clear( SHOW_KEY );
         return this;
@@ -195,7 +186,7 @@ public class GridOptions
     /**
      * Set whether the grid is drawn above the data or below (below is default).
      */
-    public GridOptions setAboveData( boolean aboveData )
+    public final GridOptions setAboveData( boolean aboveData )
     {
         put( ABOVE_DATA_KEY, aboveData );
         return this;
@@ -204,7 +195,7 @@ public class GridOptions
     /**
      * @return whether the grid is drawn above the data or below
      */
-    public Boolean getAboveData()
+    public final Boolean getAboveData()
     {
         return getBoolean( ABOVE_DATA_KEY );
     }
@@ -212,7 +203,7 @@ public class GridOptions
     /**
      * Clear the above data option
      */
-    public GridOptions clearAboveData()
+    public final GridOptions clearAboveData()
     {
         clear( ABOVE_DATA_KEY );
         return this;
@@ -221,7 +212,7 @@ public class GridOptions
     /**
      * Set the space in pixels between tick labels and axis line
      */
-    public GridOptions setLabelMargin( int labelMargin )
+    public final GridOptions setLabelMargin( int labelMargin )
     {
         put( LABEL_MARGIN_KEY, labelMargin );
         return this;
@@ -230,7 +221,7 @@ public class GridOptions
     /**
      * @return the space in pixels between tick labels and axis line
      */
-    public Integer getLabelMargin()
+    public final Integer getLabelMargin()
     {
         return getInteger( LABEL_MARGIN_KEY );
     }
@@ -238,7 +229,7 @@ public class GridOptions
     /**
      * Clear the space in pixels between tick labels and axis line
      */
-    public GridOptions clearLabelMargin()
+    public final GridOptions clearLabelMargin()
     {
         clear( LABEL_MARGIN_KEY );
         return this;
@@ -247,7 +238,7 @@ public class GridOptions
     /**
      * Set the space in pixels between axes when there are two next to each other
      */
-    public GridOptions setAxisMargin( int axisMargin )
+    public final GridOptions setAxisMargin( int axisMargin )
     {
         put( AXIS_MARGIN_KEY, axisMargin );
         return this;
@@ -256,7 +247,7 @@ public class GridOptions
     /**
      * @return the space in pixels between axes when there are two next to each other
      */
-    public Integer getAxisMargin()
+    public final Integer getAxisMargin()
     {
         return getInteger( AXIS_MARGIN_KEY );
     }
@@ -264,7 +255,7 @@ public class GridOptions
     /**
      * Clear the space in pixels between axes when there are two next to each other
      */
-    public GridOptions clearAxisMargin()
+    public final GridOptions clearAxisMargin()
     {
         clear( AXIS_MARGIN_KEY );
         return this;
@@ -273,7 +264,7 @@ public class GridOptions
     /**
      * Sets markings to the grid. It is used to draw simple lines and rectangular areas in the background of the plot.
      */
-    public GridOptions setMarkings( Markings markings )
+    public final GridOptions setMarkings( Markings markings )
     {
         put( MARKINGS_KEY, markings );
         return this;
@@ -282,23 +273,15 @@ public class GridOptions
     /**
      * @return the markings
      */
-    public Markings getMarkings()
+    public final Markings getMarkings()
     {
-        JSONArray array = getArray( MARKINGS_KEY );
-        if ( null == array )
-        {
-            return null;
-        }
-        else
-        {
-            return new Markings( array );
-        }
+        return getJsObject( MARKINGS_KEY );
     }
 
     /**
      * Sets the colors of all markings. Specific color can be defined in Marking object
      */
-    public GridOptions setMarkingsColor( String color )
+    public final GridOptions setMarkingsColor( String color )
     {
         put( MARKINGS_COLOR_KEY, color );
         return this;
@@ -307,7 +290,7 @@ public class GridOptions
     /**
      * @return the markings color
      */
-    public String getMarkingsColor()
+    public final String getMarkingsColor()
     {
         return getString( MARKINGS_COLOR_KEY );
     }
@@ -315,7 +298,7 @@ public class GridOptions
     /**
      * Clear the markings color
      */
-    public GridOptions clearMarkingsColor()
+    public final GridOptions clearMarkingsColor()
     {
         clear( MARKINGS_COLOR_KEY );
         return this;
@@ -324,7 +307,7 @@ public class GridOptions
     /**
      * Sets the line width of all markings. Specific line width can be defined in Marking object
      */
-    public GridOptions setMarkingsLineWidth( int lineWidth )
+    public final GridOptions setMarkingsLineWidth( int lineWidth )
     {
         put( MARKINGS_LINE_WIDTH_KEY, lineWidth );
         return this;
@@ -333,7 +316,7 @@ public class GridOptions
     /**
      * @return the markings line width
      */
-    public Integer getMarkingsLineWidth()
+    public final Integer getMarkingsLineWidth()
     {
         return getInteger( MARKINGS_LINE_WIDTH_KEY );
     }
@@ -341,7 +324,7 @@ public class GridOptions
     /**
      * Clear the markings line width
      */
-    public GridOptions clearMarkingsLineWidth()
+    public final GridOptions clearMarkingsLineWidth()
     {
         clear( MARKINGS_LINE_WIDTH_KEY );
         return this;
@@ -350,7 +333,7 @@ public class GridOptions
     /**
      * Set the width of the border around the plot. Set it to 0 to disable the border.
      */
-    public GridOptions setBorderWidth( int borderWidth )
+    public final GridOptions setBorderWidth( int borderWidth )
     {
         assert borderWidth >= 0 : "borderWith must be positive";
 
@@ -361,7 +344,7 @@ public class GridOptions
     /**
      * @return the width of the border around the plot
      */
-    public Integer getBorderWidth()
+    public final Integer getBorderWidth()
     {
         return getInteger( BORDER_WIDTH_KEY );
     }
@@ -369,7 +352,7 @@ public class GridOptions
     /**
      * Clear the border's width
      */
-    public GridOptions clearBorderWidth()
+    public final GridOptions clearBorderWidth()
     {
         clear( BORDER_WIDTH_KEY );
         return this;
@@ -378,7 +361,7 @@ public class GridOptions
     /**
      * Set the color of the border. By default, it's the same color than the grid lines.
      */
-    public GridOptions setBorderColor( String borderColor )
+    public final GridOptions setBorderColor( String borderColor )
     {
         put( BORDER_COLOR_KEY, borderColor );
         return this;
@@ -387,7 +370,7 @@ public class GridOptions
     /**
      * @return the color of the border
      */
-    public String getBorderColor()
+    public final String getBorderColor()
     {
         return getString( BORDER_COLOR_KEY );
     }
@@ -395,7 +378,7 @@ public class GridOptions
     /**
      * Clear the color of the border
      */
-    public GridOptions clearBorderColor()
+    public final GridOptions clearBorderColor()
     {
         clear( BORDER_COLOR_KEY );
         return this;
@@ -405,7 +388,7 @@ public class GridOptions
      * "minBorderMargin" controls the default minimum margin around the border - it's used to make sure that points
      * aren't accidentally clipped by the canvas edge so by default the value is computed from the point radius
      */
-    public GridOptions setMinBorderMargin( int minBorderMargin )
+    public final GridOptions setMinBorderMargin( int minBorderMargin )
     {
         assert minBorderMargin >= 0 : "minBorderMargin must be positive";
 
@@ -416,7 +399,7 @@ public class GridOptions
     /**
      * @return the default minimum margin around the border
      */
-    public Integer getMinBorderMargin()
+    public final Integer getMinBorderMargin()
     {
         return getInteger( MIN_BORDER_MARGIN_KEY );
     }
@@ -424,7 +407,7 @@ public class GridOptions
     /**
      * Clear the default minimum margin around the border
      */
-    public GridOptions clearMinBorderMargin()
+    public final GridOptions clearMinBorderMargin()
     {
         clear( MIN_BORDER_MARGIN_KEY );
         return this;
@@ -434,7 +417,7 @@ public class GridOptions
      * Set if the plot will listen for click events on the plot area. Add a PlotClickListener to the plot to listen to
      * the event.
      */
-    public GridOptions setClickable( boolean clickable )
+    public final GridOptions setClickable( boolean clickable )
     {
         put( CLICKABLE_KEY, clickable );
         return this;
@@ -443,7 +426,7 @@ public class GridOptions
     /**
      * @return true if the grid is clickable
      */
-    public Boolean getClickable()
+    public final Boolean getClickable()
     {
         return getBoolean( CLICKABLE_KEY );
     }
@@ -451,7 +434,7 @@ public class GridOptions
     /**
      * Clear the clickable option
      */
-    public GridOptions clearClickable()
+    public final GridOptions clearClickable()
     {
         clear( CLICKABLE_KEY );
         return this;
@@ -461,7 +444,7 @@ public class GridOptions
      * Set if the plot will listen for mouse move events on the plot area. Add a PlotHoverListener to the plot to listen
      * to the event.
      */
-    public GridOptions setHoverable( boolean hoverable )
+    public final GridOptions setHoverable( boolean hoverable )
     {
         put( HOVERABLE_KEY, hoverable );
         return this;
@@ -470,7 +453,7 @@ public class GridOptions
     /**
      * @return true if the grid is hoverable
      */
-    public Boolean getHoverable()
+    public final Boolean getHoverable()
     {
         return getBoolean( HOVERABLE_KEY );
     }
@@ -478,7 +461,7 @@ public class GridOptions
     /**
      * Clear the hoverable option
      */
-    public GridOptions clearHoverable()
+    public final GridOptions clearHoverable()
     {
         clear( HOVERABLE_KEY );
         return this;
@@ -487,7 +470,7 @@ public class GridOptions
     /**
      * Set if nearby data items are highlighted automatically (default is true)
      */
-    public GridOptions setAutoHighlight( boolean autoHighlight )
+    public final GridOptions setAutoHighlight( boolean autoHighlight )
     {
         put( AUTO_HIGHLIGHT_KEY, autoHighlight );
         return this;
@@ -496,7 +479,7 @@ public class GridOptions
     /**
      * @return true if nearby data items are highlighted automatically (default is true)
      */
-    public Boolean getAutoHighlight()
+    public final Boolean getAutoHighlight()
     {
         return getBoolean( AUTO_HIGHLIGHT_KEY );
     }
@@ -504,7 +487,7 @@ public class GridOptions
     /**
      * Clear the auto highlight option
      */
-    public GridOptions clearAutoHighlight()
+    public final GridOptions clearAutoHighlight()
     {
         clear( AUTO_HIGHLIGHT_KEY );
         return this;
@@ -515,7 +498,7 @@ public class GridOptions
      * radius, Flot chooses the closest item. For bars, the top-most bar (from the latest specified data series) is
      * chosen.
      */
-    public GridOptions setMouseActiveRadius( int mouseActiveRadius )
+    public final GridOptions setMouseActiveRadius( int mouseActiveRadius )
     {
         put( MOUSE_ACTIVE_RADIUS_KEY, mouseActiveRadius );
         return this;
@@ -524,7 +507,7 @@ public class GridOptions
     /**
      * @return the mouse active radius
      */
-    public Integer getMouseActiveRadius()
+    public final Integer getMouseActiveRadius()
     {
         return getInteger( MOUSE_ACTIVE_RADIUS_KEY );
     }
@@ -532,7 +515,7 @@ public class GridOptions
     /**
      * Clear the mouse active radius
      */
-    public GridOptions clearMouseActiveRadius()
+    public final GridOptions clearMouseActiveRadius()
     {
         clear( MOUSE_ACTIVE_RADIUS_KEY );
         return this;
@@ -541,7 +524,7 @@ public class GridOptions
     /**
      * Set canvas text plugin options
      */
-    public GridOptions setCanvasText( CanvasTextOptions canvasText )
+    public final GridOptions setCanvasText( CanvasTextOptions canvasText )
     {
         put( CANVAS_TEXT_KEY, canvasText );
         return this;
@@ -550,17 +533,9 @@ public class GridOptions
     /**
      * @return the canvas text options
      */
-    public CanvasTextOptions getCanvasText()
+    public final CanvasTextOptions getCanvasText()
     {
-        JSONObject object = getObject( CANVAS_TEXT_KEY );
-        if ( null == object )
-        {
-            return null;
-        }
-        else
-        {
-            return new CanvasTextOptions( object );
-        }
+        return getJsObject( CANVAS_TEXT_KEY );
     }
 
 }
