@@ -2,6 +2,8 @@ gflot
 =====
 gflot is a GWT wrapper of the javascript libray [flot](http://www.flotcharts.org/).
 
+**Current stable version :** 2.4.3
+
 A demo is available here : http://gflot2.appspot.com/
 
 Usage
@@ -13,7 +15,7 @@ Or use Maven :
     <dependency>
       <groupId>com.googlecode.gflot</groupId>
       <artifactId>gflot</artifactId>
-      <version>2.4.0</version>
+      <version>2.4.3</version>
       <scope>provided</scope>
     </dependency>
 
