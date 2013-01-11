@@ -2,18 +2,6 @@ package com.googlecode.gflot.examples.client.examples.sliding;
 
 import java.util.Date;
 
-import ca.nanometrics.gflot.client.DataPoint;
-import ca.nanometrics.gflot.client.PlotModel;
-import ca.nanometrics.gflot.client.PlotModelStrategy;
-import ca.nanometrics.gflot.client.PlotWidget;
-import ca.nanometrics.gflot.client.Series;
-import ca.nanometrics.gflot.client.SeriesHandler;
-import ca.nanometrics.gflot.client.SimplePlot;
-import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
-import ca.nanometrics.gflot.client.options.LineSeriesOptions;
-import ca.nanometrics.gflot.client.options.PlotOptions;
-import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
-import ca.nanometrics.gflot.client.options.TimeSeriesAxisOptions;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -27,6 +15,18 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.gflot.client.DataPoint;
+import com.googlecode.gflot.client.PlotModel;
+import com.googlecode.gflot.client.PlotModelStrategy;
+import com.googlecode.gflot.client.PlotWidget;
+import com.googlecode.gflot.client.Series;
+import com.googlecode.gflot.client.SeriesHandler;
+import com.googlecode.gflot.client.SimplePlot;
+import com.googlecode.gflot.client.options.GlobalSeriesOptions;
+import com.googlecode.gflot.client.options.LineSeriesOptions;
+import com.googlecode.gflot.client.options.PlotOptions;
+import com.googlecode.gflot.client.options.PointsSeriesOptions;
+import com.googlecode.gflot.client.options.TimeSeriesAxisOptions;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;

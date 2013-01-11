@@ -1,19 +1,19 @@
 package com.googlecode.gflot.examples.client.examples.image;
 
-import ca.nanometrics.gflot.client.DataPoint;
-import ca.nanometrics.gflot.client.ImageDataPoint;
-import ca.nanometrics.gflot.client.PlotModel;
-import ca.nanometrics.gflot.client.Series;
-import ca.nanometrics.gflot.client.SeriesHandler;
-import ca.nanometrics.gflot.client.SimplePlot;
-import ca.nanometrics.gflot.client.options.AxisOptions;
-import ca.nanometrics.gflot.client.options.ImageSeriesOptions;
-import ca.nanometrics.gflot.client.options.PlotOptions;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.gflot.client.DataPoint;
+import com.googlecode.gflot.client.ImageDataPoint;
+import com.googlecode.gflot.client.PlotModel;
+import com.googlecode.gflot.client.Series;
+import com.googlecode.gflot.client.SeriesHandler;
+import com.googlecode.gflot.client.SimplePlot;
+import com.googlecode.gflot.client.options.AxisOptions;
+import com.googlecode.gflot.client.options.ImageSeriesOptions;
+import com.googlecode.gflot.client.options.PlotOptions;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;

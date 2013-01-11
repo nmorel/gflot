@@ -2,7 +2,7 @@ gflot
 =====
 gflot is a GWT wrapper of the javascript libray [flot](http://www.flotcharts.org/).
 
-**Current stable version :** 2.4.3
+**Current version :** 3.0.0-SNAPSHOT
 
 A demo is available here : http://gflot2.appspot.com/
 
@@ -19,4 +19,4 @@ Or use Maven :
       <scope>provided</scope>
     </dependency>
 
-Then add `<inherits name='ca.nanometrics.gflot.GFlot'/>` to your module descriptor XML file.
+Then add `<inherits name='com.googlecode.gflot.GFlot'/>` to your module descriptor XML file.

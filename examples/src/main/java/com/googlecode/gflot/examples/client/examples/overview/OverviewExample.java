@@ -1,13 +1,5 @@
 package com.googlecode.gflot.examples.client.examples.overview;
 
-import ca.nanometrics.gflot.client.DataPoint;
-import ca.nanometrics.gflot.client.PlotWithOverview;
-import ca.nanometrics.gflot.client.PlotWithOverviewModel;
-import ca.nanometrics.gflot.client.Series;
-import ca.nanometrics.gflot.client.SeriesHandler;
-import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
-import ca.nanometrics.gflot.client.options.LineSeriesOptions;
-import ca.nanometrics.gflot.client.options.PlotOptions;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,6 +8,14 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.gflot.client.DataPoint;
+import com.googlecode.gflot.client.PlotWithOverview;
+import com.googlecode.gflot.client.PlotWithOverviewModel;
+import com.googlecode.gflot.client.Series;
+import com.googlecode.gflot.client.SeriesHandler;
+import com.googlecode.gflot.client.options.GlobalSeriesOptions;
+import com.googlecode.gflot.client.options.LineSeriesOptions;
+import com.googlecode.gflot.client.options.PlotOptions;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesData;
