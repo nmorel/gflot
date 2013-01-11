@@ -112,8 +112,7 @@ public class BarExample
 
         // create a series
         SeriesHandler handler =
-            model.addSeries( Series.create().setLabel( "Ottawa's Month Temperatures (Daily Average in &deg;C)" )
-                .setColor( "blue" ) );
+            model.addSeries( Series.of( "Ottawa's Month Temperatures (Daily Average in &deg;C)" ).setColor( "blue" ) );
 
         // add data
         handler.add( DataPoint.of( 1, -10.5 ) );
@@ -161,7 +160,7 @@ public class BarExample
         List<SeriesHandler> series = new ArrayList<SeriesHandler>();
         for ( int i = 0; i < nbSeries; i++ )
         {
-            series.add( model.addSeries( Series.create().setLabel( "Random series " + ( i + 1 ) ) ) );
+            series.add( model.addSeries( Series.of( "Random series " + ( i + 1 ) ) ) );
         }
 
         Markings markings = Markings.create();

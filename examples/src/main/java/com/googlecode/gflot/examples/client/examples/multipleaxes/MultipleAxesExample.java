@@ -92,11 +92,10 @@ public class MultipleAxesExample
             } ) );
 
         // create a series
-        SeriesHandler oilPrices = model.addSeries( Series.create().setLabel( "Oil price ($)" ) );
+        SeriesHandler oilPrices = model.addSeries( Series.of( "Oil price ($)" ) );
         addOilPricesData( oilPrices );
 
-        SeriesHandler exchangeRates =
-            model.addSeries( Series.create().setLabel( "USD/EUR exchange rate" ).setYAxis( 2 ) );
+        SeriesHandler exchangeRates = model.addSeries( Series.of( "USD/EUR exchange rate" ).setYAxis( 2 ) );
         addExchangeRatesDate( exchangeRates );
 
         // create the plot

@@ -103,6 +103,11 @@ public class Plot
         this.setupGrid();
     }-*/;
 
+    public final native void triggerRedrawOverlay()
+    /*-{
+        this.triggerRedrawOverlay();
+    }-*/;
+    
     public final native void addPlotSelectedListener( Element container, PlotSelectedListener listener )
     /*-{
         $wnd
@@ -203,6 +208,11 @@ public class Plot
     /*-{
         var offset = this.getPlotOffset().bottom;
         return (offset === undefined) ? -1 : offset;
+    }-*/;
+
+    public final native JsArray<JsonObject> getData()
+    /*-{
+        return this.getData();
     }-*/;
 
     public final native PlotOptions getPlotOptions()

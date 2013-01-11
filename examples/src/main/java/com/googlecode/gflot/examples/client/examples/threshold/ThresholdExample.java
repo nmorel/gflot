@@ -70,7 +70,7 @@ public class ThresholdExample
         plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
         // create series
-        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Random series 1" ).setColor( "green" ) );
+        SeriesHandler series1 = model.addSeries( Series.of( "Random series 1", "green" ) );
 
         // add data
         for ( int i = 0; i < 10; i++ )

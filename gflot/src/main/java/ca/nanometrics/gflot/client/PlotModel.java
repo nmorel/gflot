@@ -189,4 +189,10 @@ public class PlotModel
     {
         return new DefaultSeriesHandler( series, strategy );
     }
+
+    public int indexOf( SeriesHandler series )
+    {
+        return handlers.indexOf( series );
+    }
+
 }

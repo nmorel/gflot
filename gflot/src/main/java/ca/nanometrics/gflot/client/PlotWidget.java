@@ -26,6 +26,8 @@ package ca.nanometrics.gflot.client;
 
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
+import ca.nanometrics.gflot.client.event.PlotLoadEvent.HasPlotLoadHandlers;
+import ca.nanometrics.gflot.client.event.PlotRedrawEvent.HasPlotRedrawHandlers;
 import ca.nanometrics.gflot.client.event.PlotSelectedListener;
 import ca.nanometrics.gflot.client.event.PlotSelectingListener;
 import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
@@ -36,6 +38,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Alexander De Leon
  */
 public interface PlotWidget
+    extends HasPlotLoadHandlers, HasPlotRedrawHandlers
 {
 
     /**
@@ -64,21 +67,21 @@ public interface PlotWidget
 
     /**
      * Add a selected listener to the plot
-     *
+     * 
      * @param listener listener to add to the plot
      */
     void addSelectedListener( PlotSelectedListener listener );
 
     /**
      * Add a selecting listener to the plot
-     *
+     * 
      * @param listener listener to add to the plot
      */
     void addSelectingListener( PlotSelectingListener listener );
 
     /**
      * Add a unselected listener to the plot
-     *
+     * 
      * @param listener listener to add to the plot
      */
     void addUnselectedListener( PlotUnselectedListener listener );
@@ -90,14 +93,14 @@ public interface PlotWidget
 
     /**
      * Set the selection rectangle. "plotselected" event is fired.
-     *
+     * 
      * @param area area to select
      */
     void setSelection( PlotSelectionArea area );
 
     /**
      * Set the selection rectangle.
-     *
+     * 
      * @param area area to select
      * @param preventEvent true to avoid getting a "plotselected" event
      */
@@ -115,14 +118,14 @@ public interface PlotWidget
 
     /**
      * Add a hover listener to the plot
-     *
+     * 
      * @param listener listener to add to the plot
      */
     void addHoverListener( PlotHoverListener listener, boolean onlyOnDatapoint );
 
     /**
      * Add a click listener to the plot
-     *
+     * 
      * @param listener listener to add to the plot
      */
     void addClickListener( PlotClickListener listener, boolean onlyOnDatapoint );

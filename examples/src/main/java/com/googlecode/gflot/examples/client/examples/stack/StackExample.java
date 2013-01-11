@@ -70,9 +70,9 @@ public class StackExample
         plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
         // create series
-        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Series1" ) );
-        SeriesHandler series2 = model.addSeries( Series.create().setLabel( "Series2" ) );
-        SeriesHandler series3 = model.addSeries( Series.create().setLabel( "Series3" ) );
+        SeriesHandler series1 = model.addSeries( Series.of( "Series1" ) );
+        SeriesHandler series2 = model.addSeries( Series.of( "Series2" ) );
+        SeriesHandler series3 = model.addSeries( Series.of( "Series3" ) );
 
         // add data
         for ( int i = 0; i < 10; i++ )

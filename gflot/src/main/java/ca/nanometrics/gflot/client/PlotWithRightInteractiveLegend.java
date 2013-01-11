@@ -24,12 +24,7 @@
  */
 package ca.nanometrics.gflot.client;
 
-import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -39,41 +34,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class PlotWithRightInteractiveLegend
     extends PlotWithInteractiveLegend
 {
-
-    private class RightLegendItem
-        extends DefaultLegendItem
-    {
-        public RightLegendItem( String color, String label )
-        {
-            super( color, label );
-        }
-
-        @Override
-        protected void init()
-        {
-            FlexTable table = new FlexTable();
-            table.setWidth( "100%" );
-
-            HTML colorBand = new HTML( "<div style=\"width: 100%; height: " + COLOR_BAND_HEIGHT + "; background-color: " + color + ";\"></div>" );
-            table.setWidget( 0, 0, colorBand );
-            table.getFlexCellFormatter().setColSpan( 0, 0, 2 );
-
-            checkBox = new CheckBox();
-            checkBox.setValue( true );
-            table.setWidget( 1, 0, checkBox );
-            table.getCellFormatter().setHorizontalAlignment( 1, 0, HasHorizontalAlignment.ALIGN_LEFT );
-
-            m_labelsPanel = new HorizontalPanel();
-            m_labelsPanel.add( new Label( label ) );
-            table.setWidget( 1, 1, m_labelsPanel );
-            table.getCellFormatter().setHorizontalAlignment( 1, 1, HasHorizontalAlignment.ALIGN_LEFT );
-            table.getCellFormatter().setWidth( 1, 1, "100%" );
-
-            initWidget( table );
-        }
-    }
-
-    public PlotWithRightInteractiveLegend( PlotWidget plot )
+    public PlotWithRightInteractiveLegend( SimplePlot plot )
     {
         super( plot );
     }
@@ -90,12 +51,6 @@ public class PlotWithRightInteractiveLegend
         panel.add( legendPanel );
 
         return panel;
-    }
-
-    @Override
-    protected LegendItem createLegendItem( String color, String label )
-    {
-        return new RightLegendItem( color, label );
     }
 
 }

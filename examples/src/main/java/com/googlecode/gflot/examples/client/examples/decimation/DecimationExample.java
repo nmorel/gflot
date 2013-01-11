@@ -98,8 +98,7 @@ public class DecimationExample
         plotOptions.addXAxisOptions( AxisOptions.create().setShow( false ) );
 
         final SeriesHandler series =
-            model.addSeries( Series.create().setLabel( "Random Series" ).setColor( "#003366" ),
-                PlotModelStrategy.downSamplingStrategy( 20 ) );
+            model.addSeries( Series.of( "Random Series", "#003366" ), PlotModelStrategy.downSamplingStrategy( 20 ) );
 
         // pull the "fake" RPC service for new data
         updater = new Timer() {

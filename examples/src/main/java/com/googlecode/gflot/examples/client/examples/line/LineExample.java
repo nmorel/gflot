@@ -92,7 +92,7 @@ public class LineExample
         int nbSeries = Random.nextInt( 5 ) + 1;
         for ( int i = 0; i < nbSeries; i++ )
         {
-            plot.getModel().addSeries( Series.create().setLabel( "Random Series " + i ) );
+            plot.getModel().addSeries( Series.of( "Random Series " + i ) );
         }
         for ( int i = 1; i < 13; i++ )
         {

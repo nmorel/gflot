@@ -63,12 +63,12 @@ public class ImageExample
 
         // create a series
         SeriesHandler handlerImage =
-            model.addSeries( Series.create().setLabel( "Image series" )
-                .setImageSeriesOptions( ImageSeriesOptions.create().setShow( true ).setAlpha( 0.5 ) ) );
+            model.addSeries( Series.of( "Image series" ).setImageSeriesOptions(
+                ImageSeriesOptions.create().setShow( true ).setAlpha( 0.5 ) ) );
         handlerImage.add( ImageDataPoint.of( "images/hs-2004-27-a-large_web.jpg", -2, -2, 2, 2 ) );
 
         // create a series
-        SeriesHandler handlerLine = model.addSeries( Series.create().setLabel( "Line series" ) );
+        SeriesHandler handlerLine = model.addSeries( Series.of( "Line series" ) );
         handlerLine.add( DataPoint.of( -8, -8 ) );
         handlerLine.add( DataPoint.of( -6, -4 ) );
         handlerLine.add( DataPoint.of( -2, -8 ) );

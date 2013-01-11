@@ -92,8 +92,7 @@ public class SlidingExample
         plotOptions.addXAxisOptions( TimeSeriesAxisOptions.create() );
 
         final SeriesHandler series =
-            model.addSeries( Series.create().setLabel( "Random Series" ).setColor( "#FF9900" ),
-                PlotModelStrategy.slidingWindowStrategy( 20 ) );
+            model.addSeries( Series.of( "Random Series", "#FF9900" ), PlotModelStrategy.slidingWindowStrategy( 20 ) );
 
         // pull the "fake" RPC service for new data
         updater = new Timer() {

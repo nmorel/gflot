@@ -66,7 +66,7 @@ public class MarkingsExample
             .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 1 ) );
         plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
-        SeriesHandler s = model.addSeries( Series.create().setLabel( "Series 1" ) );
+        SeriesHandler s = model.addSeries( Series.of( "Series 1" ) );
         s.add( DataPoint.of( 1, 2 ) );
         s.add( DataPoint.of( 2, 5 ) );
         s.add( DataPoint.of( 3, 7 ) );

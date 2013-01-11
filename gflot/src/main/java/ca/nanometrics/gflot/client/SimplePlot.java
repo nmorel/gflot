@@ -30,12 +30,16 @@ import java.util.List;
 import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
+import ca.nanometrics.gflot.client.event.PlotLoadEvent;
+import ca.nanometrics.gflot.client.event.PlotLoadEvent.Handler;
 import ca.nanometrics.gflot.client.event.PlotPanListener;
 import ca.nanometrics.gflot.client.event.PlotPosition;
+import ca.nanometrics.gflot.client.event.PlotRedrawEvent;
 import ca.nanometrics.gflot.client.event.PlotSelectedListener;
 import ca.nanometrics.gflot.client.event.PlotSelectingListener;
 import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
 import ca.nanometrics.gflot.client.event.PlotZoomListener;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 import ca.nanometrics.gflot.client.jsni.Plot;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.Range;
@@ -44,6 +48,7 @@ import ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.FlotJavaScript
 
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Image;
@@ -318,9 +323,12 @@ public class SimplePlot
     public void redraw()
     {
         assertLoaded();
+
         plot.setData( model.getSeries() );
         plot.setupGrid();
         plot.draw();
+
+        PlotRedrawEvent.fire( this );
     }
 
     public int getOffsetLeft()
@@ -475,6 +483,8 @@ public class SimplePlot
             cmd.execute();
         }
         onLoadOperations.clear();
+
+        PlotLoadEvent.fire( this );
     }
 
     public boolean isExportAsImageEnabled()
@@ -598,6 +608,26 @@ public class SimplePlot
             throw new IllegalStateException(
                 "The widget has not been loaded yet. Please call this method after adding this widget to a panel" );
         }
+    }
+
+    /**
+     * @return the flot internal series
+     */
+    public JsArray<JsonObject> getInternalFlotSeries()
+    {
+        return plot.getData();
+    }
+
+    @Override
+    public HandlerRegistration addLoadHandler( Handler handler )
+    {
+        return addHandler( handler, PlotLoadEvent.getType() );
+    }
+
+    @Override
+    public HandlerRegistration addRedrawHandler( ca.nanometrics.gflot.client.event.PlotRedrawEvent.Handler handler )
+    {
+        return addHandler( handler, PlotRedrawEvent.getType() );
     }
 
 }

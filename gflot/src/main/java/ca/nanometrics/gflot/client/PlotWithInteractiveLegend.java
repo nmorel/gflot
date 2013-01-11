@@ -26,26 +26,29 @@ package ca.nanometrics.gflot.client;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import ca.nanometrics.gflot.client.PlotModel.PlotModelListener;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
+import ca.nanometrics.gflot.client.event.PlotLoadEvent;
+import ca.nanometrics.gflot.client.event.PlotRedrawEvent;
 import ca.nanometrics.gflot.client.event.PlotSelectedListener;
 import ca.nanometrics.gflot.client.event.PlotSelectingListener;
 import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
+import ca.nanometrics.gflot.client.jsni.JsonObject;
 
+import com.google.gwt.dom.client.Style.BorderStyle;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -54,17 +57,19 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class PlotWithInteractiveLegend
     extends Composite
-    implements PlotWidget, PlotModelListener
+    implements PlotWidget, PlotModelListener, PlotLoadEvent.Handler, PlotRedrawEvent.Handler
 {
 
-    protected final PlotWidget plot;
+    protected final SimplePlot plot;
     protected Panel legendPanel;
     private final Map<SeriesHandler, LegendItem> legend;
 
-    public PlotWithInteractiveLegend( PlotWidget plot )
+    public PlotWithInteractiveLegend( SimplePlot plot )
     {
         legend = new HashMap<SeriesHandler, LegendItem>();
         this.plot = plot;
+        addLoadHandler( this );
+        addRedrawHandler( this );
         initWidget( createUi() );
         buildLegendFromModel( plot.getModel() );
     }
@@ -180,15 +185,9 @@ public class PlotWithInteractiveLegend
         return plot.getModel();
     }
 
-    public void addLegendWidget( SeriesHandler handler, Widget widget )
-    {
-        legend.get( handler ).addWidget( widget );
-    }
-
     public void onAddSeries( PlotModel model, SeriesHandler handler )
     {
         addSeriesToLegend( handler );
-
     }
 
     public void onRemoveSeries( PlotModel model, SeriesHandler handler )
@@ -199,7 +198,7 @@ public class PlotWithInteractiveLegend
     /* --------------------- helper methods -- */
     private void addSeriesToLegend( final SeriesHandler handler )
     {
-        LegendItem item = createLegendItem( handler.getSeries().getColor(), handler.getSeries().getLabel() );
+        LegendItem item = createLegendItem();
         item.addValueChangeHandler( new ValueChangeHandler<Boolean>() {
             @Override
             public void onValueChange( ValueChangeEvent<Boolean> event )
@@ -212,9 +211,9 @@ public class PlotWithInteractiveLegend
         legendPanel.add( item );
     }
 
-    protected LegendItem createLegendItem( String color, String label )
+    protected LegendItem createLegendItem()
     {
-        return new DefaultLegendItem( color, label );
+        return new DefaultLegendItem();
     }
 
     protected Widget createUi()
@@ -223,6 +222,7 @@ public class PlotWithInteractiveLegend
         Widget plotWidget = plot.getWidget();
 
         legendPanel = new HorizontalPanel();
+        legendPanel.getElement().getStyle().setMarginBottom( 5, Unit.PX );
 
         panel.add( legendPanel );
         panel.add( plotWidget );
@@ -244,23 +244,14 @@ public class PlotWithInteractiveLegend
         extends Composite
         implements HasValue<Boolean>
     {
-
-        final String color;
-
-        final String label;
-
-        public LegendItem( String color, String label )
+        protected LegendItem()
         {
-            this.color = color;
-            this.label = label;
-
             init();
         }
 
         protected abstract void init();
 
-        public abstract void addWidget( Widget widget );
-
+        protected abstract void update( String color, String label );
     }
 
     /**
@@ -269,46 +260,34 @@ public class PlotWithInteractiveLegend
     protected class DefaultLegendItem
         extends LegendItem
     {
-
         protected static final String COLOR_BAND_HEIGHT = "3px";
 
-        protected HorizontalPanel m_labelsPanel;
+        protected SimplePanel panel;
 
         protected CheckBox checkBox;
-
-        public DefaultLegendItem( String color, String label )
-        {
-            super( color, label );
-        }
 
         @Override
         protected void init()
         {
-            FlexTable table = new FlexTable();
-
-            HTML colorBand =
-                new HTML( "<div style=\"width: 100%; height: " + COLOR_BAND_HEIGHT + "; background-color: " + color
-                    + ";\"></div>" );
-            table.setWidget( 0, 0, colorBand );
-            table.getFlexCellFormatter().setColSpan( 0, 0, 2 );
+            panel = new SimplePanel();
+            panel.getElement().getStyle().setPaddingTop( 2, Unit.PX );
+            panel.getElement().getStyle().setMarginRight( 5, Unit.PX );
+            panel.getElement().getStyle().setProperty( "borderTopStyle", BorderStyle.SOLID.getCssName() );
+            panel.getElement().getStyle().setProperty( "borderTopWidth", 3, Unit.PX );
 
             checkBox = new CheckBox();
             checkBox.setValue( true );
-            table.setWidget( 1, 0, checkBox );
-            table.getCellFormatter().setHorizontalAlignment( 1, 0, HasHorizontalAlignment.ALIGN_LEFT );
 
-            m_labelsPanel = new HorizontalPanel();
-            m_labelsPanel.add( new Label( label ) );
-            table.setWidget( 1, 1, m_labelsPanel );
-            table.getCellFormatter().setHorizontalAlignment( 1, 1, HasHorizontalAlignment.ALIGN_LEFT );
+            panel.setWidget( checkBox );
 
-            initWidget( table );
+            initWidget( panel );
         }
 
         @Override
-        public void addWidget( Widget widget )
+        protected void update( String color, String seriesLabel )
         {
-            m_labelsPanel.add( widget );
+            panel.getElement().getStyle().setProperty( "borderTopColor", color );
+            checkBox.setText( seriesLabel );
         }
 
         @Override
@@ -333,6 +312,58 @@ public class PlotWithInteractiveLegend
         public void setValue( Boolean value, boolean fireEvents )
         {
             checkBox.setValue( value, fireEvents );
+        }
+
+    }
+
+    @Override
+    public HandlerRegistration addLoadHandler( PlotLoadEvent.Handler handler )
+    {
+        return plot.addLoadHandler( handler );
+    }
+
+    @Override
+    public HandlerRegistration addRedrawHandler( PlotRedrawEvent.Handler handler )
+    {
+        return plot.addRedrawHandler( handler );
+    }
+
+    @Override
+    public void onLoad( PlotLoadEvent event )
+    {
+        updateLegend();
+    }
+
+    @Override
+    public void onRedraw( PlotRedrawEvent event )
+    {
+        updateLegend();
+    }
+
+    private void updateLegend()
+    {
+        for ( Entry<SeriesHandler, LegendItem> entry : legend.entrySet() )
+        {
+            int index = plot.getModel().indexOf( entry.getKey() );
+            JsonObject series = plot.getInternalFlotSeries().get( index );
+
+            // if no data is given to flot, it puts the label inside a data object...
+            String label = null;
+            if ( series.hasKey( "label" ) )
+            {
+                label = series.getString( "label" );
+            }
+            else if ( series.hasKey( "data" ) )
+            {
+                JsonObject data = series.getJsObject( "data" );
+                if ( data.hasKey( "label" ) )
+                {
+                    label = data.getString( "label" );
+                }
+            }
+
+            String color = series.getString( "color" );
+            entry.getValue().update( color, label );
         }
     }
 

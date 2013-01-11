@@ -87,7 +87,7 @@ public class NavigateExample
             PanOptions.create().setInteractive( true ) );
 
         // create series
-        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Series1" ) );
+        SeriesHandler series1 = model.addSeries( Series.of( "Series1" ) );
 
         // add data
         for ( double t = 0; t <= 2 * Math.PI; t += 0.01 )

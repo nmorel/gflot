@@ -26,6 +26,7 @@ package ca.nanometrics.gflot.client;
 
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
+import ca.nanometrics.gflot.client.event.PlotLoadEvent.Handler;
 import ca.nanometrics.gflot.client.event.PlotSelectedListener;
 import ca.nanometrics.gflot.client.event.PlotSelectingListener;
 import ca.nanometrics.gflot.client.event.PlotUnselectedListener;
@@ -37,6 +38,7 @@ import ca.nanometrics.gflot.client.options.Range;
 import ca.nanometrics.gflot.client.options.SelectionOptions;
 import ca.nanometrics.gflot.client.options.SelectionOptions.SelectionMode;
 
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Composite;
@@ -282,6 +284,18 @@ public class PlotWithOverview
     private void setupPlots()
     {
         overviewPlot.addSelectedListener( this );
+    }
+
+    @Override
+    public HandlerRegistration addLoadHandler( Handler handler )
+    {
+        return overviewPlot.addLoadHandler( handler );
+    }
+
+    @Override
+    public HandlerRegistration addRedrawHandler( ca.nanometrics.gflot.client.event.PlotRedrawEvent.Handler handler )
+    {
+        return overviewPlot.addRedrawHandler( handler );
     }
 
 }

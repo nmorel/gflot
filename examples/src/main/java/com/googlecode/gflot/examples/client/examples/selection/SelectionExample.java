@@ -101,8 +101,7 @@ public class SelectionExample
 
         // create a series
         SeriesHandler handler =
-            model.addSeries( Series.create().setLabel( "Ottawa's Month Temperatures (Daily Average in &deg;C)" )
-                .setColor( "blue" ) );
+            model.addSeries( Series.of( "Ottawa's Month Temperatures (Daily Average in &deg;C)", "blue" ) );
 
         // add data
         handler.add( DataPoint.of( 1, -10.5 ) );

@@ -91,8 +91,8 @@ public class ExportExample
         plotOptions.setGridOptions( GridOptions.create().setCanvasText( CanvasTextOptions.create().setShow( true ) ) );
 
         // create a series
-        SeriesHandler series1 = model.addSeries( Series.create().setLabel( "Random Series 1" ) );
-        SeriesHandler series2 = model.addSeries( Series.create().setLabel( "Random Series 2" ) );
+        SeriesHandler series1 = model.addSeries( Series.of( "Random Series 1" ) );
+        SeriesHandler series2 = model.addSeries( Series.of( "Random Series 2" ) );
 
         // add data
         for ( int i = 1; i < 13; i++ )

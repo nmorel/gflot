@@ -44,6 +44,26 @@ public class Series
         return JavaScriptObject.createObject().cast();
     }
 
+    /**
+     * Creates a {@link Series} with the specified label
+     */
+    public static final Series of( String label )
+    {
+        Series series = create();
+        series.setLabel( label );
+        return series;
+    }
+
+    /**
+     * Creates a {@link Series} with the specified label and color
+     */
+    public static final Series of( String label, String color )
+    {
+        Series series = of( label );
+        series.setColor( color );
+        return series;
+    }
+
     private static final String DATA_KEY = "data";
     private static final String COLOR_KEY = "color";
     private static final String LABEL_KEY = "label";
