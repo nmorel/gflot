@@ -15,7 +15,7 @@ Or use Maven :
     <dependency>
       <groupId>com.googlecode.gflot</groupId>
       <artifactId>gflot</artifactId>
-      <version>2.4.3</version>
+      <version>3.0.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
 
