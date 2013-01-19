@@ -17,7 +17,6 @@
     <gwt.version>2.5.0</gwt.version>
     <gae.version>1.7.0</gae.version>
     <gae.home>${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
-    <gflot.version>3.0.0</gflot.version>
   </properties>
 
   <dependencies>
@@ -37,7 +36,7 @@
     <dependency>
       <groupId>com.googlecode.gflot</groupId>
       <artifactId>gflot</artifactId>
-      <version>${gflot.version}</version>
+      <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
 
