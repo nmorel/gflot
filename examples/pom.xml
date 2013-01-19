@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.googlecode.gflot</groupId>
   <artifactId>gflot-examples</artifactId>
-  <version>3.0.0-SNAPSHOT</version>
+  <version>3.0.0</version>
   <packaging>war</packaging>
 
   <name>GFlot :: Examples</name>
@@ -18,7 +17,7 @@
     <gwt.version>2.5.0</gwt.version>
     <gae.version>1.7.0</gae.version>
     <gae.home>${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
-    <gflot.version>3.0.0-SNAPSHOT</gflot.version>
+    <gflot.version>3.0.0</gflot.version>
   </properties>
 
   <dependencies>
