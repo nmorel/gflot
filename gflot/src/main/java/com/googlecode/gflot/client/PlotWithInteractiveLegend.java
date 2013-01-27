@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
 import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -51,6 +50,7 @@ import com.googlecode.gflot.client.event.PlotSelectedListener;
 import com.googlecode.gflot.client.event.PlotSelectingListener;
 import com.googlecode.gflot.client.event.PlotUnselectedListener;
 import com.googlecode.gflot.client.jsni.JsonObject;
+import com.googlecode.gflot.client.jsni.Plot;
 
 /**
  * @author Alexander De Leon
@@ -60,11 +60,11 @@ public class PlotWithInteractiveLegend
     implements PlotWidget, PlotModelListener, PlotLoadEvent.Handler, PlotRedrawEvent.Handler
 {
 
-    protected final SimplePlot plot;
+    protected final PlotWidget plot;
     protected Panel legendPanel;
     private final Map<SeriesHandler, LegendItem> legend;
 
-    public PlotWithInteractiveLegend( SimplePlot plot )
+    public PlotWithInteractiveLegend( PlotWidget plot )
     {
         legend = new HashMap<SeriesHandler, LegendItem>();
         this.plot = plot;
@@ -345,7 +345,7 @@ public class PlotWithInteractiveLegend
         for ( Entry<SeriesHandler, LegendItem> entry : legend.entrySet() )
         {
             int index = plot.getModel().indexOf( entry.getKey() );
-            JsonObject series = plot.getInternalFlotSeries().get( index );
+            JsonObject series = plot.getPlot().getData().get( index );
 
             // if no data is given to flot, it puts the label inside a data object...
             String label = null;
@@ -365,6 +365,12 @@ public class PlotWithInteractiveLegend
             String color = series.getString( "color" );
             entry.getValue().update( color, label );
         }
+    }
+
+    @Override
+    public Plot getPlot()
+    {
+        return plot.getPlot();
     }
 
 }

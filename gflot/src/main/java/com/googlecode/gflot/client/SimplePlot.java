@@ -27,7 +27,6 @@ package com.googlecode.gflot.client;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -39,6 +38,7 @@ import com.googlecode.gflot.client.event.LoadImagesCallback;
 import com.googlecode.gflot.client.event.PlotClickListener;
 import com.googlecode.gflot.client.event.PlotHoverListener;
 import com.googlecode.gflot.client.event.PlotLoadEvent;
+import com.googlecode.gflot.client.event.PlotLoadEvent.Handler;
 import com.googlecode.gflot.client.event.PlotPanListener;
 import com.googlecode.gflot.client.event.PlotPosition;
 import com.googlecode.gflot.client.event.PlotRedrawEvent;
@@ -46,8 +46,6 @@ import com.googlecode.gflot.client.event.PlotSelectedListener;
 import com.googlecode.gflot.client.event.PlotSelectingListener;
 import com.googlecode.gflot.client.event.PlotUnselectedListener;
 import com.googlecode.gflot.client.event.PlotZoomListener;
-import com.googlecode.gflot.client.event.PlotLoadEvent.Handler;
-import com.googlecode.gflot.client.jsni.JsonObject;
 import com.googlecode.gflot.client.jsni.Plot;
 import com.googlecode.gflot.client.options.PlotOptions;
 import com.googlecode.gflot.client.options.Range;
@@ -611,11 +609,11 @@ public class SimplePlot
     }
 
     /**
-     * @return the flot internal series
+     * @return the plot
      */
-    public JsArray<JsonObject> getInternalFlotSeries()
+    public Plot getPlot()
     {
-        return plot.getData();
+        return plot;
     }
 
     @Override

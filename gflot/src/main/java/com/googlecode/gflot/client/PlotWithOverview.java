@@ -37,6 +37,7 @@ import com.googlecode.gflot.client.event.PlotSelectedListener;
 import com.googlecode.gflot.client.event.PlotSelectingListener;
 import com.googlecode.gflot.client.event.PlotUnselectedListener;
 import com.googlecode.gflot.client.event.PlotLoadEvent.Handler;
+import com.googlecode.gflot.client.jsni.Plot;
 import com.googlecode.gflot.client.options.GlobalSeriesOptions;
 import com.googlecode.gflot.client.options.LegendOptions;
 import com.googlecode.gflot.client.options.LineSeriesOptions;
@@ -296,6 +297,12 @@ public class PlotWithOverview
     public HandlerRegistration addRedrawHandler( com.googlecode.gflot.client.event.PlotRedrawEvent.Handler handler )
     {
         return overviewPlot.addRedrawHandler( handler );
+    }
+
+    @Override
+    public Plot getPlot()
+    {
+        return getWindowPlot().getPlot();
     }
 
 }

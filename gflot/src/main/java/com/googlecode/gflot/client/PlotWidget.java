@@ -24,15 +24,15 @@
  */
 package com.googlecode.gflot.client;
 
-
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.client.event.PlotClickListener;
 import com.googlecode.gflot.client.event.PlotHoverListener;
+import com.googlecode.gflot.client.event.PlotLoadEvent.HasPlotLoadHandlers;
+import com.googlecode.gflot.client.event.PlotRedrawEvent.HasPlotRedrawHandlers;
 import com.googlecode.gflot.client.event.PlotSelectedListener;
 import com.googlecode.gflot.client.event.PlotSelectingListener;
 import com.googlecode.gflot.client.event.PlotUnselectedListener;
-import com.googlecode.gflot.client.event.PlotLoadEvent.HasPlotLoadHandlers;
-import com.googlecode.gflot.client.event.PlotRedrawEvent.HasPlotRedrawHandlers;
+import com.googlecode.gflot.client.jsni.Plot;
 
 /**
  * @author Alexander De Leon
@@ -144,4 +144,9 @@ public interface PlotWidget
      * Redraw the plot
      */
     void redraw();
+
+    /**
+     * @return the plot
+     */
+    Plot getPlot();
 }
