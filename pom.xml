@@ -20,7 +20,7 @@
   <groupId>com.googlecode.gflot</groupId>
   <artifactId>gflot-parent</artifactId>
   <packaging>pom</packaging>
-  <version>3.0.1</version>
+  <version>3.0.2-SNAPSHOT</version>
 
   <name>GFlot :: Parent</name>
   <description>Parent pom used for release</description>
