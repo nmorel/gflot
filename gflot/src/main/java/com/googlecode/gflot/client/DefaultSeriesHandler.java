@@ -24,6 +24,7 @@
  */
 package com.googlecode.gflot.client;
 
+
 /**
  * Handler used to manipulate a series and its data.
  * 
@@ -75,7 +76,8 @@ public class DefaultSeriesHandler
         }
         else
         {
-            series.setData( null );
+            // we give an empty array instead of null or the redraw won't take into account the options
+            series.setData( SeriesData.create() );
         }
     }
 
@@ -86,7 +88,7 @@ public class DefaultSeriesHandler
     @Override
     public boolean isVisible()
     {
-        return null != series.getData();
+        return null != series.getData() || series.getData().isEmpty();
     }
 
     /*

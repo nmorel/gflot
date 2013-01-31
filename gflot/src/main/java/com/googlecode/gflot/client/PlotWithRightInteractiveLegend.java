@@ -34,7 +34,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class PlotWithRightInteractiveLegend
     extends PlotWithInteractiveLegend
 {
-    public PlotWithRightInteractiveLegend( SimplePlot plot )
+    public PlotWithRightInteractiveLegend( PlotWidget plot )
     {
         super( plot );
     }

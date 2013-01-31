@@ -81,7 +81,7 @@ public class InteractiveLegendExample
         plotOptions.addYAxisOptions( AxisOptions.create().setLabel( "Temperature (C\u00b0)" ) );
 
         // create a series
-        SeriesHandler ottawaSeries = model.addSeries( Series.of( "Ottawa" ) );
+        SeriesHandler ottawaSeries = model.addSeries( Series.of( "Ottawa" ).setColor( "red" ) );
         SeriesHandler vancouverSeries =
             model
                 .addSeries( Series.of( "Vancouver" ).setPointsOptions( PointsSeriesOptions.create().setShow( false ) ) );
