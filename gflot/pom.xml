@@ -176,32 +176,6 @@
               </execution>
             </executions>
           </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>${maven-jar.version}</version>
-            <executions>
-              <execution>
-                <id>bundle</id>
-                <phase>install</phase>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-                <configuration>
-                  <finalName>bundle</finalName>
-                  <classesDirectory>${project.build.directory}</classesDirectory>
-                  <useDefaultManifestFile>true</useDefaultManifestFile>
-                  <includes>
-                    <include>gflot-${project.version}*</include>
-                  </includes>
-                  <archive>
-                    <addMavenDescriptor>false</addMavenDescriptor>
-                  </archive>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
         </plugins>
       </build>
     </profile>

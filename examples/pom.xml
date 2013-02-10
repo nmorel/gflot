@@ -15,7 +15,7 @@
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
     <gwt.version>2.5.0</gwt.version>
-    <gae.version>1.7.0</gae.version>
+    <gae.version>1.7.4</gae.version>
     <gae.home>${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
   </properties>
 
@@ -47,18 +47,6 @@
       <version>${gae.version}</version>
       <scope>provided</scope>
       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>com.google.appengine</groupId>
-      <artifactId>appengine-testing</artifactId>
-      <version>${gae.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.appengine</groupId>
-      <artifactId>appengine-api-stubs</artifactId>
-      <version>${gae.version}</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.appengine</groupId>
@@ -281,6 +269,33 @@
                       <targetPath>resources</targetPath>
                     </resource>
                   </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>release</id>
+      <properties>
+        <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-maven-plugin</artifactId>
+            <version>1.7.4</version>
+            <executions>
+              <execution>
+                <id>upload</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>update</goal>
+                </goals>
+                <configuration>
+                  <version>${maven.build.timestamp}</version>
                 </configuration>
               </execution>
             </executions>

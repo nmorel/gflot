@@ -78,6 +78,11 @@
     <url>https://github.com/nmorel/gflot/issues</url>
   </issueManagement>
 
+  <modules>
+    <module>gflot</module>
+    <module>examples</module>
+  </modules>
+
   <build>
 
     <plugins>
@@ -91,13 +96,89 @@
         </configuration>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <preparationGoals>clean verify -PsetReleaseVersion</preparationGoals>
+          <completionGoals>clean deploy -PsetDevVersion</completionGoals>
+          <releaseProfiles>release</releaseProfiles>
+        </configuration>
+      </plugin>
+
     </plugins>
 
   </build>
 
-  <modules>
-    <module>gflot</module>
-    <module>examples</module>
-  </modules>
+  <profiles>
+    <profile>
+      <id>setReleaseVersion</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <configuration>
+                  <target>
+                    <replaceregexp byline="true">
+                      <regexp pattern="\*\*Current stable version :\*\* (.*)" />
+                      <substitution expression="**Current stable version :** ${project.version}" />
+                      <fileset dir=".">
+                        <include name="README.md" />
+                      </fileset>
+                    </replaceregexp>
+                    <replaceregexp byline="true">
+                      <regexp pattern="&lt;version&gt;(.*)&lt;/version&gt;" />
+                      <substitution expression="&lt;version&gt;${project.version}&lt;/version&gt;" />
+                      <fileset dir=".">
+                        <include name="README.md" />
+                      </fileset>
+                    </replaceregexp>
+                  </target>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>setDevVersion</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <configuration>
+                  <target>
+                    <replaceregexp byline="true">
+                      <regexp pattern="\*\*Current dev version :\*\* (.*)" />
+                      <substitution expression="**Current dev version :** ${project.version}" />
+                      <fileset dir=".">
+                        <include name="README.md" />
+                      </fileset>
+                    </replaceregexp>
+                  </target>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
