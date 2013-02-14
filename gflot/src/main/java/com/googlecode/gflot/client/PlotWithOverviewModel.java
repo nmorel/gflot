@@ -330,12 +330,12 @@ public class PlotWithOverviewModel
         return new PlotWithOverviewSeriesHandler( series, strategy );
     }
 
-    PlotModel getWindowPlotModel()
+    public PlotModel getWindowPlotModel()
     {
         return windowModel;
     }
 
-    PlotModel getOverviewPlotModel()
+    public PlotModel getOverviewPlotModel()
     {
         return overviewModel;
     }
@@ -350,12 +350,12 @@ public class PlotWithOverviewModel
         return overviewModel.getSeries();
     }
 
-    void setSelection( double x1, double x2 )
+    public void setSelection( double x1, double x2 )
     {
         setSelection( x1, x2, null );
     }
 
-    void setSelection( double x1, double x2, Command toExcuteAfterSelection )
+    public void setSelection( double x1, double x2, Command toExcuteAfterSelection )
     {
         selection[0] = x1;
         selection[1] = x2;
@@ -372,7 +372,7 @@ public class PlotWithOverviewModel
         }
     }
 
-    double[] getSelection()
+    public double[] getSelection()
     {
         return selection;
     }
