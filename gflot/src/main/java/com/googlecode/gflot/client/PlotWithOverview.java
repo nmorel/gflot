@@ -282,7 +282,7 @@ public class PlotWithOverview
         return mainPanel;
     }
 
-    private void setupPlots()
+    protected void setupPlots()
     {
         overviewPlot.addSelectedListener( this );
     }
