@@ -8,6 +8,7 @@ jquery.flot.pie :
 
 jquery.flot.text (v0.1):
 - Plugin to render the label directly to the canvas (see http://www.lessaworld.com/projects/flotCanvasText/)
+- Modified to add some special characters : http://code.google.com/p/gflot/issues/detail?id=60
 
 jquery.flot.navigate :
 - deleted the jquery.event.drag and jquery.mousewheel plugins as they doesn't work with jQuery 1.7+
