@@ -9,6 +9,8 @@ import com.googlecode.gflot.examples.client.examples.decimation.DecimationExampl
 import com.googlecode.gflot.examples.client.examples.decimation.DecimationPlace;
 import com.googlecode.gflot.examples.client.examples.export.ExportExample;
 import com.googlecode.gflot.examples.client.examples.export.ExportPlace;
+import com.googlecode.gflot.examples.client.examples.fillArea.FillAreaExample;
+import com.googlecode.gflot.examples.client.examples.fillArea.FillAreaPlace;
 import com.googlecode.gflot.examples.client.examples.hover.HoverExample;
 import com.googlecode.gflot.examples.client.examples.hover.HoverPlace;
 import com.googlecode.gflot.examples.client.examples.image.ImageExample;
@@ -79,6 +81,8 @@ public class AppActivityMapper
     private Activity navigateActivity;
 
     private Activity trackingActivity;
+
+    private Activity fillAreaActivity;
 
     public AppActivityMapper( Resources resources )
     {
@@ -228,6 +232,14 @@ public class AppActivityMapper
                 trackingActivity = new TrackingExample( resources );
             }
             return trackingActivity;
+        }
+        if ( place instanceof FillAreaPlace )
+        {
+            if ( null == fillAreaActivity )
+            {
+                fillAreaActivity = new FillAreaExample( resources );
+            }
+            return fillAreaActivity;
         }
         return null;
     }

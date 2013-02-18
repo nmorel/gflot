@@ -4,6 +4,7 @@ import com.google.gwt.place.shared.Place;
 import com.googlecode.gflot.examples.client.examples.bar.BarPlace;
 import com.googlecode.gflot.examples.client.examples.decimation.DecimationPlace;
 import com.googlecode.gflot.examples.client.examples.export.ExportPlace;
+import com.googlecode.gflot.examples.client.examples.fillArea.FillAreaPlace;
 import com.googlecode.gflot.examples.client.examples.hover.HoverPlace;
 import com.googlecode.gflot.examples.client.examples.image.ImagePlace;
 import com.googlecode.gflot.examples.client.examples.interactivelegend.InteractiveLegendPlace;
@@ -95,6 +96,10 @@ public class AppPlaceHistoryMapper
         {
             return new TrackingPlace();
         }
+        else if ( token.startsWith( NameTokens.FILL_AREA ) )
+        {
+            return new FillAreaPlace();
+        }
         else
         {
             return null;
@@ -172,6 +177,10 @@ public class AppPlaceHistoryMapper
         else if ( place instanceof TrackingPlace )
         {
             return NameTokens.TRACKING;
+        }
+        else if ( place instanceof FillAreaPlace )
+        {
+            return NameTokens.FILL_AREA;
         }
         else
         {

@@ -41,6 +41,8 @@ public final class NameTokens
 
     public static final String TRACKING = "tracking";
 
+    public static final String FILL_AREA = "fillArea";
+
     public static String line()
     {
         return LINE;
@@ -124,6 +126,11 @@ public final class NameTokens
     public static String tracking()
     {
         return TRACKING;
+    }
+
+    public static String fillArea()
+    {
+        return FILL_AREA;
     }
 
     private NameTokens()

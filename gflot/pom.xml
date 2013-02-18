@@ -169,6 +169,7 @@
                 <jsSourceFile>jquery.flot.axislabels-20120404.js</jsSourceFile>
                 <jsSourceFile>jquery.flot.multiplebars-0.1.js</jsSourceFile>
                 <jsSourceFile>jquery.flot.text-0.1-modified.js</jsSourceFile>
+                <jsSourceFile>jquery.flot.fillarea-20130108.js</jsSourceFile>
               </jsSourceFiles>
               <skipMerge>true</skipMerge>
             </configuration>

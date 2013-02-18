@@ -55,6 +55,8 @@
             styleName='{res.style.menuLink}' />
 
           <div class="{res.style.menuCategory}">Customizations</div>
+          <g:Hyperlink ui:field="fillAreaLink" text="Fill Area" targetHistoryToken="{tokens.fillArea}"
+                       styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="imageLink" text="Image" targetHistoryToken="{tokens.image}" styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="markingsLink" text="Markings" targetHistoryToken="{tokens.markings}"
             styleName='{res.style.menuLink}' />
