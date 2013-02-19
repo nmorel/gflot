@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -33,10 +33,10 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.client.event.PlotClickListener;
 import com.googlecode.gflot.client.event.PlotHoverListener;
+import com.googlecode.gflot.client.event.PlotLoadEvent.Handler;
 import com.googlecode.gflot.client.event.PlotSelectedListener;
 import com.googlecode.gflot.client.event.PlotSelectingListener;
 import com.googlecode.gflot.client.event.PlotUnselectedListener;
-import com.googlecode.gflot.client.event.PlotLoadEvent.Handler;
 import com.googlecode.gflot.client.jsni.Plot;
 import com.googlecode.gflot.client.options.GlobalSeriesOptions;
 import com.googlecode.gflot.client.options.LegendOptions;
@@ -203,14 +203,29 @@ public class PlotWithOverview
 
     public void redraw()
     {
+        redraw( false );
+    }
+
+    public void redraw( boolean force )
+    {
         double[] selection = model.getSelection();
+        if ( force )
+        {
+            // if a recreation is asked, we have to recreate first and then select
+            windowPlot.redraw( true );
+            overviewPlot.redraw( true );
+        }
         if ( selection[0] < selection[1] )
         {
             overviewPlot
                 .setSelection( PlotSelectionArea.create().setX( Range.of( selection[0], selection[1] ) ), false );
         }
-        windowPlot.redraw();
-        overviewPlot.redraw();
+        if ( !force )
+        {
+            // if it's a simple redraw, we redraw after the selection
+            windowPlot.redraw( false );
+            overviewPlot.redraw( false );
+        }
     }
 
     public void setHeight( int height )
@@ -245,11 +260,6 @@ public class PlotWithOverview
         windowPlot.setWidth( width );
     }
 
-    public Widget getWidget()
-    {
-        return this;
-    }
-
     public SimplePlot getWindowPlot()
     {
         return windowPlot;
@@ -264,7 +274,8 @@ public class PlotWithOverview
     public void onPlotSelected( PlotSelectionArea area )
     {
         Range xRange = area.getX();
-        model.setSelection( xRange.getFrom(), xRange.getTo(), new Command() {
+        model.setSelection( xRange.getFrom(), xRange.getTo(), new Command()
+        {
             public void execute()
             {
                 windowPlot.redraw();

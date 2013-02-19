@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,7 +24,7 @@
  */
 package com.googlecode.gflot.client;
 
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.gflot.client.event.PlotClickListener;
 import com.googlecode.gflot.client.event.PlotHoverListener;
 import com.googlecode.gflot.client.event.PlotLoadEvent.HasPlotLoadHandlers;
@@ -38,7 +38,7 @@ import com.googlecode.gflot.client.jsni.Plot;
  * @author Alexander De Leon
  */
 public interface PlotWidget
-    extends HasPlotLoadHandlers, HasPlotRedrawHandlers
+    extends HasPlotLoadHandlers, HasPlotRedrawHandlers, IsWidget
 {
 
     /**
@@ -67,21 +67,21 @@ public interface PlotWidget
 
     /**
      * Add a selected listener to the plot
-     * 
+     *
      * @param listener listener to add to the plot
      */
     void addSelectedListener( PlotSelectedListener listener );
 
     /**
      * Add a selecting listener to the plot
-     * 
+     *
      * @param listener listener to add to the plot
      */
     void addSelectingListener( PlotSelectingListener listener );
 
     /**
      * Add a unselected listener to the plot
-     * 
+     *
      * @param listener listener to add to the plot
      */
     void addUnselectedListener( PlotUnselectedListener listener );
@@ -93,14 +93,14 @@ public interface PlotWidget
 
     /**
      * Set the selection rectangle. "plotselected" event is fired.
-     * 
+     *
      * @param area area to select
      */
     void setSelection( PlotSelectionArea area );
 
     /**
      * Set the selection rectangle.
-     * 
+     *
      * @param area area to select
      * @param preventEvent true to avoid getting a "plotselected" event
      */
@@ -118,22 +118,17 @@ public interface PlotWidget
 
     /**
      * Add a hover listener to the plot
-     * 
+     *
      * @param listener listener to add to the plot
      */
     void addHoverListener( PlotHoverListener listener, boolean onlyOnDatapoint );
 
     /**
      * Add a click listener to the plot
-     * 
+     *
      * @param listener listener to add to the plot
      */
     void addClickListener( PlotClickListener listener, boolean onlyOnDatapoint );
-
-    /**
-     * @return the plot as a widget
-     */
-    Widget getWidget();
 
     /**
      * @return the model
@@ -144,6 +139,13 @@ public interface PlotWidget
      * Redraw the plot
      */
     void redraw();
+
+    /**
+     * Redraw the plot
+     *
+     * @param force true if you want to recreate completely the plot, false otherwise
+     */
+    void redraw( boolean force );
 
     /**
      * @return the plot

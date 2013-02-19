@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -169,7 +169,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command() {
+            onLoadOperations.add( new Command()
+            {
                 @Override
                 public void execute()
                 {
@@ -188,7 +189,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command() {
+            onLoadOperations.add( new Command()
+            {
                 @Override
                 public void execute()
                 {
@@ -207,7 +209,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command() {
+            onLoadOperations.add( new Command()
+            {
                 @Override
                 public void execute()
                 {
@@ -242,7 +245,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command() {
+            onLoadOperations.add( new Command()
+            {
                 @Override
                 public void execute()
                 {
@@ -274,7 +278,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command() {
+            onLoadOperations.add( new Command()
+            {
                 @Override
                 public void execute()
                 {
@@ -294,7 +299,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command() {
+            onLoadOperations.add( new Command()
+            {
                 @Override
                 public void execute()
                 {
@@ -312,21 +318,32 @@ public class SimplePlot
     }
 
     @Override
-    public Widget getWidget()
-    {
-        return this;
-    }
-
-    @Override
     public void redraw()
     {
-        assertLoaded();
+        redraw( false );
+    }
 
-        plot.setData( model.getSeries() );
-        plot.setupGrid();
-        plot.draw();
+    public void redraw( boolean force )
+    {
+        if ( loaded )
+        {
+            if ( force )
+            {
+                loaded = false;
+                if ( isAttached() )
+                {
+                    createPlot();
+                }
+            }
+            else
+            {
+                plot.setData( model.getSeries() );
+                plot.setupGrid();
+                plot.draw();
 
-        PlotRedrawEvent.fire( this );
+                PlotRedrawEvent.fire( this );
+            }
+        }
     }
 
     public int getOffsetLeft()
@@ -367,7 +384,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command() {
+            onLoadOperations.add( new Command()
+            {
                 @Override
                 public void execute()
                 {
@@ -385,7 +403,8 @@ public class SimplePlot
         }
         else
         {
-            onLoadOperations.add( new Command() {
+            onLoadOperations.add( new Command()
+            {
                 @Override
                 public void execute()
                 {
@@ -435,35 +454,42 @@ public class SimplePlot
         super.onLoad();
         if ( !loaded )
         {
-            FlotJavaScriptLoader.get().loadRequiredFlotLibrary( new FlotJavaScriptCallback() {
-                @Override
-                public void onSuccess()
-                {
-                    if ( loadDataImages )
-                    {
-                        Plot.loadDataImages( model.getSeries(), options, new LoadImagesCallback() {
-                            @Override
-                            public void onImagesLoaded( JsArray<Series> data, PlotOptions options )
-                            {
-                                plot = Plot.create( getElement(), data, options );
-                                onPlotCreated();
-                            }
-                        } );
-                    }
-                    else
-                    {
-                        plot = Plot.create( getElement(), model.getSeries(), options );
-                        onPlotCreated();
-                    }
-                }
-
-                @Override
-                public void onError( Throwable caught )
-                {
-                    throw new RuntimeException( "Error while loading flot library", caught );
-                }
-            } );
+            createPlot();
         }
+    }
+
+    private void createPlot()
+    {
+        FlotJavaScriptLoader.get().loadRequiredFlotLibrary( new FlotJavaScriptCallback()
+        {
+            @Override
+            public void onSuccess()
+            {
+                if ( loadDataImages )
+                {
+                    Plot.loadDataImages( model.getSeries(), options, new LoadImagesCallback()
+                    {
+                        @Override
+                        public void onImagesLoaded( JsArray<Series> data, PlotOptions options )
+                        {
+                            plot = Plot.create( getElement(), data, options );
+                            onPlotCreated();
+                        }
+                    } );
+                }
+                else
+                {
+                    plot = Plot.create( getElement(), model.getSeries(), options );
+                    onPlotCreated();
+                }
+            }
+
+            @Override
+            public void onError( Throwable caught )
+            {
+                throw new RuntimeException( "Error while loading flot library", caught );
+            }
+        } );
     }
 
     private void onPlotCreated()
@@ -503,7 +529,7 @@ public class SimplePlot
 
     /**
      * Prompt the user to save the plot as an image. The image is scaled at the given dimensions.
-     * 
+     *
      * @param width
      * @param height
      */
@@ -549,7 +575,7 @@ public class SimplePlot
 
     /**
      * Set the position of the crosshair. Note that this is cleared if the user moves the mouse.
-     * 
+     *
      * @param pos Position of the crosshair
      */
     public void setCrosshair( PlotPosition pos )
@@ -575,7 +601,7 @@ public class SimplePlot
 
     /**
      * Cause the crosshair to lock to the current location, no longer updating if the user moves the mouse.
-     * 
+     *
      * @param pos position to lock the crosshair to
      */
     public void lockCrosshair( PlotPosition pos )
