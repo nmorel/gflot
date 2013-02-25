@@ -198,6 +198,7 @@ public class PlotWithInteractiveLegend
     public void onRemoveSeries( PlotModel model, SeriesHandler handler )
     {
         legendPanel.remove( legend.get( handler ) );
+        legend.remove( handler );
     }
 
     /* --------------------- helper methods -- */

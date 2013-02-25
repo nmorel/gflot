@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,7 +27,7 @@ package com.googlecode.gflot.client;
 
 /**
  * Handler used to manipulate a series and its data.
- * 
+ *
  * @author Alexander De Leon
  */
 public class DefaultSeriesHandler
@@ -123,26 +123,6 @@ public class DefaultSeriesHandler
         {
             series.setData( getData() );
         }
-    }
-
-    @Override
-    public boolean equals( Object obj )
-    {
-        if ( obj == this )
-        {
-            return true;
-        }
-        if ( obj instanceof DefaultSeriesHandler )
-        {
-            return series.equals( ( (DefaultSeriesHandler) obj ).series );
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return series.hashCode();
     }
 
 }
