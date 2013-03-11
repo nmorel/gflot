@@ -15,7 +15,7 @@
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
     <gwt.version>2.5.0</gwt.version>
-    <gae.version>1.7.4</gae.version>
+    <gae.version>1.7.5</gae.version>
     <gae.home>${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
   </properties>
 
@@ -141,7 +141,7 @@
       <plugin>
         <groupId>net.kindleit</groupId>
         <artifactId>maven-gae-plugin</artifactId>
-        <version>0.9.4</version>
+        <version>0.9.5</version>
         <executions>
           <execution>
             <id />
@@ -149,11 +149,19 @@
             <goals>
               <goal>unpack</goal>
             </goals>
+            <configuration>
+              <unpackVersion>${gae.version}</unpackVersion>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <serverId>appengine.google.com</serverId>
-        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>net.kindleit</groupId>
+            <artifactId>gae-runtime</artifactId>
+            <version>1.7.5.1</version>
+            <type>pom</type>
+          </dependency>
+        </dependencies>
       </plugin>
 
       <!-- Mark the project for Google Plugin for Eclipse (GPE) -->
@@ -214,7 +222,7 @@
                   <pluginExecutionFilter>
                     <groupId>net.kindleit</groupId>
                     <artifactId>maven-gae-plugin</artifactId>
-                    <versionRange>[0.9.4,)</versionRange>
+                    <versionRange>[0.9.5,)</versionRange>
                     <goals>
                       <goal>unpack</goal>
                     </goals>
@@ -286,7 +294,7 @@
           <plugin>
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-maven-plugin</artifactId>
-            <version>1.7.4</version>
+            <version>1.7.5</version>
             <executions>
               <execution>
                 <id>upload</id>
