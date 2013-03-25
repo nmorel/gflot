@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -48,7 +48,7 @@ public class SeriesData
 
     /**
      * Gets the number of datapoint.
-     * 
+     *
      * @return the number of datapoint
      */
     public final native int length()
@@ -58,7 +58,7 @@ public class SeriesData
 
     /**
      * Reset the length of the array.
-     * 
+     *
      * @param newLength the new length of the array
      */
     final native void setLength( int newLength ) /*-{
@@ -67,7 +67,7 @@ public class SeriesData
 
     /**
      * Gets the datapoint at a given index.
-     * 
+     *
      * @param index the index to be retrieved
      * @return the datapoint at the given index, or <code>null</code> if none exists
      */
@@ -79,7 +79,7 @@ public class SeriesData
     /**
      * Sets the object value at a given index. If the index is out of bounds, the value will still be set. The array's
      * length will be updated to encompass the bounds implied by the added object.
-     * 
+     *
      * @param index the index to be set
      * @param value the object to be stored
      */
@@ -98,7 +98,7 @@ public class SeriesData
 
     /**
      * Shifts the first value off the array.
-     * 
+     *
      * @return the shifted value
      */
     final native DataPoint shift()
@@ -108,7 +108,7 @@ public class SeriesData
 
     /**
      * Shifts a value onto the beginning of the array.
-     * 
+     *
      * @param value the value to the stored
      */
     final native void unshift( DataPoint value )
@@ -131,14 +131,34 @@ public class SeriesData
         return get( index ).getY();
     }
 
-    public final SeriesData slice( int start )
-    {
-        return slice( start, length() - 1 );
-    }
-
-    public final native SeriesData slice( int start, int end )
+    /**
+     * Returns a shallow copy of a portion of an array.
+     *
+     * @param begin Zero-based index at which to begin extraction.
+     * As a negative index, begin indicates an offset from the end of the sequence. slice(-2) extracts the
+     * second-to-last element and the last element in the sequence.
+     * @return a shallow copy of a portion of an array
+     */
+    public final native SeriesData slice( int begin )
     /*-{
-        return this.slice(start, end);
+        return this.slice(begin);
+    }-*/;
+
+    /**
+     * Returns a shallow copy of a portion of an array.
+     *
+     * @param begin Zero-based index at which to begin extraction.
+     * As a negative index, begin indicates an offset from the end of the sequence. slice(-2) extracts the
+     * second-to-last element and the last element in the sequence.
+     * @param end Zero-based index at which to end extraction. slice extracts up to but not including end.
+     * slice(1,4) extracts the second element through the fourth element (elements indexed 1, 2, and 3).
+     * As a negative index, end indicates an offset from the end of the sequence. slice(2,
+     * -1) extracts the third element through the second-to-last element in the sequence.
+     * @return a shallow copy of a portion of an array
+     */
+    public final native SeriesData slice( int begin, int end )
+    /*-{
+        return this.slice(begin, end);
     }-*/;
 
     public final void clear()
