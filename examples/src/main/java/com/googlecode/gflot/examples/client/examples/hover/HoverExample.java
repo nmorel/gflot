@@ -13,6 +13,7 @@ import com.googlecode.gflot.client.PlotModel;
 import com.googlecode.gflot.client.Series;
 import com.googlecode.gflot.client.SeriesHandler;
 import com.googlecode.gflot.client.SimplePlot;
+import com.googlecode.gflot.client.event.PlotClickListener;
 import com.googlecode.gflot.client.event.PlotHoverListener;
 import com.googlecode.gflot.client.event.PlotItem;
 import com.googlecode.gflot.client.event.PlotPosition;
@@ -77,8 +78,8 @@ public class HoverExample
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = PlotOptions.create();
         plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
-            .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ) )
-            .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
+            .setLineSeriesOptions(LineSeriesOptions.create().setLineWidth(1).setShow(true))
+            .setPointsOptions(PointsSeriesOptions.create().setRadius(2).setShow(true)).setShadowSize( 0d ) );
         // add tick formatter to the options
         plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
             public String formatTickValue( double tickValue, Axis axis )
@@ -88,7 +89,7 @@ public class HoverExample
         } ) );
 
         // >>>>>>> You need make the grid hoverable <<<<<<<<<
-        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable(true).setClickable(true) );
         // >>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
         // create a series
@@ -141,6 +142,16 @@ public class HoverExample
                 }
             }
         }, false );
+
+        plot.addClickListener(new PlotClickListener() {
+            @Override
+            public void onPlotClick(Plot plot, PlotPosition position, PlotItem item) {
+                plot.unhighlight();
+                if(null != item){
+                    plot.highlight(item.getSeries(), item.getDataPoint());
+                }
+            }
+        }, false);
 
         return binder.createAndBindUi( this );
     }

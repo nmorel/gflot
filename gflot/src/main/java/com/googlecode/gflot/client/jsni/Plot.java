@@ -29,11 +29,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.Image;
-import com.googlecode.gflot.client.Axes;
-import com.googlecode.gflot.client.Pan;
-import com.googlecode.gflot.client.PlotSelectionArea;
-import com.googlecode.gflot.client.Series;
-import com.googlecode.gflot.client.Zoom;
+import com.googlecode.gflot.client.*;
 import com.googlecode.gflot.client.event.LoadImagesCallback;
 import com.googlecode.gflot.client.event.PlotClickListener;
 import com.googlecode.gflot.client.event.PlotHoverListener;
@@ -326,5 +322,53 @@ public class Plot
     public final native void unlockCrosshair()
     /*-{
         this.unlockCrosshair();
+    }-*/;
+
+    /**
+     * Highlight a specific datapoint in the data series.
+     * @param series
+     * @param datapoint
+     */
+    public final native void highlight(Series series, DataPoint datapoint)
+    /*-{
+        this.highlight(series, datapoint);
+    }-*/;
+
+    /**
+     * Highlight a specific datapoint in the data series.
+     * @param seriesIndex index of the series (starting at 0)
+     * @param datapointIndex index of the datapoint in the series (starting at 0)
+     */
+    public final native void highlight(int seriesIndex, int datapointIndex)
+    /*-{
+        this.highlight(seriesIndex, datapointIndex);
+    }-*/;
+
+    /**
+     * Unhighlight a specific datapoint in the data series.
+     * @param series
+     * @param datapoint
+     */
+    public final native void unhighlight(Series series, DataPoint datapoint)
+    /*-{
+        this.unhighlight(series, datapoint);
+    }-*/;
+
+    /**
+     * Unhighlight a specific datapoint in the data series.
+     * @param seriesIndex index of the series (starting at 0)
+     * @param datapointIndex index of the datapoint in the series (starting at 0)
+     */
+    public final native void unhighlight(int seriesIndex, int datapointIndex)
+    /*-{
+        this.unhighlight(seriesIndex, datapointIndex);
+    }-*/;
+
+    /**
+     * Removes all current highlights
+     */
+    public final native void unhighlight()
+    /*-{
+        this.unhighlight();
     }-*/;
 }

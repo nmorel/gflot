@@ -654,4 +654,52 @@ public class SimplePlot
         return addHandler( handler, PlotRedrawEvent.getType() );
     }
 
+    /**
+     * Highlight a specific datapoint in the data series.
+     * @param series
+     * @param datapoint
+     */
+    public void highlight(Series series, DataPoint datapoint)
+    {
+        plot.highlight(series, datapoint);
+    }
+
+    /**
+     * Highlight a specific datapoint in the data series.
+     * @param seriesIndex index of the series (starting at 0)
+     * @param datapointIndex index of the datapoint in the series (starting at 0)
+     */
+    public void highlight(int seriesIndex, int datapointIndex)
+    {
+        plot.highlight(seriesIndex, datapointIndex);
+    }
+
+    /**
+     * Unhighlight a specific datapoint in the data series.
+     * @param series
+     * @param datapoint
+     */
+    public void unhighlight(Series series, DataPoint datapoint)
+    {
+        plot.unhighlight(series, datapoint);
+    }
+
+    /**
+     * Unhighlight a specific datapoint in the data series.
+     * @param seriesIndex index of the series (starting at 0)
+     * @param datapointIndex index of the datapoint in the series (starting at 0)
+     */
+    public void unhighlight(int seriesIndex, int datapointIndex)
+    {
+        plot.unhighlight(seriesIndex, datapointIndex);
+    }
+
+    /**
+     * Removes all current highlights
+     */
+    public void unhighlight()
+    {
+        plot.unhighlight();
+    }
+
 }
