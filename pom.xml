@@ -20,7 +20,7 @@
   <groupId>com.googlecode.gflot</groupId>
   <artifactId>gflot-parent</artifactId>
   <packaging>pom</packaging>
-  <version>3.0.3-SNAPSHOT</version>
+  <version>3.0.3</version>
 
   <name>GFlot :: Parent</name>
   <description>Parent pom used for release</description>
@@ -38,7 +38,7 @@
     <connection>scm:git:git://github.com/nmorel/gflot.git</connection>
     <developerConnection>scm:git:git@github.com:nmorel/gflot.git</developerConnection>
     <url>https://github.com/nmorel/gflot</url>
-    <tag>HEAD</tag>
+    <tag>3.0.3</tag>
   </scm>
 
   <developers>

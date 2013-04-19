@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.googlecode.gflot</groupId>
   <artifactId>gflot-examples</artifactId>
-  <version>3.0.3-SNAPSHOT</version>
+  <version>3.0.3</version>
   <packaging>war</packaging>
 
   <name>GFlot :: Examples</name>
