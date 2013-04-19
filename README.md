@@ -8,6 +8,8 @@ gflot is a GWT wrapper of the javascript libray [flot](http://www.flotcharts.org
 
 A demo is available here : http://gflot2.appspot.com/
 
+You can check the last release notes here : [ReleaseNotes](https://code.google.com/p/gflot/wiki/ReleaseNotes)
+
 Documentation
 -------------
 While migrating, you can find the documentation here : https://code.google.com/p/gflot/w/list
