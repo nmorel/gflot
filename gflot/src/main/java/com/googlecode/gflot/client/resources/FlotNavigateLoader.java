@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -37,13 +37,7 @@ public class FlotNavigateLoader
     interface Bundle
         extends ClientBundle
     {
-        @Source( "jquery.event.drag-2.0-modified.min.js" )
-        TextResource jQueryEventDrag();
-
-        @Source( "jquery.mousewheel-3.0.6.min.js" )
-        TextResource jQueryMouseWheel();
-
-        @Source( "jquery.flot-0.7.navigate-modified.min.js" )
+        @Source( "jquery.flot.navigate.min.js" )
         TextResource flotNavigate();
     }
 
@@ -65,8 +59,6 @@ public class FlotNavigateLoader
     {
         if ( !loaded )
         {
-            JavaScriptInjector.inject( getBundle().jQueryEventDrag().getText() );
-            JavaScriptInjector.inject( getBundle().jQueryMouseWheel().getText() );
             JavaScriptInjector.inject( getBundle().flotNavigate().getText() );
             loaded = true;
         }

@@ -85,6 +85,10 @@ public class FlotJavaScriptLoader
         PluginLoader getFlotFillBetweenLoader();
 
         PluginLoader getFlotFillAreaLoader();
+
+        PluginLoader getFlotTimeLoader();
+
+        PluginLoader getFlotCanvasLoader();
     }
 
     public static class SynchronousImpl
@@ -127,6 +131,10 @@ public class FlotJavaScriptLoader
         private PluginLoader flotFillBetweenLoader;
 
         private PluginLoader flotFillAreaLoader;
+
+        private PluginLoader flotTimeLoader;
+
+        private PluginLoader flotCanvasLoader;
 
         @Override
         public void loadRequiredFlotLibrary( final FlotJavaScriptCallback callback )
@@ -319,6 +327,26 @@ public class FlotJavaScriptLoader
             return flotFillAreaLoader;
         }
 
+        @Override
+        public PluginLoader getFlotTimeLoader()
+        {
+            if ( null == flotTimeLoader )
+            {
+                flotTimeLoader = GWT.create( FlotTimeLoader.class );
+            }
+            return flotTimeLoader;
+        }
+
+        @Override
+        public PluginLoader getFlotCanvasLoader()
+        {
+            if ( null == flotCanvasLoader )
+            {
+                flotCanvasLoader = GWT.create( FlotCanvasLoader.class );
+            }
+            return flotCanvasLoader;
+        }
+
         private void load()
         {
             getJqueryLoader().load();
@@ -339,6 +367,8 @@ public class FlotJavaScriptLoader
             getFlotMultipleBarsLoader().load();
             getFlotFillBetweenLoader().load();
             getFlotFillAreaLoader().load();
+            getFlotTimeLoader().load();
+            getFlotCanvasLoader().load();
         }
     }
 }

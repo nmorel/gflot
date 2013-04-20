@@ -30,14 +30,14 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
 import com.googlecode.gflot.client.util.JavaScriptInjector;
 
-public class FlotLoader
+public class FlotCanvasLoader
     extends DefaultLoader
 {
     interface Bundle
         extends ClientBundle
     {
-        @Source( "jquery.flot.min.js" )
-        TextResource flot();
+        @Source( "jquery.flot.canvas.min.js" )
+        TextResource flotCanvas();
     }
 
     private Bundle bundle;
@@ -58,7 +58,7 @@ public class FlotLoader
     {
         if ( !loaded )
         {
-            JavaScriptInjector.inject( getBundle().flot().getText() );
+            JavaScriptInjector.inject( getBundle().flotCanvas().getText() );
             loaded = true;
         }
     }

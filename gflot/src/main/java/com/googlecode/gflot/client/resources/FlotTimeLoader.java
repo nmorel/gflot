@@ -30,14 +30,14 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
 import com.googlecode.gflot.client.util.JavaScriptInjector;
 
-public class FlotLoader
+public class FlotTimeLoader
     extends DefaultLoader
 {
     interface Bundle
         extends ClientBundle
     {
-        @Source( "jquery.flot.min.js" )
-        TextResource flot();
+        @Source( "jquery.flot.time.min.js" )
+        TextResource flotTime();
     }
 
     private Bundle bundle;
@@ -58,7 +58,7 @@ public class FlotLoader
     {
         if ( !loaded )
         {
-            JavaScriptInjector.inject( getBundle().flot().getText() );
+            JavaScriptInjector.inject( getBundle().flotTime().getText() );
             loaded = true;
         }
     }

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -35,14 +35,6 @@ import com.googlecode.gflot.client.jsni.JsonObject;
 public class PlotOptions
     extends JsonObject
 {
-    /**
-     * Creates a {@link PlotOptions}
-     */
-    public static final PlotOptions create()
-    {
-        return JavaScriptObject.createObject().cast();
-    }
-
     private static final String COLORS_KEY = "colors";
     private static final String LEGEND_KEY = "legend";
     private static final String X_AXES_KEY = "xaxes";
@@ -54,9 +46,26 @@ public class PlotOptions
     private static final String PAN_KEY = "pan";
     private static final String CROSSHAIR_KEY = "crosshair";
     private static final String MULTIPLE_BARS_KEY = "multiplebars";
+    private static final String CANVAS_KEY = "canvas";
+
+    /**
+     * Creates a {@link PlotOptions}
+     */
+    public static final PlotOptions create()
+    {
+        return JavaScriptObject.createObject().cast();
+    }
 
     protected PlotOptions()
     {
+    }
+
+    /**
+     * @return the default color theme to get colors for the data series from
+     */
+    public final JsArrayString getDefaultColorTheme()
+    {
+        return getStringArray( COLORS_KEY );
     }
 
     /**
@@ -77,14 +86,6 @@ public class PlotOptions
     }
 
     /**
-     * @return the default color theme to get colors for the data series from
-     */
-    public final JsArrayString getDefaultColorTheme()
-    {
-        return getStringArray( COLORS_KEY );
-    }
-
-    /**
      * Clear the default color theme
      */
     public final PlotOptions clearDefaultColorTheme()
@@ -94,20 +95,20 @@ public class PlotOptions
     }
 
     /**
+     * @return the legend options
+     */
+    public final LegendOptions getLegendOptions()
+    {
+        return getJsObject( LEGEND_KEY );
+    }
+
+    /**
      * Set the legend options
      */
     public final PlotOptions setLegendOptions( LegendOptions legendOptions )
     {
         put( LEGEND_KEY, legendOptions );
         return this;
-    }
-
-    /**
-     * @return the legend options
-     */
-    public final LegendOptions getLegendOptions()
-    {
-        return getJsObject( LEGEND_KEY );
     }
 
     /**
@@ -148,20 +149,20 @@ public class PlotOptions
     }
 
     /**
+     * @return the options for x axes
+     */
+    public final AxesOptions getXAxesOptions()
+    {
+        return getJsObject( X_AXES_KEY );
+    }
+
+    /**
      * Set the options for x axes
      */
     public final PlotOptions setXAxesOptions( AxesOptions xAxesOptions )
     {
         put( X_AXES_KEY, xAxesOptions );
         return this;
-    }
-
-    /**
-     * @return the options for x axes
-     */
-    public final AxesOptions getXAxesOptions()
-    {
-        return getJsObject( X_AXES_KEY );
     }
 
     /**
@@ -202,15 +203,6 @@ public class PlotOptions
     }
 
     /**
-     * Set the options for y axes
-     */
-    public final PlotOptions setYAxesOptions( AxesOptions yAxesOptions )
-    {
-        put( Y_AXES_KEY, yAxesOptions );
-        return this;
-    }
-
-    /**
      * @return the options for y axes
      */
     public final AxesOptions getYAxesOptions()
@@ -219,11 +211,11 @@ public class PlotOptions
     }
 
     /**
-     * Set the selection options
+     * Set the options for y axes
      */
-    public final PlotOptions setSelectionOptions( SelectionOptions selectionOptions )
+    public final PlotOptions setYAxesOptions( AxesOptions yAxesOptions )
     {
-        put( SELECTION_KEY, selectionOptions );
+        put( Y_AXES_KEY, yAxesOptions );
         return this;
     }
 
@@ -236,11 +228,11 @@ public class PlotOptions
     }
 
     /**
-     * Set the grid options
+     * Set the selection options
      */
-    public final PlotOptions setGridOptions( GridOptions gridOptions )
+    public final PlotOptions setSelectionOptions( SelectionOptions selectionOptions )
     {
-        put( GRID_KEY, gridOptions );
+        put( SELECTION_KEY, selectionOptions );
         return this;
     }
 
@@ -253,11 +245,11 @@ public class PlotOptions
     }
 
     /**
-     * Set the global series options
+     * Set the grid options
      */
-    public final PlotOptions setGlobalSeriesOptions( GlobalSeriesOptions globalSeriesOptions )
+    public final PlotOptions setGridOptions( GridOptions gridOptions )
     {
-        put( SERIES_KEY, globalSeriesOptions );
+        put( GRID_KEY, gridOptions );
         return this;
     }
 
@@ -270,11 +262,11 @@ public class PlotOptions
     }
 
     /**
-     * Set the zoom options
+     * Set the global series options
      */
-    public final PlotOptions setZoomOptions( ZoomOptions zoom )
+    public final PlotOptions setGlobalSeriesOptions( GlobalSeriesOptions globalSeriesOptions )
     {
-        put( ZOOM_KEY, zoom );
+        put( SERIES_KEY, globalSeriesOptions );
         return this;
     }
 
@@ -287,11 +279,11 @@ public class PlotOptions
     }
 
     /**
-     * Set the pan options
+     * Set the zoom options
      */
-    public final PlotOptions setPanOptions( PanOptions pan )
+    public final PlotOptions setZoomOptions( ZoomOptions zoom )
     {
-        put( PAN_KEY, pan );
+        put( ZOOM_KEY, zoom );
         return this;
     }
 
@@ -304,11 +296,11 @@ public class PlotOptions
     }
 
     /**
-     * Set the crosshair options
+     * Set the pan options
      */
-    public final PlotOptions setCrosshairOptions( CrosshairOptions crosshair )
+    public final PlotOptions setPanOptions( PanOptions pan )
     {
-        put( CROSSHAIR_KEY, crosshair );
+        put( PAN_KEY, pan );
         return this;
     }
 
@@ -321,11 +313,11 @@ public class PlotOptions
     }
 
     /**
-     * Enable the multiple bars plugin
+     * Set the crosshair options
      */
-    public final PlotOptions setMultipleBars( boolean multiplebars )
+    public final PlotOptions setCrosshairOptions( CrosshairOptions crosshair )
     {
-        put( MULTIPLE_BARS_KEY, multiplebars );
+        put( CROSSHAIR_KEY, crosshair );
         return this;
     }
 
@@ -335,6 +327,32 @@ public class PlotOptions
     public final Boolean getMultipleBars()
     {
         return getBoolean( MULTIPLE_BARS_KEY );
+    }
+
+    /**
+     * Enable the multiple bars plugin
+     */
+    public final PlotOptions setMultipleBars( boolean multiplebars )
+    {
+        put( MULTIPLE_BARS_KEY, multiplebars );
+        return this;
+    }
+
+    /**
+     * @return true if the the full canvas drawing is enabled
+     */
+    public final Boolean getCanvasEnabled()
+    {
+        return getBoolean( CANVAS_KEY );
+    }
+
+    /**
+     * Enable the full canvas drawing
+     */
+    public final PlotOptions setCanvasEnabled( boolean enabled )
+    {
+        put( CANVAS_KEY, enabled );
+        return this;
     }
 
 }

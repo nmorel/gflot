@@ -47,6 +47,8 @@
   <define-property name="gflot.load.flot.multiplebars" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.fillbetween" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.fillarea" values="ENABLED, DISABLED" />
+  <define-property name="gflot.load.flot.time" values="ENABLED, DISABLED" />
+  <define-property name="gflot.load.flot.canvas" values="ENABLED, DISABLED" />
 
   <!-- Default values -->
   <set-property name="gflot.load" value="ENABLED" />
@@ -66,6 +68,8 @@
   <set-property name="gflot.load.flot.multiplebars" value="ENABLED" />
   <set-property name="gflot.load.flot.fillbetween" value="ENABLED" />
   <set-property name="gflot.load.flot.fillarea" value="ENABLED" />
+  <set-property name="gflot.load.flot.time" value="ENABLED" />
+  <set-property name="gflot.load.flot.canvas" value="ENABLED" />
 
   <!-- Load excanvas only for IE < 9 -->
   <replace-with class="com.googlecode.gflot.client.resources.NullLoader">
@@ -158,6 +162,16 @@
     <when-property-is name="gflot.load" value="ENABLED" />
     <when-property-is name="gflot.load.flot.fillarea" value="DISABLED" />
   </replace-with>
+  <replace-with class="com.googlecode.gflot.client.resources.NullLoader">
+    <when-type-is class="com.googlecode.gflot.client.resources.FlotTimeLoader" />
+    <when-property-is name="gflot.load" value="ENABLED" />
+    <when-property-is name="gflot.load.flot.time" value="DISABLED" />
+  </replace-with>
+  <replace-with class="com.googlecode.gflot.client.resources.NullLoader">
+    <when-type-is class="com.googlecode.gflot.client.resources.FlotCanvasLoader" />
+    <when-property-is name="gflot.load" value="ENABLED" />
+    <when-property-is name="gflot.load.flot.canvas" value="DISABLED" />
+  </replace-with>
 
   <!-- External loading -->
   <replace-with class="com.googlecode.gflot.client.resources.ExternalLoader">
@@ -233,6 +247,14 @@
   </replace-with>
   <replace-with class="com.googlecode.gflot.client.resources.ExternalLoader">
     <when-type-is class="com.googlecode.gflot.client.resources.FlotFillAreaLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="com.googlecode.gflot.client.resources.ExternalLoader">
+    <when-type-is class="com.googlecode.gflot.client.resources.FlotTimeLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="com.googlecode.gflot.client.resources.ExternalLoader">
+    <when-type-is class="com.googlecode.gflot.client.resources.FlotCanvasLoader" />
     <when-property-is name="gflot.load" value="EXTERNAL" />
   </replace-with>
 
