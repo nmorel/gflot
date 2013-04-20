@@ -1,10 +1,10 @@
 This folder contains all the scripts used by gflot
 
-jquery.flot.images :
-- Added checks in the function $.plot.image.loadDataImages to avoid null pointer when the images option are not set.
-
 jquery :
 - version 1.8.3
+
+0.8/jquery.flot.images :
+- Added checks in the function $.plot.image.loadDataImages to avoid null pointer when the images option are not set.
 
 plugins/jquery.flot.axislabels
 - from https://github.com/markrcote/flot-axislabels
