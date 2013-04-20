@@ -64,8 +64,6 @@ public class FlotJavaScriptLoader
 
         PluginLoader getFlotStackLoader();
 
-        PluginLoader getFlotTextLoader();
-
         PluginLoader getExcanvasLoader();
 
         PluginLoader getFlotResizeLoader();
@@ -80,7 +78,7 @@ public class FlotJavaScriptLoader
 
         PluginLoader getFlotCrosshairLoader();
 
-        PluginLoader getFlotMultipleBarsLoader();
+        PluginLoader getFlotOrderBarsLoader();
 
         PluginLoader getFlotFillBetweenLoader();
 
@@ -110,8 +108,6 @@ public class FlotJavaScriptLoader
 
         private PluginLoader flotStackLoader;
 
-        private PluginLoader flotTextLoader;
-
         private PluginLoader flotResizeLoader;
 
         private PluginLoader excanvasLoader;
@@ -126,7 +122,7 @@ public class FlotJavaScriptLoader
 
         private PluginLoader flotCrosshairLoader;
 
-        private PluginLoader flotMultipleBarsLoader;
+        private PluginLoader flotOrderBarsLoader;
 
         private PluginLoader flotFillBetweenLoader;
 
@@ -218,16 +214,6 @@ public class FlotJavaScriptLoader
         }
 
         @Override
-        public PluginLoader getFlotTextLoader()
-        {
-            if ( null == flotTextLoader )
-            {
-                flotTextLoader = GWT.create( FlotTextLoader.class );
-            }
-            return flotTextLoader;
-        }
-
-        @Override
         public PluginLoader getExcanvasLoader()
         {
             if ( null == excanvasLoader )
@@ -298,13 +284,13 @@ public class FlotJavaScriptLoader
         }
 
         @Override
-        public PluginLoader getFlotMultipleBarsLoader()
+        public PluginLoader getFlotOrderBarsLoader()
         {
-            if ( null == flotMultipleBarsLoader )
+            if ( null == flotOrderBarsLoader )
             {
-                flotMultipleBarsLoader = GWT.create( FlotMultipleBarsLoader.class );
+                flotOrderBarsLoader = GWT.create( FlotOrderBarsLoader.class );
             }
-            return flotMultipleBarsLoader;
+            return flotOrderBarsLoader;
         }
 
         @Override
@@ -356,7 +342,6 @@ public class FlotJavaScriptLoader
             getFlotImageLoader().load();
             getFlotPieLoader().load();
             getFlotStackLoader().load();
-            getFlotTextLoader().load();
             getFlotResizeLoader().load();
             getExcanvasLoader().load();
             getCanvas2ImageLoader().load();
@@ -364,7 +349,7 @@ public class FlotJavaScriptLoader
             getFlotThresholdLoader().load();
             getFlotNavigateLoader().load();
             getFlotCrosshairLoader().load();
-            getFlotMultipleBarsLoader().load();
+            getFlotOrderBarsLoader().load();
             getFlotFillBetweenLoader().load();
             getFlotFillAreaLoader().load();
             getFlotTimeLoader().load();

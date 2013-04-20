@@ -45,7 +45,6 @@ public class PlotOptions
     private static final String ZOOM_KEY = "zoom";
     private static final String PAN_KEY = "pan";
     private static final String CROSSHAIR_KEY = "crosshair";
-    private static final String MULTIPLE_BARS_KEY = "multiplebars";
     private static final String CANVAS_KEY = "canvas";
 
     /**
@@ -318,23 +317,6 @@ public class PlotOptions
     public final PlotOptions setCrosshairOptions( CrosshairOptions crosshair )
     {
         put( CROSSHAIR_KEY, crosshair );
-        return this;
-    }
-
-    /**
-     * @return true if the multiple bars plugin is enabled
-     */
-    public final Boolean getMultipleBars()
-    {
-        return getBoolean( MULTIPLE_BARS_KEY );
-    }
-
-    /**
-     * Enable the multiple bars plugin
-     */
-    public final PlotOptions setMultipleBars( boolean multiplebars )
-    {
-        put( MULTIPLE_BARS_KEY, multiplebars );
         return this;
     }
 

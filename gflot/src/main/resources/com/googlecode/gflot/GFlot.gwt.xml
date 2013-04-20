@@ -38,13 +38,12 @@
   <define-property name="gflot.load.flot.pie" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.stack" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.resize" values="ENABLED, DISABLED" />
-  <define-property name="gflot.load.flot.text" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.canvas2image" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.axislabels" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.threshold" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.navigate" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.crosshair" values="ENABLED, DISABLED" />
-  <define-property name="gflot.load.flot.multiplebars" values="ENABLED, DISABLED" />
+  <define-property name="gflot.load.flot.orderBars" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.fillbetween" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.fillarea" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.time" values="ENABLED, DISABLED" />
@@ -59,17 +58,16 @@
   <set-property name="gflot.load.flot.pie" value="ENABLED" />
   <set-property name="gflot.load.flot.stack" value="ENABLED" />
   <set-property name="gflot.load.flot.resize" value="ENABLED" />
-  <set-property name="gflot.load.flot.text" value="DISABLED" />
   <set-property name="gflot.load.canvas2image" value="DISABLED" />
   <set-property name="gflot.load.flot.axislabels" value="ENABLED" />
   <set-property name="gflot.load.flot.threshold" value="ENABLED" />
   <set-property name="gflot.load.flot.navigate" value="ENABLED" />
   <set-property name="gflot.load.flot.crosshair" value="ENABLED" />
-  <set-property name="gflot.load.flot.multiplebars" value="ENABLED" />
+  <set-property name="gflot.load.flot.orderBars" value="ENABLED" />
   <set-property name="gflot.load.flot.fillbetween" value="ENABLED" />
   <set-property name="gflot.load.flot.fillarea" value="ENABLED" />
   <set-property name="gflot.load.flot.time" value="ENABLED" />
-  <set-property name="gflot.load.flot.canvas" value="ENABLED" />
+  <set-property name="gflot.load.flot.canvas" value="DISABLED" />
 
   <!-- Load excanvas only for IE < 9 -->
   <replace-with class="com.googlecode.gflot.client.resources.NullLoader">
@@ -108,11 +106,6 @@
     <when-property-is name="gflot.load.flot.stack" value="DISABLED" />
   </replace-with>
   <replace-with class="com.googlecode.gflot.client.resources.NullLoader">
-    <when-type-is class="com.googlecode.gflot.client.resources.FlotTextLoader" />
-    <when-property-is name="gflot.load" value="ENABLED" />
-    <when-property-is name="gflot.load.flot.text" value="DISABLED" />
-  </replace-with>
-  <replace-with class="com.googlecode.gflot.client.resources.NullLoader">
     <when-type-is class="com.googlecode.gflot.client.resources.FlotResizeLoader" />
     <when-property-is name="gflot.load" value="ENABLED" />
     <when-property-is name="gflot.load.flot.resize" value="DISABLED" />
@@ -148,9 +141,9 @@
     <when-property-is name="gflot.load.flot.crosshair" value="DISABLED" />
   </replace-with>
   <replace-with class="com.googlecode.gflot.client.resources.NullLoader">
-    <when-type-is class="com.googlecode.gflot.client.resources.FlotMultipleBarsLoader" />
+    <when-type-is class="com.googlecode.gflot.client.resources.FlotOrderBarsLoader" />
     <when-property-is name="gflot.load" value="ENABLED" />
-    <when-property-is name="gflot.load.flot.multiplebars" value="DISABLED" />
+    <when-property-is name="gflot.load.flot.orderBars" value="DISABLED" />
   </replace-with>
   <replace-with class="com.googlecode.gflot.client.resources.NullLoader">
     <when-type-is class="com.googlecode.gflot.client.resources.FlotFillBetweenLoader" />
@@ -210,10 +203,6 @@
     <when-property-is name="gflot.load" value="EXTERNAL" />
   </replace-with>
   <replace-with class="com.googlecode.gflot.client.resources.ExternalLoader">
-    <when-type-is class="com.googlecode.gflot.client.resources.FlotTextLoader" />
-    <when-property-is name="gflot.load" value="EXTERNAL" />
-  </replace-with>
-  <replace-with class="com.googlecode.gflot.client.resources.ExternalLoader">
     <when-type-is class="com.googlecode.gflot.client.resources.FlotResizeLoader" />
     <when-property-is name="gflot.load" value="EXTERNAL" />
   </replace-with>
@@ -238,7 +227,7 @@
     <when-property-is name="gflot.load" value="EXTERNAL" />
   </replace-with>
   <replace-with class="com.googlecode.gflot.client.resources.ExternalLoader">
-    <when-type-is class="com.googlecode.gflot.client.resources.FlotMultipleBarsLoader" />
+    <when-type-is class="com.googlecode.gflot.client.resources.FlotOrderBarsLoader" />
     <when-property-is name="gflot.load" value="EXTERNAL" />
   </replace-with>
   <replace-with class="com.googlecode.gflot.client.resources.ExternalLoader">

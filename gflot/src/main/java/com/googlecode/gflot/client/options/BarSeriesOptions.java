@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -63,7 +63,7 @@ public class BarSeriesOptions
             return null;
         }
     }
-    
+
     /**
      * Creates a {@link BarSeriesOptions}
      */
@@ -75,6 +75,7 @@ public class BarSeriesOptions
     private static final String BAR_WIDTH_KEY = "barWidth";
     private static final String ALIGN_KEY = "align";
     private static final String HORIZONTAL_KEY = "horizontal";
+    private static final String ORDER_KEY = "order";
 
     protected BarSeriesOptions()
     {
@@ -161,6 +162,49 @@ public class BarSeriesOptions
     public final BarSeriesOptions clearHorizontal()
     {
         clear( HORIZONTAL_KEY );
+        return this;
+    }
+
+    /**
+     * Set the order for this serie. If two series have the same order, they are displayed in the same position
+     */
+    public final BarSeriesOptions setOrder( double order )
+    {
+        put( ORDER_KEY, order);
+        return this;
+    }
+
+    /**
+     * Set the order for this serie. If two series have the same order, they are displayed in the same position
+     */
+    public final BarSeriesOptions setOrder( String order )
+    {
+        put( ORDER_KEY, order);
+        return this;
+    }
+
+    /**
+     * @return the order as a number
+     */
+    public final Double getOrderAsDouble()
+    {
+        return getDouble( ORDER_KEY );
+    }
+
+    /**
+     * @return the order as a String
+     */
+    public final String getOrderAsString()
+    {
+        return getString( ORDER_KEY );
+    }
+
+    /**
+     * Clear the order
+     */
+    public final BarSeriesOptions clearOrder()
+    {
+        clear( ORDER_KEY );
         return this;
     }
 }

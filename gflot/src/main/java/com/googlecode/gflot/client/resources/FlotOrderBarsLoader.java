@@ -30,14 +30,15 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
 import com.googlecode.gflot.client.util.JavaScriptInjector;
 
-public class FlotTextLoader
+public class FlotOrderBarsLoader
     extends DefaultLoader
 {
+
     interface Bundle
         extends ClientBundle
     {
-        @Source("jquery.flot.text-0.1-modified.min.js")
-        TextResource flotText();
+        @Source( "jquery.flot.orderBars.min.js" )
+        TextResource flotOrderBars();
     }
 
     private Bundle bundle;
@@ -46,7 +47,7 @@ public class FlotTextLoader
     {
         if ( null == bundle )
         {
-            bundle = GWT.create( Bundle.class );
+            bundle = GWT.create( FlotOrderBarsLoader.Bundle.class );
         }
         return bundle;
     }
@@ -58,9 +59,8 @@ public class FlotTextLoader
     {
         if ( !loaded )
         {
-            JavaScriptInjector.inject( getBundle().flotText().getText() );
+            JavaScriptInjector.inject( getBundle().flotOrderBars().getText() );
             loaded = true;
         }
     }
-
 }

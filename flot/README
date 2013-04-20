@@ -1,14 +1,19 @@
-This folder contains modified flot js files from version 0.7.
+This folder contains all the scripts used by gflot
 
 jquery.flot.images :
 - Added checks in the function $.plot.image.loadDataImages to avoid null pointer when the images option are not set.
 
-jquery.flot.text (v0.1):
-- Plugin to render the label directly to the canvas (see http://www.lessaworld.com/projects/flotCanvasText/)
-- Modified to add some special characters : http://code.google.com/p/gflot/issues/detail?id=60
+jquery :
+- version 1.8.3
 
-jquery.flot.multiplebars :
-- plugin downloaded from comment #10 in flot issue : http://code.google.com/p/flot/issues/detail?id=159#c10
+plugins/jquery.flot.axislabels
+- from https://github.com/markrcote/flot-axislabels
+- commit Dec 04, 2012
 
-jquery.flot :
-- applied patch from flot issue http://code.google.com/p/flot/issues/detail?id=159#c27 to fix multiple bars problems
+plugins/jquery.flot.fillarea
+- from https://github.com/analoureiro99/flot-fillArea-plugin
+- commit Jan 08, 2013
+
+plugins/jquery.flot.orderBars
+-from https://github.com/pkoltermann/SideBySideImproved
+- commit Feb 12, 2013

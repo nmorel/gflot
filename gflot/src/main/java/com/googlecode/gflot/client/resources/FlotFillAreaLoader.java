@@ -37,7 +37,7 @@ public class FlotFillAreaLoader extends DefaultLoader
     interface Bundle
             extends ClientBundle
     {
-        @ClientBundle.Source( "jquery.flot.fillarea-20130108.min.js" )
+        @ClientBundle.Source( "jquery.flot.fillarea.min.js" )
         TextResource flotFillArea();
     }
 

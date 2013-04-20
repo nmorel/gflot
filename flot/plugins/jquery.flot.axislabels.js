@@ -239,6 +239,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         var offsets = this.calculateOffsets(box);
         var elem = $('<div class="axisLabels ' + this.axisName +
                      'Label" style="position:absolute; ' +
+                     'color: ' + this.opts.color + '; ' +
                      this.transforms(offsets.degrees, offsets.x, offsets.y) +
                      '">' + this.opts.axisLabel + '</div>');
         this.plot.getPlaceholder().append(elem);
@@ -326,14 +327,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         var defaultPadding = 2;  // padding between axis and tick labels
         plot.hooks.draw.push(function (plot, ctx) {
+            var hasAxisLabels = false;
             if (!secondPass) {
                 // MEASURE AND SET OPTIONS
                 $.each(plot.getAxes(), function(axisName, axis) {
                     var opts = axis.options // Flot 0.7
                         || plot.getOptions()[axisName]; // Flot 0.6
-                    if (!opts || !opts.axisLabel)
+                    if (!opts || !opts.axisLabel || !axis.show)
                         return;
 
+                    hasAxisLabels = true;
                     var renderer = null;
 
                     if (!opts.axisLabelUseHtml &&
@@ -383,16 +386,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                     opts.labelHeight = axis.labelHeight;
                     opts.labelWidth = axis.labelWidth;
                 });
-                // re-draw with new label widths and heights
-                secondPass = true;
-                plot.setupGrid();
-                plot.draw();
+                // if there are axis labels re-draw with new label widths and heights
+                if (hasAxisLabels) {
+                    secondPass = true;
+                    plot.setupGrid();
+                    plot.draw();
+                }
             } else {
                 // DRAW
                 $.each(plot.getAxes(), function(axisName, axis) {
                     var opts = axis.options // Flot 0.7
                         || plot.getOptions()[axisName]; // Flot 0.6
-                    if (!opts || !opts.axisLabel)
+                    if (!opts || !opts.axisLabel || !axis.show)
                         return;
 
                     axisLabels[axisName].draw(axis.box);
