@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -31,7 +31,7 @@ import com.googlecode.gflot.client.jsni.JsonObject;
 
 /**
  * Options for pie series
- * 
+ *
  * @author Nicolas Morel
  */
 public class PieSeriesOptions
@@ -40,6 +40,9 @@ public class PieSeriesOptions
     public static class Offset
         extends JsonObject
     {
+        private static final String TOP_KEY = "top";
+        private static final String LEFT_KEY = "left";
+
         /**
          * Creates a {@link Offset}
          */
@@ -48,8 +51,16 @@ public class PieSeriesOptions
             return JavaScriptObject.createObject().cast();
         }
 
-        private static final String TOP_KEY = "top";
-        private static final String LEFT_KEY = "left";
+        /**
+         * Creates a {@link Offset}
+         */
+        public static final Offset of( int top, int left )
+        {
+            Offset offset = Offset.create();
+            offset.setTop( top );
+            offset.setLeft( left );
+            return offset;
+        }
 
         protected Offset()
         {
@@ -108,9 +119,131 @@ public class PieSeriesOptions
         }
     }
 
+    public static class Shadow
+        extends JsonObject
+    {
+        private static final String TOP_KEY = "top";
+        private static final String LEFT_KEY = "left";
+        private static final String ALPHA_KEY = "alpha";
+
+        /**
+         * Creates a {@link Shadow}
+         */
+        public static final Shadow create()
+        {
+            return JavaScriptObject.createObject().cast();
+        }
+
+        /**
+         * Creates a {@link Shadow}
+         */
+        public static final Shadow of( int top, int left )
+        {
+            Shadow shadow = Shadow.create();
+            shadow.setTop( top );
+            shadow.setLeft( left );
+            return shadow;
+        }
+
+        /**
+         * Creates a {@link Shadow}
+         */
+        public static final Shadow of( int top, int left, double alpha )
+        {
+            Shadow shadow = Shadow.of( top, left );
+            shadow.setAlpha( alpha );
+            return shadow;
+        }
+
+        protected Shadow()
+        {
+        }
+
+        /**
+         * Set the top. integer value to move the pie up or down
+         */
+        public final Shadow setTop( int top )
+        {
+            put( TOP_KEY, top );
+            return this;
+        }
+
+        /**
+         * @return the top
+         */
+        public final Integer getTop()
+        {
+            return getInteger( TOP_KEY );
+        }
+
+        /**
+         * Clear the top option
+         */
+        public final Shadow clearTop()
+        {
+            clear( TOP_KEY );
+            return this;
+        }
+
+        /**
+         * Set the left. integer value to move the pie left or right
+         */
+        public final Shadow setLeft( int left )
+        {
+            put( LEFT_KEY, left );
+            return this;
+        }
+
+        /**
+         * @return the left
+         */
+        public final Integer getLeft()
+        {
+            return getInteger( LEFT_KEY );
+        }
+
+        /**
+         * Clear the left option
+         */
+        public final Shadow clearLeft()
+        {
+            clear( LEFT_KEY );
+            return this;
+        }
+
+        /**
+         * Set the alpha.
+         */
+        public final Shadow setAlpha( double alpha )
+        {
+            put( ALPHA_KEY, alpha );
+            return this;
+        }
+
+        /**
+         * @return the alpha
+         */
+        public final Double getAlpha()
+        {
+            return getDouble( ALPHA_KEY );
+        }
+
+        /**
+         * Clear the alpha option
+         */
+        public final Shadow clearAlpha()
+        {
+            clear( ALPHA_KEY );
+            return this;
+        }
+    }
+
     public static class Stroke
         extends JsonObject
     {
+        private static final String COLOR_KEY = "color";
+        private static final String WIDTH_KEY = "width";
+
         /**
          * Creates a {@link Stroke}
          */
@@ -118,9 +251,6 @@ public class PieSeriesOptions
         {
             return JavaScriptObject.createObject().cast();
         }
-
-        private static final String COLOR_KEY = "color";
-        private static final String WIDTH_KEY = "width";
 
         protected Stroke()
         {
@@ -183,9 +313,17 @@ public class PieSeriesOptions
     public static class Label
         extends JsonObject
     {
+        public interface Formatter
+        {
+            String format( String label, Series series );
+        }
+
         public static class Background
             extends JsonObject
         {
+            private static final String COLOR_KEY = "color";
+            private static final String OPACITY_KEY = "opacity";
+
             /**
              * Creates a {@link Background}
              */
@@ -193,9 +331,6 @@ public class PieSeriesOptions
             {
                 return JavaScriptObject.createObject().cast();
             }
-
-            private static final String COLOR_KEY = "color";
-            private static final String OPACITY_KEY = "opacity";
 
             protected Background()
             {
@@ -257,10 +392,10 @@ public class PieSeriesOptions
             }
         }
 
-        public interface Formatter
-        {
-            String format( String label, Series series );
-        }
+        private static final String SHOW_KEY = "show";
+        private static final String RADIUS_KEY = "radius";
+        private static final String BACKGROUND_KEY = "background";
+        private static final String THRESHOLD_KEY = "threshold";
 
         /**
          * Creates a {@link Label}
@@ -269,12 +404,6 @@ public class PieSeriesOptions
         {
             return JavaScriptObject.createObject().cast();
         }
-
-        private static final String SHOW_KEY = "show";
-        private static final String FORMATTER_KEY = "formatter";
-        private static final String RADIUS_KEY = "radius";
-        private static final String BACKGROUND_KEY = "background";
-        private static final String THRESHOLD_KEY = "threshold";
 
         protected Label()
         {
@@ -319,7 +448,7 @@ public class PieSeriesOptions
 
         private native void setFormatterNative( Formatter formatter )
         /*-{
-            this.formatter = function(label, series) {
+            this.formatter = function (label, series) {
                 return formatter.@com.googlecode.gflot.client.options.PieSeriesOptions.Label.Formatter::format(Ljava/lang/String;Lcom/googlecode/gflot/client/Series;)(label, series);
             };
         }-*/;
@@ -417,6 +546,10 @@ public class PieSeriesOptions
     public static class Combine
         extends JsonObject
     {
+        private static final String THRESHOLD_KEY = "threshold";
+        private static final String COLOR_KEY = "color";
+        private static final String LABEL_KEY = "label";
+
         /**
          * Creates a {@link Combine}
          */
@@ -424,10 +557,6 @@ public class PieSeriesOptions
         {
             return JavaScriptObject.createObject().cast();
         }
-
-        private static final String THRESHOLD_KEY = "threshold";
-        private static final String COLOR_KEY = "color";
-        private static final String LABEL_KEY = "label";
 
         protected Combine()
         {
@@ -519,6 +648,8 @@ public class PieSeriesOptions
     public static class Highlight
         extends JsonObject
     {
+        private static final String OPACITY_KEY = "opacity";
+
         /**
          * Creates a {@link Highlight}
          */
@@ -526,8 +657,6 @@ public class PieSeriesOptions
         {
             return JavaScriptObject.createObject().cast();
         }
-
-        private static final String OPACITY_KEY = "opacity";
 
         protected Highlight()
         {
@@ -562,14 +691,6 @@ public class PieSeriesOptions
         }
     }
 
-    /**
-     * Creates a {@link PieSeriesOptions}
-     */
-    public static final PieSeriesOptions create()
-    {
-        return JavaScriptObject.createObject().cast();
-    }
-
     private static final String RADIUS_KEY = "radius";
     private static final String INNER_RADIUS_KEY = "innerRadius";
     private static final String START_ANGLE_KEY = "startAngle";
@@ -579,6 +700,15 @@ public class PieSeriesOptions
     private static final String LABEL_KEY = "label";
     private static final String COMBINE_KEY = "combine";
     private static final String HIGHLIGHT_KEY = "highlight";
+    private static final String SHADOW_KEY = "shadow";
+
+    /**
+     * Creates a {@link PieSeriesOptions}
+     */
+    public static final PieSeriesOptions create()
+    {
+        return JavaScriptObject.createObject().cast();
+    }
 
     protected PieSeriesOptions()
     {
@@ -782,5 +912,31 @@ public class PieSeriesOptions
     public final Highlight getHighlight()
     {
         return getJsObject( HIGHLIGHT_KEY );
+    }
+
+    /**
+     * Set the shadow.
+     */
+    public final PieSeriesOptions setShadow( Shadow shadow )
+    {
+        put( SHADOW_KEY, shadow );
+        return this;
+    }
+
+    /**
+     * @return the shadow
+     */
+    public final Shadow getShadow()
+    {
+        return getJsObject( SHADOW_KEY );
+    }
+
+    /**
+     * Clear the shadow
+     */
+    public final PieSeriesOptions clearShadow()
+    {
+        clear( SHADOW_KEY );
+        return this;
     }
 }
