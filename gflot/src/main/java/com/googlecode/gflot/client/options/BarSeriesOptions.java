@@ -76,6 +76,7 @@ public class BarSeriesOptions
     private static final String ALIGN_KEY = "align";
     private static final String HORIZONTAL_KEY = "horizontal";
     private static final String ORDER_KEY = "order";
+    private static final String ZERO_KEY = "zero";
 
     protected BarSeriesOptions()
     {
@@ -205,6 +206,32 @@ public class BarSeriesOptions
     public final BarSeriesOptions clearOrder()
     {
         clear( ORDER_KEY );
+        return this;
+    }
+
+    /**
+     * Set whether the y-axis minimum is scaled to fit the data or set to zero
+     */
+    public final BarSeriesOptions setZero( boolean zero )
+    {
+        put( ZERO_KEY, zero );
+        return this;
+    }
+
+    /**
+     * @return true if the y-axis minimum is set to zero
+     */
+    public final Boolean getZero()
+    {
+        return getBoolean( ZERO_KEY );
+    }
+
+    /**
+     * Clear whether the y-axis minimum is scaled to fit the data or set to zero
+     */
+    public final BarSeriesOptions clearZero()
+    {
+        clear( ZERO_KEY );
         return this;
     }
 }
