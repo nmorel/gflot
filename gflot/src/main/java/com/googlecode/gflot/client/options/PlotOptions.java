@@ -46,6 +46,7 @@ public class PlotOptions
     private static final String PAN_KEY = "pan";
     private static final String CROSSHAIR_KEY = "crosshair";
     private static final String CANVAS_KEY = "canvas";
+    private static final String INTERACTION_KEY = "interaction";
 
     /**
      * Creates a {@link PlotOptions}
@@ -334,6 +335,23 @@ public class PlotOptions
     public final PlotOptions setCanvasEnabled( boolean enabled )
     {
         put( CANVAS_KEY, enabled );
+        return this;
+    }
+
+    /**
+     * @return the interaction options
+     */
+    public final InteractionOptions getInteractionOptions()
+    {
+        return getJsObject( INTERACTION_KEY );
+    }
+
+    /**
+     * Set the interaction options
+     */
+    public final PlotOptions setInteractionOptions( InteractionOptions interactionOptions )
+    {
+        put( INTERACTION_KEY, interactionOptions );
         return this;
     }
 
