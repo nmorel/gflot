@@ -34,7 +34,7 @@ public class BarSeriesOptions
 {
     public enum BarAlignment
     {
-        CENTER( "center" ), LEFT( "left" );
+        CENTER( "center" ), LEFT( "left" ), RIGHT( "right" );
 
         private final String flotValue;
 
