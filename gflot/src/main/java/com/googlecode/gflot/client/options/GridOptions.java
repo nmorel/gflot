@@ -28,6 +28,8 @@ package com.googlecode.gflot.client.options;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayString;
 import com.googlecode.gflot.client.jsni.JsonObject;
+import com.googlecode.gflot.client.options.side.IntegerSideOptions;
+import com.googlecode.gflot.client.options.side.StringSideOptions;
 
 /**
  * The grid is the thing with the axes and a number of ticks.
@@ -37,144 +39,6 @@ import com.googlecode.gflot.client.jsni.JsonObject;
 public class GridOptions
     extends JsonObject
 {
-    public static class Margin extends JsonObject
-    {
-
-        private static final String MARGIN_TOP_KEY = "top";
-        private static final String MARGIN_RIGHT_KEY = "right";
-        private static final String MARGIN_BOTTOM_KEY = "bottom";
-        private static final String MARGIN_LEFT_KEY = "left";
-
-        /**
-         * Creates a {@link Margin}
-         */
-        public static final Margin create()
-        {
-            return JavaScriptObject.createObject().cast();
-        }
-
-        /**
-         * Creates a {@link Margin}
-         */
-        public static final Margin of( double top, double right, double bottom, double left )
-        {
-            Margin margin = Margin.create();
-            margin.setTop( top );
-            margin.setRight( right );
-            margin.setBottom( bottom );
-            margin.setLeft( left );
-            return margin;
-        }
-
-        protected Margin()
-        {
-        }
-
-        /**
-         * Set the top margin
-         */
-        public final Margin setTop( double top )
-        {
-            put( MARGIN_TOP_KEY, top );
-            return this;
-        }
-
-        /**
-         * @return the top margin
-         */
-        public final Double getTop()
-        {
-            return getDouble( MARGIN_TOP_KEY );
-        }
-
-        /**
-         * Clear the top margin
-         */
-        public final Margin clearTop()
-        {
-            clear( MARGIN_TOP_KEY );
-            return this;
-        }
-
-        /**
-         * Set the right margin
-         */
-        public final Margin setRight( double right )
-        {
-            put( MARGIN_RIGHT_KEY, right );
-            return this;
-        }
-
-        /**
-         * @return the right margin
-         */
-        public final Double getRight()
-        {
-            return getDouble( MARGIN_RIGHT_KEY );
-        }
-
-        /**
-         * Clear the right margin
-         */
-        public final Margin clearRight()
-        {
-            clear( MARGIN_RIGHT_KEY );
-            return this;
-        }
-
-        /**
-         * Set the bottom margin
-         */
-        public final Margin setBottom( double bottom )
-        {
-            put( MARGIN_BOTTOM_KEY, bottom );
-            return this;
-        }
-
-        /**
-         * @return the bottom margin
-         */
-        public final Double getBottom()
-        {
-            return getDouble( MARGIN_BOTTOM_KEY );
-        }
-
-        /**
-         * Clear the bottom margin
-         */
-        public final Margin clearBottom()
-        {
-            clear( MARGIN_BOTTOM_KEY );
-            return this;
-        }
-
-        /**
-         * Set the left margin
-         */
-        public final Margin setLeft( double left )
-        {
-            put( MARGIN_LEFT_KEY, left );
-            return this;
-        }
-
-        /**
-         * @return the left margin
-         */
-        public final Double getLeft()
-        {
-            return getDouble( MARGIN_LEFT_KEY );
-        }
-
-        /**
-         * Clear the left margin
-         */
-        public final Margin clearLeft()
-        {
-            clear( MARGIN_LEFT_KEY );
-            return this;
-        }
-
-    }
 
     private static final String COLOR_KEY = "color";
     private static final String BACKGROUND_COLOR_KEY = "backgroundColor";
@@ -484,11 +348,28 @@ public class GridOptions
     }
 
     /**
+     * Set the width of the border around the plot. Set it to 0 to disable the border.
+     */
+    public final GridOptions setBorderWidth( IntegerSideOptions borderWidth )
+    {
+        put( BORDER_WIDTH_KEY, borderWidth );
+        return this;
+    }
+
+    /**
      * @return the width of the border around the plot
      */
-    public final Integer getBorderWidth()
+    public final Integer getBorderWidthAsInteger()
     {
         return getInteger( BORDER_WIDTH_KEY );
+    }
+
+    /**
+     * @return the width of the border around the plot
+     */
+    public final IntegerSideOptions getBorderWidthAsObject()
+    {
+        return getJsObject( BORDER_WIDTH_KEY );
     }
 
     /**
@@ -510,11 +391,28 @@ public class GridOptions
     }
 
     /**
+     * Set the color of the border. By default, it's the same color than the grid lines.
+     */
+    public final GridOptions setBorderColor( StringSideOptions borderColor )
+    {
+        put( BORDER_COLOR_KEY, borderColor );
+        return this;
+    }
+
+    /**
      * @return the color of the border
      */
-    public final String getBorderColor()
+    public final String getBorderColorAsString()
     {
         return getString( BORDER_COLOR_KEY );
+    }
+
+    /**
+     * @return the color of the border
+     */
+    public final StringSideOptions getBorderColorAsObject()
+    {
+        return getJsObject( BORDER_COLOR_KEY );
     }
 
     /**
@@ -674,7 +572,7 @@ public class GridOptions
     /**
      * @return the margin object
      */
-    public final Margin getMarginAsObject()
+    public final IntegerSideOptions getMarginAsObject()
     {
         return getJsObject( MARGIN_KEY );
     }
@@ -691,7 +589,7 @@ public class GridOptions
     /**
      * Set the space in pixels between the canvas edge and the grid
      */
-    public final GridOptions setMargin( Margin margin )
+    public final GridOptions setMargin( IntegerSideOptions margin )
     {
         put( MARGIN_KEY, margin );
         return this;
