@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -35,7 +35,7 @@ import com.google.gwt.core.client.JsArrayString;
  * Flot always displays timestamps according to UTC. To get UTC time, you can use in GWT the function
  * java.util.Date.UTC(). Look at Flot API for more info about Time series.
  * </p>
- * 
+ *
  * @author AlexanderDeleon
  */
 public class TimeSeriesAxisOptions
@@ -44,18 +44,6 @@ public class TimeSeriesAxisOptions
     public enum TickTimeUnit
     {
         SECOND( "second" ), MINUTE( "minute" ), HOUR( "hour" ), DAY( "day" ), MONTH( "month" ), YEAR( "year" );
-
-        private String flotValue;
-
-        TickTimeUnit( String flotValue )
-        {
-            this.flotValue = flotValue;
-        }
-
-        String getFlotValue()
-        {
-            return flotValue;
-        }
 
         static TickTimeUnit findByFlotValue( String flotValue )
         {
@@ -70,6 +58,18 @@ public class TimeSeriesAxisOptions
                 }
             }
             return null;
+        }
+
+        private String flotValue;
+
+        TickTimeUnit( String flotValue )
+        {
+            this.flotValue = flotValue;
+        }
+
+        String getFlotValue()
+        {
+            return flotValue;
         }
     }
 
@@ -102,6 +102,13 @@ public class TimeSeriesAxisOptions
         }
     }
 
+    public static final String TIME_ZONE_BROWSER_KEY = "browser";
+    private static final String TIME_ZONE_KEY = "timezone";
+    private static final String TIME_FORMAT_KEY = "timeformat";
+    private static final String DAY_NAMES_KEY = "dayNames";
+    private static final String MONTH_NAMES_KEY = "monthNames";
+    private static final String TWELVE_HOUR_CLOCK_KEY = "twelveHourClock";
+
     /**
      * Creates a {@link TimeSeriesAxisOptions}
      */
@@ -112,12 +119,43 @@ public class TimeSeriesAxisOptions
         return axis;
     }
 
-    private static final String TIME_FORMAT_KEY = "timeformat";
-    private static final String MONTH_NAMES_KEY = "monthNames";
-    private static final String TWELVE_HOUR_CLOCK_KEY = "twelveHourClock";
-
     protected TimeSeriesAxisOptions()
     {
+    }
+
+    /**
+     * @return the time zone
+     */
+    public final String getTimeZone()
+    {
+        return getString( TIME_ZONE_KEY );
+    }
+
+    /**
+     * Set how the dates are displayed. If null, the dates are displayed as UTC. If
+     * "browser", the dates are displayed in the time zone of the user's browser. You can also give a time zone (e.g. "America/New_York") if you include the script <a href="https://github.com/mde/timezone-js">timezone-js</a>
+     */
+    public final TimeSeriesAxisOptions setTimeZone( String timeZone )
+    {
+        put( TIME_ZONE_KEY, timeZone );
+        return this;
+    }
+
+    /**
+     * Clear the time zone
+     */
+    public final TimeSeriesAxisOptions clearTimeZone()
+    {
+        clear( TIME_ZONE_KEY );
+        return this;
+    }
+
+    /**
+     * @return the format of the tick label
+     */
+    public final String getTimeFormat()
+    {
+        return getString( TIME_FORMAT_KEY );
     }
 
     /**
@@ -125,16 +163,21 @@ public class TimeSeriesAxisOptions
      * <p>
      * The following specifiers are supported :
      * <ul>
-     * <li>%h: hours</li>
-     * <li>%H: hours (left-padded with a zero)</li>
-     * <li>%M: minutes (left-padded with a zero)</li>
-     * <li>%S: seconds (left-padded with a zero)</li>
-     * <li>%d: day of month (1-31), use %0d for zero-padding</li>
-     * <li>%m: month (1-12), use %0m for zero-padding</li>
-     * <li>%y: year (four digits)</li>
+     * <li>%a: weekday name (customizable)</li>
      * <li>%b: month name (customizable)</li>
-     * <li>%p: am/pm, additionally switches %h/%H to 12 hour instead of 24</li>
+     * <li>%d: day of month, zero-padded (01-31)</li>
+     * <li>%e: day of month, space-padded ( 1-31)</li>
+     * <li>%H: hours, 24-hour time, zero-padded (00-23)</li>
+     * <li>%I: hours, 12-hour time, zero-padded (01-12)</li>
+     * <li>%m: month, zero-padded (01-12)</li>
+     * <li>%M: minutes, zero-padded (00-59)</li>
+     * <li>%q: quarter (1-4)</li>
+     * <li>%S: seconds, zero-padded (00-59)</li>
+     * <li>%y: year (two digits)</li>
+     * <li>%Y: year (four digits)</li>
+     * <li>%p: am/pm</li>
      * <li>%P: AM/PM (uppercase version of %p)</li>
+     * <li>%w: weekday as number (0-6, 0 being Sunday)</li>
      * </ul>
      * </p>
      * <p>
@@ -148,20 +191,20 @@ public class TimeSeriesAxisOptions
     }
 
     /**
-     * @return the format of the tick label
-     */
-    public final String getTimeFormat()
-    {
-        return getString( TIME_FORMAT_KEY );
-    }
-
-    /**
      * Clear the format of the tick label
      */
     public final TimeSeriesAxisOptions clearTimeFormat()
     {
         clear( TIME_FORMAT_KEY );
         return this;
+    }
+
+    /**
+     * @return the label used for month
+     */
+    public final JsArrayString getMonthNames()
+    {
+        return getStringArray( MONTH_NAMES_KEY );
     }
 
     /**
@@ -209,14 +252,6 @@ public class TimeSeriesAxisOptions
     }
 
     /**
-     * @return the label used for month
-     */
-    public final JsArrayString getMonthNames()
-    {
-        return getStringArray( MONTH_NAMES_KEY );
-    }
-
-    /**
      * Clear the labels used for month
      */
     public final TimeSeriesAxisOptions clearMonthNames()
@@ -226,11 +261,63 @@ public class TimeSeriesAxisOptions
     }
 
     /**
-     * Set if the autogenerated timestamps will use 12 hour AM/PM timestamps instead of 24 hour.
+     * @return the label used for days
      */
-    public final TimeSeriesAxisOptions setTwelveHourClock( boolean twelveHourClock )
+    public final JsArrayString getDayNames()
     {
-        put( TWELVE_HOUR_CLOCK_KEY, twelveHourClock );
+        return getStringArray( DAY_NAMES_KEY );
+    }
+
+    /**
+     * Set the label used for days.
+     */
+    public final TimeSeriesAxisOptions setDayNames( String... dayNames )
+    {
+        assert null != dayNames : "dayNames can't be null";
+        assert dayNames.length == 7 : "dayNames must have all 7 days names";
+
+        JsArrayString array = JavaScriptObject.createArray().cast();
+        for ( String dayName : dayNames )
+        {
+            array.push( dayName );
+        }
+        return setDayNames( array );
+    }
+
+    /**
+     * Set the label used for days.
+     */
+    public final TimeSeriesAxisOptions setDayNames( Collection<String> dayNames )
+    {
+        assert null != dayNames : "dayNames can't be null";
+        assert dayNames.size() == 7 : "dayNames must have all 7 days names";
+
+        JsArrayString array = JavaScriptObject.createArray().cast();
+        for ( String dayName : dayNames )
+        {
+            array.push( dayName );
+        }
+        return setDayNames( array );
+    }
+
+    /**
+     * Set the label used for days.
+     */
+    public final TimeSeriesAxisOptions setDayNames( JsArrayString dayNames )
+    {
+        assert null != dayNames : "dayNames can't be null";
+        assert dayNames.length() == 7 : "dayNames must have all 7 days names";
+
+        put( DAY_NAMES_KEY, dayNames );
+        return this;
+    }
+
+    /**
+     * Clear the labels used for days
+     */
+    public final TimeSeriesAxisOptions clearDayNames()
+    {
+        clear( DAY_NAMES_KEY );
         return this;
     }
 
@@ -243,12 +330,29 @@ public class TimeSeriesAxisOptions
     }
 
     /**
+     * Set if the autogenerated timestamps will use 12 hour AM/PM timestamps instead of 24 hour.
+     */
+    public final TimeSeriesAxisOptions setTwelveHourClock( boolean twelveHourClock )
+    {
+        put( TWELVE_HOUR_CLOCK_KEY, twelveHourClock );
+        return this;
+    }
+
+    /**
      * Clear the twelve hour clock option
      */
     public final TimeSeriesAxisOptions clearTwelveHourClock()
     {
         clear( TWELVE_HOUR_CLOCK_KEY );
         return this;
+    }
+
+    /**
+     * @return the tick interval size
+     */
+    public final TickSize getTickSize()
+    {
+        return getJsObject( TICK_SIZE_KEY );
     }
 
     /**
@@ -263,11 +367,11 @@ public class TimeSeriesAxisOptions
     }
 
     /**
-     * @return the tick interval size
+     * @return the minimum tick size
      */
-    public final TickSize getTickSize()
+    public final TickSize getMinTickSize()
     {
-        return getJsObject( TICK_SIZE_KEY );
+        return getJsObject( MIN_TICK_SIZE_KEY );
     }
 
     /**
@@ -279,14 +383,6 @@ public class TimeSeriesAxisOptions
 
         put( MIN_TICK_SIZE_KEY, TickSize.of( minTickSize, unit ) );
         return this;
-    }
-
-    /**
-     * @return the minimum tick size
-     */
-    public final TickSize getMinTickSize()
-    {
-        return getJsObject( MIN_TICK_SIZE_KEY );
     }
 
 }
