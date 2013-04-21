@@ -42,6 +42,9 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     public static class Threshold
         extends JsonObject
     {
+        private static final String BELOW_KEY = "below";
+        private static final String COLOR_KEY = "color";
+
         /**
          * Creates a {@link Threshold}
          */
@@ -49,9 +52,6 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
         {
             return JavaScriptObject.createObject().cast();
         }
-
-        private static final String BELOW_KEY = "below";
-        private static final String COLOR_KEY = "color";
 
         protected Threshold()
         {
@@ -118,6 +118,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     private static final String SHADOW_SIZE_KEY = "shadowSize";
     private static final String STACK_KEY = "stack";
     private static final String THRESHOLD_KEY = "threshold";
+    private static final String HIGHLIGHT_COLOR_KEY = "highlightColor";
 
     protected CommonSeriesOptions()
     {
@@ -335,6 +336,54 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     public final T clearThreshold()
     {
         clear( THRESHOLD_KEY );
+        return (T) this;
+    }
+
+    /**
+     * Set the color of the translucent overlay used
+     * to highlight the series when the mouse hovers over it
+     */
+    public final T setHighlightColor( String color )
+    {
+        put( HIGHLIGHT_COLOR_KEY, color );
+        return (T) this;
+    }
+
+    /**
+     * Set the color of the translucent overlay used
+     * to highlight the series when the mouse hovers over it
+     */
+    public final T setHighlightColor( double color )
+    {
+        put( HIGHLIGHT_COLOR_KEY, color );
+        return (T) this;
+    }
+
+    /**
+     * @return the color of the translucent overlay used
+     *         to highlight the series when the mouse hovers over it
+     */
+    public final String getHighlightColorAsString()
+    {
+        return getString( HIGHLIGHT_COLOR_KEY );
+    }
+
+    /**
+     * @return the color of the translucent overlay used
+     *         to highlight the series when the mouse hovers over it
+     */
+    public final Double getHighlightColorAsNumber()
+    {
+        return getDouble( HIGHLIGHT_COLOR_KEY );
+    }
+
+    /**
+     * Clear the color of the translucent overlay used
+     * to highlight the series when the mouse hovers over it
+     */
+    public final T clearHighlightColor()
+    {
+        clear( HIGHLIGHT_COLOR_KEY );
         return (T) this;
     }
 }
