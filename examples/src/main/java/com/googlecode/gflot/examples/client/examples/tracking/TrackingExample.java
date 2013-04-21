@@ -25,6 +25,7 @@ import com.googlecode.gflot.client.options.AxisOptions;
 import com.googlecode.gflot.client.options.CrosshairOptions;
 import com.googlecode.gflot.client.options.GlobalSeriesOptions;
 import com.googlecode.gflot.client.options.GridOptions;
+import com.googlecode.gflot.client.options.LegendOptions;
 import com.googlecode.gflot.client.options.LineSeriesOptions;
 import com.googlecode.gflot.client.options.PlotOptions;
 import com.googlecode.gflot.client.options.PointsSeriesOptions;
@@ -140,6 +141,7 @@ public class TrackingExample
         plotOptions.setCrosshairOptions( CrosshairOptions.create().setMode( Mode.X ) );
         plotOptions.setGridOptions( GridOptions.create().setHoverable( true ).setAutoHighlight( false ) );
         plotOptions.addYAxisOptions( AxisOptions.create().setMinimum( -1.2 ).setMaximum( 1.2 ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setSorted( LegendOptions.LegendSorting.ASCENDING ) );
 
         // create a series
         final SeriesHandler sin = model1.addSeries( Series.of( "sin(x)" ) );

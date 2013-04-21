@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -25,6 +25,8 @@
 package com.googlecode.gflot.client.options;
 
 
+import java.util.Comparator;
+
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayNumber;
 import com.google.gwt.dom.client.Document;
@@ -34,24 +36,47 @@ import com.googlecode.gflot.client.jsni.JsonObject;
 
 /**
  * The legend is generated as a table with the data series labels and small label boxes with the color of the series.
- * 
+ *
  * @author AlexanderDeleon
  */
 public class LegendOptions
     extends JsonObject
 {
-    public interface LabelFormatter
+    public enum LegendSorting
     {
-        String formatLabel( String label, Series series );
-    }
+        /**
+         * Will appear in the opposite order from their series
+         */
+        REVERSE( "reverse" ),
 
-    public enum LegendPosition
-    {
-        NORTH_EAST( "ne" ), NORTH_WEST( "nw" ), SOUTH_EAST( "se" ), SOUTH_WEST( "sw" );
+        /**
+         * Sorted alphabetically in ascending order
+         */
+        ASCENDING( "ascending" ),
+
+        /**
+         * Sorted alphabetically in descending order
+         */
+        DESCENDING( "descending" );
+
+        static LegendSorting findByFlotValue( String flotValue )
+        {
+            if ( null != flotValue && !"".equals( flotValue ) )
+            {
+                for ( LegendSorting mode : values() )
+                {
+                    if ( mode.getFlotValue().equals( flotValue ) )
+                    {
+                        return mode;
+                    }
+                }
+            }
+            return null;
+        }
 
         private String flotValue;
 
-        LegendPosition( String flotValue )
+        LegendSorting( String flotValue )
         {
             this.flotValue = flotValue;
         }
@@ -60,6 +85,11 @@ public class LegendOptions
         {
             return flotValue;
         }
+    }
+
+    public enum LegendPosition
+    {
+        NORTH_EAST( "ne" ), NORTH_WEST( "nw" ), SOUTH_EAST( "se" ), SOUTH_WEST( "sw" );
 
         static LegendPosition findByFlotValue( String flotValue )
         {
@@ -75,14 +105,40 @@ public class LegendOptions
             }
             return null;
         }
+
+        private String flotValue;
+
+        LegendPosition( String flotValue )
+        {
+            this.flotValue = flotValue;
+        }
+
+        String getFlotValue()
+        {
+            return flotValue;
+        }
     }
 
-    /**
-     * Creates a {@link LegendOptions}
-     */
-    public static final LegendOptions create()
+    public interface LabelFormatter
     {
-        return JavaScriptObject.createObject().cast();
+        String formatLabel( String label, Series series );
+    }
+
+    public static class LegendComparable extends JsonObject
+    {
+        protected LegendComparable()
+        {
+        }
+
+        public final String getLabel()
+        {
+            return getString( "label" );
+        }
+
+        public final String getColor()
+        {
+            return getString( "color" );
+        }
     }
 
     private static final String SHOW_KEY = "show";
@@ -93,6 +149,15 @@ public class LegendOptions
     private static final String BACKGROUND_COLOR_KEY = "backgroundColor";
     private static final String BACKGROUND_OPACITY_KEY = "backgroundOpacity";
     private static final String CONTAINER_KEY = "container";
+    private static final String SORTED_KEY = "sorted";
+
+    /**
+     * Creates a {@link LegendOptions}
+     */
+    public static final LegendOptions create()
+    {
+        return JavaScriptObject.createObject().cast();
+    }
 
     protected LegendOptions()
     {
@@ -232,7 +297,7 @@ public class LegendOptions
 
     /**
      * @return the distance to the plot edge. The array can contains one value if the margin is applied to both x and y
-     * axis or 2 values if the first one is applied to x axis and the second one to y axis.
+     *         axis or 2 values if the first one is applied to x axis and the second one to y axis.
      */
     public final Object getMargin()
     {
@@ -241,22 +306,22 @@ public class LegendOptions
 
     /**
      * @return the distance to the plot edge. The array can contains one value if the margin is applied to both x and y
-     * axis or 2 values if the first one is applied to x axis and the second one to y axis.
+     *         axis or 2 values if the first one is applied to x axis and the second one to y axis.
      */
     public final Double getMarginAsDouble()
     {
         Object margin = getMargin();
-        return (Double) ( margin instanceof Double ? margin : null );
+        return (Double) (margin instanceof Double ? margin : null);
     }
 
     /**
      * @return the distance to the plot edge. The array can contains one value if the margin is applied to both x and y
-     * axis or 2 values if the first one is applied to x axis and the second one to y axis.
+     *         axis or 2 values if the first one is applied to x axis and the second one to y axis.
      */
     public final JsArrayNumber getMarginAsArray()
     {
         Object margin = getMargin();
-        return (JsArrayNumber) ( margin instanceof JavaScriptObject ? margin : null );
+        return (JsArrayNumber) (margin instanceof JavaScriptObject ? margin : null);
     }
 
     /**
@@ -375,7 +440,7 @@ public class LegendOptions
 
     private final native void setLabelFormatterNative( LabelFormatter labelFormatter )
     /*-{
-        this.labelFormatter = function(label, series) {
+        this.labelFormatter = function (label, series) {
             return labelFormatter.@com.googlecode.gflot.client.options.LegendOptions.LabelFormatter::formatLabel(Ljava/lang/String;Lcom/googlecode/gflot/client/Series;)(label, series);
         };
     }-*/;
@@ -386,6 +451,55 @@ public class LegendOptions
     public final LegendOptions clearLabelFormatter()
     {
         clear( "labelFormatter" );
+        return this;
+    }
+
+    /**
+     * @return the sorted option
+     */
+    public final LegendSorting getSorted()
+    {
+        return LegendSorting.findByFlotValue( getString( SORTED_KEY ) );
+    }
+
+    /**
+     * Set the sorted option. Legend entries appear in the same order as their series by default. If "sorted"
+     * is "reverse" then they appear in the opposite order from their series. To sort
+     * them alphabetically, you can specify true, "ascending" or "descending", where
+     * true and "ascending" are equivalent.
+     */
+    public final LegendOptions setSorted( LegendSorting sorting )
+    {
+        assert null != sorting : "sorting can't be null";
+
+        put( SORTED_KEY, sorting.getFlotValue() );
+        return this;
+    }
+
+    /**
+     * Set the comparator for sorted option
+     */
+    public final LegendOptions setSortedComparator( Comparator<LegendComparable> comparator )
+    {
+        assert null != comparator : "comparator can't be null";
+
+        setSortedComparatorNative( comparator );
+        return this;
+    }
+
+    private final native void setSortedComparatorNative( Comparator<LegendComparable> comparator )
+    /*-{
+        this.sorted = function (a, b) {
+            return comparator.@java.util.Comparator::compare(Ljava/lang/Object;Ljava/lang/Object;)(a, b);
+        };
+    }-*/;
+
+    /**
+     * Clear the sorted option
+     */
+    public final LegendOptions clearSorted()
+    {
+        clear( SORTED_KEY );
         return this;
     }
 }
