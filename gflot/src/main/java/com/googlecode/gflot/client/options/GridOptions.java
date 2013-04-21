@@ -37,12 +37,143 @@ import com.googlecode.gflot.client.jsni.JsonObject;
 public class GridOptions
     extends JsonObject
 {
-    /**
-     * Creates a {@link GridOptions}
-     */
-    public static final GridOptions create()
+    public static class Margin extends JsonObject
     {
-        return JavaScriptObject.createObject().cast();
+
+        private static final String MARGIN_TOP_KEY = "top";
+        private static final String MARGIN_RIGHT_KEY = "right";
+        private static final String MARGIN_BOTTOM_KEY = "bottom";
+        private static final String MARGIN_LEFT_KEY = "left";
+
+        /**
+         * Creates a {@link Margin}
+         */
+        public static final Margin create()
+        {
+            return JavaScriptObject.createObject().cast();
+        }
+
+        /**
+         * Creates a {@link Margin}
+         */
+        public static final Margin of( double top, double right, double bottom, double left )
+        {
+            Margin margin = Margin.create();
+            margin.setTop( top );
+            margin.setRight( right );
+            margin.setBottom( bottom );
+            margin.setLeft( left );
+            return margin;
+        }
+
+        protected Margin()
+        {
+        }
+
+        /**
+         * Set the top margin
+         */
+        public final Margin setTop( double top )
+        {
+            put( MARGIN_TOP_KEY, top );
+            return this;
+        }
+
+        /**
+         * @return the top margin
+         */
+        public final Double getTop()
+        {
+            return getDouble( MARGIN_TOP_KEY );
+        }
+
+        /**
+         * Clear the top margin
+         */
+        public final Margin clearTop()
+        {
+            clear( MARGIN_TOP_KEY );
+            return this;
+        }
+
+        /**
+         * Set the right margin
+         */
+        public final Margin setRight( double right )
+        {
+            put( MARGIN_RIGHT_KEY, right );
+            return this;
+        }
+
+        /**
+         * @return the right margin
+         */
+        public final Double getRight()
+        {
+            return getDouble( MARGIN_RIGHT_KEY );
+        }
+
+        /**
+         * Clear the right margin
+         */
+        public final Margin clearRight()
+        {
+            clear( MARGIN_RIGHT_KEY );
+            return this;
+        }
+
+        /**
+         * Set the bottom margin
+         */
+        public final Margin setBottom( double bottom )
+        {
+            put( MARGIN_BOTTOM_KEY, bottom );
+            return this;
+        }
+
+        /**
+         * @return the bottom margin
+         */
+        public final Double getBottom()
+        {
+            return getDouble( MARGIN_BOTTOM_KEY );
+        }
+
+        /**
+         * Clear the bottom margin
+         */
+        public final Margin clearBottom()
+        {
+            clear( MARGIN_BOTTOM_KEY );
+            return this;
+        }
+
+        /**
+         * Set the left margin
+         */
+        public final Margin setLeft( double left )
+        {
+            put( MARGIN_LEFT_KEY, left );
+            return this;
+        }
+
+        /**
+         * @return the left margin
+         */
+        public final Double getLeft()
+        {
+            return getDouble( MARGIN_LEFT_KEY );
+        }
+
+        /**
+         * Clear the left margin
+         */
+        public final Margin clearLeft()
+        {
+            clear( MARGIN_LEFT_KEY );
+            return this;
+        }
+
     }
 
     private static final String COLOR_KEY = "color";
@@ -62,7 +193,15 @@ public class GridOptions
     private static final String HOVERABLE_KEY = "hoverable";
     private static final String AUTO_HIGHLIGHT_KEY = "autoHighlight";
     private static final String MOUSE_ACTIVE_RADIUS_KEY = "mouseActiveRadius";
-    private static final String CANVAS_TEXT_KEY = "canvasText";
+    private static final String MARGIN_KEY = "margin";
+
+    /**
+     * Creates a {@link GridOptions}
+     */
+    public static final GridOptions create()
+    {
+        return JavaScriptObject.createObject().cast();
+    }
 
     protected GridOptions()
     {
@@ -123,7 +262,7 @@ public class GridOptions
 
     /**
      * @return the background color inside the grid area. The result can be a {@link String} or a
-     * {@link JavaScriptObject}.
+     *         {@link JavaScriptObject}.
      */
     public final Object getBackgroundColor()
     {
@@ -132,23 +271,23 @@ public class GridOptions
 
     /**
      * @return the background color inside the grid area. The result can be a {@link String} or a
-     * {@link JavaScriptObject}.
+     *         {@link JavaScriptObject}.
      */
     public final String getBackgroundColorAsString()
     {
         Object color = getObject( BACKGROUND_COLOR_KEY );
-        return (String) ( color instanceof String ? color : null );
+        return (String) (color instanceof String ? color : null);
     }
 
     /**
      * @return the background color inside the grid area. The result can be a {@link String} or a
-     * {@link JavaScriptObject}.
+     *         {@link JavaScriptObject}.
      */
     public final JsArrayString getBackgroundColorAsArray()
     {
         Object color = getObject( BACKGROUND_COLOR_KEY );
-        return ( color instanceof JavaScriptObject ? ( (JsonObject) color ).getStringArray( BACKGROUND_COLORS_KEY )
-            : null );
+        return (color instanceof JavaScriptObject ? ((JsonObject) color).getStringArray( BACKGROUND_COLORS_KEY )
+            : null);
     }
 
     /**
@@ -521,6 +660,49 @@ public class GridOptions
     public final GridOptions clearMouseActiveRadius()
     {
         clear( MOUSE_ACTIVE_RADIUS_KEY );
+        return this;
+    }
+
+    /**
+     * @return the margin number
+     */
+    public final Double getMarginAsNumber()
+    {
+        return getDouble( MARGIN_KEY );
+    }
+
+    /**
+     * @return the margin object
+     */
+    public final Margin getMarginAsObject()
+    {
+        return getJsObject( MARGIN_KEY );
+    }
+
+    /**
+     * Set the space in pixels between the canvas edge and the grid
+     */
+    public final GridOptions setMargin( double margin )
+    {
+        put( MARGIN_KEY, margin );
+        return this;
+    }
+
+    /**
+     * Set the space in pixels between the canvas edge and the grid
+     */
+    public final GridOptions setMargin( Margin margin )
+    {
+        put( MARGIN_KEY, margin );
+        return this;
+    }
+
+    /**
+     * Clear the margin option
+     */
+    public final GridOptions clearMargin()
+    {
+        clear( MARGIN_KEY );
         return this;
     }
 

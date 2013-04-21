@@ -13,6 +13,7 @@ import com.googlecode.gflot.client.PlotModel;
 import com.googlecode.gflot.client.Series;
 import com.googlecode.gflot.client.SeriesHandler;
 import com.googlecode.gflot.client.SimplePlot;
+import com.googlecode.gflot.client.options.GridOptions;
 import com.googlecode.gflot.client.options.LegendOptions;
 import com.googlecode.gflot.client.options.PlotOptions;
 import com.googlecode.gflot.client.options.LegendOptions.LegendPosition;
@@ -59,6 +60,7 @@ public class LineExample
         PlotOptions plotOptions = PlotOptions.create();
         plotOptions.setLegendOptions( LegendOptions.create().setBackgroundOpacity( 0 )
             .setPosition( LegendPosition.NORTH_WEST ) );
+        plotOptions.setGridOptions( GridOptions.create().setMargin( 5 ) );
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );
@@ -71,7 +73,7 @@ public class LineExample
 
     /**
      * On click on the generate button, we clear the current data and generate new ones
-     * 
+     *
      * @param e click event
      */
     @GFlotExamplesSource
