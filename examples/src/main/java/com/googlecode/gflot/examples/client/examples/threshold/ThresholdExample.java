@@ -94,15 +94,15 @@ public class ThresholdExample
         GlobalSeriesOptions options = plot.getPlotOptions().getGlobalSeriesOptions();
         if ( positive.getValue() )
         {
-            options.getThreshold().setBelow( 5 );
+            options.getThreshold().get( 0 ).setBelow( 5 );
         }
         else if ( zero.getValue() )
         {
-            options.getThreshold().setBelow( 0 );
+            options.getThreshold().get( 0 ).setBelow( 0 );
         }
         else
         {
-            options.getThreshold().setBelow( -2.5 );
+            options.getThreshold().get( 0 ).setBelow( -2.5 );
         }
 
         plot.redraw();

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,11 +26,12 @@ package com.googlecode.gflot.client.options;
 
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.googlecode.gflot.client.jsni.JsonObject;
 
 /**
  * Options common to global series options and specific series options
- * 
+ *
  * @author Nicolas Morel
  */
 @SuppressWarnings( "unchecked" )
@@ -306,6 +307,16 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
      */
     public final T setThreshold( Threshold threshold )
     {
+        JsArray<Threshold> array = JavaScriptObject.createArray().cast();
+        array.push( threshold );
+        return setThreshold( array );
+    }
+
+    /**
+     * Set the threshold options.
+     */
+    public final T setThreshold( JsArray<Threshold> threshold )
+    {
         put( THRESHOLD_KEY, threshold );
         return (T) this;
     }
@@ -313,8 +324,17 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * @return the threshold options
      */
-    public final Threshold getThreshold()
+    public final JsArray<Threshold> getThreshold()
     {
         return getJsObject( THRESHOLD_KEY );
+    }
+
+    /**
+     * Clear the threshold option
+     */
+    public final T clearThreshold()
+    {
+        clear( THRESHOLD_KEY );
+        return (T) this;
     }
 }
