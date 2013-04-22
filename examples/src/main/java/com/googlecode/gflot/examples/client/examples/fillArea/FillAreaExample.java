@@ -95,7 +95,7 @@ public class FillAreaExample
         {
             double x = i + 10.0;
             double y = i * 0.5;
-            vancouverSeries.add(MultiLevelDataPoint.of(x, y, y - 10.0, y + 15.0, 20));
+            vancouverSeries.add(DataPoint.of(x, y, y - 10.0, y + 15.0, 20));
         }
 
         // create the plot

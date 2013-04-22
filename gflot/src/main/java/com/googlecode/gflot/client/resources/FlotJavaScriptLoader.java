@@ -87,6 +87,8 @@ public class FlotJavaScriptLoader
         PluginLoader getFlotTimeLoader();
 
         PluginLoader getFlotCanvasLoader();
+
+        PluginLoader getFlotErrorBarsLoader();
     }
 
     public static class SynchronousImpl
@@ -131,6 +133,8 @@ public class FlotJavaScriptLoader
         private PluginLoader flotTimeLoader;
 
         private PluginLoader flotCanvasLoader;
+
+        private PluginLoader flotErrorBarsLoader;
 
         @Override
         public void loadRequiredFlotLibrary( final FlotJavaScriptCallback callback )
@@ -333,6 +337,16 @@ public class FlotJavaScriptLoader
             return flotCanvasLoader;
         }
 
+        @Override
+        public PluginLoader getFlotErrorBarsLoader()
+        {
+            if ( null == flotErrorBarsLoader )
+            {
+                flotErrorBarsLoader = GWT.create( FlotErrorBarsLoader.class );
+            }
+            return flotErrorBarsLoader;
+        }
+
         private void load()
         {
             getJqueryLoader().load();
@@ -354,6 +368,7 @@ public class FlotJavaScriptLoader
             getFlotFillAreaLoader().load();
             getFlotTimeLoader().load();
             getFlotCanvasLoader().load();
+            getFlotErrorBarsLoader().load();
         }
     }
 }

@@ -62,6 +62,8 @@
             styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="thresholdLink" text="Threshold" targetHistoryToken="{tokens.threshold}"
             styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="errorBarsLink" text="Error bars" targetHistoryToken="{tokens.errorBars}"
+                       styleName='{res.style.menuLink}' />
 
           <div class="{res.style.menuCategory}">Others</div>
           <g:Hyperlink ui:field="exportLink" text="Export" targetHistoryToken="{tokens.export}" styleName='{res.style.menuLink}' />

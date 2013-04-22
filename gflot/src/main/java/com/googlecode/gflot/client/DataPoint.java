@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -25,6 +25,7 @@
 package com.googlecode.gflot.client;
 
 import com.google.gwt.core.client.JsArrayMixed;
+import com.googlecode.gflot.client.jsni.JsArrayUtils;
 
 /**
  * @author AlexanderDeleon
@@ -42,7 +43,7 @@ public class DataPoint
 
     /**
      * Creates a {@link DataPoint} with the specified coordinates.
-     * 
+     *
      * @param x Coordinate for x axis
      * @param y Coordinate for y axis
      */
@@ -53,15 +54,26 @@ public class DataPoint
 
     /**
      * Creates a {@link DataPoint} with the specified coordinates.
-     * 
+     *
      * @param x Coordinate for x axis
      * @param y Coordinate for y axis
-     * @param bottomY Bottom of the filled area/bar for filled lines and bars. Default to 0.
+     * @param third Third coordinate. Can be the bottom of the filled area/bar for filled lines and bars. Or the xerr, yerr value for the error bars.
      */
-    public static final native DataPoint of( double x, double y, double bottomY )
+    public static final native DataPoint of( double x, double y, double third )
     /*-{
-        return [ x, y, bottomY ];
+        return [ x, y, third ];
     }-*/;
+
+    /**
+     * Creates a {@link DataPoint}. This method uses {@link JsArrayUtils#readOnlyJsArray(double[])} so be careful of the differences between dev and production mode.
+     *
+     * @param array source array
+     * @return JS array, which may be a copy or an alias of the input array
+     */
+    public static final DataPoint of( double... array )
+    {
+        return JsArrayUtils.readOnlyJsArray( array ).cast();
+    }
 
     protected DataPoint()
     {

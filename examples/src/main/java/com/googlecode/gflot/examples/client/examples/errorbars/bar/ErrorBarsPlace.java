@@ -22,26 +22,57 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.googlecode.gflot.client;
 
-import com.googlecode.gflot.client.jsni.JsArrayUtils;
+package com.googlecode.gflot.examples.client.examples.errorbars.bar;
+
+import com.googlecode.gflot.examples.client.source.PlaceWithSources;
 
 /**
- * @author Ana Rita Loureiro
- *         Holds a variable-size data point which can be provided as an array of numbers.
+ * @author Nicolas Morel
  */
-public class MultiLevelDataPoint
-        extends DataPoint
+public class ErrorBarsPlace
+    extends PlaceWithSources<ErrorBarsPlace>
 {
-    /**
-     * Creates a {@link MultiLevelDataPoint} with the specified percent
-     */
-    public static final MultiLevelDataPoint of(double... point)
+    private static final String SOURCE_FILENAME;
+
+    static final String UI_RAW_SOURCE_FILENAME = "ErrorBarsExample.ui.xml";
+
+    private static final String[] RAW_SOURCE_FILENAMES = new String[] { UI_RAW_SOURCE_FILENAME };
+
+    static
     {
-        return JsArrayUtils.readOnlyJsArray(point).cast();
+        SOURCE_FILENAME = extractSourceFilenameFromClassName( ErrorBarsExample.class.getName() );
     }
 
-    protected MultiLevelDataPoint()
+    @Override
+    public String getSourceFilename()
     {
+        return SOURCE_FILENAME;
     }
+
+    @Override
+    public String[] getRawSourceFilenames()
+    {
+        return RAW_SOURCE_FILENAMES;
+    }
+
+    /**
+     * Default constructor. It will show the example
+     */
+    public ErrorBarsPlace()
+    {
+        super();
+    }
+
+    public ErrorBarsPlace( String filename, boolean rawSource )
+    {
+        super( filename, rawSource );
+    }
+
+    @Override
+    public ErrorBarsPlace createPlace()
+    {
+        return new ErrorBarsPlace();
+    }
+
 }
