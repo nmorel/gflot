@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gflot.examples.client.examples.bar.BarPlace;
+import com.googlecode.gflot.examples.client.examples.categories.CategoriesPlace;
 import com.googlecode.gflot.examples.client.examples.decimation.DecimationPlace;
 import com.googlecode.gflot.examples.client.examples.errorbars.bar.ErrorBarsPlace;
 import com.googlecode.gflot.examples.client.examples.export.ExportPlace;
@@ -146,6 +147,9 @@ public class MainView
 
     @UiField
     Hyperlink errorBarsLink;
+
+    @UiField
+    Hyperlink categoriesLink;
 
     @UiField
     Anchor exampleLink;
@@ -298,6 +302,13 @@ public class MainView
             public boolean apply( Place place )
             {
                 return place instanceof ErrorBarsPlace;
+            }
+        } ) );
+        links.add( new Link( categoriesLink, new Predicate() {
+            @Override
+            public boolean apply( Place place )
+            {
+                return place instanceof CategoriesPlace;
             }
         } ) );
 

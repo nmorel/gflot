@@ -2,6 +2,7 @@ package com.googlecode.gflot.examples.client.mvp;
 
 import com.google.gwt.place.shared.Place;
 import com.googlecode.gflot.examples.client.examples.bar.BarPlace;
+import com.googlecode.gflot.examples.client.examples.categories.CategoriesPlace;
 import com.googlecode.gflot.examples.client.examples.decimation.DecimationPlace;
 import com.googlecode.gflot.examples.client.examples.errorbars.bar.ErrorBarsPlace;
 import com.googlecode.gflot.examples.client.examples.export.ExportPlace;
@@ -105,6 +106,10 @@ public class AppPlaceHistoryMapper
         {
             return new ErrorBarsPlace();
         }
+        else if ( token.startsWith( NameTokens.CATEGORIES_BARS ) )
+        {
+            return new CategoriesPlace();
+        }
         else
         {
             return null;
@@ -190,6 +195,10 @@ public class AppPlaceHistoryMapper
         else if ( place instanceof ErrorBarsPlace )
         {
             return NameTokens.ERROR_BARS;
+        }
+        else if ( place instanceof CategoriesPlace )
+        {
+            return NameTokens.CATEGORIES_BARS;
         }
         else
         {

@@ -75,6 +75,28 @@ public class DataPoint
         return JsArrayUtils.readOnlyJsArray( array ).cast();
     }
 
+    /**
+     * Creates a {@link DataPoint} with the specified coordinates.
+     *
+     * @param x Category for x axis
+     * @param y Coordinate for y axis
+     */
+    public static final native DataPoint of( String x, double y )
+    /*-{
+        return [ x, y ];
+    }-*/;
+
+    /**
+     * Creates a {@link DataPoint} with the specified coordinates.
+     *
+     * @param x Coordinate for x axis
+     * @param y Category for y axis
+     */
+    public static final native DataPoint of( double x, String y )
+    /*-{
+        return [ x, y ];
+    }-*/;
+
     protected DataPoint()
     {
     }

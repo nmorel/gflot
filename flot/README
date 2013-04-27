@@ -15,5 +15,5 @@ plugins/jquery.flot.fillarea
 - commit Jan 08, 2013
 
 plugins/jquery.flot.orderBars
--from https://github.com/pkoltermann/SideBySideImproved
+- from https://github.com/pkoltermann/SideBySideImproved
 - commit Feb 12, 2013

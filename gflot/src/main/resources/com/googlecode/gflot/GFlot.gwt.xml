@@ -49,6 +49,7 @@
   <define-property name="gflot.load.flot.time" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.canvas" values="ENABLED, DISABLED" />
   <define-property name="gflot.load.flot.errorbars" values="ENABLED, DISABLED" />
+  <define-property name="gflot.load.flot.categories" values="ENABLED, DISABLED" />
 
   <!-- Default values -->
   <set-property name="gflot.load" value="ENABLED" />
@@ -70,6 +71,7 @@
   <set-property name="gflot.load.flot.time" value="ENABLED" />
   <set-property name="gflot.load.flot.canvas" value="DISABLED" />
   <set-property name="gflot.load.flot.errorbars" value="ENABLED" />
+  <set-property name="gflot.load.flot.categories" value="ENABLED" />
 
   <!-- Load excanvas only for IE < 9 -->
   <replace-with class="com.googlecode.gflot.client.resources.NullLoader">
@@ -172,6 +174,11 @@
     <when-property-is name="gflot.load" value="ENABLED" />
     <when-property-is name="gflot.load.flot.errorbars" value="DISABLED" />
   </replace-with>
+  <replace-with class="com.googlecode.gflot.client.resources.NullLoader">
+    <when-type-is class="com.googlecode.gflot.client.resources.FlotCategoriesLoader" />
+    <when-property-is name="gflot.load" value="ENABLED" />
+    <when-property-is name="gflot.load.flot.categories" value="DISABLED" />
+  </replace-with>
 
   <!-- External loading -->
   <replace-with class="com.googlecode.gflot.client.resources.ExternalLoader">
@@ -255,6 +262,10 @@
   </replace-with>
   <replace-with class="com.googlecode.gflot.client.resources.ExternalLoader">
     <when-type-is class="com.googlecode.gflot.client.resources.FlotErrorBarsLoader" />
+    <when-property-is name="gflot.load" value="EXTERNAL" />
+  </replace-with>
+  <replace-with class="com.googlecode.gflot.client.resources.ExternalLoader">
+    <when-type-is class="com.googlecode.gflot.client.resources.FlotCategoriesLoader" />
     <when-property-is name="gflot.load" value="EXTERNAL" />
   </replace-with>
 

@@ -45,6 +45,8 @@ public final class NameTokens
 
     public static final String ERROR_BARS = "errorBars";
 
+    public static final String CATEGORIES_BARS = "categories";
+
     public static String line()
     {
         return LINE;
@@ -138,6 +140,11 @@ public final class NameTokens
     public static String errorBars()
     {
         return ERROR_BARS;
+    }
+
+    public static String categories()
+    {
+        return CATEGORIES_BARS;
     }
 
     private NameTokens()

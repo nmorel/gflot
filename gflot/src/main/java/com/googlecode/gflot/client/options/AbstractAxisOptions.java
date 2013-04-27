@@ -102,6 +102,7 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     protected static final String MIN_TICK_SIZE_KEY = "minTickSize";
     protected static final String MODE_KEY = "mode";
     protected static final String TIME_MODE_KEY = "time";
+    protected static final String CATEGORIES_MODE_KEY = "categories";
     private static final String AXIS_LABEL_KEY = "axisLabel";
     private static final String AXIS_LABEL_PADDING_KEY = "axisLabelPadding";
     private static final String AXIS_LABEL_RENDERING_MODE_CANVAS_KEY = "axisLabelUseCanvas";

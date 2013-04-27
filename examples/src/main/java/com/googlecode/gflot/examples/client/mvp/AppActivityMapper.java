@@ -5,6 +5,8 @@ import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.googlecode.gflot.examples.client.examples.bar.BarExample;
 import com.googlecode.gflot.examples.client.examples.bar.BarPlace;
+import com.googlecode.gflot.examples.client.examples.categories.CategoriesExample;
+import com.googlecode.gflot.examples.client.examples.categories.CategoriesPlace;
 import com.googlecode.gflot.examples.client.examples.decimation.DecimationExample;
 import com.googlecode.gflot.examples.client.examples.decimation.DecimationPlace;
 import com.googlecode.gflot.examples.client.examples.errorbars.bar.ErrorBarsExample;
@@ -87,6 +89,8 @@ public class AppActivityMapper
     private Activity fillAreaActivity;
 
     private Activity errorBarsActivity;
+
+    private Activity categoriesActivity;
 
     public AppActivityMapper( Resources resources )
     {
@@ -252,6 +256,14 @@ public class AppActivityMapper
                 errorBarsActivity = new ErrorBarsExample( resources );
             }
             return errorBarsActivity;
+        }
+        if ( place instanceof CategoriesPlace )
+        {
+            if ( null == categoriesActivity )
+            {
+                categoriesActivity = new CategoriesExample( resources );
+            }
+            return categoriesActivity;
         }
         return null;
     }
