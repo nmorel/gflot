@@ -173,7 +173,28 @@ More detail and specific examples can be found in the included HTML file.
 
 				var value = data[i].data;
 
-                value = ensureNumericValue(value);
+				// If the data is an array, we'll assume that it's a standard
+				// Flot x-y pair, and are concerned only with the second value.
+
+				// Note how we use the original array, rather than creating a
+				// new one; this is more efficient and preserves any extra data
+				// that the user may have stored in higher indexes.
+
+				if ($.isArray(value) && value.length == 1) {
+    				value = value[0];
+				}
+
+				if ($.isArray(value)) {
+					if ($.isNumeric(value[1])) {
+						value[1] = +value[1];
+					} else {
+						value[1] = 0;
+					}
+				} else if ($.isNumeric(value)) {
+					value = [1, +value];
+				} else {
+					value = [1, 0];
+				}
 
 				data[i].data = [value];
 			}
@@ -222,29 +243,6 @@ More detail and specific examples can be found in the included HTML file.
 			}
 
 			return newdata;
-
-            function ensureNumericValue(value){
-                // If the data is an array, we'll assume that it's a standard
-                // Flot x-y pair, and are concerned only with the second value.
-
-                // Note how we use the original array, rather than creating a
-                // new one; this is more efficient and preserves any extra data
-                // that the user may have stored in higher indexes.
-                if ($.isArray(value)) {
-                    if (value.length == 1 && $.isArray(value[0])) {
-                        return ensureNumericValue(value[0]);
-                    } else if ($.isNumeric(value[1])) {
-                        value[1] = +value[1];
-                    } else {
-                        value[1] = 0;
-                    }
-                    return value;
-                } else if ($.isNumeric(value)) {
-                    return [1, +value];
-                } else {
-                    return [1, 0];
-                }
-            }
 		}
 
 		function draw(plot, newCtx) {
