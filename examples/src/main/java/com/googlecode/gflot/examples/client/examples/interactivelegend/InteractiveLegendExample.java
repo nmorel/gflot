@@ -13,6 +13,7 @@ import com.googlecode.gflot.client.PlotWithInteractiveLegend;
 import com.googlecode.gflot.client.Series;
 import com.googlecode.gflot.client.SeriesHandler;
 import com.googlecode.gflot.client.SimplePlot;
+import com.googlecode.gflot.client.options.AbstractAxisOptions;
 import com.googlecode.gflot.client.options.AxisOptions;
 import com.googlecode.gflot.client.options.GlobalSeriesOptions;
 import com.googlecode.gflot.client.options.LegendOptions;
@@ -78,7 +79,7 @@ public class InteractiveLegendExample
         plotOptions.addXAxisOptions( TimeSeriesAxisOptions.create().setTickSize( 2, TickTimeUnit.MONTH )
             .setMonthNames( MONTH_NAMES ) );
 
-        plotOptions.addYAxisOptions( AxisOptions.create().setLabel( "Temperature (C\u00b0)" ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setLabel( "Temperature (C\u00b0)" ).setLabelRenderingMode( AbstractAxisOptions.AxisLabelRenderingMode.CANVAS ) );
 
         // create a series
         SeriesHandler ottawaSeries = model.addSeries( Series.of( "Ottawa" ).setColor( "red" ) );

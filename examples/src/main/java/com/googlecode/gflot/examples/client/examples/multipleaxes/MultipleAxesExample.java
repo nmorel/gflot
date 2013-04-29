@@ -1,6 +1,8 @@
 package com.googlecode.gflot.examples.client.examples.multipleaxes;
 
 
+import java.util.Comparator;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -76,7 +78,13 @@ public class MultipleAxesExample
         PlotOptions plotOptions = PlotOptions.create();
 
         plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
-        plotOptions.setLegendOptions( LegendOptions.create().setPosition( LegendPosition.SOUTH_WEST ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setPosition( LegendPosition.SOUTH_WEST ).setSortedComparator( new Comparator<LegendOptions.LegendComparable>() {
+            @Override
+            public int compare( LegendOptions.LegendComparable o1, LegendOptions.LegendComparable o2 )
+            {
+                return o2.getLabel().compareToIgnoreCase( o1.getLabel() );
+            }
+        } ) );
 
         // add tick formatter to the options
         plotOptions.addXAxisOptions( TimeSeriesAxisOptions.create() );

@@ -103,7 +103,7 @@
     <maven-jar.version>2.4</maven-jar.version>
 
     <!-- GWT dependencies version -->
-    <gwt.version>2.1.0</gwt.version>
+    <gwt.version>2.2.0</gwt.version>
   </properties>
 
   <dependencies>
@@ -161,15 +161,26 @@
               <jsSourceFiles>
                 <jsSourceFile>base64.js</jsSourceFile>
                 <jsSourceFile>canvas2image.js</jsSourceFile>
-                <jsSourceFile>jquery.event.drag-2.0-modified.js</jsSourceFile>
-                <jsSourceFile>jquery.flot-0.7-modified.js</jsSourceFile>
-                <jsSourceFile>jquery.flot-0.7.image-modified.js</jsSourceFile>
-                <jsSourceFile>jquery.flot-0.7.navigate-modified.js</jsSourceFile>
-                <jsSourceFile>jquery.flot-0.7.pie-modified.js</jsSourceFile>
-                <jsSourceFile>jquery.flot.axislabels-20120404.js</jsSourceFile>
-                <jsSourceFile>jquery.flot.multiplebars-0.1.js</jsSourceFile>
-                <jsSourceFile>jquery.flot.text-0.1-modified.js</jsSourceFile>
-                <jsSourceFile>jquery.flot.fillarea-20130108.js</jsSourceFile>
+                <jsSourceFile>jquery.js</jsSourceFile>
+                <jsSourceFile>0.8/excanvas.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.canvas.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.categories.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.crosshair.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.errorbars.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.fillbetween.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.image.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.navigate.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.pie.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.resize.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.selection.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.stack.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.symbol.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.threshold.js</jsSourceFile>
+                <jsSourceFile>0.8/jquery.flot.time.js</jsSourceFile>
+                <jsSourceFile>plugins/jquery.flot.axislabels.js</jsSourceFile>
+                <jsSourceFile>plugins/jquery.flot.fillarea.js</jsSourceFile>
+                <jsSourceFile>plugins/jquery.flot.orderBars.js</jsSourceFile>
               </jsSourceFiles>
               <skipMerge>true</skipMerge>
             </configuration>

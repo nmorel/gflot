@@ -79,7 +79,7 @@ public class HoverExample
         PlotOptions plotOptions = PlotOptions.create();
         plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
             .setLineSeriesOptions(LineSeriesOptions.create().setLineWidth(1).setShow(true))
-            .setPointsOptions(PointsSeriesOptions.create().setRadius(2).setShow(true)).setShadowSize( 0d ) );
+            .setPointsOptions(PointsSeriesOptions.create().setRadius(2).setShow(true)).setShadowSize( 0d ).setHighlightColor( "red" ) );
         // add tick formatter to the options
         plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
             public String formatTickValue( double tickValue, Axis axis )

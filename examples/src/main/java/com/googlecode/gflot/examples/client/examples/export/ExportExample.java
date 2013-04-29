@@ -17,8 +17,6 @@ import com.googlecode.gflot.client.Series;
 import com.googlecode.gflot.client.SeriesHandler;
 import com.googlecode.gflot.client.SimplePlot;
 import com.googlecode.gflot.client.options.AxisOptions;
-import com.googlecode.gflot.client.options.CanvasTextOptions;
-import com.googlecode.gflot.client.options.GridOptions;
 import com.googlecode.gflot.client.options.LegendOptions;
 import com.googlecode.gflot.client.options.PlotOptions;
 import com.googlecode.gflot.client.options.TickFormatter;
@@ -79,6 +77,9 @@ public class ExportExample
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = PlotOptions.create();
 
+        // Enables the rendering of text in canvas to export the axis label too
+        plotOptions.setCanvasEnabled( true );
+
         // Add tick formatter to the options
         plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
             public String formatTickValue( double tickValue, Axis axis )
@@ -88,7 +89,6 @@ public class ExportExample
         } ) );
         plotOptions.setLegendOptions( LegendOptions.create().setBackgroundOpacity( 0 )
             .setPosition( LegendPosition.NORTH_WEST ) );
-        plotOptions.setGridOptions( GridOptions.create().setCanvasText( CanvasTextOptions.create().setShow( true ) ) );
 
         // create a series
         SeriesHandler series1 = model.addSeries( Series.of( "Random Series 1" ) );

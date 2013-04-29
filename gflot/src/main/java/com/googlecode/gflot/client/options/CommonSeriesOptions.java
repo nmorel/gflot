@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,11 +26,12 @@ package com.googlecode.gflot.client.options;
 
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.googlecode.gflot.client.jsni.JsonObject;
 
 /**
  * Options common to global series options and specific series options
- * 
+ *
  * @author Nicolas Morel
  */
 @SuppressWarnings( "unchecked" )
@@ -41,6 +42,9 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     public static class Threshold
         extends JsonObject
     {
+        private static final String BELOW_KEY = "below";
+        private static final String COLOR_KEY = "color";
+
         /**
          * Creates a {@link Threshold}
          */
@@ -48,9 +52,6 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
         {
             return JavaScriptObject.createObject().cast();
         }
-
-        private static final String BELOW_KEY = "below";
-        private static final String COLOR_KEY = "color";
 
         protected Threshold()
         {
@@ -117,6 +118,7 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     private static final String SHADOW_SIZE_KEY = "shadowSize";
     private static final String STACK_KEY = "stack";
     private static final String THRESHOLD_KEY = "threshold";
+    private static final String HIGHLIGHT_COLOR_KEY = "highlightColor";
 
     protected CommonSeriesOptions()
     {
@@ -306,6 +308,16 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
      */
     public final T setThreshold( Threshold threshold )
     {
+        JsArray<Threshold> array = JavaScriptObject.createArray().cast();
+        array.push( threshold );
+        return setThreshold( array );
+    }
+
+    /**
+     * Set the threshold options.
+     */
+    public final T setThreshold( JsArray<Threshold> threshold )
+    {
         put( THRESHOLD_KEY, threshold );
         return (T) this;
     }
@@ -313,8 +325,65 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * @return the threshold options
      */
-    public final Threshold getThreshold()
+    public final JsArray<Threshold> getThreshold()
     {
         return getJsObject( THRESHOLD_KEY );
+    }
+
+    /**
+     * Clear the threshold option
+     */
+    public final T clearThreshold()
+    {
+        clear( THRESHOLD_KEY );
+        return (T) this;
+    }
+
+    /**
+     * Set the color of the translucent overlay used
+     * to highlight the series when the mouse hovers over it
+     */
+    public final T setHighlightColor( String color )
+    {
+        put( HIGHLIGHT_COLOR_KEY, color );
+        return (T) this;
+    }
+
+    /**
+     * Set the color of the translucent overlay used
+     * to highlight the series when the mouse hovers over it
+     */
+    public final T setHighlightColor( double color )
+    {
+        put( HIGHLIGHT_COLOR_KEY, color );
+        return (T) this;
+    }
+
+    /**
+     * @return the color of the translucent overlay used
+     *         to highlight the series when the mouse hovers over it
+     */
+    public final String getHighlightColorAsString()
+    {
+        return getString( HIGHLIGHT_COLOR_KEY );
+    }
+
+    /**
+     * @return the color of the translucent overlay used
+     *         to highlight the series when the mouse hovers over it
+     */
+    public final Double getHighlightColorAsNumber()
+    {
+        return getDouble( HIGHLIGHT_COLOR_KEY );
+    }
+
+    /**
+     * Clear the color of the translucent overlay used
+     * to highlight the series when the mouse hovers over it
+     */
+    public final T clearHighlightColor()
+    {
+        clear( HIGHLIGHT_COLOR_KEY );
+        return (T) this;
     }
 }

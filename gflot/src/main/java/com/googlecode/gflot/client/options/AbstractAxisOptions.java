@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -102,6 +102,7 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     protected static final String MIN_TICK_SIZE_KEY = "minTickSize";
     protected static final String MODE_KEY = "mode";
     protected static final String TIME_MODE_KEY = "time";
+    protected static final String CATEGORIES_MODE_KEY = "categories";
     private static final String AXIS_LABEL_KEY = "axisLabel";
     private static final String AXIS_LABEL_PADDING_KEY = "axisLabelPadding";
     private static final String AXIS_LABEL_RENDERING_MODE_CANVAS_KEY = "axisLabelUseCanvas";
@@ -113,7 +114,6 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
 
     protected AbstractAxisOptions()
     {
-        super();
     }
 
     /**
@@ -322,23 +322,23 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      * parts of the axis non-linearly, e.g. suppress weekends or compress far away points with a logarithm or some other
      * means. When Flot draws the plot, each value is first put through the transform function. Here's an example, the x
      * axis can be turned into a natural logarithm axis with the following code:
-     * 
+     *
      * <pre>
      *   xaxis: {
      *     transform: function (v) { return Math.log(v); },
      *     inverseTransform: function (v) { return Math.exp(v); }
      *   }
      * </pre>
-     * 
+     *
      * Similarly, for reversing the y axis so the values appear in inverse order:
-     * 
+     *
      * <pre>
      *   yaxis: {
      *     transform: function (v) { return -v; },
      *     inverseTransform: function (v) { return -v; }
      *   }
      * </pre>
-     * 
+     *
      * Note that for finding extrema, Flot assumes that the transform function does not reorder values (it should be
      * monotone). </br> The inverseTransform is simply the inverse of the transform function (so v ==
      * inverseTransform(transform(v)) for all relevant v). It is required for converting from canvas coordinates to data

@@ -13,7 +13,7 @@
     <hr />
     <p:SimplePlot ui:field="plot2" width="600px" height="300px" />
     <p>
-      This chart is using the multiple bars plugin.
+      This chart is using the <a href='https://github.com/pkoltermann/SideBySideImproved'>side by side improved plugin</a>.
     </p>
   </g:HTMLPanel>
 </ui:UiBinder>

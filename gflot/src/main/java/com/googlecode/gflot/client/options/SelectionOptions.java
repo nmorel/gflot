@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -65,7 +65,38 @@ public class SelectionOptions
             return null;
         }
     }
-    
+    public enum SelectionShape
+    {
+        ROUND( "round" ), MITER( "miter" ), BEVEL( "bevel" );
+
+        private String flotValue;
+
+        SelectionShape( String flotValue )
+        {
+            this.flotValue = flotValue;
+        }
+
+        String getFlotValue()
+        {
+            return flotValue;
+        }
+
+        static SelectionShape findByFlotValue( String flotValue )
+        {
+            if ( null != flotValue && !"".equals( flotValue ) )
+            {
+                for ( SelectionShape mode : values() )
+                {
+                    if ( mode.getFlotValue().equals( flotValue ) )
+                    {
+                        return mode;
+                    }
+                }
+            }
+            return null;
+        }
+    }
+
     /**
      * Creates a {@link SelectionOptions}
      */
@@ -76,6 +107,8 @@ public class SelectionOptions
 
     private static final String MODE_KEY = "mode";
     private static final String COLOR_KEY = "color";
+    private static final String SHAPE_KEY = "shape";
+    private static final String MIN_SIZE_KEY = "minSize";
 
     protected SelectionOptions()
     {
@@ -132,6 +165,60 @@ public class SelectionOptions
     public final SelectionOptions clearColor()
     {
         clear( COLOR_KEY );
+        return this;
+    }
+
+    /**
+     * Set the shape of the corner selection.
+     */
+    public final SelectionOptions setShape( SelectionShape shape )
+    {
+        assert null != shape : "shape can't be null";
+
+        put( SHAPE_KEY, shape.getFlotValue() );
+        return this;
+    }
+
+    /**
+     * @return the shape
+     */
+    public final SelectionShape getShape()
+    {
+        return SelectionShape.findByFlotValue( getString( SHAPE_KEY ) );
+    }
+
+    /**
+     * Clear the shape
+     */
+    public final SelectionOptions clearShape()
+    {
+        clear( SHAPE_KEY );
+        return this;
+    }
+
+    /**
+     * Set the minimum size of the selection
+     */
+    public final SelectionOptions setMinSize( int minSize)
+    {
+        put( MIN_SIZE_KEY, minSize );
+        return this;
+    }
+
+    /**
+     * @return the minimum size of the selection
+     */
+    public final Integer getMinSize()
+    {
+        return getInteger( MIN_SIZE_KEY );
+    }
+
+    /**
+     * Clear the minimum size of the selection
+     */
+    public final SelectionOptions clearMinSize()
+    {
+        clear( MIN_SIZE_KEY );
         return this;
     }
 }

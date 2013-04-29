@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -42,6 +42,7 @@ public class LineSeriesOptions
     }
 
     private static final String STEPS_KEY = "steps";
+    private static final String ZERO_KEY = "zero";
 
     protected LineSeriesOptions()
     {
@@ -72,6 +73,32 @@ public class LineSeriesOptions
     public final LineSeriesOptions clearSteps()
     {
         clear( STEPS_KEY );
+        return this;
+    }
+
+    /**
+     * Set whether the y-axis minimum is scaled to fit the data or set to zero
+     */
+    public final LineSeriesOptions setZero( boolean zero )
+    {
+        put( ZERO_KEY, zero );
+        return this;
+    }
+
+    /**
+     * @return true if the y-axis minimum is set to zero
+     */
+    public final Boolean getZero()
+    {
+        return getBoolean( ZERO_KEY );
+    }
+
+    /**
+     * Clear whether the y-axis minimum is scaled to fit the data or set to zero
+     */
+    public final LineSeriesOptions clearZero()
+    {
+        clear( ZERO_KEY );
         return this;
     }
 

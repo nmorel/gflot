@@ -41,8 +41,6 @@ public class SlidingExample
     extends DefaultActivity
 {
 
-    private static Binder binder = GWT.create( Binder.class );
-
     interface Binder
         extends UiBinder<Widget, SlidingExample>
     {
@@ -57,16 +55,15 @@ public class SlidingExample
         void getNewData( AsyncCallback<DataPoint[]> callback );
     }
 
+    private static Binder binder = GWT.create( Binder.class );
     /**
      * Plot
      */
     @GFlotExamplesData
     @UiField( provided = true )
     SimplePlot plot;
-
     @UiField
     Button startStop;
-
     /**
      * Timer
      */
@@ -89,13 +86,14 @@ public class SlidingExample
         plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
             .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ) )
             .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
-        plotOptions.addXAxisOptions( TimeSeriesAxisOptions.create() );
+        plotOptions.addXAxisOptions( TimeSeriesAxisOptions.create().setTimeZone( TimeSeriesAxisOptions.TIME_ZONE_BROWSER_KEY ) );
 
         final SeriesHandler series =
             model.addSeries( Series.of( "Random Series", "#FF9900" ), PlotModelStrategy.slidingWindowStrategy( 20 ) );
 
         // pull the "fake" RPC service for new data
-        updater = new Timer() {
+        updater = new Timer()
+        {
             @Override
             public void run()
             {
@@ -175,7 +173,8 @@ public class SlidingExample
     private void update( final SeriesHandler series, final PlotWidget plot )
     {
         FakeRpcServiceAsync service = getRpcService();
-        service.getNewData( new AsyncCallback<DataPoint[]>() {
+        service.getNewData( new AsyncCallback<DataPoint[]>()
+        {
             public void onFailure( Throwable caught )
             {
                 GWT.log( "Something went wrong", caught );
@@ -198,15 +197,12 @@ public class SlidingExample
     @GFlotExamplesSource
     private FakeRpcServiceAsync getRpcService()
     {
-        return new FakeRpcServiceAsync() {
+        return new FakeRpcServiceAsync()
+        {
             @SuppressWarnings( "deprecation" )
             public void getNewData( final AsyncCallback<DataPoint[]> callback )
             {
-                Date currentDate = new Date();
-                callback.onSuccess( new DataPoint[] { DataPoint.of(
-                    Date.UTC( currentDate.getYear(), currentDate.getMonth(), currentDate.getDate(),
-                        currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds() ),
-                    Random.nextDouble() ) } );
+                callback.onSuccess( new DataPoint[]{DataPoint.of( new Date().getTime(), Random.nextDouble() )} );
             }
         };
     }

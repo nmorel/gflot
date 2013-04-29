@@ -13,9 +13,7 @@
   <g:HTMLPanel>
     <p:SimplePlot ui:field="plot" width="600px" height="300px" />
     <p>
-      The export functionality uses the
-      <a href="http://www.lessaworld.com/projects/flotCanvasText/" target="_blank">flot canvas text</a>
-      plugin and the
+      The export functionality uses the new canvas plugin from 0.8 and the
       <a href="http://www.nihilogic.dk/labs/canvas2image/" target="_blank">canvas2image</a>
       plugin.
     </p>

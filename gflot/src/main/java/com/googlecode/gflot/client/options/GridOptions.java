@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Nicolas Morel
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -28,22 +28,17 @@ package com.googlecode.gflot.client.options;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayString;
 import com.googlecode.gflot.client.jsni.JsonObject;
+import com.googlecode.gflot.client.options.side.IntegerSideOptions;
+import com.googlecode.gflot.client.options.side.StringSideOptions;
 
 /**
  * The grid is the thing with the axes and a number of ticks.
- * 
+ *
  * @author Alexander De Leon
  */
 public class GridOptions
     extends JsonObject
 {
-    /**
-     * Creates a {@link GridOptions}
-     */
-    public static final GridOptions create()
-    {
-        return JavaScriptObject.createObject().cast();
-    }
 
     private static final String COLOR_KEY = "color";
     private static final String BACKGROUND_COLOR_KEY = "backgroundColor";
@@ -62,7 +57,15 @@ public class GridOptions
     private static final String HOVERABLE_KEY = "hoverable";
     private static final String AUTO_HIGHLIGHT_KEY = "autoHighlight";
     private static final String MOUSE_ACTIVE_RADIUS_KEY = "mouseActiveRadius";
-    private static final String CANVAS_TEXT_KEY = "canvasText";
+    private static final String MARGIN_KEY = "margin";
+
+    /**
+     * Creates a {@link GridOptions}
+     */
+    public static final GridOptions create()
+    {
+        return JavaScriptObject.createObject().cast();
+    }
 
     protected GridOptions()
     {
@@ -123,7 +126,7 @@ public class GridOptions
 
     /**
      * @return the background color inside the grid area. The result can be a {@link String} or a
-     * {@link JavaScriptObject}.
+     *         {@link JavaScriptObject}.
      */
     public final Object getBackgroundColor()
     {
@@ -132,23 +135,23 @@ public class GridOptions
 
     /**
      * @return the background color inside the grid area. The result can be a {@link String} or a
-     * {@link JavaScriptObject}.
+     *         {@link JavaScriptObject}.
      */
     public final String getBackgroundColorAsString()
     {
         Object color = getObject( BACKGROUND_COLOR_KEY );
-        return (String) ( color instanceof String ? color : null );
+        return (String) (color instanceof String ? color : null);
     }
 
     /**
      * @return the background color inside the grid area. The result can be a {@link String} or a
-     * {@link JavaScriptObject}.
+     *         {@link JavaScriptObject}.
      */
     public final JsArrayString getBackgroundColorAsArray()
     {
         Object color = getObject( BACKGROUND_COLOR_KEY );
-        return ( color instanceof JavaScriptObject ? ( (JsonObject) color ).getStringArray( BACKGROUND_COLORS_KEY )
-            : null );
+        return (color instanceof JavaScriptObject ? ((JsonObject) color).getStringArray( BACKGROUND_COLORS_KEY )
+            : null);
     }
 
     /**
@@ -345,11 +348,28 @@ public class GridOptions
     }
 
     /**
+     * Set the width of the border around the plot. Set it to 0 to disable the border.
+     */
+    public final GridOptions setBorderWidth( IntegerSideOptions borderWidth )
+    {
+        put( BORDER_WIDTH_KEY, borderWidth );
+        return this;
+    }
+
+    /**
      * @return the width of the border around the plot
      */
-    public final Integer getBorderWidth()
+    public final Integer getBorderWidthAsInteger()
     {
         return getInteger( BORDER_WIDTH_KEY );
+    }
+
+    /**
+     * @return the width of the border around the plot
+     */
+    public final IntegerSideOptions getBorderWidthAsObject()
+    {
+        return getJsObject( BORDER_WIDTH_KEY );
     }
 
     /**
@@ -371,11 +391,28 @@ public class GridOptions
     }
 
     /**
+     * Set the color of the border. By default, it's the same color than the grid lines.
+     */
+    public final GridOptions setBorderColor( StringSideOptions borderColor )
+    {
+        put( BORDER_COLOR_KEY, borderColor );
+        return this;
+    }
+
+    /**
      * @return the color of the border
      */
-    public final String getBorderColor()
+    public final String getBorderColorAsString()
     {
         return getString( BORDER_COLOR_KEY );
+    }
+
+    /**
+     * @return the color of the border
+     */
+    public final StringSideOptions getBorderColorAsObject()
+    {
+        return getJsObject( BORDER_COLOR_KEY );
     }
 
     /**
@@ -525,20 +562,46 @@ public class GridOptions
     }
 
     /**
-     * Set canvas text plugin options
+     * @return the margin number
      */
-    public final GridOptions setCanvasText( CanvasTextOptions canvasText )
+    public final Double getMarginAsNumber()
     {
-        put( CANVAS_TEXT_KEY, canvasText );
+        return getDouble( MARGIN_KEY );
+    }
+
+    /**
+     * @return the margin object
+     */
+    public final IntegerSideOptions getMarginAsObject()
+    {
+        return getJsObject( MARGIN_KEY );
+    }
+
+    /**
+     * Set the space in pixels between the canvas edge and the grid
+     */
+    public final GridOptions setMargin( double margin )
+    {
+        put( MARGIN_KEY, margin );
         return this;
     }
 
     /**
-     * @return the canvas text options
+     * Set the space in pixels between the canvas edge and the grid
      */
-    public final CanvasTextOptions getCanvasText()
+    public final GridOptions setMargin( IntegerSideOptions margin )
     {
-        return getJsObject( CANVAS_TEXT_KEY );
+        put( MARGIN_KEY, margin );
+        return this;
+    }
+
+    /**
+     * Clear the margin option
+     */
+    public final GridOptions clearMargin()
+    {
+        clear( MARGIN_KEY );
+        return this;
     }
 
 }

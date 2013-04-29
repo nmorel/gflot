@@ -40,23 +40,20 @@ public class BarExample
     extends DefaultActivity
 {
 
-    private static Binder binder = GWT.create( Binder.class );
-
     interface Binder
         extends UiBinder<Widget, BarExample>
     {
     }
 
-    private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
-        "nov", "dec" };
-
+    private static final String[] MONTH_NAMES = {"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
+        "nov", "dec"};
+    private static Binder binder = GWT.create( Binder.class );
     /**
      * First Plot
      */
     @GFlotExamplesData
     @UiField( provided = true )
     SimplePlot plot1;
-
     /**
      * Second Plot
      */
@@ -98,13 +95,14 @@ public class BarExample
         plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
         // add tick formatter to the options
-        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter()
+        {
             @Override
             public String formatTickValue( double tickValue, Axis axis )
             {
                 if ( tickValue > 0 && tickValue <= 12 )
                 {
-                    return MONTH_NAMES[(int) ( tickValue - 1 )];
+                    return MONTH_NAMES[(int) (tickValue - 1)];
                 }
                 return "";
             }
@@ -145,12 +143,7 @@ public class BarExample
 
         GlobalSeriesOptions globalSeriesOptions = GlobalSeriesOptions.create();
         globalSeriesOptions.setBarsSeriesOptions( BarSeriesOptions.create().setShow( true )
-            .setBarWidth( 0.9 / nbSeries ) );
-
-        // Activate the plugin for multiple bars support
-        plotOptions.setMultipleBars( true );
-        // Activate the patch for flot. see http://code.google.com/p/flot/issues/detail?id=159
-        globalSeriesOptions.setMultipleBars( true );
+            .setBarWidth( 0.2 ).setLineWidth( 1 ) );
 
         plotOptions.setGlobalSeriesOptions( globalSeriesOptions );
 
@@ -160,7 +153,7 @@ public class BarExample
         List<SeriesHandler> series = new ArrayList<SeriesHandler>();
         for ( int i = 0; i < nbSeries; i++ )
         {
-            series.add( model.addSeries( Series.of( "Random series " + ( i + 1 ) ) ) );
+            series.add( model.addSeries( Series.of( "Random series " + (i + 1) ).setBarsSeriesOptions( BarSeriesOptions.create().setOrder( i ) ) ) );
         }
 
         Markings markings = Markings.create();
