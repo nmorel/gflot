@@ -47,47 +47,51 @@ import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExampl
 /**
  * @author Nicolas Morel
  */
-@GFlotExamplesRaw(CategoriesPlace.UI_RAW_SOURCE_FILENAME)
-public class CategoriesExample
-        extends DefaultActivity {
+@GFlotExamplesRaw( CategoriesPlace.UI_RAW_SOURCE_FILENAME )
+public class CategoriesExample extends DefaultActivity
+{
 
-    private static Binder binder = GWT.create(Binder.class);
+    interface Binder extends UiBinder<Widget, CategoriesExample>
+    {}
 
-    interface Binder
-            extends UiBinder<Widget, CategoriesExample> {
-    }
-
+    private static Binder binder = GWT.create( Binder.class );
     /**
      * Plot
      */
     @GFlotExamplesData
-    @UiField(provided = true)
+    @UiField( provided = true )
     SimplePlot plot;
 
-    public CategoriesExample(Resources resources) {
-        super(resources);
+    public CategoriesExample( Resources resources )
+    {
+        super( resources );
     }
 
     /**
      * Create plot
      */
     @GFlotExamplesSource
-    public Widget createPlot() {
+    public Widget createPlot()
+    {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = PlotOptions.create();
-        plotOptions.setGlobalSeriesOptions(GlobalSeriesOptions.create().setBarsSeriesOptions(BarSeriesOptions.create().setShow(true).setBarWidth(0.6).setAlignment(BarSeriesOptions.BarAlignment.CENTER))).addXAxisOptions(CategoriesAxisOptions.create().setTickLength(0));
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setBarsSeriesOptions( BarSeriesOptions.create()
+            .setShow( true )
+            .setBarWidth( 0.6 )
+            .setAlignment( BarSeriesOptions.BarAlignment.CENTER ) ) ).addXAxisOptions( CategoriesAxisOptions.create()
+            .setTickLength( 0 ) );
 
         SeriesHandler series = model.addSeries();
-        series.add(DataPoint.of("January", 10));
-        series.add(DataPoint.of("February", 8));
-        series.add(DataPoint.of("March", 4));
-        series.add(DataPoint.of("April", 13));
-        series.add(DataPoint.of("May", 17));
-        series.add(DataPoint.of("June", 9));
+        series.add( DataPoint.of( "January", 10 ) );
+        series.add( DataPoint.of( "February", 8 ) );
+        series.add( DataPoint.of( "March", 4 ) );
+        series.add( DataPoint.of( "April", 13 ) );
+        series.add( DataPoint.of( "May", 17 ) );
+        series.add( DataPoint.of( "June", 9 ) );
 
         // create the plot
-        plot = new SimplePlot(model, plotOptions);
+        plot = new SimplePlot( model, plotOptions );
 
-        return binder.createAndBindUi(this);
+        return binder.createAndBindUi( this );
     }
 }

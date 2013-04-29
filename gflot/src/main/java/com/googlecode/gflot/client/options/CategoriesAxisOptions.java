@@ -25,114 +25,130 @@
 
 package com.googlecode.gflot.client.options;
 
+import java.util.Collection;
+
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayString;
 import com.googlecode.gflot.client.jsni.JsonObject;
 
-import java.util.Collection;
-
 /**
  * @author Nicolas Morel
  */
-public class CategoriesAxisOptions extends AbstractAxisOptions<CategoriesAxisOptions> {
+public class CategoriesAxisOptions extends AbstractAxisOptions<CategoriesAxisOptions>
+{
 
-    public static class Categories extends JsonObject {
+    public static class Categories extends JsonObject
+    {
 
         /**
          * Creates a {@link Categories}
          */
-        public static final Categories create() {
+        public static final Categories create()
+        {
             return JavaScriptObject.createObject().cast();
         }
 
-        protected Categories() {
+        protected Categories()
+        {
         }
 
-        public final Categories add(String category, double distance) {
-            put(category, distance);
+        public final Categories add( String category, double distance )
+        {
+            put( category, distance );
             return this;
         }
     }
 
+    private static final String CATEGORIES_KEY = "categories";
+
     /**
      * Creates a {@link CategoriesAxisOptions}
      */
-    public static final CategoriesAxisOptions create() {
+    public static final CategoriesAxisOptions create()
+    {
         CategoriesAxisOptions axis = JavaScriptObject.createObject().cast();
-        axis.put(MODE_KEY, CATEGORIES_MODE_KEY);
+        axis.put( MODE_KEY, CATEGORIES_MODE_KEY );
         return axis;
     }
 
-    private static final String CATEGORIES_KEY = "categories";
-
-    protected CategoriesAxisOptions() {
+    protected CategoriesAxisOptions()
+    {
     }
 
     /**
      * @return the categories as an array
      */
-    public final JsArrayString getCategoriesAsArray() {
-        return getStringArray(CATEGORIES_KEY);
+    public final JsArrayString getCategoriesAsArray()
+    {
+        return getStringArray( CATEGORIES_KEY );
     }
 
     /**
      * @return the categories as an object mapping labels to values
      */
-    public final Categories getCategoriesAsMap() {
-        return getJsObject(CATEGORIES_KEY);
+    public final Categories getCategoriesAsMap()
+    {
+        return getJsObject( CATEGORIES_KEY );
     }
 
     /**
      * Set the categories as an array.
      */
-    public final CategoriesAxisOptions setCategories(String... categories) {
+    public final CategoriesAxisOptions setCategories( String... categories )
+    {
         assert null != categories : "categories can't be null";
 
         JsArrayString array = JavaScriptObject.createArray().cast();
-        for (String category : categories) {
-            array.push(category);
+        for ( String category : categories )
+        {
+            array.push( category );
         }
-        return setCategories(array);
+        return setCategories( array );
     }
 
     /**
      * Set the categories as an array.
      */
-    public final CategoriesAxisOptions setCategories(Collection<String> categories) {
+    public final CategoriesAxisOptions setCategories( Collection<String> categories )
+    {
         assert null != categories : "categories can't be null";
 
         JsArrayString array = JavaScriptObject.createArray().cast();
-        for (String category : categories) {
-            array.push(category);
+        for ( String category : categories )
+        {
+            array.push( category );
         }
-        return setCategories(array);
+        return setCategories( array );
     }
 
     /**
      * Set the categories as an array.
      */
-    public final CategoriesAxisOptions setCategories(JsArrayString categories) {
+    public final CategoriesAxisOptions setCategories( JsArrayString categories )
+    {
         assert null != categories : "categories can't be null";
 
-        put(CATEGORIES_KEY, categories);
+        put( CATEGORIES_KEY, categories );
         return this;
     }
 
     /**
      * Set the categories as an object mapping labels to values.
      */
-    public final CategoriesAxisOptions setCategories(Categories categories) {
+    public final CategoriesAxisOptions setCategories( Categories categories )
+    {
         assert null != categories : "categories can't be null";
 
-        put(CATEGORIES_KEY, categories);
+        put( CATEGORIES_KEY, categories );
         return this;
     }
 
     /**
      * Clear the categories
      */
-    public final CategoriesAxisOptions clearCategories() {
-        clear(CATEGORIES_KEY);
+    public final CategoriesAxisOptions clearCategories()
+    {
+        clear( CATEGORIES_KEY );
         return this;
     }
 

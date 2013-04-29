@@ -44,17 +44,11 @@ import com.googlecode.gflot.examples.client.examples.tracking.TrackingPlace;
 import com.googlecode.gflot.examples.client.resources.Resources;
 import com.googlecode.gflot.examples.client.source.PlaceWithSources;
 
-public class MainView
-    extends ResizeComposite
-    implements Handler
+public class MainView extends ResizeComposite implements Handler
 {
 
-    private static MainViewUiBinder uiBinder = GWT.create( MainViewUiBinder.class );
-
-    interface MainViewUiBinder
-        extends UiBinder<Widget, MainView>
-    {
-    }
+    interface MainViewUiBinder extends UiBinder<Widget, MainView>
+    {}
 
     private static interface Predicate
     {
@@ -64,7 +58,6 @@ public class MainView
     private static class Link
     {
         private Hyperlink link;
-
         private Predicate predicate;
 
         public Link( Hyperlink link, Predicate predicate )
@@ -84,84 +77,59 @@ public class MainView
         }
     }
 
+    private static MainViewUiBinder uiBinder = GWT.create( MainViewUiBinder.class );
     private final PlaceController placeController;
-
-    private List<Link> links;
-
     @UiField( provided = true )
     Resources res;
-
     @UiField
     Hyperlink barLink;
-
     @UiField
     Hyperlink decimationLink;
-
     @UiField
     Hyperlink hoverLink;
-
     @UiField
     Hyperlink imageLink;
-
     @UiField
     Hyperlink interactiveLegendLink;
-
     @UiField
     Hyperlink markingsLink;
-
     @UiField
     Hyperlink multipleAxesLink;
-
     @UiField
     Hyperlink overviewLink;
-
     @UiField
     Hyperlink pieLink;
-
     @UiField
     Hyperlink selectionLink;
-
     @UiField
     Hyperlink simpleLink;
-
     @UiField
     Hyperlink slidingLink;
-
     @UiField
     Hyperlink stackLink;
-
     @UiField
     Hyperlink exportLink;
-
     @UiField
     Hyperlink thresholdLink;
-
     @UiField
     Hyperlink navigateLink;
-
     @UiField
     Hyperlink trackingLink;
-
     @UiField
     Hyperlink fillAreaLink;
-
     @UiField
     Hyperlink errorBarsLink;
-
     @UiField
     Hyperlink categoriesLink;
-
     @UiField
     Anchor exampleLink;
-
     @UiField
     Anchor sourceLink;
-
     @UiField
     ListBox sourceList;
-
     @UiField
     ScrollPanel container;
+    private List<Link> links;
 
     public MainView( EventBus eventBus, PlaceController placeController, Resources res )
     {
@@ -171,140 +139,160 @@ public class MainView
         initWidget( uiBinder.createAndBindUi( this ) );
 
         links = new ArrayList<Link>();
-        links.add( new Link( barLink, new Predicate() {
+        links.add( new Link( barLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof BarPlace;
             }
         } ) );
-        links.add( new Link( decimationLink, new Predicate() {
+        links.add( new Link( decimationLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof DecimationPlace;
             }
         } ) );
-        links.add( new Link( hoverLink, new Predicate() {
+        links.add( new Link( hoverLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof HoverPlace;
             }
         } ) );
-        links.add( new Link( imageLink, new Predicate() {
+        links.add( new Link( imageLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof ImagePlace;
             }
         } ) );
-        links.add( new Link( interactiveLegendLink, new Predicate() {
+        links.add( new Link( interactiveLegendLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof InteractiveLegendPlace;
             }
         } ) );
-        links.add( new Link( markingsLink, new Predicate() {
+        links.add( new Link( markingsLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof MarkingsPlace;
             }
         } ) );
-        links.add( new Link( multipleAxesLink, new Predicate() {
+        links.add( new Link( multipleAxesLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof MultipleAxesPlace;
             }
         } ) );
-        links.add( new Link( overviewLink, new Predicate() {
+        links.add( new Link( overviewLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof OverviewPlace;
             }
         } ) );
-        links.add( new Link( pieLink, new Predicate() {
+        links.add( new Link( pieLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof PiePlace;
             }
         } ) );
-        links.add( new Link( selectionLink, new Predicate() {
+        links.add( new Link( selectionLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof SelectionPlace;
             }
         } ) );
-        links.add( new Link( simpleLink, new Predicate() {
+        links.add( new Link( simpleLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof LinePlace;
             }
         } ) );
-        links.add( new Link( slidingLink, new Predicate() {
+        links.add( new Link( slidingLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof SlidingPlace;
             }
         } ) );
-        links.add( new Link( stackLink, new Predicate() {
+        links.add( new Link( stackLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof StackPlace;
             }
         } ) );
-        links.add( new Link( exportLink, new Predicate() {
+        links.add( new Link( exportLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof ExportPlace;
             }
         } ) );
-        links.add( new Link( thresholdLink, new Predicate() {
+        links.add( new Link( thresholdLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof ThresholdPlace;
             }
         } ) );
-        links.add( new Link( navigateLink, new Predicate() {
+        links.add( new Link( navigateLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof NavigatePlace;
             }
         } ) );
-        links.add( new Link( trackingLink, new Predicate() {
+        links.add( new Link( trackingLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof TrackingPlace;
             }
         } ) );
-        links.add( new Link( fillAreaLink, new Predicate() {
+        links.add( new Link( fillAreaLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof FillAreaPlace;
             }
         } ) );
-        links.add( new Link( errorBarsLink, new Predicate() {
+        links.add( new Link( errorBarsLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
                 return place instanceof ErrorBarsPlace;
             }
         } ) );
-        links.add( new Link( categoriesLink, new Predicate() {
+        links.add( new Link( categoriesLink, new Predicate()
+        {
             @Override
             public boolean apply( Place place )
             {
@@ -434,8 +422,8 @@ public class MainView
         {
             PlaceWithSources<?> place = (PlaceWithSources<?>) currentPlace;
             // we were on the example page, we create a new place from the previous one and go to this new place
-            placeController.goTo( place.createPlace( place.getSourceFilename(),
-                sourceList.isVisible() && sourceList.getSelectedIndex() > 0 ) );
+            placeController.goTo( place.createPlace( place.getSourceFilename(), sourceList.isVisible() && sourceList
+                .getSelectedIndex() > 0 ) );
         }
     }
 

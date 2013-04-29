@@ -30,17 +30,16 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
 import com.googlecode.gflot.client.util.JavaScriptInjector;
 
-public class FlotCategoriesLoader
-    extends DefaultLoader
+public class FlotCategoriesLoader extends DefaultLoader
 {
-    interface Bundle
-        extends ClientBundle
+    interface Bundle extends ClientBundle
     {
         @Source( "jquery.flot.categories.min.js" )
         TextResource flotCategories();
     }
 
     private Bundle bundle;
+    private boolean loaded;
 
     private Bundle getBundle()
     {
@@ -50,8 +49,6 @@ public class FlotCategoriesLoader
         }
         return bundle;
     }
-
-    private boolean loaded;
 
     @Override
     public void load()
