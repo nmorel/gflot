@@ -97,7 +97,6 @@ public class SelectionExample
         } ) );
 
         plotOptions.setSelectionOptions( SelectionOptions.create().setMode( SelectionMode.XY ).setColor( "red" ).setShape( SelectionOptions.SelectionShape.BEVEL ).setMinSize( 10 ) );
-        System.out.println(plotOptions.getSelectionOptions().stringify());
         plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
 
         // create a series
