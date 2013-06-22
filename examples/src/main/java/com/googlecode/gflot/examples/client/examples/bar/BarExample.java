@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Random;
@@ -15,6 +16,8 @@ import com.googlecode.gflot.client.PlotModel;
 import com.googlecode.gflot.client.Series;
 import com.googlecode.gflot.client.SeriesHandler;
 import com.googlecode.gflot.client.SimplePlot;
+import com.googlecode.gflot.client.Tick;
+import com.googlecode.gflot.client.options.AbstractAxisOptions;
 import com.googlecode.gflot.client.options.AxisOptions;
 import com.googlecode.gflot.client.options.BarSeriesOptions;
 import com.googlecode.gflot.client.options.GlobalSeriesOptions;
@@ -32,31 +35,21 @@ import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExampl
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 @GFlotExamplesRaw( BarPlace.UI_RAW_SOURCE_FILENAME )
-public class BarExample
-    extends DefaultActivity
+public class BarExample extends DefaultActivity
 {
 
-    interface Binder
-        extends UiBinder<Widget, BarExample>
-    {
-    }
+    interface Binder extends UiBinder<Widget, BarExample>
+    {}
 
-    private static final String[] MONTH_NAMES = {"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
-        "nov", "dec"};
+    private static final String[] MONTH_NAMES = {"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"};
     private static Binder binder = GWT.create( Binder.class );
-    /**
-     * First Plot
-     */
+    /** First Plot */
     @GFlotExamplesData
     @UiField( provided = true )
     SimplePlot plot1;
-    /**
-     * Second Plot
-     */
+    /** Second Plot */
     @GFlotExamplesData
     @UiField( provided = true )
     SimplePlot plot2;
@@ -66,9 +59,7 @@ public class BarExample
         super( resources );
     }
 
-    /**
-     * Create plot
-     */
+    /** Create plot */
     @Override
     @GFlotExamplesSource
     public Widget createPlot()
@@ -79,18 +70,18 @@ public class BarExample
         return binder.createAndBindUi( this );
     }
 
-    /**
-     * Create the first plot
-     */
+    /** Create the first plot */
     @GFlotExamplesSource
     private void createFirstPlot()
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = PlotOptions.create();
 
-        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setBarsSeriesOptions(
-            BarSeriesOptions.create().setShow( true ).setLineWidth( 1 ).setBarWidth( 1 )
-                .setAlignment( BarAlignment.CENTER ) ) );
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setBarsSeriesOptions( BarSeriesOptions.create()
+            .setShow( true )
+            .setLineWidth( 1 )
+            .setBarWidth( 1 )
+            .setAlignment( BarAlignment.CENTER ) ) );
 
         plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
@@ -109,8 +100,7 @@ public class BarExample
         } ) );
 
         // create a series
-        SeriesHandler handler =
-            model.addSeries( Series.of( "Ottawa's Month Temperatures (Daily Average in &deg;C)" ).setColor( "blue" ) );
+        SeriesHandler handler = model.addSeries( Series.of( "Ottawa's Month Temperatures (Daily Average in &deg;C)" ).setColor( "blue" ) );
 
         // add data
         handler.add( DataPoint.of( 1, -10.5 ) );
@@ -130,9 +120,7 @@ public class BarExample
         plot1 = new SimplePlot( model, plotOptions );
     }
 
-    /**
-     * Create the second plot
-     */
+    /** Create the second plot */
     @GFlotExamplesSource
     private void createSecondPlot()
     {
@@ -142,8 +130,20 @@ public class BarExample
         PlotOptions plotOptions = PlotOptions.create();
 
         GlobalSeriesOptions globalSeriesOptions = GlobalSeriesOptions.create();
-        globalSeriesOptions.setBarsSeriesOptions( BarSeriesOptions.create().setShow( true )
-            .setBarWidth( 0.2 ).setLineWidth( 1 ) );
+        globalSeriesOptions.setBarsSeriesOptions( BarSeriesOptions.create().setShow( true ).setBarWidth( 0.2 ).setLineWidth( 1 ) );
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( new AbstractAxisOptions.TickGenerator()
+        {
+            @Override
+            public JsArray<Tick> generate( Axis axis )
+            {
+                JsArray<Tick> array = JsArray.createArray().cast();
+                for ( int i = 0; i < 10; i++ )
+                {
+                    array.push( Tick.of( i, "B" + i ) );
+                }
+                return array;
+            }
+        } ) );
 
         plotOptions.setGlobalSeriesOptions( globalSeriesOptions );
 
@@ -167,8 +167,7 @@ public class BarExample
             }
             if ( i % 2 != 0 )
             {
-                markings.addMarking( Marking.create().setX( Range.of( i - 0.5, i + 0.5 ) )
-                    .setColor( "rgba(153, 153, 153, 0.3)" ) );
+                markings.addMarking( Marking.create().setX( Range.of( i - 0.5, i + 0.5 ) ).setColor( "rgba(153, 153, 153, 0.3)" ) );
             }
         }
         plotOptions.setGridOptions( GridOptions.create().setMarkings( markings ) );

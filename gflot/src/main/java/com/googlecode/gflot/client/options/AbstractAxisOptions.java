@@ -45,7 +45,7 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
 
     public interface TickGenerator
     {
-        Tick[] generate( Axis axis );
+        JsArray<Tick> generate( Axis axis );
     }
 
     public enum AxisPosition
