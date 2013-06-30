@@ -111,6 +111,7 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     private static final String AXIS_LABEL_CANVAS_FONT_FAMILY_KEY = "axisLabelFontFamily";
     private static final String ZOOM_RANGE_KEY = "zoomRange";
     private static final String PAN_RANGE_KEY = "panRange";
+    private static final String FONT_KEY = "font";
 
     protected AbstractAxisOptions()
     {
@@ -871,6 +872,32 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     public final T clearPanRange()
     {
         clear( PAN_RANGE_KEY );
+        return (T) this;
+    }
+
+    /**
+     * Define the font and color used to draw the axis tick labels.
+     */
+    public final T setFont( FontOptions font )
+    {
+        put( FONT_KEY, font );
+        return (T) this;
+    }
+
+    /**
+     * @return the font
+     */
+    public final FontOptions getFont()
+    {
+        return getJsObject( FONT_KEY );
+    }
+
+    /**
+     * Clear the font
+     */
+    public final T clearFont()
+    {
+        clear( FONT_KEY );
         return (T) this;
     }
 }
