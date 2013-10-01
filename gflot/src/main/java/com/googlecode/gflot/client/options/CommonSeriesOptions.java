@@ -114,7 +114,6 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     private static final String BAR_SERIES_KEY = "bars";
     private static final String POINTS_SERIES_KEY = "points";
     private static final String IMAGES_SERIES_KEY = "images";
-    private static final String PIE_SERIES_KEY = "pie";
     private static final String SHADOW_SIZE_KEY = "shadowSize";
     private static final String STACK_KEY = "stack";
     private static final String THRESHOLD_KEY = "threshold";
@@ -190,23 +189,6 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     public final ImageSeriesOptions getImageSeriesOptions()
     {
         return getJsObject( IMAGES_SERIES_KEY );
-    }
-
-    /**
-     * Set global Pie series options that will be used unless options are set directly to the series
-     */
-    public final T setPieSeriesOptions( PieSeriesOptions pieSeriesOptions )
-    {
-        put( PIE_SERIES_KEY, pieSeriesOptions );
-        return (T) this;
-    }
-
-    /**
-     * @return global Pie series options
-     */
-    public final PieSeriesOptions getPieSeriesOptions()
-    {
-        return getJsObject( PIE_SERIES_KEY );
     }
 
     /**

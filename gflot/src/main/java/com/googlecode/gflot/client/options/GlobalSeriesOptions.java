@@ -42,8 +42,27 @@ public class GlobalSeriesOptions
         return JavaScriptObject.createObject().cast();
     }
 
+    private static final String PIE_SERIES_KEY = "pie";
+
     protected GlobalSeriesOptions()
     {
+    }
+
+    /**
+     * Set global Pie series options that will be used unless options are set directly to the series
+     */
+    public final GlobalSeriesOptions setPieSeriesOptions( PieSeriesOptions pieSeriesOptions )
+    {
+        put( PIE_SERIES_KEY, pieSeriesOptions );
+        return this;
+    }
+
+    /**
+     * @return global Pie series options
+     */
+    public final PieSeriesOptions getPieSeriesOptions()
+    {
+        return getJsObject( PIE_SERIES_KEY );
     }
 
 }
