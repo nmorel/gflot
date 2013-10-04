@@ -1,8 +1,5 @@
 package com.googlecode.gflot.examples.client.examples.sliding;
 
-import java.util.Date;
-
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
@@ -23,6 +20,7 @@ import com.googlecode.gflot.client.Series;
 import com.googlecode.gflot.client.SeriesHandler;
 import com.googlecode.gflot.client.SimplePlot;
 import com.googlecode.gflot.client.options.GlobalSeriesOptions;
+import com.googlecode.gflot.client.options.LegendOptions;
 import com.googlecode.gflot.client.options.LineSeriesOptions;
 import com.googlecode.gflot.client.options.PlotOptions;
 import com.googlecode.gflot.client.options.PointsSeriesOptions;
@@ -40,11 +38,16 @@ import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExampl
 public class SlidingExample
     extends DefaultActivity
 {
-
-    interface Binder
-        extends UiBinder<Widget, SlidingExample>
-    {
-    }
+    /**
+     * Refresh period
+     */
+    @GFlotExamplesData
+    private static final int period = 300;
+    /**
+     * Maximum datapoints in the slide at a time
+     */
+    @GFlotExamplesData
+    private static final int slidingWindow = 20;
 
     /**
      * The Async interface of the service
@@ -55,13 +58,22 @@ public class SlidingExample
         void getNewData( AsyncCallback<DataPoint[]> callback );
     }
 
+    interface Binder
+        extends UiBinder<Widget, SlidingExample>
+    {
+    }
+
     private static Binder binder = GWT.create( Binder.class );
     /**
      * Plot
      */
     @GFlotExamplesData
-    @UiField( provided = true )
+    @UiField(provided = true)
     SimplePlot plot;
+    /**
+     * start/stop button
+     */
+    @GFlotExamplesData
     @UiField
     Button startStop;
     /**
@@ -83,13 +95,13 @@ public class SlidingExample
     {
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = PlotOptions.create();
-        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
-            .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ) )
-            .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 0d ) );
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 )
+            .setShow( true ).setFill( true ).setFillColor( 1.0, 1.0, 1.0, 0.5 ) ).setPointsOptions( PointsSeriesOptions.create()
+            .setRadius( 1 ).setShow( true ) ).setShadowSize( 0d ) ).setLegendOptions( LegendOptions.create().setShow( false ) );
         plotOptions.addXAxisOptions( TimeSeriesAxisOptions.create().setTimeZone( TimeSeriesAxisOptions.TIME_ZONE_BROWSER_KEY ) );
 
-        final SeriesHandler series =
-            model.addSeries( Series.of( "Random Series", "#FF9900" ), PlotModelStrategy.slidingWindowStrategy( 20 ) );
+        final SeriesHandler series = model.addSeries( Series.of( "Random Series", "#FF9900" ), PlotModelStrategy
+            .slidingWindowStrategy( slidingWindow ) );
 
         // pull the "fake" RPC service for new data
         updater = new Timer()
@@ -116,6 +128,21 @@ public class SlidingExample
     {
         super.start( panel, eventBus );
         start();
+        fillSlidingWindow( plot.getModel().getHandlers().get( 0 ) );
+    }
+
+    /**
+     * Fill the series with random data
+     */
+    @GFlotExamplesSource
+    private void fillSlidingWindow( SeriesHandler series )
+    {
+        series.clear();
+        double currentMilli = System.currentTimeMillis();
+        for ( int i = slidingWindow - 1; i >= 0; i-- )
+        {
+            series.add( DataPoint.of( currentMilli - (period * i), nextValue() ) );
+        }
     }
 
     /**
@@ -126,6 +153,7 @@ public class SlidingExample
     public void onStop()
     {
         stop();
+        plot.getModel().clear();
         super.onStop();
     }
 
@@ -133,7 +161,7 @@ public class SlidingExample
      * On click on the start/stop button
      */
     @GFlotExamplesSource
-    @UiHandler( "startStop" )
+    @UiHandler("startStop")
     void onClickStartStop( ClickEvent e )
     {
         if ( "Stop".equals( startStop.getText() ) )
@@ -153,7 +181,7 @@ public class SlidingExample
     private void start()
     {
         startStop.setText( "Stop" );
-        updater.scheduleRepeating( 1000 );
+        updater.scheduleRepeating( period );
     }
 
     /**
@@ -199,11 +227,20 @@ public class SlidingExample
     {
         return new FakeRpcServiceAsync()
         {
-            @SuppressWarnings( "deprecation" )
+            @SuppressWarnings("deprecation")
             public void getNewData( final AsyncCallback<DataPoint[]> callback )
             {
-                callback.onSuccess( new DataPoint[]{DataPoint.of( new Date().getTime(), Random.nextDouble() )} );
+                callback.onSuccess( new DataPoint[]{DataPoint.of( System.currentTimeMillis(), nextValue() )} );
             }
         };
+    }
+
+    /**
+     * @return the next random value
+     */
+    @GFlotExamplesSource
+    private double nextValue()
+    {
+        return Math.min( Random.nextDouble() + 0.2, 0.9 );
     }
 }

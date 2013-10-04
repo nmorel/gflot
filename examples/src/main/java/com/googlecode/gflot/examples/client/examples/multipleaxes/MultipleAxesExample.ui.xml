@@ -4,14 +4,40 @@
 
   <ui:style>
     .spacing {
-    	margin-right: 5px;
+      margin-right: 5px;
+    }
+
+    .loadingMask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .mask {
+      background-color: #000;
+      opacity: 0.3;
+    }
+
+    .loading {
+      text-align: center;
+      line-height: 300px;
+      font-size: 30px;
+      color: #8C2E0B;
     }
   </ui:style>
 
   <ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' />
 
   <g:HTMLPanel>
-    <p:SimplePlot ui:field="plot" width="600px" height="300px" />
+    <div style="width: 600px; height: 300px; position: relative;">
+      <p:SimplePlot ui:field="plot" width="100%" height="100%" />
+      <div ui:field='loadingMask' class="{style.loadingMask}">
+        <div class="{style.loadingMask} {style.mask}" />
+        <div class="{style.loadingMask} {style.loading}">Loading...</div>
+      </div>
+    </div>
 
     <div style="margin-top: 10px">
       <span>Cursor position :</span>
@@ -24,9 +50,9 @@
 
     <g:HorizontalPanel verticalAlignment="MIDDLE">
       <g:InlineLabel addStyleNames='{style.spacing}'>Position axis</g:InlineLabel>
-      <g:Button ui:field="left" addStyleNames='{style.spacing}'>left</g:Button>
+      <g:Button ui:field="left" addStyleNames='{style.spacing}' enabled="false">left</g:Button>
       <g:InlineLabel addStyleNames='{style.spacing}'>or</g:InlineLabel>
-      <g:Button ui:field="right">right</g:Button>
+      <g:Button ui:field="right" enabled="false">right</g:Button>
     </g:HorizontalPanel>
   </g:HTMLPanel>
 
