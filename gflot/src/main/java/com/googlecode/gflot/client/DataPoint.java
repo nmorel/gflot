@@ -134,4 +134,9 @@ public class DataPoint
         return getNumber( 2 );
     }
 
+    public final native String stringify()
+    /*-{
+        return JSON.stringify(this);
+    }-*/;
+
 }
