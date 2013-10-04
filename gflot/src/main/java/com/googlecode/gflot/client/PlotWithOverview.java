@@ -186,14 +186,36 @@ public class PlotWithOverview
         return model;
     }
 
-    public PlotOptions getWindowPlotOptions()
+    public PlotOptions getWindowOptions()
     {
-        return windowPlot.getPlotOptions();
+        return windowPlot.getOptions();
     }
 
+    /**
+     * @deprecated since 3.2.0 this method always returns the options created by user and not the internal plot options used by flot. Use
+     * {@link PlotWithOverview#getWindowOptions()} to get user's option and {@link PlotWithOverview#getPlot()}.getOptions() to get
+     * internal flot options.
+     */
+    @Deprecated
+    public PlotOptions getWindowPlotOptions()
+    {
+        return windowPlot.getOptions();
+    }
+
+    public PlotOptions getOverviewOptions()
+    {
+        return overviewPlot.getOptions();
+    }
+
+    /**
+     * @deprecated since 3.2.0 this method always returns the options created by user and not the internal plot options used by flot. Use
+     * {@link PlotWithOverview#getOverviewOptions()} to get user's option and {@link PlotWithOverview#getOverviewPlot()}.getPlot()
+     * .getOptions() to get internal flot options.
+     */
+    @Deprecated
     public PlotOptions getOverviewPlotOptions()
     {
-        return overviewPlot.getPlotOptions();
+        return overviewPlot.getOptions();
     }
 
     public int getWidth()
@@ -203,28 +225,15 @@ public class PlotWithOverview
 
     public void redraw()
     {
-        redraw( false );
-    }
-
-    public void redraw( boolean force )
-    {
         double[] selection = model.getSelection();
-        if ( force )
-        {
-            // if a recreation is asked, we have to recreate first and then select
-            windowPlot.redraw( true );
-            overviewPlot.redraw( true );
-        }
+        // we have to redraw first and then select
+        windowPlot.redraw();
+        overviewPlot.redraw();
+
         if ( selection[0] < selection[1] )
         {
             overviewPlot
                 .setSelection( PlotSelectionArea.create().setX( Range.of( selection[0], selection[1] ) ), false );
-        }
-        if ( !force )
-        {
-            // if it's a simple redraw, we redraw after the selection
-            windowPlot.redraw( false );
-            overviewPlot.redraw( false );
         }
     }
 
@@ -302,12 +311,6 @@ public class PlotWithOverview
     public HandlerRegistration addLoadHandler( Handler handler )
     {
         return overviewPlot.addLoadHandler( handler );
-    }
-
-    @Override
-    public HandlerRegistration addRedrawHandler( com.googlecode.gflot.client.event.PlotRedrawEvent.Handler handler )
-    {
-        return overviewPlot.addRedrawHandler( handler );
     }
 
     @Override

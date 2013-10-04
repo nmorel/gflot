@@ -212,7 +212,7 @@ public class Plot
         this.setData(series);
     }-*/;
 
-    public final native PlotOptions getPlotOptions()
+    public final native PlotOptions getOptions()
     /*-{
         return this.getOptions();
     }-*/;

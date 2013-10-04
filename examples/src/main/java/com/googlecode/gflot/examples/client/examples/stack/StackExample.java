@@ -97,11 +97,11 @@ public class StackExample
     {
         if ( event.getValue() )
         {
-            plot.getPlotOptions().getGlobalSeriesOptions().setStack( true );
+            plot.getOptions().getGlobalSeriesOptions().setStack( true );
         }
         else
         {
-            plot.getPlotOptions().getGlobalSeriesOptions().setStack( null );
+            plot.getOptions().getGlobalSeriesOptions().setStack( null );
         }
         plot.redraw();
     }
@@ -113,7 +113,7 @@ public class StackExample
     @GFlotExamplesSource
     void onValueChangeGraphType( ValueChangeEvent<Boolean> event )
     {
-        GlobalSeriesOptions options = plot.getPlotOptions().getGlobalSeriesOptions();
+        GlobalSeriesOptions options = plot.getOptions().getGlobalSeriesOptions();
         options.getLineSeriesOptions().setShow( lines.getValue() || linesStep.getValue() )
             .setSteps( linesStep.getValue() );
         options.getBarSeriesOptions().setShow( bars.getValue() );

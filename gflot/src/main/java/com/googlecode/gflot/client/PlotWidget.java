@@ -28,7 +28,6 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.gflot.client.event.PlotClickListener;
 import com.googlecode.gflot.client.event.PlotHoverListener;
 import com.googlecode.gflot.client.event.PlotLoadEvent.HasPlotLoadHandlers;
-import com.googlecode.gflot.client.event.PlotRedrawEvent.HasPlotRedrawHandlers;
 import com.googlecode.gflot.client.event.PlotSelectedListener;
 import com.googlecode.gflot.client.event.PlotSelectingListener;
 import com.googlecode.gflot.client.event.PlotUnselectedListener;
@@ -38,7 +37,7 @@ import com.googlecode.gflot.client.jsni.Plot;
  * @author Alexander De Leon
  */
 public interface PlotWidget
-    extends HasPlotLoadHandlers, HasPlotRedrawHandlers, IsWidget
+    extends HasPlotLoadHandlers, IsWidget
 {
 
     /**
@@ -141,14 +140,7 @@ public interface PlotWidget
     void redraw();
 
     /**
-     * Redraw the plot
-     *
-     * @param force true if you want to recreate completely the plot, false otherwise
-     */
-    void redraw( boolean force );
-
-    /**
-     * @return the plot
+     * @return the internal flot plot
      */
     Plot getPlot();
 }

@@ -91,7 +91,7 @@ public class ThresholdExample
     @GFlotExamplesSource
     void onValueChangeGraphType( ValueChangeEvent<Boolean> event )
     {
-        GlobalSeriesOptions options = plot.getPlotOptions().getGlobalSeriesOptions();
+        GlobalSeriesOptions options = plot.getOptions().getGlobalSeriesOptions();
         if ( positive.getValue() )
         {
             options.getThreshold().get( 0 ).setBelow( 5 );

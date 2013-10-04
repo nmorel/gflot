@@ -41,7 +41,6 @@ import com.googlecode.gflot.client.event.PlotLoadEvent;
 import com.googlecode.gflot.client.event.PlotLoadEvent.Handler;
 import com.googlecode.gflot.client.event.PlotPanListener;
 import com.googlecode.gflot.client.event.PlotPosition;
-import com.googlecode.gflot.client.event.PlotRedrawEvent;
 import com.googlecode.gflot.client.event.PlotSelectedListener;
 import com.googlecode.gflot.client.event.PlotSelectingListener;
 import com.googlecode.gflot.client.event.PlotUnselectedListener;
@@ -320,28 +319,12 @@ public class SimplePlot
     @Override
     public void redraw()
     {
-        redraw( false );
-    }
-
-    public void redraw( boolean force )
-    {
         if ( loaded )
         {
-            if ( force )
+            loaded = false;
+            if ( isAttached() )
             {
-                loaded = false;
-                if ( isAttached() )
-                {
-                    createPlot();
-                }
-            }
-            else
-            {
-                plot.setData( model.getSeries() );
-                plot.setupGrid();
-                plot.draw();
-
-                PlotRedrawEvent.fire( this );
+                createPlot();
             }
         }
     }
@@ -366,9 +349,22 @@ public class SimplePlot
         return plot.getPlotOffsetBottom();
     }
 
-    public PlotOptions getPlotOptions()
+    /**
+     * @return the options provided by user
+     */
+    public PlotOptions getOptions()
     {
         return options;
+    }
+
+    /**
+     * @deprecated since 3.2.0 this method always returns the options created by user and not the internal plot options used by flot. Use
+     * {@link SimplePlot#getOptions()} to get user's option and {@link SimplePlot#getPlot()}.getOptions() to get internal flot options.
+     */
+    @Deprecated
+    public PlotOptions getPlotOptions()
+    {
+        return getOptions();
     }
 
     public void setLoadDataImages( boolean loadDataImages )
@@ -498,9 +494,6 @@ public class SimplePlot
         assert plot != null : "A javascript error occurred while creating plot.";
 
         loaded = true;
-
-        // retrieving the calculated options
-        options = plot.getPlotOptions();
 
         for ( Command cmd : onLoadOperations )
         {
@@ -635,7 +628,7 @@ public class SimplePlot
     }
 
     /**
-     * @return the plot
+     * @return the internal flot plot
      */
     public Plot getPlot()
     {
@@ -646,12 +639,6 @@ public class SimplePlot
     public HandlerRegistration addLoadHandler( Handler handler )
     {
         return addHandler( handler, PlotLoadEvent.getType() );
-    }
-
-    @Override
-    public HandlerRegistration addRedrawHandler( com.googlecode.gflot.client.event.PlotRedrawEvent.Handler handler )
-    {
-        return addHandler( handler, PlotRedrawEvent.getType() );
     }
 
     /**

@@ -216,8 +216,8 @@ public class NavigateExample
     void onClickReset( ClickEvent event )
     {
         message.setText( NO_ZOOM_MESSAGE );
-        plot.getPlotOptions().getXAxisOptions().clearMinimum().clearMaximum();
-        plot.getPlotOptions().getYAxisOptions().clearMinimum().clearMaximum();
+        plot.getOptions().getXAxisOptions().clearMinimum().clearMaximum();
+        plot.getOptions().getYAxisOptions().clearMinimum().clearMaximum();
         plot.redraw();
     }
 }

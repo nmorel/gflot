@@ -154,12 +154,12 @@ public class LineExample
 
         plot.removeStyleName( style.whiteTheme() );
         plot.addStyleName( style.darkTheme() );
-        plot.getPlotOptions().getXAxisOptions().getFont().setColor( "white" );
-        plot.getPlotOptions().getXAxisOptions().setTickColor( "rgba(255, 255, 255, 0.6)" );
-        plot.getPlotOptions().getYAxisOptions().getFont().setColor( "white" );
-        plot.getPlotOptions().getYAxisOptions().setTickColor( "rgba(255, 255, 255, 0.6)" );
-        plot.getPlotOptions().getGridOptions().setBorderColor( "white" );
-        plot.redraw(true);
+        plot.getOptions().getXAxisOptions().getFont().setColor( "white" );
+        plot.getOptions().getXAxisOptions().setTickColor( "rgba(255, 255, 255, 0.6)" );
+        plot.getOptions().getYAxisOptions().getFont().setColor( "white" );
+        plot.getOptions().getYAxisOptions().setTickColor( "rgba(255, 255, 255, 0.6)" );
+        plot.getOptions().getGridOptions().setBorderColor( "white" );
+        plot.redraw();
     }
 
     /**
@@ -176,12 +176,12 @@ public class LineExample
 
         plot.removeStyleName( style.darkTheme() );
         plot.addStyleName( style.whiteTheme() );
-        plot.getPlotOptions().getXAxisOptions().getFont().setColor( "black" );
-        plot.getPlotOptions().getXAxisOptions().clearTickColor();
-        plot.getPlotOptions().getYAxisOptions().getFont().setColor( "black" );
-        plot.getPlotOptions().getYAxisOptions().clearTickColor();
-        plot.getPlotOptions().getGridOptions().clearBorderColor();
-        plot.redraw( true );
+        plot.getOptions().getXAxisOptions().getFont().setColor( "black" );
+        plot.getOptions().getXAxisOptions().clearTickColor();
+        plot.getOptions().getYAxisOptions().getFont().setColor( "black" );
+        plot.getOptions().getYAxisOptions().clearTickColor();
+        plot.getOptions().getGridOptions().clearBorderColor();
+        plot.redraw();
     }
 
 }

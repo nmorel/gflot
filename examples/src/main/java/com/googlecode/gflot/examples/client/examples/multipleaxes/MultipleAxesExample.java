@@ -131,7 +131,7 @@ public class MultipleAxesExample
     @GFlotExamplesSource
     void onClickLeft( ClickEvent e )
     {
-        plot.getPlotOptions().getYAxisOptions( 2 ).setPosition( AxisPosition.LEFT );
+        plot.getOptions().getYAxisOptions( 2 ).setPosition( AxisPosition.LEFT );
         plot.redraw();
     }
 
@@ -142,7 +142,7 @@ public class MultipleAxesExample
     @GFlotExamplesSource
     void onClickRight( ClickEvent e )
     {
-        plot.getPlotOptions().getYAxisOptions( 2 ).setPosition( AxisPosition.RIGHT );
+        plot.getOptions().getYAxisOptions( 2 ).setPosition( AxisPosition.RIGHT );
         plot.redraw();
     }
 

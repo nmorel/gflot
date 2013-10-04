@@ -45,7 +45,6 @@ import com.googlecode.gflot.client.PlotModel.PlotModelListener;
 import com.googlecode.gflot.client.event.PlotClickListener;
 import com.googlecode.gflot.client.event.PlotHoverListener;
 import com.googlecode.gflot.client.event.PlotLoadEvent;
-import com.googlecode.gflot.client.event.PlotRedrawEvent;
 import com.googlecode.gflot.client.event.PlotSelectedListener;
 import com.googlecode.gflot.client.event.PlotSelectingListener;
 import com.googlecode.gflot.client.event.PlotUnselectedListener;
@@ -57,7 +56,7 @@ import com.googlecode.gflot.client.jsni.Plot;
  */
 public class PlotWithInteractiveLegend
     extends Composite
-    implements PlotWidget, PlotModelListener, PlotLoadEvent.Handler, PlotRedrawEvent.Handler
+    implements PlotWidget, PlotModelListener, PlotLoadEvent.Handler
 {
 
     protected final PlotWidget plot;
@@ -69,7 +68,6 @@ public class PlotWithInteractiveLegend
         legend = new HashMap<SeriesHandler, LegendItem>();
         this.plot = plot;
         addLoadHandler( this );
-        addRedrawHandler( this );
         initWidget( createUi() );
         buildLegendFromModel( plot.getModel() );
     }
@@ -175,11 +173,6 @@ public class PlotWithInteractiveLegend
         plot.redraw();
     }
 
-    public void redraw( boolean force )
-    {
-        plot.redraw( force );
-    }
-
     public Widget getWidget()
     {
         return this;
@@ -242,7 +235,7 @@ public class PlotWithInteractiveLegend
         legend.get( handler ).setValue( visible, false );
         if ( redraw )
         {
-            plot.redraw( true );
+            plot.redraw();
         }
     }
 
@@ -329,19 +322,7 @@ public class PlotWithInteractiveLegend
     }
 
     @Override
-    public HandlerRegistration addRedrawHandler( PlotRedrawEvent.Handler handler )
-    {
-        return plot.addRedrawHandler( handler );
-    }
-
-    @Override
     public void onLoad( PlotLoadEvent event )
-    {
-        updateLegend();
-    }
-
-    @Override
-    public void onRedraw( PlotRedrawEvent event )
     {
         updateLegend();
     }
