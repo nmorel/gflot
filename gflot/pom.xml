@@ -162,22 +162,22 @@
                 <jsSourceFile>base64.js</jsSourceFile>
                 <jsSourceFile>canvas2image.js</jsSourceFile>
                 <jsSourceFile>jquery.js</jsSourceFile>
-                <jsSourceFile>0.8.1/excanvas.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.canvas.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.categories.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.crosshair.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.errorbars.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.fillbetween.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.image.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.navigate.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.pie.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.resize.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.selection.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.stack.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.symbol.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.threshold.js</jsSourceFile>
-                <jsSourceFile>0.8.1/jquery.flot.time.js</jsSourceFile>
+                <jsSourceFile>0.8.2/excanvas.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.canvas.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.categories.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.crosshair.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.errorbars.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.fillbetween.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.image.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.navigate.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.pie.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.resize.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.selection.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.stack.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.symbol.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.threshold.js</jsSourceFile>
+                <jsSourceFile>0.8.2/jquery.flot.time.js</jsSourceFile>
                 <jsSourceFile>plugins/jquery.flot.axislabels.js</jsSourceFile>
                 <jsSourceFile>plugins/jquery.flot.fillarea.js</jsSourceFile>
                 <jsSourceFile>plugins/jquery.flot.orderBars.js</jsSourceFile>
