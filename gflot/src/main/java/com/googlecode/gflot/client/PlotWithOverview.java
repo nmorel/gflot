@@ -29,7 +29,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gflot.client.event.PlotClickListener;
 import com.googlecode.gflot.client.event.PlotHoverListener;
@@ -58,10 +58,8 @@ public class PlotWithOverview
     public static final PlotOptions DEFAULT_OVERVIEW_OPTIONS = PlotOptions
         .create()
         .setLegendOptions( LegendOptions.create().setShow( false ) )
-        .setGlobalSeriesOptions(
-            GlobalSeriesOptions.create()
-                .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setFill( true ) )
-                .setShadowSize( 0d ) ).setSelectionOptions( SelectionOptions.create().setMode( SelectionMode.X ) );
+        .setGlobalSeriesOptions( GlobalSeriesOptions.create().setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 )
+            .setFill( true ) ).setShadowSize( 0d ) ).setSelectionOptions( SelectionOptions.create().setMode( SelectionMode.X ) );
 
     private final SimplePlot windowPlot;
 
@@ -295,11 +293,15 @@ public class PlotWithOverview
     /* -------------------------- Helper Methods -- */
     private Widget createUi()
     {
-        FlexTable mainPanel = new FlexTable();
-        mainPanel.setWidget( 0, 0, windowPlot );
-        mainPanel.setWidget( 1, 0, overviewPlot );
+        FlowPanel panel = new FlowPanel();
+        panel.add( windowPlot );
+        panel.add( overviewPlot );
+
+        panel.setWidth( SimplePlot.DEFAULT_WIDTH + "px" );
+        windowPlot.setWidth( "auto" );
+        overviewPlot.setWidth( "auto" );
         overviewPlot.setHeight( DEFAULT_OVERVIEW_HEIGHT );
-        return mainPanel;
+        return panel;
     }
 
     protected void setupPlots()

@@ -59,9 +59,9 @@ public class SimplePlot
     implements PlotWidget
 {
 
-    private static final int DEFAULT_WIDTH = 600;
+    static final int DEFAULT_WIDTH = 600;
 
-    private static final int DEFAULT_HEIGHT = 300;
+    static final int DEFAULT_HEIGHT = 300;
 
     private final PlotModel model;
 
