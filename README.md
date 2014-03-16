@@ -12,7 +12,7 @@ You can check the last release notes here : https://github.com/nmorel/gflot/rele
 
 Documentation
 -------------
-While migrating, you can find the documentation here : https://code.google.com/p/gflot/w/list
+You can find more documentation here : https://github.com/nmorel/gflot/wiki
 
 Forum
 -----
