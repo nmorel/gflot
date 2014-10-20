@@ -35,336 +35,336 @@ import com.googlecode.gflot.client.options.CommonSeriesOptions;
  * @author AlexanderDeleon
  */
 public class Series
-        extends CommonSeriesOptions<Series>
+extends CommonSeriesOptions<Series>
 {
-    /**
-     * Creates a {@link Series}
-     */
-    public static final Series create()
-    {
-        return JavaScriptObject.createObject().cast();
-    }
+	/**
+	 * Creates a {@link Series}
+	 */
+	public static final Series create()
+	{
+		return JavaScriptObject.createObject().cast();
+	}
 
-    /**
-     * Creates a {@link Series} with the specified label
-     */
-    public static final Series of( String label )
-    {
-        Series series = create();
-        series.setLabel(label);
-        return series;
-    }
+	/**
+	 * Creates a {@link Series} with the specified label
+	 */
+	public static final Series of( final String label )
+	{
+		final Series series = create();
+		series.setLabel(label);
+		return series;
+	}
 
-    /**
-     * Creates a {@link Series} with the specified label and color
-     */
-    public static final Series of( String label, String color )
-    {
-        Series series = of(label);
-        series.setColor(color);
-        return series;
-    }
+	/**
+	 * Creates a {@link Series} with the specified label and color
+	 */
+	public static final Series of( final String label, final String color )
+	{
+		final Series series = of(label);
+		series.setColor(color);
+		return series;
+	}
 
-    private static final String DATA_KEY = "data";
-    private static final String COLOR_KEY = "color";
-    private static final String LABEL_KEY = "label";
-    private static final String X_AXIS_KEY = "xaxis";
-    private static final String Y_AXIS_KEY = "yaxis";
-    private static final String CLICKABLE_KEY = "clickable";
-    private static final String HOVERABLE_KEY = "hoverable";
-    private static final String PERCENT_KEY = "percent";
-    private static final String ANGLE_KEY = "angle";
-    private static final String FILL_BETWEEN_KEY = "fillBetween";
-    private static final String ID_KEY = "id";
-    private static final String FILL_AREA_KEY = "fillArea";
+	private static final String DATA_KEY = "data";
+	private static final String COLOR_KEY = "color";
+	private static final String LABEL_KEY = "label";
+	private static final String X_AXIS_KEY = "xaxis";
+	private static final String Y_AXIS_KEY = "yaxis";
+	private static final String CLICKABLE_KEY = "clickable";
+	private static final String HOVERABLE_KEY = "hoverable";
+	private static final String PERCENT_KEY = "percent";
+	private static final String ANGLE_KEY = "angle";
+	private static final String FILL_BETWEEN_KEY = "fillBetween";
+	private static final String ID_KEY = "id";
+	private static final String FILL_AREA_KEY = "fillArea";
 
-    protected Series()
-    {
-    }
+	protected Series()
+	{
+	}
 
-    final Series setData( SeriesData data )
-    {
-        put(DATA_KEY, data);
-        return this;
-    }
+	public final Series setData( final SeriesData data )
+	{
+		put(DATA_KEY, data);
+		return this;
+	}
 
-    /**
-     * Returns the data associated to this series.
-     * <p/>
-     * Be careful, the data can be null if the method {@link SeriesHandler#setVisible()} has been called on its
-     * associated SeriesHandler. In this case, use the method {@link SeriesHandler#getData()} of the
-     * {@link SeriesHandler}
-     * <p/>
-     */
-    public final SeriesData getData()
-    {
-        return getJsObject(DATA_KEY);
-    }
+	/**
+	 * Returns the data associated to this series.
+	 * <p/>
+	 * Be careful, the data can be null if the method {@link SeriesHandler#setVisible()} has been called on its
+	 * associated SeriesHandler. In this case, use the method {@link SeriesHandler#getData()} of the
+	 * {@link SeriesHandler}
+	 * <p/>
+	 */
+	public final SeriesData getData()
+	{
+		return getJsObject(DATA_KEY);
+	}
 
-    /**
-     * Binds this series to a different X axis, i.e. "xaxis: 2"
-     *
-     * @param axis the axis number such as 2, 3, etc.
-     */
-    public final Series setXAxis( int axis )
-    {
-        assert axis > 0 : "axis starts at 1";
-        put(X_AXIS_KEY, axis);
-        return this;
-    }
+	/**
+	 * Binds this series to a different X axis, i.e. "xaxis: 2"
+	 *
+	 * @param axis the axis number such as 2, 3, etc.
+	 */
+	public final Series setXAxis( final int axis )
+	{
+		assert axis > 0 : "axis starts at 1";
+		put(X_AXIS_KEY, axis);
+		return this;
+	}
 
-    /**
-     * @return the x axis number
-     */
-    public final int getXAxis()
-    {
-        Integer axis = getInteger(X_AXIS_KEY);
-        if ( null == axis )
-        {
-            return 1;
-        }
-        return axis;
-    }
+	/**
+	 * @return the x axis number
+	 */
+	public final int getXAxis()
+	{
+		final Integer axis = getInteger(X_AXIS_KEY);
+		if ( null == axis )
+		{
+			return 1;
+		}
+		return axis;
+	}
 
-    /**
-     * Binds this series to a different Y axis, i.e. "yaxis: 2"
-     *
-     * @param axis the axis number such as 2, 3, etc.
-     */
-    public final Series setYAxis( int axis )
-    {
-        assert axis > 0 : "axis starts at 1";
-        put(Y_AXIS_KEY, axis);
-        return this;
-    }
+	/**
+	 * Binds this series to a different Y axis, i.e. "yaxis: 2"
+	 *
+	 * @param axis the axis number such as 2, 3, etc.
+	 */
+	public final Series setYAxis( final int axis )
+	{
+		assert axis > 0 : "axis starts at 1";
+		put(Y_AXIS_KEY, axis);
+		return this;
+	}
 
-    /**
-     * @return the y axis number
-     */
-    public final int getYAxis()
-    {
-        Integer axis = getInteger(Y_AXIS_KEY);
-        if ( null == axis )
-        {
-            return 1;
-        }
-        return axis;
-    }
+	/**
+	 * @return the y axis number
+	 */
+	public final int getYAxis()
+	{
+		final Integer axis = getInteger(Y_AXIS_KEY);
+		if ( null == axis )
+		{
+			return 1;
+		}
+		return axis;
+	}
 
-    /**
-     * Set the color. If you don't specify color, the series will get a color from the auto-generated colors.
-     */
-    public final Series setColor( String color )
-    {
-        put(COLOR_KEY, color);
-        return this;
-    }
+	/**
+	 * Set the color. If you don't specify color, the series will get a color from the auto-generated colors.
+	 */
+	public final Series setColor( final String color )
+	{
+		put(COLOR_KEY, color);
+		return this;
+	}
 
-    /**
-     * @return the color
-     */
-    public final String getColor()
-    {
-        return getString(COLOR_KEY);
-    }
+	/**
+	 * @return the color
+	 */
+	public final String getColor()
+	{
+		return getString(COLOR_KEY);
+	}
 
-    /**
-     * Set which of auto-generated colors to select, e.g. 0 will get color no. 0, etc. It is mostly useful if you let
-     * the user add and remove series, in which case you can hard-code the color index to prevent the colors from
-     * jumping around between the series.
-     */
-    public final Series setAutoGeneratedColor( int color )
-    {
-        put(COLOR_KEY, color);
-        return this;
-    }
+	/**
+	 * Set which of auto-generated colors to select, e.g. 0 will get color no. 0, etc. It is mostly useful if you let
+	 * the user add and remove series, in which case you can hard-code the color index to prevent the colors from
+	 * jumping around between the series.
+	 */
+	public final Series setAutoGeneratedColor( final int color )
+	{
+		put(COLOR_KEY, color);
+		return this;
+	}
 
-    /**
-     * @return the auto-generated color to select
-     */
-    public final Integer getAutoGeneratedColor()
-    {
-        return getInteger(COLOR_KEY);
-    }
+	/**
+	 * @return the auto-generated color to select
+	 */
+	public final Integer getAutoGeneratedColor()
+	{
+		return getInteger(COLOR_KEY);
+	}
 
-    /**
-     * Set the label. The label is used for the legend, if you don't specify one, the series will not show up in the
-     * legend.
-     */
-    public final Series setLabel( String label )
-    {
-        put(LABEL_KEY, label);
-        return this;
-    }
+	/**
+	 * Set the label. The label is used for the legend, if you don't specify one, the series will not show up in the
+	 * legend.
+	 */
+	public final Series setLabel( final String label )
+	{
+		put(LABEL_KEY, label);
+		return this;
+	}
 
-    /**
-     * @return the label
-     */
-    public final String getLabel()
-    {
-        return getString(LABEL_KEY);
-    }
+	/**
+	 * @return the label
+	 */
+	public final String getLabel()
+	{
+		return getString(LABEL_KEY);
+	}
 
-    /**
-     * Set if this series will listen for click events.
-     */
-    public final Series setClickable( boolean clickable )
-    {
-        put(CLICKABLE_KEY, clickable);
-        return this;
-    }
+	/**
+	 * Set if this series will listen for click events.
+	 */
+	public final Series setClickable( final boolean clickable )
+	{
+		put(CLICKABLE_KEY, clickable);
+		return this;
+	}
 
-    /**
-     * @return true if the series is clickable
-     */
-    public final Boolean getClickable()
-    {
-        return getBoolean(CLICKABLE_KEY);
-    }
+	/**
+	 * @return true if the series is clickable
+	 */
+	public final Boolean getClickable()
+	{
+		return getBoolean(CLICKABLE_KEY);
+	}
 
-    /**
-     * Set if this series will listen for mouse move events.
-     */
-    public final Series setHoverable( boolean hoverable )
-    {
-        put(HOVERABLE_KEY, hoverable);
-        return this;
-    }
+	/**
+	 * Set if this series will listen for mouse move events.
+	 */
+	public final Series setHoverable( final boolean hoverable )
+	{
+		put(HOVERABLE_KEY, hoverable);
+		return this;
+	}
 
-    /**
-     * @return true if the series is hoverable
-     */
-    public final Boolean getHoverable()
-    {
-        return getBoolean(HOVERABLE_KEY);
-    }
+	/**
+	 * @return true if the series is hoverable
+	 */
+	public final Boolean getHoverable()
+	{
+		return getBoolean(HOVERABLE_KEY);
+	}
 
-    /**
-     * Only available for pie plot!
-     *
-     * @return the percent of the series
-     */
-    public final Double getPercent()
-    {
-        return getDouble(PERCENT_KEY);
-    }
+	/**
+	 * Only available for pie plot!
+	 *
+	 * @return the percent of the series
+	 */
+	public final Double getPercent()
+	{
+		return getDouble(PERCENT_KEY);
+	}
 
-    /**
-     * Only available for pie plot!
-     *
-     * @return the angle of the series
-     */
-    public final Double getAngle()
-    {
-        return getDouble(ANGLE_KEY);
-    }
+	/**
+	 * Only available for pie plot!
+	 *
+	 * @return the angle of the series
+	 */
+	public final Double getAngle()
+	{
+		return getDouble(ANGLE_KEY);
+	}
 
-    /**
-     * Provides the identifier of another series which is used to fill the area between these two series. If this
-     * identifier was given as a number that doesn't appear as an id in the series, it is interpreted as the index in
-     * the array instead (so fillBetween: 0 can also mean the first series). Only for the fillbetween plugin!
-     *
-     * @return an identifier of another series (a {@link String}, {@link Integer} or null).
-     */
-    public final Object getFillBetween()
-    {
-        return getObject(FILL_BETWEEN_KEY);
-    }
+	/**
+	 * Provides the identifier of another series which is used to fill the area between these two series. If this
+	 * identifier was given as a number that doesn't appear as an id in the series, it is interpreted as the index in
+	 * the array instead (so fillBetween: 0 can also mean the first series). Only for the fillbetween plugin!
+	 *
+	 * @return an identifier of another series (a {@link String}, {@link Integer} or null).
+	 */
+	public final Object getFillBetween()
+	{
+		return getObject(FILL_BETWEEN_KEY);
+	}
 
-    /**
-     * Provides the identifier of another series which is used to fill the area between these two series. If this
-     * identifier was given as a number that doesn't appear as an id in the series, it is interpreted as the index in
-     * the array instead (so fillBetween: 0 can also mean the first series). Only for the fillbetween plugin!
-     *
-     * @return an identifier of another series or null if it is not present or not a String.
-     */
-    public final String getFillBetweenAsString()
-    {
-        Object fillBetween = getFillBetween();
-        return (String) (fillBetween instanceof String ? fillBetween : null);
-    }
+	/**
+	 * Provides the identifier of another series which is used to fill the area between these two series. If this
+	 * identifier was given as a number that doesn't appear as an id in the series, it is interpreted as the index in
+	 * the array instead (so fillBetween: 0 can also mean the first series). Only for the fillbetween plugin!
+	 *
+	 * @return an identifier of another series or null if it is not present or not a String.
+	 */
+	public final String getFillBetweenAsString()
+	{
+		final Object fillBetween = getFillBetween();
+		return (String) (fillBetween instanceof String ? fillBetween : null);
+	}
 
-    /**
-     * Provides the identifier of another series which is used to fill the area between these two series. If this
-     * identifier was given as a number that doesn't appear as an id in the series, it is interpreted as the index in
-     * the array instead (so fillBetween: 0 can also mean the first series). Only for the fillbetween plugin!
-     *
-     * @return an identifier of another series or null if it is not present or not a Integer.
-     */
-    public final Integer getFillBetweenAsInteger()
-    {
-        Object fillBetween = getFillBetween();
-        return (Integer) (fillBetween instanceof Integer ? fillBetween : null);
-    }
+	/**
+	 * Provides the identifier of another series which is used to fill the area between these two series. If this
+	 * identifier was given as a number that doesn't appear as an id in the series, it is interpreted as the index in
+	 * the array instead (so fillBetween: 0 can also mean the first series). Only for the fillbetween plugin!
+	 *
+	 * @return an identifier of another series or null if it is not present or not a Integer.
+	 */
+	public final Integer getFillBetweenAsInteger()
+	{
+		final Object fillBetween = getFillBetween();
+		return (Integer) (fillBetween instanceof Integer ? fillBetween : null);
+	}
 
-    /**
-     * Defines the ID associated with another series which is used to fill the area between these two series. Only for
-     * the fillbetween plugin!
-     *
-     * @param seriesId the ID identifying another series.
-     */
-    public final Series setFillBetween( String seriesId )
-    {
-        put(FILL_BETWEEN_KEY, seriesId);
-        return this;
-    }
+	/**
+	 * Defines the ID associated with another series which is used to fill the area between these two series. Only for
+	 * the fillbetween plugin!
+	 *
+	 * @param seriesId the ID identifying another series.
+	 */
+	public final Series setFillBetween( final String seriesId )
+	{
+		put(FILL_BETWEEN_KEY, seriesId);
+		return this;
+	}
 
-    /**
-     * Defines another series which is used to fill the area between these two series. If this identifier was given as a
-     * number that doesn't appear as an id in the series, it is interpreted as the index in the array instead (so
-     * fillBetween: 0 can also mean the first series). Only for the fillbetween plugin!
-     *
-     * @param seriesIndex an identifier of another series.
-     */
-    public final Series setFillBetween( int seriesIndex )
-    {
-        put(FILL_BETWEEN_KEY, seriesIndex);
-        return this;
-    }
+	/**
+	 * Defines another series which is used to fill the area between these two series. If this identifier was given as a
+	 * number that doesn't appear as an id in the series, it is interpreted as the index in the array instead (so
+	 * fillBetween: 0 can also mean the first series). Only for the fillbetween plugin!
+	 *
+	 * @param seriesIndex an identifier of another series.
+	 */
+	public final Series setFillBetween( final int seriesIndex )
+	{
+		put(FILL_BETWEEN_KEY, seriesIndex);
+		return this;
+	}
 
-    /**
-     * Provides the ID given to this series. Only for the fillbetween plugin!
-     *
-     * @return the series ID
-     */
-    public final String getId()
-    {
-        return getString(ID_KEY);
-    }
+	/**
+	 * Provides the ID given to this series. Only for the fillbetween plugin!
+	 *
+	 * @return the series ID
+	 */
+	public final String getId()
+	{
+		return getString(ID_KEY);
+	}
 
-    /**
-     * Defines the ID for this series. Only for the fillbetween plugin!
-     *
-     * @param id the series ID
-     */
-    public final Series setId( String id )
-    {
-        put(ID_KEY, id);
-        return this;
-    }
+	/**
+	 * Defines the ID for this series. Only for the fillbetween plugin!
+	 *
+	 * @param id the series ID
+	 */
+	public final Series setId( final String id )
+	{
+		put(ID_KEY, id);
+		return this;
+	}
 
-    /**
-     * Defines the options for the various levels. Level is used to define a
-     * area around a central line.
-     * <p/>
-     * Only for the fillArea plugin!
-     */
-    public final Series setFillArea( JsArray<LevelInfo> options )
-    {
-        put(FILL_AREA_KEY, options);
-        return this;
-}
+	/**
+	 * Defines the options for the various levels. Level is used to define a
+	 * area around a central line.
+	 * <p/>
+	 * Only for the fillArea plugin!
+	 */
+	public final Series setFillArea( final JsArray<LevelInfo> options )
+	{
+		put(FILL_AREA_KEY, options);
+		return this;
+	}
 
-    /**
-     * Provides the array given to this series.
-     * <p/>
-     * Only for the fillArea plugin!
-     *
-     * @return the series level
-     */
-    public final JsArray<LevelInfo> getFillArea()
-    {
-        return getJsObject(FILL_AREA_KEY);
-    }
+	/**
+	 * Provides the array given to this series.
+	 * <p/>
+	 * Only for the fillArea plugin!
+	 *
+	 * @return the series level
+	 */
+	public final JsArray<LevelInfo> getFillArea()
+	{
+		return getJsObject(FILL_AREA_KEY);
+	}
 
 }
