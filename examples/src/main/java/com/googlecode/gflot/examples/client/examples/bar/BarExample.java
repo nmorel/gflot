@@ -43,7 +43,7 @@ public class BarExample extends DefaultActivity
     interface Binder extends UiBinder<Widget, BarExample>
     {}
 
-    private static final String[] MONTH_NAMES = {"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"};
+    private static final String[] MONTH_NAMES = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     private static Binder binder = GWT.create( Binder.class );
     /** First Plot */
     @GFlotExamplesData
@@ -86,7 +86,7 @@ public class BarExample extends DefaultActivity
         plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
 
         // add tick formatter to the options
-        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter()
+        plotOptions.addXAxisOptions( AxisOptions.create().setAxisLabelAngle(135d).setTicks( 12 ).setTickFormatter( new TickFormatter()
         {
             @Override
             public String formatTickValue( double tickValue, Axis axis )

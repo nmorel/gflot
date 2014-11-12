@@ -112,6 +112,7 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     private static final String ZOOM_RANGE_KEY = "zoomRange";
     private static final String PAN_RANGE_KEY = "panRange";
     private static final String FONT_KEY = "font";
+    private static final String AXIS_LABEL_ANGLE= "rotateTicks";
 
     protected AbstractAxisOptions()
     {
@@ -898,6 +899,32 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     public final T clearFont()
     {
         clear( FONT_KEY );
+        return (T) this;
+    }
+
+    /**
+     * Define the rotate angle used to draw the axis tick labels.
+     */
+    public final T setAxisLabelAngle( double angle )
+    {
+        put( AXIS_LABEL_ANGLE, angle );
+        return (T) this;
+    }
+
+    /**
+     * @return the axis label rotate angle
+     */
+    public final Double getAxisLabelAngle()
+    {
+        return getDouble( AXIS_LABEL_ANGLE );
+    }
+
+    /**
+     * Clear the axis label rotate angle
+     */
+    public final T clearAxisLabelAngle()
+    {
+        clear( AXIS_LABEL_ANGLE );
         return (T) this;
     }
 }
