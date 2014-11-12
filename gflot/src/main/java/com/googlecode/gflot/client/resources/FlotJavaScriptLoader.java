@@ -72,6 +72,8 @@ public class FlotJavaScriptLoader
 
         PluginLoader getFlotAxisLabelsLoader();
 
+        PluginLoader getFlotTickRotorLoader();
+
         PluginLoader getFlotThresholdLoader();
 
         PluginLoader getFlotNavigateLoader();
@@ -119,6 +121,8 @@ public class FlotJavaScriptLoader
         private PluginLoader canvas2ImageLoader;
 
         private PluginLoader flotAxisLabelsLoader;
+
+        private PluginLoader flotTickRotorLoader;
 
         private PluginLoader flotThresholdLoader;
 
@@ -262,6 +266,16 @@ public class FlotJavaScriptLoader
         }
 
         @Override
+        public PluginLoader getFlotTickRotorLoader()
+        {
+            if ( null == flotTickRotorLoader )
+            {
+                flotTickRotorLoader = GWT.create( FlotTickRotorLoader.class );
+            }
+            return flotTickRotorLoader;
+        }
+
+        @Override
         public PluginLoader getFlotThresholdLoader()
         {
             if ( null == flotThresholdLoader )
@@ -374,6 +388,7 @@ public class FlotJavaScriptLoader
             getExcanvasLoader().load();
             getCanvas2ImageLoader().load();
             getFlotAxisLabelsLoader().load();
+            getFlotTickRotorLoader().load();
             getFlotThresholdLoader().load();
             getFlotNavigateLoader().load();
             getFlotCrosshairLoader().load();
