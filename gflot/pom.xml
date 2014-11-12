@@ -179,6 +179,7 @@
                 <jsSourceFile>0.8.2/jquery.flot.threshold.js</jsSourceFile>
                 <jsSourceFile>0.8.2/jquery.flot.time.js</jsSourceFile>
                 <jsSourceFile>plugins/jquery.flot.axislabels.js</jsSourceFile>
+                <jsSourceFile>plugins/jquery.flot.tickrotor.js</jsSourceFile>
                 <jsSourceFile>plugins/jquery.flot.fillarea.js</jsSourceFile>
                 <jsSourceFile>plugins/jquery.flot.orderBars.js</jsSourceFile>
               </jsSourceFiles>
