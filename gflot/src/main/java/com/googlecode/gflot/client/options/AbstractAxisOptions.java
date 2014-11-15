@@ -320,10 +320,11 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     }
 
     /**
-     * Set the transform and inverseTransform functions. </br>You can design a function to compress or expand certain
+     * Set the transform and inverseTransform functions.
+     * <p>You can design a function to compress or expand certain
      * parts of the axis non-linearly, e.g. suppress weekends or compress far away points with a logarithm or some other
-     * means. When Flot draws the plot, each value is first put through the transform function. Here's an example, the x
-     * axis can be turned into a natural logarithm axis with the following code:
+     * means. When Flot draws the plot, each value is first put through the transform function.</p>
+     * Here's an example, the x axis can be turned into a natural logarithm axis with the following code:
      *
      * <pre>
      *   xaxis: {
@@ -342,10 +343,11 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      * </pre>
      *
      * Note that for finding extrema, Flot assumes that the transform function does not reorder values (it should be
-     * monotone). </br> The inverseTransform is simply the inverse of the transform function (so v ==
+     * monotone).
+     * <p>The inverseTransform is simply the inverse of the transform function (so v ==
      * inverseTransform(transform(v)) for all relevant v). It is required for converting from canvas coordinates to data
      * coordinates, e.g. for a mouse interaction where a certain pixel is clicked. If you don't use any interactive
-     * features of Flot, you may not need it.
+     * features of Flot, you may not need it.</p>
      */
     public final T setTransform( TransformAxis transform )
     {

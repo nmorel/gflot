@@ -35,8 +35,10 @@ public class DataPoint
 {
     /**
      * Creates an empty {@link DataPoint}
+     *
+     * @return an empty {@link DataPoint}
      */
-    public static final DataPoint create()
+    public static DataPoint create()
     {
         return createArray().cast();
     }
@@ -46,8 +48,10 @@ public class DataPoint
      *
      * @param x Coordinate for x axis
      * @param y Coordinate for y axis
+     *
+     * @return a {@link DataPoint} with the specified coordinates.
      */
-    public static final native DataPoint of( double x, double y )
+    public static native DataPoint of( double x, double y )
     /*-{
         return [ x, y ];
     }-*/;
@@ -58,8 +62,10 @@ public class DataPoint
      * @param x Coordinate for x axis
      * @param y Coordinate for y axis
      * @param third Third coordinate. Can be the bottom of the filled area/bar for filled lines and bars. Or the xerr, yerr value for the error bars.
+     *
+     * @return a {@link DataPoint} with the specified coordinates.
      */
-    public static final native DataPoint of( double x, double y, double third )
+    public static native DataPoint of( double x, double y, double third )
     /*-{
         return [ x, y, third ];
     }-*/;
@@ -68,9 +74,10 @@ public class DataPoint
      * Creates a {@link DataPoint}. This method uses {@link JsArrayUtils#readOnlyJsArray(double[])} so be careful of the differences between dev and production mode.
      *
      * @param array source array
+     *
      * @return JS array, which may be a copy or an alias of the input array
      */
-    public static final DataPoint of( double... array )
+    public static DataPoint of( double... array )
     {
         return JsArrayUtils.readOnlyJsArray( array ).cast();
     }
@@ -80,8 +87,10 @@ public class DataPoint
      *
      * @param x Category for x axis
      * @param y Coordinate for y axis
+     *
+     * @return a {@link DataPoint} with the specified coordinates
      */
-    public static final native DataPoint of( String x, double y )
+    public static native DataPoint of( String x, double y )
     /*-{
         return [ x, y ];
     }-*/;
@@ -91,8 +100,10 @@ public class DataPoint
      *
      * @param x Coordinate for x axis
      * @param y Category for y axis
+     *
+     * @return a {@link DataPoint} with the specified coordinates.
      */
-    public static final native DataPoint of( double x, String y )
+    public static native DataPoint of( double x, String y )
     /*-{
         return [ x, y ];
     }-*/;
@@ -101,18 +112,33 @@ public class DataPoint
     {
     }
 
+    /**
+     * @param x the x coordinate
+     *
+     * @return the {@link DataPoint}
+     */
     public final DataPoint setX( double x )
     {
         set( 0, x );
         return this;
     }
 
+    /**
+     * @param y the y coordinate
+     *
+     * @return the {@link DataPoint}
+     */
     public final DataPoint setY( double y )
     {
         set( 1, y );
         return this;
     }
 
+    /**
+     * @param bottomY the bottom y coordinate
+     *
+     * @return the {@link DataPoint}
+     */
     public final DataPoint setBottomY( double bottomY )
     {
         set( 2, bottomY );

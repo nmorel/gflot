@@ -38,8 +38,10 @@ public class ImageDataPoint
      * @param yTopLeftCorner Y coordinate for top left corner
      * @param xBottomRightCorner X coordinate for bottom right corner
      * @param yBottomRightCorner Y coordinate for bottom right corner
+     *
+     * @return an {@link ImageDataPoint} with the specified url and coordinates.
      */
-    public static final native ImageDataPoint of( String url, double xTopLeftCorner, double yTopLeftCorner,
+    public static native ImageDataPoint of( String url, double xTopLeftCorner, double yTopLeftCorner,
                                                   double xBottomRightCorner, double yBottomRightCorner )
     /*-{
         return [ url, xTopLeftCorner, yTopLeftCorner, xBottomRightCorner,

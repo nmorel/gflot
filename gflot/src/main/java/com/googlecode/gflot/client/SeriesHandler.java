@@ -64,7 +64,7 @@ public interface SeriesHandler
     /**
      * Sets the data
      * 
-     * @param newData
+     * @param newData the new data
      */
     void setData( SeriesData newData );
 

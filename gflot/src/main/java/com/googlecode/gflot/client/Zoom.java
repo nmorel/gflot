@@ -34,7 +34,7 @@ public class Zoom
     public static class Center
         extends JsonObject
     {
-        public static final Center create()
+        public static Center create()
         {
             return JavaScriptObject.createObject().cast();
         }
@@ -59,7 +59,7 @@ public class Zoom
         }
     }
 
-    public static final Zoom create()
+    public static Zoom create()
     {
         return JavaScriptObject.createObject().cast();
     }
@@ -74,7 +74,7 @@ public class Zoom
     /**
      * Pan the plot to the left or right.
      * 
-     * @param left Pixels to pan the plot to. Negative value to go to the left, positive value to go to the right
+     * @param amount amount of pixels to pan the plot to. Negative value to go to the left, positive value to go to the right
      */
     public final Zoom setAmount( double amount )
     {
@@ -83,9 +83,9 @@ public class Zoom
     }
 
     /**
-     * Pan the plot to the left or right.
+     * Center the plot.
      * 
-     * @param left Pixels to pan the plot to. Negative value to go to the left, positive value to go to the right
+     * @param center the center
      */
     public final Zoom setCenter( Center center )
     {

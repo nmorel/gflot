@@ -38,8 +38,10 @@ public class Axis
 {
     /**
      * Creates a {@link Axis}
+     *
+     * @return a {@link Axis}
      */
-    public static final Axis create()
+    public static Axis create()
     {
         return JavaScriptObject.createObject().cast();
     }

@@ -160,7 +160,7 @@ public class TimeSeriesAxisOptions
 
     /**
      * Set the format of the tick label.
-     * <p>
+     * <p></p>
      * The following specifiers are supported :
      * <ul>
      * <li>%a: weekday name (customizable)</li>
@@ -179,7 +179,6 @@ public class TimeSeriesAxisOptions
      * <li>%P: AM/PM (uppercase version of %p)</li>
      * <li>%w: weekday as number (0-6, 0 being Sunday)</li>
      * </ul>
-     * </p>
      * <p>
      * The timeformat "%y/%m/%d" will results in tick labels like "2000/12/24".
      * </p>

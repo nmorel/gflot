@@ -193,6 +193,8 @@ public class PlotWithOverview
      * @deprecated since 3.2.0 this method always returns the options created by user and not the internal plot options used by flot. Use
      * {@link PlotWithOverview#getWindowOptions()} to get user's option and {@link PlotWithOverview#getPlot()}.getOptions() to get
      * internal flot options.
+     *
+     * @return the {@link PlotOptions}
      */
     @Deprecated
     public PlotOptions getWindowPlotOptions()
@@ -209,6 +211,8 @@ public class PlotWithOverview
      * @deprecated since 3.2.0 this method always returns the options created by user and not the internal plot options used by flot. Use
      * {@link PlotWithOverview#getOverviewOptions()} to get user's option and {@link PlotWithOverview#getOverviewPlot()}.getPlot()
      * .getOptions() to get internal flot options.
+     *
+     * @return the {@link PlotOptions}
      */
     @Deprecated
     public PlotOptions getOverviewPlotOptions()

@@ -32,6 +32,8 @@ public final class PlotModelStrategy
 
     /**
      * A plot model strategy that allows unlimited amount of datapoints.
+     *
+     * @return the new default {@link SeriesDataStrategy}
      */
     public static SeriesDataStrategy defaultStrategy()
     {

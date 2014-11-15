@@ -34,7 +34,7 @@ public interface PlotPanListener
     /**
      * Called when the user pan the plot
      * 
-     * @param axes current axes
+     * @param plot the plot
      */
     void onPlotPan( Plot plot );
 }

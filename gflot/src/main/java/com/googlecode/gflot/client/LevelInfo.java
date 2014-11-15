@@ -29,10 +29,9 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.googlecode.gflot.client.jsni.JsonObject;
 
 /**
+ * Options for a level of the fillArea plugin. LevelInfo is displayed an area around a central line.
+ *
  * @author Ana Rita Loureiro
- *         <p/>
- *         Options for a level of the fillArea plugin. LevelInfo is displayed an area around
- *         a central line.
  */
 public class LevelInfo
         extends JsonObject
@@ -71,16 +70,22 @@ public class LevelInfo
 
     /**
      * Creates a {@link LevelInfo}
+     *
+     * @return a {@link LevelInfo}
      */
-    public static final LevelInfo create()
+    public static LevelInfo create()
     {
         return JavaScriptObject.createObject().cast();
     }
 
     /**
      * Creates a {@link LevelInfo}
+     *
+     * @param representation the level representation
+     *
+     * @return a {@link LevelInfo}
      */
-    public static final LevelInfo of( LevelRepresentation representation )
+    public static LevelInfo of( LevelRepresentation representation )
     {
         return create().setRepresentation(representation);
     }
@@ -102,6 +107,10 @@ public class LevelInfo
     /**
      * Defines the color of the area to draw around the line, when none is
      * defined the line color is used.
+     *
+     * @param color the color
+     *
+     * @return this instance of {@link LevelInfo}
      */
     public final LevelInfo setColor( String color )
     {
@@ -111,6 +120,8 @@ public class LevelInfo
 
     /**
      * Clear the color
+     *
+     * @return this instance of {@link LevelInfo}
      */
     public final LevelInfo clearColor()
     {
@@ -129,6 +140,10 @@ public class LevelInfo
     /**
      * Defines the opacity of the area, when none is defined the folloing
      * formula is used: (number of levels - position)/(number of levels + 1).
+     *
+     * @param opacity the opacity
+     *
+     * @return this instance of {@link LevelInfo}
      */
     public final LevelInfo setOpacity( double opacity )
     {
@@ -138,6 +153,8 @@ public class LevelInfo
 
     /**
      * Clear the opacity
+     *
+     * @return this instance of {@link LevelInfo}
      */
     public final LevelInfo clearOpacity()
     {
@@ -163,6 +180,10 @@ public class LevelInfo
      * When it is "symmetric", the level requires a single value that represents
      * an offset around the central line, when "asymmetric" is used the level
      * will require two absolute values, the minimum and maximum.
+     *
+     * @param representation the representation
+     *
+     * @return this instance of {@link LevelInfo}
      */
     public final LevelInfo setRepresentation( LevelRepresentation representation )
     {
@@ -174,6 +195,8 @@ public class LevelInfo
 
     /**
      * Clear the representation
+     *
+     * @return this instance of {@link LevelInfo}
      */
     public final LevelInfo clearRepresentation()
     {

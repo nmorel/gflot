@@ -430,9 +430,10 @@ public class Plot
      * Returns the calculated offset of the data point at (x, y) in data
      * space within the placeholder div. If you are working with multiple axes, you
      * can specify the x and y axis references, e.g.
-     * <p/>
+     * <p>
      * o = pointOffset({ x: xpos, y: ypos, xaxis: 2, yaxis: 3 })
      * // o.left and o.top now contains the offset within the div
+     * </p>
      */
     public final native PieSeriesOptions.Offset pointOffset( JsonObject point )
     /*-{

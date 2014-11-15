@@ -38,6 +38,10 @@ public class Navigate<T extends Navigate<?>>
 
     /**
      * Prevent the corresponding event to fire
+     *
+     * @param preventEvent if you want to prevent the event to fire
+     *
+     * @return this instance of {@link Navigate}
      */
     public final T setPreventEvent( boolean preventEvent )
     {

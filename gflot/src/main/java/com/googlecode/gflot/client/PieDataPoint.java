@@ -29,8 +29,12 @@ public class PieDataPoint
 {
     /**
      * Creates a {@link PieDataPoint} with the specified percent
+     *
+     * @param value the percent
+     *
+     * @return a {@link PieDataPoint} with the specified percent
      */
-    public static final native PieDataPoint of( double value )
+    public static native PieDataPoint of( double value )
     /*-{
         return [ 1, value ];
     }-*/;

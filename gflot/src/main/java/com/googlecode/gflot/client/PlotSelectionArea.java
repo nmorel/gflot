@@ -37,8 +37,10 @@ public class PlotSelectionArea
 {
     /**
      * Creates a {@link PlotSelectionArea}
+     *
+     * @return a {@link PlotSelectionArea}
      */
-    public static final PlotSelectionArea create()
+    public static PlotSelectionArea create()
     {
         return JavaScriptObject.createObject().cast();
     }
@@ -79,6 +81,8 @@ public class PlotSelectionArea
     }
 
     /**
+     * @param xAxisNumber the x axis number
+     *
      * @return the range for x axis
      */
     public final Range getX( int xAxisNumber )
@@ -121,6 +125,8 @@ public class PlotSelectionArea
     }
 
     /**
+     * @param yAxisNumber the y axis number
+     *
      * @return the range for y axis
      */
     public final Range getY( int yAxisNumber )

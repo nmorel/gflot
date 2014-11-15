@@ -47,6 +47,8 @@ public interface PlotWidget
 
     /**
      * Set the width of the plot in pixel
+     *
+     * @param width the width
      */
     void setWidth( int width );
 
@@ -57,6 +59,8 @@ public interface PlotWidget
 
     /**
      * Set the height of the plot in pixel
+     *
+     * @param height the height
      */
     void setHeight( int height );
 
@@ -112,6 +116,8 @@ public interface PlotWidget
 
     /**
      * Clear the selection rectangle. Pass in true to avoid getting a "plotunselected" event.
+     *
+     * @param preventEvent true if you want to prevent the "plotunselected" event
      */
     void clearSelection( boolean preventEvent );
 
@@ -119,6 +125,7 @@ public interface PlotWidget
      * Add a hover listener to the plot
      *
      * @param listener listener to add to the plot
+     * @param onlyOnDatapoint true if the event should fire only when hovering a datapoint
      */
     void addHoverListener( PlotHoverListener listener, boolean onlyOnDatapoint );
 
@@ -126,6 +133,7 @@ public interface PlotWidget
      * Add a click listener to the plot
      *
      * @param listener listener to add to the plot
+     * @param onlyOnDatapoint true if the event should fire only when hovering a datapoint
      */
     void addClickListener( PlotClickListener listener, boolean onlyOnDatapoint );
 

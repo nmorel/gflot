@@ -36,8 +36,10 @@ public class Axes
 {
     /**
      * Creates a {@link Axes}
+     *
+     * @return a {@link Axes}
      */
-    public static final Axes create()
+    public static Axes create()
     {
         return JavaScriptObject.createObject().cast();
     }
@@ -60,6 +62,8 @@ public class Axes
     }
 
     /**
+     * @param xAxisNumber the x axis number
+     *
      * @return the x axis
      */
     public final Axis getX( int xAxisNumber )
@@ -84,6 +88,8 @@ public class Axes
     }
 
     /**
+     * @param yAxisNumber the y axis number
+     *
      * @return the y axis
      */
     public final Axis getY( int yAxisNumber )

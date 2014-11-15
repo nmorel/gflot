@@ -34,7 +34,7 @@ public interface PlotZoomListener
     /**
      * Called when the user zoom the plot
      * 
-     * @param axes current axes
+     * @param plot the plot
      */
     void onPlotZoom( Plot plot );
 }

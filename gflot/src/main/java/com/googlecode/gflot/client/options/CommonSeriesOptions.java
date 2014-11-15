@@ -47,8 +47,10 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
         /**
          * Creates a {@link Threshold}
+         *
+         * @return a {@link Threshold}
          */
-        public static final Threshold create()
+        public static Threshold create()
         {
             return JavaScriptObject.createObject().cast();
         }
@@ -59,6 +61,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
         /**
          * The data points below "below" are drawn with the specified color.
+         *
+         * @return this instance of {@link Threshold}
          */
         public final Threshold setBelow( double below )
         {
@@ -76,6 +80,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
         /**
          * Clear the below number
+         *
+         * @return this instance of {@link Threshold}
          */
         public final Threshold clearBelowNumber()
         {
@@ -85,6 +91,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
         /**
          * Set the color.
+         *
+         * @return this instance of {@link Threshold}
          */
         public final Threshold setColor( String color )
         {
@@ -102,6 +110,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
         /**
          * Clear the color
+         *
+         * @return this instance of {@link Threshold}
          */
         public final Threshold clearColor()
         {
@@ -125,6 +135,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
     /**
      * Set global Line series options that will be used unless options are set directly to the series
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T setLineSeriesOptions( LineSeriesOptions lineSeriesOptions )
     {
@@ -142,6 +154,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
     /**
      * Set global Bar series options that will be used unless options are set directly to the series
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T setBarsSeriesOptions( BarSeriesOptions barSeriesOptions )
     {
@@ -159,6 +173,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
     /**
      * Set global Points series options that will be used unless options are set directly to the series
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T setPointsOptions( PointsSeriesOptions pointsSeriesOptions )
     {
@@ -176,6 +192,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
     /**
      * Set global Image series options that will be used unless options are set directly to the series
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T setImageSeriesOptions( ImageSeriesOptions imageSeriesOptions )
     {
@@ -193,6 +211,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
     /**
      * Set the size of shadows in pixels for all series. Set it to 0 to remove shadows.
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T setShadowSize( double shadow )
     {
@@ -212,6 +232,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
     /**
      * Clear the size of the shadows
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T clearShadowSize()
     {
@@ -223,6 +245,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
      * Set the stack key option. Two or more series are stacked when their "stack" attribute is set to the same key
      * (which can be any number or string or just "true"). The stacking order is determined by the order of the data
      * series in the array (later series end up on top of the previous).
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T setStack( String key )
     {
@@ -234,6 +258,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
      * Set the stack key option. Two or more series are stacked when their "stack" attribute is set to the same key
      * (which can be any number or string or just "true"). The stacking order is determined by the order of the data
      * series in the array (later series end up on top of the previous).
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T setStack( int key )
     {
@@ -245,6 +271,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
      * Set the stack key option. Two or more series are stacked when their "stack" attribute is set to the same key
      * (which can be any number or string or just "true"). The stacking order is determined by the order of the data
      * series in the array (later series end up on top of the previous).
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T setStack( boolean stack )
     {
@@ -278,6 +306,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
     /**
      * Clear the stack option
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T clearStack()
     {
@@ -287,6 +317,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
     /**
      * Set the threshold options.
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T setThreshold( Threshold threshold )
     {
@@ -297,6 +329,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
     /**
      * Set the threshold options.
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T setThreshold( JsArray<Threshold> threshold )
     {
@@ -314,6 +348,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
 
     /**
      * Clear the threshold option
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T clearThreshold()
     {
@@ -324,6 +360,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * Set the color of the translucent overlay used
      * to highlight the series when the mouse hovers over it
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T setHighlightColor( String color )
     {
@@ -334,6 +372,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * Set the color of the translucent overlay used
      * to highlight the series when the mouse hovers over it
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T setHighlightColor( double color )
     {
@@ -362,6 +402,8 @@ public abstract class CommonSeriesOptions<T extends CommonSeriesOptions<?>>
     /**
      * Clear the color of the translucent overlay used
      * to highlight the series when the mouse hovers over it
+     *
+     * @return this instance of {@link CommonSeriesOptions}
      */
     public final T clearHighlightColor()
     {

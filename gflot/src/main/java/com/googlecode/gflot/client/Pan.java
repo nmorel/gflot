@@ -30,7 +30,7 @@ public class Pan
     extends Navigate<Pan>
 {
 
-    public static final Pan create()
+    public static Pan create()
     {
         return JavaScriptObject.createObject().cast();
     }
@@ -46,6 +46,8 @@ public class Pan
      * Pan the plot to the left or right.
      * 
      * @param left Pixels to pan the plot to. Negative value to go to the left, positive value to go to the right
+     *
+     * @return this instance of {@link Pan}
      */
     public final Pan setLeft( double left )
     {
@@ -57,6 +59,8 @@ public class Pan
      * Pan the plot to the top or bottom.
      * 
      * @param top Pixels to pan the plot to. Negative value to go up, positive value to go down
+     *
+     * @return this instance of {@link Pan}
      */
     public final Pan setTop( double top )
     {
