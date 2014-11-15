@@ -1,0 +1,121 @@
+<pre>    /**
+     * Plot
+     */
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    /**
+     * Button switch to dark
+     */
+    @UiField
+    Button switchDark;
+
+    /**
+     * Button switch to white
+     */
+    @UiField
+    Button switchWhite;
+
+    /**
+     * Access to UiBinder style
+     */
+    @UiField
+    Style style;
+
+    /**
+     * Create plot
+     */
+    public Widget createPlot()
+    {
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setLegendOptions( LegendOptions.create().setBackgroundOpacity( 0 )
+            .setPosition( LegendPosition.NORTH_WEST ) );
+        plotOptions.setGridOptions( GridOptions.create().setMargin( 5 ) );
+        plotOptions.addXAxisOptions( AxisOptions.create().setFont( FontOptions.create().setColor("black").setWeight( "bold" ).setStyle( "italic" ) ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setFont( FontOptions.create().setColor( "black" ).setWeight( "bold" ).setStyle( "italic" ) ) );
+
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        // add data
+        generateRandomData();
+
+        return binder.createAndBindUi( this );
+    }
+
+    /**
+     * On click on the generate button, we clear the current data and generate new ones
+     *
+     * @param e click event
+     */
+    @UiHandler( "generate" )
+    void onClickGenerate( ClickEvent e )
+    {
+        plot.getModel().removeAllSeries();
+        generateRandomData();
+        plot.redraw();
+    }
+
+    /**
+     * Generate random data
+     */
+    private void generateRandomData()
+    {
+        int nbSeries = Random.nextInt( 5 ) + 1;
+        for ( int i = 0; i &lt; nbSeries; i++ )
+        {
+            plot.getModel().addSeries( Series.of( "Random Series " + i ) );
+        }
+        for ( int i = 1; i &lt; 13; i++ )
+        {
+            for ( SeriesHandler series : plot.getModel().getHandlers() )
+            {
+                series.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+            }
+        }
+    }
+
+    /**
+     * Switch to dark theme
+     *
+     * @param e click event
+     */
+    @UiHandler( "switchDark" )
+    void onClickSwitchToDark( ClickEvent e )
+    {
+        switchDark.setVisible( false );
+        switchWhite.setVisible( true );
+
+        plot.removeStyleName( style.whiteTheme() );
+        plot.addStyleName( style.darkTheme() );
+        plot.getOptions().getXAxisOptions().getFont().setColor( "white" );
+        plot.getOptions().getXAxisOptions().setTickColor( "rgba(255, 255, 255, 0.6)" );
+        plot.getOptions().getYAxisOptions().getFont().setColor( "white" );
+        plot.getOptions().getYAxisOptions().setTickColor( "rgba(255, 255, 255, 0.6)" );
+        plot.getOptions().getGridOptions().setBorderColor( "white" );
+        plot.redraw();
+    }
+
+    /**
+     * Switch to white theme
+     *
+     * @param e click event
+     */
+    @UiHandler( "switchWhite" )
+    void onClickSwitchToWhite( ClickEvent e )
+    {
+        switchDark.setVisible( true );
+        switchWhite.setVisible( false );
+
+        plot.removeStyleName( style.darkTheme() );
+        plot.addStyleName( style.whiteTheme() );
+        plot.getOptions().getXAxisOptions().getFont().setColor( "black" );
+        plot.getOptions().getXAxisOptions().clearTickColor();
+        plot.getOptions().getYAxisOptions().getFont().setColor( "black" );
+        plot.getOptions().getYAxisOptions().clearTickColor();
+        plot.getOptions().getGridOptions().clearBorderColor();
+        plot.redraw();
+    }
+
+</pre>

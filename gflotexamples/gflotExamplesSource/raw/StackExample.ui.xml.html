@@ -1,0 +1,31 @@
+<pre>&lt;!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent"&gt;
+&lt;ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:p="urn:import:com.googlecode.gflot.client"&gt;
+
+  &lt;ui:style&gt;
+
+  &lt;/ui:style&gt;
+
+  &lt;ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' /&gt;
+
+  &lt;g:HTMLPanel&gt;
+    &lt;p:SimplePlot ui:field="plot" width="600px" height="300px" /&gt;
+
+    &lt;p&gt;With the stack plugin, you can have Flot stack the
+      series. This is useful if you wish to display both a total and
+      the
+      constituents it is made of. The only requirement is that you provide
+      the input sorted on x.&lt;/p&gt;
+
+    &lt;p class="stackControls"&gt;
+      &lt;g:CheckBox ui:field="stacking" text="Stacking" value="true" /&gt;
+    &lt;/p&gt;
+
+    &lt;p class="graphControls"&gt;
+      &lt;g:RadioButton ui:field="bars" text="Bars" name="graphControls" value="true" /&gt;
+      &lt;g:RadioButton ui:field="lines" text="Lines" name="graphControls" /&gt;
+      &lt;g:RadioButton ui:field="linesStep" text="Lines with steps" name="graphControls" /&gt;
+    &lt;/p&gt;
+  &lt;/g:HTMLPanel&gt;
+&lt;/ui:UiBinder&gt;
+</pre>

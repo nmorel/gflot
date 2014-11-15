@@ -1,0 +1,63 @@
+<pre>    /**
+     * Create plot
+     */
+    protected Widget createPlot()
+    {
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setShow( false ).setFill( true ) )
+            .setBarsSeriesOptions( BarSeriesOptions.create().setShow( true ).setBarWidth( 0.6 ) ).setStack( true ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
+
+        // create series
+        SeriesHandler series1 = model.addSeries( Series.of( "Series1" ) );
+        SeriesHandler series2 = model.addSeries( Series.of( "Series2" ) );
+        SeriesHandler series3 = model.addSeries( Series.of( "Series3" ) );
+
+        // add data
+        for ( int i = 0; i &lt; 10; i++ )
+        {
+            series1.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+            series2.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+            series3.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+        }
+
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        return binder.createAndBindUi( this );
+    }
+
+    /**
+     * When the stacking value changes
+     */
+    @UiHandler( "stacking" )
+    void onValueChangeStacking( ValueChangeEvent&lt;Boolean&gt; event )
+    {
+        if ( event.getValue() )
+        {
+            plot.getOptions().getGlobalSeriesOptions().setStack( true );
+        }
+        else
+        {
+            plot.getOptions().getGlobalSeriesOptions().setStack( null );
+        }
+        plot.redraw();
+    }
+
+    /**
+     * When the type of graph changes
+     */
+    @UiHandler( { "bars", "lines", "linesStep" } )
+    void onValueChangeGraphType( ValueChangeEvent&lt;Boolean&gt; event )
+    {
+        GlobalSeriesOptions options = plot.getOptions().getGlobalSeriesOptions();
+        options.getLineSeriesOptions().setShow( lines.getValue() || linesStep.getValue() )
+            .setSteps( linesStep.getValue() );
+        options.getBarSeriesOptions().setShow( bars.getValue() );
+
+        plot.redraw();
+    }
+
+</pre>

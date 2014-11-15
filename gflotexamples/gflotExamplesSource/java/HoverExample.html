@@ -1,0 +1,93 @@
+<pre>    /**
+     * Plot
+     */
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    /**
+     * Create plot
+     */
+    public Widget createPlot()
+    {
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions(LineSeriesOptions.create().setLineWidth(1).setShow(true))
+            .setPointsOptions(PointsSeriesOptions.create().setRadius(2).setShow(true)).setShadowSize( 0d ).setHighlightColor( "red" ) );
+        // add tick formatter to the options
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
+            public String formatTickValue( double tickValue, Axis axis )
+            {
+                return MONTH_NAMES[(int) ( tickValue - 1 )];
+            }
+        } ) );
+
+        // &gt;&gt;&gt;&gt;&gt;&gt;&gt; You need make the grid hoverable &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+        plotOptions.setGridOptions( GridOptions.create().setHoverable(true).setClickable(true) );
+        // &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+
+        // create a series
+        SeriesHandler handler =
+            model.addSeries( Series.of( "Ottawa's Month Temperatures (Daily Average in &deg;C)", "#007f00" ) );
+
+        // add data
+        handler.add( DataPoint.of( 1, -10.5 ) );
+        handler.add( DataPoint.of( 2, -8.6 ) );
+        handler.add( DataPoint.of( 3, -2.4 ) );
+        handler.add( DataPoint.of( 4, 6 ) );
+        handler.add( DataPoint.of( 5, 13.6 ) );
+        handler.add( DataPoint.of( 6, 18.4 ) );
+        handler.add( DataPoint.of( 7, 21 ) );
+        handler.add( DataPoint.of( 8, 19.7 ) );
+        handler.add( DataPoint.of( 9, 14.7 ) );
+        handler.add( DataPoint.of( 10, 8.2 ) );
+        handler.add( DataPoint.of( 11, 1.5 ) );
+        handler.add( DataPoint.of( 12, -6.6 ) );
+
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        final PopupPanel popup = new PopupPanel();
+        final Label label = new Label();
+        popup.add( label );
+
+        // add hover listener
+        plot.addHoverListener( new PlotHoverListener() {
+            public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
+            {
+                if ( position != null )
+                {
+                    cursorPosition.setText( "Position : {x=" + position.getX() + ", y=" + position.getY() + "}" );
+                }
+                if ( item != null )
+                {
+                    String text = "x: " + item.getDataPoint().getX() + ", y: " + item.getDataPoint().getY();
+
+                    hoverPoint.setText( text );
+
+                    label.setText( text );
+                    popup.setPopupPosition( item.getPageX() + 10, item.getPageY() - 25 );
+                    popup.show();
+                }
+                else
+                {
+                    hoverPoint.setText( INSTRUCTIONS );
+                    popup.hide();
+                }
+            }
+        }, false );
+
+        plot.addClickListener(new PlotClickListener() {
+            @Override
+            public void onPlotClick(Plot plot, PlotPosition position, PlotItem item) {
+                plot.unhighlight();
+                if(null != item){
+                    plot.highlight(item.getSeries(), item.getDataPoint());
+                }
+            }
+        }, false);
+
+        return binder.createAndBindUi( this );
+    }
+
+</pre>

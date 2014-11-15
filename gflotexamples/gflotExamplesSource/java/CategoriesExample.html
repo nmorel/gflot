@@ -1,0 +1,34 @@
+<pre>    /**
+     * Plot
+     */
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    /**
+     * Create plot
+     */
+    public Widget createPlot()
+    {
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setBarsSeriesOptions( BarSeriesOptions.create()
+            .setShow( true )
+            .setBarWidth( 0.6 )
+            .setAlignment( BarSeriesOptions.BarAlignment.CENTER ) ) ).addXAxisOptions( CategoriesAxisOptions.create()
+            .setTickLength( 0 ) );
+
+        SeriesHandler series = model.addSeries();
+        series.add( DataPoint.of( "January", 10 ) );
+        series.add( DataPoint.of( "February", 8 ) );
+        series.add( DataPoint.of( "March", 4 ) );
+        series.add( DataPoint.of( "April", 13 ) );
+        series.add( DataPoint.of( "May", 17 ) );
+        series.add( DataPoint.of( "June", 9 ) );
+
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        return binder.createAndBindUi( this );
+    }
+
+</pre>

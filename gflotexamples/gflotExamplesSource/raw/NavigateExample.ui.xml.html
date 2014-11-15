@@ -1,0 +1,93 @@
+<pre>&lt;!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent"&gt;
+&lt;ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:p="urn:import:com.googlecode.gflot.client"&gt;
+
+  &lt;ui:style&gt;
+    .zoomOut {
+    	position: absolute;
+    	font-size: smaller;
+    	color: #999;
+    	background-color: #eee;
+    	padding: 2px;
+    	cursor: pointer;
+    	top: 10px;
+    	left: 545px;
+    }
+
+    .arrow {
+    	position: absolute;
+    	cursor: pointer;
+    }
+
+    .arrowDown {
+    	top: 57px;
+    	left: 559px;
+    }
+
+    .arrowUp {
+    	top: 27px;
+    	left: 559px;
+    }
+
+    .arrowLeft {
+    	top: 42px;
+    	left: 544px;
+    }
+
+    .arrowRight {
+    	top: 42px;
+    	left: 574px;
+    }
+
+    .reset {
+    	position: absolute;
+    	font-size: smaller;
+    	color: #999;
+    	background-color: #eee;
+    	padding: 2px;
+    	cursor: pointer;
+    	top: 76px;
+    	left: 553px;
+    }
+
+    .message {
+    	font-style: italic;
+    }
+  &lt;/ui:style&gt;
+
+  &lt;ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' /&gt;
+
+  &lt;ui:image src="arrow-down.gif" field="arrowDown" /&gt;
+  &lt;ui:image src="arrow-up.gif" field="arrowUp" /&gt;
+  &lt;ui:image src="arrow-left.gif" field="arrowLeft" /&gt;
+  &lt;ui:image src="arrow-right.gif" field="arrowRight" /&gt;
+
+  &lt;g:HTMLPanel&gt;
+    &lt;p:SimplePlot ui:field="plot" width="600px" height="300px" /&gt;
+
+    &lt;g:Label ui:field="zoomOut" addStyleNames='{style.zoomOut}'&gt;zoom out&lt;/g:Label&gt;
+    &lt;g:Image ui:field="down" resource='{arrowDown}' addStyleNames='{style.arrow} {style.arrowDown}' /&gt;
+    &lt;g:Image ui:field="up" resource='{arrowUp}' addStyleNames='{style.arrow} {style.arrowUp}' /&gt;
+    &lt;g:Image ui:field="left" resource='{arrowLeft}' addStyleNames='{style.arrow} {style.arrowLeft}' /&gt;
+    &lt;g:Image ui:field="right" resource='{arrowRight}' addStyleNames='{style.arrow} {style.arrowRight}' /&gt;
+    &lt;g:Label ui:field="reset" addStyleNames='{style.reset}'&gt;reset&lt;/g:Label&gt;
+
+    &lt;div style="margin: 10px 0px"&gt;
+      &lt;g:InlineLabel ui:field="message" addStyleNames='{style.message}' /&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;With the navigate plugin it is easy to add panning and zooming.
+      Drag to pan, double click to
+      zoom (or use the
+      mouse scrollwheel).&lt;/p&gt;
+
+    &lt;p&gt;The plugin fires events (useful for synchronizing several
+      plots) and adds a couple of public
+      methods so you can
+      easily build
+      a little user interface around it, like the little buttons at
+      the
+      top right in the plot.&lt;/p&gt;
+  &lt;/g:HTMLPanel&gt;
+&lt;/ui:UiBinder&gt;
+</pre>

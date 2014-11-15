@@ -1,0 +1,220 @@
+<pre>    /**
+     * NumberFormat with two decimals
+     */
+    private static final NumberFormat numberFormat = NumberFormat.getFormat( "#0.00" );
+
+    /**
+     * First Plot
+     */
+    @UiField( provided = true )
+    SimplePlot plot1;
+
+    /**
+     * Label to show the tracking
+     */
+    @UiField
+    Label tracker;
+
+    /**
+     * PlotModel
+     */
+    private PlotModel model1;
+
+    /**
+     * If the timer is scheduled
+     */
+    private boolean updateTrackingTimeout = false;
+
+    /**
+     * Last mouse position
+     */
+    private PlotPosition latestPosition = null;
+
+    /**
+     * Timer to not calculate the data points at each mouse hover event
+     */
+    private Timer updateTrackingTimer = new Timer() {
+        @Override
+        public void run()
+        {
+            updateTracking();
+
+    /**
+     * Second Plot
+     */
+    @UiField( provided = true )
+    SimplePlot plot2;
+
+    /**
+     * Create plot
+     */
+    @Override
+    public Widget createPlot()
+    {
+        createFirstPlot();
+        createSecondPlot();
+
+        return binder.createAndBindUi( this );
+    }
+
+    /**
+     * Create the first plot
+     */
+    private void createFirstPlot()
+    {
+        model1 = new PlotModel();
+
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setLineSeriesOptions(
+            LineSeriesOptions.create().setShow( true ) ) );
+        plotOptions.setCrosshairOptions( CrosshairOptions.create().setMode( Mode.X ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ).setAutoHighlight( false ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setMinimum( -1.2 ).setMaximum( 1.2 ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setSorted( LegendOptions.LegendSorting.ASCENDING ) );
+
+        // create a series
+        final SeriesHandler sin = model1.addSeries( Series.of( "sin(x)" ) );
+        final SeriesHandler cos = model1.addSeries( Series.of( "cos(x)" ) );
+
+        // add data
+        for ( double i = 0; i &lt; 14; i += 0.1 )
+        {
+            sin.add( DataPoint.of( i, Math.sin( i ) ) );
+            cos.add( DataPoint.of( i, Math.cos( i ) ) );
+        }
+
+        // create the plot
+        plot1 = new SimplePlot( model1, plotOptions );
+
+        plot1.addHoverListener( new PlotHoverListener() {
+            @Override
+            public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
+            {
+                latestPosition = position;
+                if ( !updateTrackingTimeout )
+                {
+                    updateTrackingTimeout = true;
+                    updateTrackingTimer.schedule( 100 );
+                }
+            }
+        }, false );
+    }
+
+    /**
+     * Update the tracking
+     */
+    private void updateTracking()
+    {
+        updateTrackingTimeout = false;
+
+        PlotPosition position = latestPosition;
+
+        Axes axes = plot1.getAxes();
+        double xPos = position.getX();
+        double yPos = position.getY();
+        double xAxisMin = axes.getX().getMinimumValue();
+        double xAxisMax = axes.getX().getMaximumValue();
+        double yAxisMin = axes.getY().getMinimumValue();
+        double yAxisMax = axes.getY().getMaximumValue();
+
+        if ( xPos &lt; xAxisMin || xPos &gt; xAxisMax || yPos &lt; yAxisMin || yPos &gt; yAxisMax )
+        {
+            return;
+        }
+
+        int i = 0;
+        int j = 0;
+        JsArray&lt;Series&gt; dataset = model1.getSeries();
+        StringBuilder builder = new StringBuilder();
+        for ( i = 0; i &lt; dataset.length(); i++ )
+        {
+            Series series = dataset.get( i );
+            SeriesData data = series.getData();
+            // find the nearest points, x-wise
+            for ( j = 0; j &lt; data.length(); j++ )
+            {
+                if ( data.getX( j ) &gt; xPos )
+                {
+                    break;
+                }
+            }
+
+            // now interpolate
+            double y;
+            DataPoint p1 = data.get( j - 1 );
+            DataPoint p2 = data.get( j );
+            if ( p1 == null )
+            {
+                y = p2.getY();
+            }
+            else if ( p2 == null )
+            {
+                y = p1.getY();
+            }
+            else
+            {
+                y = p1.getY() + ( p2.getY() - p1.getY() ) * ( xPos - p1.getX() ) / ( p2.getX() - p1.getX() );
+            }
+
+            if ( builder.length() &gt; 0 )
+            {
+                builder.append( " | " );
+            }
+            builder.append( series.getLabel() );
+            builder.append( " = " );
+            builder.append( numberFormat.format( y ) );
+        }
+        tracker.setText( builder.toString() );
+    }
+
+    /**
+     * Create the second plot
+     */
+    private void createSecondPlot()
+    {
+        PlotModel model = new PlotModel();
+
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions
+            .create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setShow( true ) )
+            .setPointsOptions(
+                PointsSeriesOptions.create().setShow( true ).setRadius( 5 ).setSymbol( PointSymbol.DIAMOND )
+                    .setFill( true ) ) );
+        plotOptions.setCrosshairOptions( CrosshairOptions.create().setMode( Mode.XY ).setLineWidth( 2 )
+            .setColor( "green" ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ).setAutoHighlight( false )
+            .setMouseActiveRadius( 15 ) );
+
+        // create a series
+        SeriesHandler series1 = model.addSeries( Series.of( "Random Series 1" ) );
+        SeriesHandler series2 = model.addSeries( Series.of( "Random Series 2" ) );
+
+        // add data
+        for ( int i = 1; i &lt; 13; i++ )
+        {
+            series1.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+            series2.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+        }
+
+        // create the plot
+        plot2 = new SimplePlot( model, plotOptions );
+
+        plot2.addHoverListener( new PlotHoverListener() {
+            @Override
+            public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
+            {
+                if ( null == item )
+                {
+                    plot.unlockCrosshair();
+                }
+                else
+                {
+                    DataPoint dataPoint = item.getDataPoint();
+                    plot.lockCrosshair( PlotPosition.of( dataPoint.getX(), dataPoint.getY() ) );
+                }
+            }
+        }, false );
+    }
+
+</pre>

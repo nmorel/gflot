@@ -1,0 +1,24 @@
+<pre>&lt;!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent"&gt;
+&lt;ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:p="urn:import:com.googlecode.gflot.client"&gt;
+
+  &lt;ui:style&gt;
+
+  &lt;/ui:style&gt;
+
+  &lt;ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' /&gt;
+
+  &lt;g:HTMLPanel&gt;
+    &lt;p:SimplePlot ui:field="plot" width="600px" height="300px" /&gt;
+
+    &lt;p&gt;With the threshold plugin, you can apply a specific color to the part of a data series below a threshold. This is
+      can be useful for highlighting negative values, e.g. when displaying net results or what's in stock.&lt;/p&gt;
+
+    &lt;p class="graphControls"&gt;
+      &lt;div&gt;&lt;g:RadioButton ui:field="positive" text="Threshold at 5" name="graphControls" /&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;g:RadioButton ui:field="zero" text="Threshold at 0" name="graphControls" value="true" /&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;g:RadioButton ui:field="negative" text="Threshold at -2.5" name="graphControls" /&gt;&lt;/div&gt;
+    &lt;/p&gt;
+  &lt;/g:HTMLPanel&gt;
+&lt;/ui:UiBinder&gt;
+</pre>

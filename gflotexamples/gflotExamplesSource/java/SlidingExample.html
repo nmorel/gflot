@@ -1,0 +1,183 @@
+<pre>    /**
+     * Refresh period
+     */
+    private static final int period = 300;
+
+    /**
+     * Maximum datapoints in the slide at a time
+     */
+    private static final int slidingWindow = 20;
+
+    /**
+     * The Async interface of the service
+     */
+    interface FakeRpcServiceAsync
+    {
+        void getNewData( AsyncCallback&lt;DataPoint[]&gt; callback );
+    }
+
+    /**
+     * Plot
+     */
+    @UiField(provided = true)
+    SimplePlot plot;
+
+    /**
+     * start/stop button
+     */
+    @UiField
+    Button startStop;
+
+    /**
+     * Timer
+     */
+    private Timer updater;
+
+    /**
+     * Create plot
+     */
+    public Widget createPlot()
+    {
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 )
+            .setShow( true ).setFill( true ).setFillColor( 1.0, 1.0, 1.0, 0.5 ) ).setPointsOptions( PointsSeriesOptions.create()
+            .setRadius( 1 ).setShow( true ) ).setShadowSize( 0d ) ).setLegendOptions( LegendOptions.create().setShow( false ) );
+        plotOptions.addXAxisOptions( TimeSeriesAxisOptions.create().setTimeZone( TimeSeriesAxisOptions.TIME_ZONE_BROWSER_KEY ) );
+
+        final SeriesHandler series = model.addSeries( Series.of( "Random Series", "#FF9900" ), PlotModelStrategy
+            .slidingWindowStrategy( slidingWindow ) );
+
+        // pull the "fake" RPC service for new data
+        updater = new Timer()
+        {
+            @Override
+            public void run()
+            {
+                update( series, plot );
+            }
+        };
+
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        return binder.createAndBindUi( this );
+    }
+
+    /**
+     * Start the timer when the activity starts
+     */
+    @Override
+    public void start( AcceptsOneWidget panel, EventBus eventBus )
+    {
+        super.start( panel, eventBus );
+        start();
+        fillSlidingWindow( plot.getModel().getHandlers().get( 0 ) );
+    }
+
+    /**
+     * Fill the series with random data
+     */
+    private void fillSlidingWindow( SeriesHandler series )
+    {
+        series.clear();
+        double currentMilli = System.currentTimeMillis();
+        for ( int i = slidingWindow - 1; i &gt;= 0; i-- )
+        {
+            series.add( DataPoint.of( currentMilli - (period * i), nextValue() ) );
+        }
+    }
+
+    /**
+     * Stop the timer when the activity stops
+     */
+    @Override
+    public void onStop()
+    {
+        stop();
+        plot.getModel().clear();
+        super.onStop();
+    }
+
+    /**
+     * On click on the start/stop button
+     */
+    @UiHandler("startStop")
+    void onClickStartStop( ClickEvent e )
+    {
+        if ( "Stop".equals( startStop.getText() ) )
+        {
+            stop();
+        }
+        else
+        {
+            start();
+        }
+    }
+
+    /**
+     * Start the timer
+     */
+    private void start()
+    {
+        startStop.setText( "Stop" );
+        updater.scheduleRepeating( period );
+    }
+
+    /**
+     * Stop the timer
+     */
+    private void stop()
+    {
+        startStop.setText( "Start" );
+        updater.cancel();
+    }
+
+    /**
+     * Fake a rpc call and update the data
+     */
+    private void update( final SeriesHandler series, final PlotWidget plot )
+    {
+        FakeRpcServiceAsync service = getRpcService();
+        service.getNewData( new AsyncCallback&lt;DataPoint[]&gt;()
+        {
+            public void onFailure( Throwable caught )
+            {
+                GWT.log( "Something went wrong", caught );
+            }
+
+            public void onSuccess( DataPoint[] result )
+            {
+                for ( DataPoint dataPoint : result )
+                {
+                    series.add( dataPoint );
+                }
+                plot.redraw();
+            }
+        } );
+    }
+
+    /**
+     * @return a fake rpc service
+     */
+    private FakeRpcServiceAsync getRpcService()
+    {
+        return new FakeRpcServiceAsync()
+        {
+            @SuppressWarnings("deprecation")
+            public void getNewData( final AsyncCallback&lt;DataPoint[]&gt; callback )
+            {
+                callback.onSuccess( new DataPoint[]{DataPoint.of( System.currentTimeMillis(), nextValue() )} );
+            }
+        };
+    }
+
+    /**
+     * @return the next random value
+     */
+    private double nextValue()
+    {
+        return Math.min( Random.nextDouble() + 0.2, 0.9 );
+    }
+
+</pre>

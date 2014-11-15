@@ -1,0 +1,25 @@
+<pre>&lt;!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent"&gt;
+&lt;ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:p="urn:import:com.googlecode.gflot.client"&gt;
+
+  &lt;ui:style&gt;
+    .exportButton {
+    	margin-bottom: 10px;
+    }
+  &lt;/ui:style&gt;
+
+  &lt;ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' /&gt;
+
+  &lt;g:HTMLPanel&gt;
+    &lt;p:SimplePlot ui:field="plot" width="600px" height="300px" /&gt;
+    &lt;p&gt;
+      The export functionality uses the new canvas plugin from 0.8 and the
+      &lt;a href="http://www.nihilogic.dk/labs/canvas2image/" target="_blank"&gt;canvas2image&lt;/a&gt;
+      plugin.
+    &lt;/p&gt;
+    &lt;g:Button ui:field="createImage" addStyleNames='{style.exportButton}'&gt;Create image&lt;/g:Button&gt;
+    &lt;g:Button ui:field="saveImage" addStyleNames='{style.exportButton}'&gt;Save image&lt;/g:Button&gt;
+    &lt;g:SimplePanel ui:field="imgPanel" /&gt;
+  &lt;/g:HTMLPanel&gt;
+&lt;/ui:UiBinder&gt;
+</pre>

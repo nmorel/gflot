@@ -1,0 +1,89 @@
+<pre>    /**
+     * Month names used by the tick formatter
+     */
+    private static final String[] MONTH_NAMES = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
+        "nov", "dec" };
+
+    /**
+     * Plot
+     */
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    /**
+     * Panel that will contain the exported image
+     */
+    @UiField
+    SimplePanel imgPanel;
+
+    /**
+     * Create plot
+     */
+    public Widget createPlot()
+    {
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+
+        // Enables the rendering of text in canvas to export the axis label too
+        plotOptions.setCanvasEnabled( true );
+
+        // Add tick formatter to the options
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
+            public String formatTickValue( double tickValue, Axis axis )
+            {
+                return MONTH_NAMES[(int) ( tickValue - 1 )];
+            }
+        } ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setBackgroundOpacity( 0 )
+            .setPosition( LegendPosition.NORTH_WEST ) );
+
+        // create a series
+        SeriesHandler series1 = model.addSeries( Series.of( "Random Series 1" ) );
+        SeriesHandler series2 = model.addSeries( Series.of( "Random Series 2" ) );
+
+        // add data
+        for ( int i = 1; i &lt; 13; i++ )
+        {
+            series1.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+            series2.add( DataPoint.of( i, Random.nextInt( 30 ) ) );
+        }
+
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        return binder.createAndBindUi( this );
+    }
+
+    /**
+     * When the user clicks on the create image button
+     */
+    @UiHandler( "createImage" )
+    void onClickCreateImage( ClickEvent e )
+    {
+        if ( plot.isExportAsImageEnabled() )
+        {
+            imgPanel.setWidget( plot.getImage() );
+        }
+        else
+        {
+            Window.alert( "The export option isn't supported by your browser." );
+        }
+    }
+
+    /**
+     * When the user clicks on the save image button
+     */
+    @UiHandler( "saveImage" )
+    void onClickSaveImage( ClickEvent e )
+    {
+        if ( plot.isExportAsImageEnabled() )
+        {
+            plot.saveAsImage();
+        }
+        else
+        {
+            Window.alert( "The export option isn't supported by your browser." );
+        }
+    }
+
+</pre>

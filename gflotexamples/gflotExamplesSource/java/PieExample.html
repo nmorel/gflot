@@ -1,0 +1,84 @@
+<pre>    /**
+     * Plot
+     */
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    /**
+     * Paragraph to add the hovering series
+     */
+    @UiField
+    ParagraphElement hovering;
+
+    /**
+     * Create plot
+     */
+    @Override
+    public Widget createPlot()
+    {
+        final PlotModel model = new PlotModel();
+        final PlotOptions plotOptions = PlotOptions.create();
+
+        // activate the pie
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setPieSeriesOptions(
+            PieSeriesOptions
+                .create()
+                .setShow( true )
+                .setRadius( 1 )
+                .setInnerRadius( 0.2 )
+                .setLabel(
+                    Label.create().setShow( true ).setRadius( 3d / 4d )
+                        .setBackground( Background.create().setOpacity( 0.8 ) ).setThreshold( 0.05 )
+                        .setFormatter( new Formatter() {
+                            @Override
+                            public String format( String label, Series series )
+                            {
+                                return "&lt;div style=\"font-size:8pt;text-align:center;padding:2px;color:white;\"&gt;"
+                                    + label + "&lt;br/&gt;" + formatter.format( series.getData().getY( 0 ) ) + " / "
+                                    + formatter.format( series.getPercent() ) + "%&lt;/div&gt;";
+                            }
+                        } ) ) ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
+
+        // create series
+        SeriesHandler series1 = model.addSeries( Series.of( "Series 1" ) );
+        series1.add( PieDataPoint.of( 148 ) );
+
+        SeriesHandler series2 = model.addSeries( Series.of( "Series 2" ) );
+        series2.add( PieDataPoint.of( 221 ) );
+
+        SeriesHandler series3 = model.addSeries( Series.of( "Series 3" ) );
+        series3.add( PieDataPoint.of( 25 ) );
+
+        SeriesHandler series4 = model.addSeries( Series.of( "Series 4" ) );
+        series4.add( PieDataPoint.of( 35 ) );
+
+        SeriesHandler series5 = model.addSeries( Series.of( "Series 5" ) );
+        series5.add( PieDataPoint.of( 102 ) );
+
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        plot.addHoverListener( new PlotHoverListener() {
+            @Override
+            public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
+            {
+                hovering.setInnerText( "Hovering series n\u00b0" + ( item.getSeriesIndex() + 1 ) + " : "
+                    + formatter.format( item.getSeries().getData().getY( 0 ) ) + " / "
+                    + formatter.format( item.getSeries().getPercent() ) + "%" );
+            }
+        }, true );
+
+        plot.addDomHandler( new MouseOutHandler() {
+            @Override
+            public void onMouseOut( MouseOutEvent event )
+            {
+                hovering.setInnerText( "" );
+            }
+        }, MouseOutEvent.getType() );
+
+        return binder.createAndBindUi( this );
+    }
+
+</pre>

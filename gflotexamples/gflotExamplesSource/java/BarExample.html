@@ -1,0 +1,123 @@
+<pre>    /** First Plot */
+    @UiField( provided = true )
+    SimplePlot plot1;
+
+    /** Second Plot */
+    @UiField( provided = true )
+    SimplePlot plot2;
+
+    /** Create plot */
+    @Override
+    public Widget createPlot()
+    {
+        createFirstPlot();
+        createSecondPlot();
+
+        return binder.createAndBindUi( this );
+    }
+
+    /** Create the first plot */
+    private void createFirstPlot()
+    {
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create().setBarsSeriesOptions( BarSeriesOptions.create()
+            .setShow( true )
+            .setLineWidth( 1 )
+            .setBarWidth( 1 )
+            .setAlignment( BarAlignment.CENTER ) ) );
+
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
+
+        // add tick formatter to the options
+        plotOptions.addXAxisOptions( AxisOptions.create().setAxisLabelAngle(135d).setTicks( 12 ).setTickFormatter( new TickFormatter()
+        {
+            @Override
+            public String formatTickValue( double tickValue, Axis axis )
+            {
+                if ( tickValue &gt; 0 && tickValue &lt;= 12 )
+                {
+                    return MONTH_NAMES[(int) (tickValue - 1)];
+                }
+                return "";
+            }
+        } ) );
+
+        // create a series
+        SeriesHandler handler = model.addSeries( Series.of( "Ottawa's Month Temperatures (Daily Average in &deg;C)" ).setColor( "blue" ) );
+
+        // add data
+        handler.add( DataPoint.of( 1, -10.5 ) );
+        handler.add( DataPoint.of( 2, -8.6 ) );
+        handler.add( DataPoint.of( 3, -2.4 ) );
+        handler.add( DataPoint.of( 4, 6 ) );
+        handler.add( DataPoint.of( 5, 13.6 ) );
+        handler.add( DataPoint.of( 6, 18.4 ) );
+        handler.add( DataPoint.of( 7, 21 ) );
+        handler.add( DataPoint.of( 8, 19.7 ) );
+        handler.add( DataPoint.of( 9, 14.7 ) );
+        handler.add( DataPoint.of( 10, 8.2 ) );
+        handler.add( DataPoint.of( 11, 1.5 ) );
+        handler.add( DataPoint.of( 12, -6.6 ) );
+
+        // create the plot
+        plot1 = new SimplePlot( model, plotOptions );
+    }
+
+    /** Create the second plot */
+    private void createSecondPlot()
+    {
+        int nbSeries = 4;
+
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+
+        GlobalSeriesOptions globalSeriesOptions = GlobalSeriesOptions.create();
+        globalSeriesOptions.setBarsSeriesOptions( BarSeriesOptions.create().setShow( true ).setBarWidth( 0.2 ).setLineWidth( 1 ) );
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( new AbstractAxisOptions.TickGenerator()
+        {
+            @Override
+            public JsArray&lt;Tick&gt; generate( Axis axis )
+            {
+                JsArray&lt;Tick&gt; array = JsArray.createArray().cast();
+                for ( int i = 0; i &lt; 10; i++ )
+                {
+                    array.push( Tick.of( i, "B" + i ) );
+                }
+                return array;
+            }
+        } ) );
+
+        plotOptions.setGlobalSeriesOptions( globalSeriesOptions );
+
+        plotOptions.setLegendOptions( LegendOptions.create().setMargin( -120, 0 ) );
+
+        // create a series
+        List&lt;SeriesHandler&gt; series = new ArrayList&lt;SeriesHandler&gt;();
+        for ( int i = 0; i &lt; nbSeries; i++ )
+        {
+            series.add( model.addSeries( Series.of( "Random series " + (i + 1) ).setBarsSeriesOptions( BarSeriesOptions.create().setOrder( i ) ) ) );
+        }
+
+        Markings markings = Markings.create();
+
+        // add data
+        for ( int i = 0; i &lt; 10; i++ )
+        {
+            for ( SeriesHandler serie : series )
+            {
+                serie.add( DataPoint.of( i, Random.nextInt( 50 ) ) );
+            }
+            if ( i % 2 != 0 )
+            {
+                markings.addMarking( Marking.create().setX( Range.of( i - 0.5, i + 0.5 ) ).setColor( "rgba(153, 153, 153, 0.3)" ) );
+            }
+        }
+        plotOptions.setGridOptions( GridOptions.create().setMarkings( markings ) );
+
+        // create the plot
+        plot2 = new SimplePlot( model, plotOptions );
+    }
+
+</pre>

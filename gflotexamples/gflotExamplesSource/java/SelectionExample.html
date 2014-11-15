@@ -1,0 +1,107 @@
+<pre>    /**
+     * Plot
+     */
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    /**
+     * Create plot
+     */
+    public Widget createPlot()
+    {
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+
+        // add tick formatter to the options
+        plotOptions.addXAxisOptions( AxisOptions.create().setTicks( 12 ).setTickFormatter( new TickFormatter() {
+            public String formatTickValue( double tickValue, Axis axis )
+            {
+                return MONTH_NAMES[(int) ( tickValue - 1 )];
+            }
+        } ) );
+
+        plotOptions.setSelectionOptions( SelectionOptions.create().setMode( SelectionMode.XY ).setColor( "red" ).setShape( SelectionOptions.SelectionShape.BEVEL ).setMinSize( 10 ) );
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
+
+        // create a series
+        SeriesHandler handler =
+            model.addSeries( Series.of( "Ottawa's Month Temperatures (Daily Average in &deg;C)", "blue" ) );
+
+        // add data
+        handler.add( DataPoint.of( 1, -10.5 ) );
+        handler.add( DataPoint.of( 2, -8.6 ) );
+        handler.add( DataPoint.of( 3, -2.4 ) );
+        handler.add( DataPoint.of( 4, 6 ) );
+        handler.add( DataPoint.of( 5, 13.6 ) );
+        handler.add( DataPoint.of( 6, 18.4 ) );
+        handler.add( DataPoint.of( 7, 21 ) );
+        handler.add( DataPoint.of( 8, 19.7 ) );
+        handler.add( DataPoint.of( 9, 14.7 ) );
+        handler.add( DataPoint.of( 10, 8.2 ) );
+        handler.add( DataPoint.of( 11, 1.5 ) );
+        handler.add( DataPoint.of( 12, -6.6 ) );
+
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        final PopupPanel popup = new PopupPanel();
+        final Label hoverLabel = new Label( "You are hovering the selected zone" );
+        popup.setWidget( hoverLabel );
+
+        plot.addHoverListener( new PlotHoverListener() {
+            @Override
+            public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
+            {
+                PlotSelectionArea area = plot.getSelection();
+                if ( null == area )
+                {
+                    popup.hide();
+                    return;
+                }
+                double xFrom = area.getX().getFrom();
+                double xTo = area.getX().getTo();
+                double yFrom = area.getY().getFrom();
+                double yTo = area.getY().getTo();
+                if ( xFrom &lt;= position.getX() && xTo &gt;= position.getX() && yFrom &lt;= position.getY()
+                    && yTo &gt;= position.getY() )
+                {
+                    popup.setPopupPosition( position.getPageX() + 10, position.getPageY() - 25 );
+                    popup.show();
+                }
+                else
+                {
+                    popup.hide();
+                }
+            }
+        }, false );
+
+        plot.addSelectedListener( new PlotSelectedListener() {
+            @Override
+            public void onPlotSelected( PlotSelectionArea area )
+            {
+                selectionLabel.setText( buildSelectString( SELECTED, area ) );
+                clear.setEnabled( true );
+            }
+        } );
+        plot.addSelectingListener( new PlotSelectingListener() {
+            @Override
+            public void onPlotSelecting( PlotSelectionArea area )
+            {
+                selectionLabel.setText( buildSelectString( SELECTING, area ) );
+            }
+        } );
+        plot.addUnselectedListener( new PlotUnselectedListener() {
+            @Override
+            public void onPlotUnselected()
+            {
+                selectionLabel.setText( UNSELECTED );
+                clear.setEnabled( false );
+            }
+        } );
+
+        plot.setSelection( PlotSelectionArea.create().setX( Range.of( 2, 4 ) ).setY( Range.of( 0, 20 ) ), false );
+
+        return binder.createAndBindUi( this );
+    }
+
+</pre>

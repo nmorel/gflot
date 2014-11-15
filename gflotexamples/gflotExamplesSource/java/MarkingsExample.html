@@ -1,0 +1,48 @@
+<pre>    /**
+     * Plot
+     */
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    /**
+     * Create plot
+     */
+    @Override
+    public Widget createPlot()
+    {
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setLineWidth( 1 ).setShow( true ) )
+            .setPointsOptions( PointsSeriesOptions.create().setRadius( 2 ).setShow( true ) ).setShadowSize( 1 ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
+
+        SeriesHandler s = model.addSeries( Series.of( "Series 1" ) );
+        s.add( DataPoint.of( 1, 2 ) );
+        s.add( DataPoint.of( 2, 5 ) );
+        s.add( DataPoint.of( 3, 7 ) );
+        s.add( DataPoint.of( 4, 5 ) );
+        s.add( DataPoint.of( 5, 3 ) );
+        s.add( DataPoint.of( 6, 2 ) );
+        s.add( DataPoint.of( 7, 5 ) );
+        s.add( DataPoint.of( 8, 7 ) );
+        s.add( DataPoint.of( 9, 5 ) );
+        s.add( DataPoint.of( 10, 3 ) );
+
+        // Start of Marking Code
+        Marking m = Marking.create().setX( Range.of( 2, 2 ) ).setLineWidth( 2 ).setColor( "#3BEFc3" );
+        Marking m2 = Marking.create().setX( Range.of( 5, 7 ) ).setY( Range.of( 2, 6 ) ).setColor( "#cccccc" );
+        Marking m3 = Marking.create().setX( Range.create().setFrom( 8 ) ).setColor( "#000000" );
+        // End of Marking Code
+
+        // Add Markings Objects to Grid Options
+        plotOptions.setGridOptions( GridOptions.create().setMarkings(
+            Markings.create().addMarking( m ).addMarking( m2 ).addMarking( m3 ) ) );
+
+        // create plot
+        plot = new SimplePlot( model, plotOptions );
+
+        return binder.createAndBindUi( this );
+    }
+
+</pre>

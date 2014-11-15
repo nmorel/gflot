@@ -1,0 +1,157 @@
+<pre>    /**
+     * Plot
+     */
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    /**
+     * Message showing panning and zooming information
+     */
+    @UiField
+    Label message;
+
+    /**
+     * Create plot
+     */
+    protected Widget createPlot()
+    {
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setShow( true ).setFill( true ) ).setShadowSize( 0 ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
+
+        plotOptions.addXAxisOptions( AxisOptions.create().setZoomRange( 0.1d, 10d ).setPanRange( -10d, 10d ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setZoomRange( 0.1d, 10d ).setPanRange( -10d, 10d )
+            .setLabelWidth( 20 ) );
+        plotOptions.setZoomOptions( ZoomOptions.create().setInteractive( true ) ).setPanOptions(
+            PanOptions.create().setInteractive( true ) );
+
+        // create series
+        SeriesHandler series1 = model.addSeries( Series.of( "Series1" ) );
+
+        // add data
+        for ( double t = 0; t &lt;= 2 * Math.PI; t += 0.01 )
+        {
+            series1.add( DataPoint.of( sumfCos( t, 10 ), sumfSin( t, 10 ) ) );
+        }
+
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        final NumberFormat format = NumberFormat.getDecimalFormat();
+
+        plot.addZoomListener( new PlotZoomListener() {
+            @Override
+            public void onPlotZoom( Plot plot )
+            {
+                Axes axes = plot.getAxes();
+                message.setText( "Zooming to x=[min:\"" + format.format( axes.getX().getMinimumValue() ) + "\", max:\""
+                    + format.format( axes.getX().getMaximumValue() ) + "\"], y=[min:\""
+                    + format.format( axes.getY().getMinimumValue() ) + "\", max:\""
+                    + format.format( axes.getY().getMaximumValue() ) + "\"]" );
+            }
+        } );
+
+        plot.addPanListener( new PlotPanListener() {
+
+            @Override
+            public void onPlotPan( Plot plot )
+            {
+                Axes axes = plot.getAxes();
+                message.setText( "Panning to x=[min:\"" + format.format( axes.getX().getMinimumValue() ) + "\", max:\""
+                    + format.format( axes.getX().getMaximumValue() ) + "\"], y=[min:\""
+                    + format.format( axes.getY().getMinimumValue() ) + "\", max:\""
+                    + format.format( axes.getY().getMaximumValue() ) + "\"]" );
+            }
+        } );
+
+        Widget widget = binder.createAndBindUi( this );
+        message.setText( NO_ZOOM_MESSAGE );
+        return widget;
+    }
+
+    /**
+     *
+     */
+    private double sumfCos( double t, double m )
+    {
+        double res = 0;
+        for ( double i = 1; i &lt; m; ++i )
+        {
+            res += Math.cos( i * i * t ) / ( i * i );
+        }
+        return res;
+    }
+
+    /**
+     *
+     */
+    private double sumfSin( double t, double m )
+    {
+        double res = 0;
+        for ( double i = 1; i &lt; m; ++i )
+        {
+            res += Math.sin( i * i * t ) / ( i * i );
+        }
+        return res;
+    }
+
+    /**
+     * On click left arrow
+     */
+    @UiHandler( "left" )
+    void onClickLeft( ClickEvent event )
+    {
+        plot.pan( Pan.create().setLeft( -100 ) );
+    }
+
+    /**
+     * On click right arrow
+     */
+    @UiHandler( "right" )
+    void onClickRight( ClickEvent event )
+    {
+        plot.pan( Pan.create().setLeft( 100 ) );
+    }
+
+    /**
+     * On click up arrow
+     */
+    @UiHandler( "up" )
+    void onClickUp( ClickEvent event )
+    {
+        plot.pan( Pan.create().setTop( -100 ) );
+    }
+
+    /**
+     * On click down arrow
+     */
+    @UiHandler( "down" )
+    void onClickDown( ClickEvent event )
+    {
+        plot.pan( Pan.create().setTop( 100 ) );
+    }
+
+    /**
+     * On click zoom out
+     */
+    @UiHandler( "zoomOut" )
+    void onClickZoomOut( ClickEvent event )
+    {
+        plot.zoomOut();
+    }
+
+    /**
+     * On click reset
+     */
+    @UiHandler( "reset" )
+    void onClickReset( ClickEvent event )
+    {
+        message.setText( NO_ZOOM_MESSAGE );
+        plot.getOptions().getXAxisOptions().clearMinimum().clearMaximum();
+        plot.getOptions().getYAxisOptions().clearMinimum().clearMaximum();
+        plot.redraw();
+    }
+
+</pre>

@@ -1,0 +1,43 @@
+<pre>    /**
+     * Plot
+     */
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    /**
+     * Create plot
+     */
+    @Override
+    public Widget createPlot()
+    {
+        PlotModel model = new PlotModel();
+
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setLegendOptions(LegendOptions.create().setShow(false));
+        plotOptions.addYAxisOptions(AxisOptions.create().setShow(true));
+        plotOptions.addXAxisOptions(AxisOptions.create().setShow(true));
+        plotOptions.setZoomOptions(ZoomOptions.create().setInteractive(true));
+        plotOptions.setPanOptions(PanOptions.create().setInteractive(true));
+
+        JsArray&lt;LevelInfo&gt; levels = JavaScriptObject.createArray().cast();
+        levels.push(LevelInfo.of(LevelInfo.LevelRepresentation.ASYMMETRIC).setColor("red"));
+        levels.push(LevelInfo.of(LevelInfo.LevelRepresentation.SYMMETRIC).setColor("green"));
+
+        // create a series
+        final SeriesHandler vancouverSeries = model.addSeries(Series.of("Vancouver").setFillArea(levels).setLineSeriesOptions(LineSeriesOptions.create().setShow(true).setSteps(true)));
+
+        // add data
+        for ( int i = 0; i &lt; 10; i++ )
+        {
+            double x = i + 10.0;
+            double y = i * 0.5;
+            vancouverSeries.add(DataPoint.of(x, y, y - 10.0, y + 15.0, 20));
+        }
+
+        // create the plot
+        plot = new SimplePlot(model, plotOptions);
+
+        return binder.createAndBindUi(this);
+    }
+
+</pre>

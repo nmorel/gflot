@@ -1,0 +1,51 @@
+<pre>    /**
+     * Create plot
+     */
+    protected Widget createPlot()
+    {
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+        plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
+            .setLineSeriesOptions( LineSeriesOptions.create().setShow( true ).setSteps( true ) )
+            .setThreshold( Threshold.create().setBelow( 0 ).setColor( "red" ) ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
+
+        // create series
+        SeriesHandler series1 = model.addSeries( Series.of( "Random series 1", "green" ) );
+
+        // add data
+        for ( int i = 0; i &lt; 10; i++ )
+        {
+            series1.add( DataPoint.of( i, Random.nextInt( 30 ) - 10 ) );
+        }
+
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        return binder.createAndBindUi( this );
+    }
+
+    /**
+     * When the below changes
+     */
+    @UiHandler( { "positive", "zero", "negative" } )
+    void onValueChangeGraphType( ValueChangeEvent&lt;Boolean&gt; event )
+    {
+        GlobalSeriesOptions options = plot.getOptions().getGlobalSeriesOptions();
+        if ( positive.getValue() )
+        {
+            options.getThreshold().get( 0 ).setBelow( 5 );
+        }
+        else if ( zero.getValue() )
+        {
+            options.getThreshold().get( 0 ).setBelow( 0 );
+        }
+        else
+        {
+            options.getThreshold().get( 0 ).setBelow( -2.5 );
+        }
+
+        plot.redraw();
+    }
+
+</pre>

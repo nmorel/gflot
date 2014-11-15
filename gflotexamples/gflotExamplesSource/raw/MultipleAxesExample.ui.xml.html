@@ -1,0 +1,60 @@
+<pre>&lt;!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent"&gt;
+&lt;ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:p="urn:import:com.googlecode.gflot.client"&gt;
+
+  &lt;ui:style&gt;
+    .spacing {
+      margin-right: 5px;
+    }
+
+    .loadingMask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .mask {
+      background-color: #000;
+      opacity: 0.3;
+    }
+
+    .loading {
+      text-align: center;
+      line-height: 300px;
+      font-size: 30px;
+      color: #8C2E0B;
+    }
+  &lt;/ui:style&gt;
+
+  &lt;ui:with field='res' type='com.googlecode.gflot.examples.client.resources.Resources' /&gt;
+
+  &lt;g:HTMLPanel&gt;
+    &lt;div style="width: 600px; height: 300px; position: relative;"&gt;
+      &lt;p:SimplePlot ui:field="plot" width="100%" height="100%" /&gt;
+      &lt;div ui:field='loadingMask' class="{style.loadingMask}"&gt;
+        &lt;div class="{style.loadingMask} {style.mask}" /&gt;
+        &lt;div class="{style.loadingMask} {style.loading}"&gt;Loading...&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div style="margin-top: 10px"&gt;
+      &lt;span&gt;Cursor position :&lt;/span&gt;
+      &lt;g:InlineLabel ui:field="cursorPosition" /&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;Multiple axis support showing the raw oil price in US $/barrel of crude oil vs. the exchange rate from US $ to €.&lt;/p&gt;
+    &lt;p&gt;As illustrated, you can put in multiple axes if you need to. For each data series, simply specify the axis
+      number. In the options, you can then configure where you want the extra axes to appear.&lt;/p&gt;
+
+    &lt;g:HorizontalPanel verticalAlignment="MIDDLE"&gt;
+      &lt;g:InlineLabel addStyleNames='{style.spacing}'&gt;Position axis&lt;/g:InlineLabel&gt;
+      &lt;g:Button ui:field="left" addStyleNames='{style.spacing}' enabled="false"&gt;left&lt;/g:Button&gt;
+      &lt;g:InlineLabel addStyleNames='{style.spacing}'&gt;or&lt;/g:InlineLabel&gt;
+      &lt;g:Button ui:field="right" enabled="false"&gt;right&lt;/g:Button&gt;
+    &lt;/g:HorizontalPanel&gt;
+  &lt;/g:HTMLPanel&gt;
+
+&lt;/ui:UiBinder&gt;
+</pre>

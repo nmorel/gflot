@@ -1,0 +1,146 @@
+<pre>    /**
+     * Plot
+     */
+    @UiField( provided = true )
+    SimplePlot plot;
+
+    /**
+     * Loading mask
+     */
+    @UiField
+    DivElement loadingMask;
+
+    /**
+     * Position label
+     */
+    @UiField
+    Label cursorPosition;
+
+    /**
+     * Left button
+     */
+    @UiField
+    Button left;
+
+    /**
+     * Right button
+     */
+    @UiField
+    Button right;
+
+    /**
+     * Create plot
+     */
+    public Widget createPlot()
+    {
+        PlotModel model = new PlotModel();
+        PlotOptions plotOptions = PlotOptions.create();
+
+        plotOptions.setGridOptions( GridOptions.create().setHoverable( true ) );
+        plotOptions.setLegendOptions( LegendOptions.create().setPosition( LegendPosition.SOUTH_WEST )
+            .setSortedComparator( new Comparator&lt;LegendOptions.LegendComparable&gt;()
+            {
+                @Override
+                public int compare( LegendOptions.LegendComparable o1, LegendOptions.LegendComparable o2 )
+                {
+                    return o2.getLabel().compareToIgnoreCase( o1.getLabel() );
+                }
+            } ) );
+
+        // add tick formatter to the options
+        plotOptions.addXAxisOptions( TimeSeriesAxisOptions.create() );
+        plotOptions.addYAxisOptions( AxisOptions.create().setMinimum( 0 ) );
+        plotOptions.addYAxisOptions( AxisOptions.create().setAlignTicksWithAxis( 1 ).setPosition( AxisPosition.RIGHT ).setTickDecimals( 3 )
+            .setTickFormatter( new TickFormatter()
+            {
+                @Override
+                public String formatTickValue( double tickValue, Axis axis )
+                {
+                    double round = Math.pow( 10, axis.getTickDecimals() );
+                    return (Math.round( tickValue * round ) / round) + "\u20ac";
+                }
+            } ) );
+
+        // create a series
+        final SeriesHandler oilPrices = model.addSeries( Series.of( "Oil price ($)" ) );
+        loadData( "multipleaxes/oilprices.json", new SeriesDataCallback()
+        {
+            @Override
+            protected void onSuccess( SeriesData data )
+            {
+                oilPrices.setData( data );
+                onDataLoaded();
+            }
+        } );
+
+        final SeriesHandler exchangeRates = model.addSeries( Series.of( "USD/EUR exchange rate" ).setYAxis( 2 ) );
+        loadData( "multipleaxes/exchangerates.json", new SeriesDataCallback()
+        {
+            @Override
+            protected void onSuccess( SeriesData data )
+            {
+                exchangeRates.setData( data );
+                onDataLoaded();
+            }
+        } );
+
+        // create the plot
+        plot = new SimplePlot( model, plotOptions );
+
+        // add hover listener
+        plot.addHoverListener( new PlotHoverListener()
+        {
+            public void onPlotHover( Plot plot, PlotPosition position, PlotItem item )
+            {
+                if ( position != null )
+                {
+                    cursorPosition.setText( "{x=" + position.getX() + ", y1=" + position.getY() + ", y2=" + position.getY( 2 ) + "}" );
+                }
+            }
+        }, false );
+
+        return binder.createAndBindUi( this );
+    }
+
+    /**
+     * When user clicks on left button
+     */
+    @UiHandler( "left" )
+    void onClickLeft( ClickEvent e )
+    {
+        plot.getOptions().getYAxisOptions( 2 ).setPosition( AxisPosition.LEFT );
+        plot.redraw();
+        left.setEnabled( false );
+        right.setEnabled( true );
+    }
+
+    /**
+     * When user clicks on right button
+     */
+    @UiHandler( "right" )
+    void onClickRight( ClickEvent e )
+    {
+        plot.getOptions().getYAxisOptions( 2 ).setPosition( AxisPosition.RIGHT );
+        plot.redraw();
+        left.setEnabled( true );
+        right.setEnabled( false );
+    }
+
+    /**
+     * Called when data from a series is loaded
+     */
+    private void onDataLoaded()
+    {
+        for ( SeriesHandler handler : plot.getModel().getHandlers() )
+        {
+            if ( handler.getData().isEmpty() )
+            {
+                return;
+            }
+        }
+        left.setEnabled( true );
+        loadingMask.getStyle().setDisplay( Display.NONE );
+        plot.redraw();
+    }
+
+</pre>
