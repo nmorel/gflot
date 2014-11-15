@@ -101,7 +101,7 @@
     <maven-javadoc.version>2.10.1</maven-javadoc.version>
     <maven-gpg.version>1.5</maven-gpg.version>
     <maven-jar.version>2.5</maven-jar.version>
-    <minify-maven.version>1.7.4</minify-maven.version>
+    <minify-maven.version>1.7</minify-maven.version>
 
     <!-- GWT dependencies version -->
     <gwt.version>2.2.0</gwt.version>
