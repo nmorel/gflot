@@ -83,6 +83,7 @@ public class Series
     private static final String FILL_BETWEEN_KEY = "fillBetween";
     private static final String ID_KEY = "id";
     private static final String FILL_AREA_KEY = "fillArea";
+    private static final String ORIGIN_SERIES_KEY = "originSeries";
 
     protected Series()
     {
@@ -394,7 +395,7 @@ public class Series
     {
         put(FILL_AREA_KEY, options);
         return this;
-}
+    }
 
     /**
      * Provides the array given to this series.
@@ -405,6 +406,23 @@ public class Series
     public final JsArray<LevelInfo> getFillArea()
     {
         return getJsObject(FILL_AREA_KEY);
+    }
+
+    /**
+     * Provides the original series used to split the data.
+     * <p>Only for the threshold plugin! Here is the part of the documentation describing it :</p>
+     * <code>
+     * Internally, the plugin works by splitting the data into two series, above and
+     * below the threshold. The extra series below the threshold will have its label
+     * cleared and the special "originSeries" attribute set to the original series.
+     * You may need to check for this in hover events.
+     * </code>
+     *
+     * @return the original series
+     */
+    public final Series getOriginSeries()
+    {
+        return getJsObject(ORIGIN_SERIES_KEY);
     }
 
 }

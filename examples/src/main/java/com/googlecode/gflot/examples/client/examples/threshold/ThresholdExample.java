@@ -14,15 +14,18 @@ import com.googlecode.gflot.client.PlotModel;
 import com.googlecode.gflot.client.Series;
 import com.googlecode.gflot.client.SeriesHandler;
 import com.googlecode.gflot.client.SimplePlot;
-import com.googlecode.gflot.client.options.GlobalSeriesOptions;
-import com.googlecode.gflot.client.options.LegendOptions;
-import com.googlecode.gflot.client.options.LineSeriesOptions;
-import com.googlecode.gflot.client.options.PlotOptions;
+import com.googlecode.gflot.client.event.PlotHoverListener;
+import com.googlecode.gflot.client.event.PlotItem;
+import com.googlecode.gflot.client.event.PlotPosition;
+import com.googlecode.gflot.client.jsni.Plot;
+import com.googlecode.gflot.client.options.*;
 import com.googlecode.gflot.client.options.CommonSeriesOptions.Threshold;
 import com.googlecode.gflot.examples.client.examples.DefaultActivity;
 import com.googlecode.gflot.examples.client.resources.Resources;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesRaw;
 import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExamplesSource;
+
+import java.util.logging.Logger;
 
 /**
  * @author Nicolas Morel
@@ -31,6 +34,7 @@ import com.googlecode.gflot.examples.client.source.SourceAnnotations.GFlotExampl
 public class ThresholdExample
     extends DefaultActivity
 {
+    private static final Logger logger = Logger.getLogger(ThresholdExample.class.getName());
 
     private static Binder binder = GWT.create( Binder.class );
 
@@ -65,9 +69,11 @@ public class ThresholdExample
         PlotModel model = new PlotModel();
         PlotOptions plotOptions = PlotOptions.create();
         plotOptions.setGlobalSeriesOptions( GlobalSeriesOptions.create()
-            .setLineSeriesOptions( LineSeriesOptions.create().setShow( true ).setSteps( true ) )
-            .setThreshold( Threshold.create().setBelow( 0 ).setColor( "red" ) ) );
+            .setLineSeriesOptions(LineSeriesOptions.create().setShow(true).setSteps(true))
+            .setThreshold(Threshold.create().setBelow(0).setColor("red")) );
         plotOptions.setLegendOptions( LegendOptions.create().setShow( false ) );
+
+        plotOptions.setGridOptions(GridOptions.create().setHoverable(true));
 
         // create series
         SeriesHandler series1 = model.addSeries( Series.of( "Random series 1", "green" ) );
@@ -80,6 +86,16 @@ public class ThresholdExample
 
         // create the plot
         plot = new SimplePlot( model, plotOptions );
+        plot.addHoverListener(new PlotHoverListener() {
+            @Override
+            public void onPlotHover(Plot plot, PlotPosition position, PlotItem item) {
+                Series series = item.getSeries().getOriginSeries();
+                if (null == series) {
+                    series = item.getSeries();
+                }
+                logger.info("Hovering series : " + series.getLabel());
+            }
+        }, true);
 
         return binder.createAndBindUi( this );
     }

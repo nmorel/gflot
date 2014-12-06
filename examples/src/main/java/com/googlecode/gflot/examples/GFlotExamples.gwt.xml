@@ -8,6 +8,11 @@
   <set-property name="gflot.load.flot.canvas" value="ENABLED" />
   <set-property name="gflot.load.canvas2image" value="ENABLED" />
 
+  <inherits name="com.google.gwt.logging.Logging" />
+  <set-property name="gwt.logging.logLevel" value="ALL" />
+  <set-property name="gwt.logging.enabled" value="TRUE" />
+  <set-property name="gwt.logging.consoleHandler" value="ENABLED" />
+
   <!-- Generator to create the source code -->
   <generate-with class="com.googlecode.gflot.examples.generator.SourceGenerator">
     <when-type-assignable class="com.googlecode.gflot.examples.client.GFlotExamples.GeneratorInfo" />
