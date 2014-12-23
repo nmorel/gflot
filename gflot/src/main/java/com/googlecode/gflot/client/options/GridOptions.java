@@ -59,6 +59,8 @@ public class GridOptions
     private static final String MOUSE_ACTIVE_RADIUS_KEY = "mouseActiveRadius";
     private static final String MARGIN_KEY = "margin";
 
+    private static final String BACKGROUND_KEY = "background";
+
     /**
      * Creates a {@link GridOptions}
      */
@@ -604,4 +606,20 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return the background options
+     */
+    public final BackgroundOptions getBackgroundOptions()
+    {
+        return getJsObject( BACKGROUND_KEY );
+    }
+
+    /**
+     * Set the background options
+     */
+    public final GridOptions setBackgroundOptions( BackgroundOptions backgroundOptions )
+    {
+        put( BACKGROUND_KEY, backgroundOptions );
+        return this;
+    }
 }

@@ -3,6 +3,8 @@ package com.googlecode.gflot.examples.client.mvp;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
+import com.googlecode.gflot.examples.client.examples.background.BackgroundExample;
+import com.googlecode.gflot.examples.client.examples.background.BackgroundPlace;
 import com.googlecode.gflot.examples.client.examples.bar.BarExample;
 import com.googlecode.gflot.examples.client.examples.bar.BarPlace;
 import com.googlecode.gflot.examples.client.examples.categories.CategoriesExample;
@@ -91,6 +93,8 @@ public class AppActivityMapper
     private Activity errorBarsActivity;
 
     private Activity categoriesActivity;
+
+    private Activity backgroundActivity;
 
     public AppActivityMapper( Resources resources )
     {
@@ -264,6 +268,14 @@ public class AppActivityMapper
                 categoriesActivity = new CategoriesExample( resources );
             }
             return categoriesActivity;
+        }
+        if ( place instanceof BackgroundPlace )
+        {
+            if ( null == backgroundActivity )
+            {
+            	backgroundActivity = new BackgroundExample( resources );
+            }
+            return backgroundActivity;
         }
         return null;
     }

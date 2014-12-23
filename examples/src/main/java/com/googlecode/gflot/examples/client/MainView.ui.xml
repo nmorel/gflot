@@ -66,6 +66,8 @@
                        styleName='{res.style.menuLink}' />
           <g:Hyperlink ui:field="categoriesLink" text="Categories" targetHistoryToken="{tokens.categories}"
                        styleName='{res.style.menuLink}' />
+          <g:Hyperlink ui:field="backgroundLink" text="Background" targetHistoryToken="{tokens.background}"
+                       styleName='{res.style.menuLink}' />
 
           <div class="{res.style.menuCategory}">Others</div>
           <g:Hyperlink ui:field="exportLink" text="Export" targetHistoryToken="{tokens.export}" styleName='{res.style.menuLink}' />

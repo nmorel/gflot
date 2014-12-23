@@ -47,6 +47,8 @@ public final class NameTokens
 
     public static final String CATEGORIES_BARS = "categories";
 
+    public static final String BACKGROUND = "background";
+
     public static String line()
     {
         return LINE;
@@ -145,6 +147,11 @@ public final class NameTokens
     public static String categories()
     {
         return CATEGORIES_BARS;
+    }
+    
+    public static String background()
+    {
+        return BACKGROUND;
     }
 
     private NameTokens()
