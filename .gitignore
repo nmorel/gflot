@@ -4,3 +4,6 @@ target/
 .classpath
 .project
 .settings/
+bin
+gwt-unitCache
+examples/src/main/webapp/gflotexamples
